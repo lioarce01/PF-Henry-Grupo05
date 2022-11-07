@@ -16,39 +16,40 @@ const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
-router.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const post = yield prisma.post.findMany({
-            where: {
-                published: true
-            },
-            orderBy: {
-                createdAt: "desc"
-            }
-        });
-        res.status(200).json({ post });
-    }
-    catch (error) {
-        next(error.message);
-    }
-}));
-router.post('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const bodyPost = req.body;
-        const post = yield prisma.post.create({
-            data: {
-                authorId: bodyPost.authorId,
-                published: bodyPost.published,
-                title: bodyPost.title,
-                description: bodyPost.description,
-            }
-        });
-        res.status(200).json(post);
-    }
-    catch (error) {
-        next(error.message);
-    }
-}));
+// router.get('/', async(req,res, next) => {
+//     try {
+//       const post = await prisma.post.findMany({
+//         where:{
+//             published: true
+//         },
+//         orderBy:{
+//             createdAt: "desc"
+//         }
+//       })
+//       res.status(200).json({post})  
+//     } catch (error: any) {
+//         next(error.message)
+//     }
+// });
+// router.post('/', async(req,res, next) =>{
+//     try {
+//         interface postInterface{
+//             authorId: string , 
+//             published: boolean, 
+//             title: string,
+//              description: string
+//         }
+//         const bodyPost: postInterface = req.body;
+//         const post = await prisma.post.create({
+//             data:{
+//                 authorId: bodyPost.authorId,
+//             }
+//         })
+//         res.status(200).json(post)
+//     } catch (error: any) {
+//         next(error.message)
+//     }
+// });
 router.get('/:id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const post = yield prisma.post.findUnique({

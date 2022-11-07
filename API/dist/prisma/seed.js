@@ -21,36 +21,6 @@ function run() {
             create: {
                 email: "PawsFounding@gmail.com",
                 name: "Paws FOunding",
-                isOng: true,
-                address: 'Calle las palmeras 123',
-                country: 'Argentina',
-                city: 'San Luis',
-                collection: 120000.75
-            }
-        });
-        const user2 = yield prisma.user.upsert({
-            where: {
-                email: "juntosporlosanimales@gmail.com"
-            },
-            update: {},
-            create: {
-                email: "juntosporlosanimales@gmail.com",
-                name: "Juntos por los animales",
-                isOng: true,
-                address: 'Hipolito Irigoyen 124',
-                country: 'Argentina',
-                city: 'Buenos aires',
-                collection: 130000.55
-            }
-        });
-        const comment = yield prisma.comment.create({
-            data: {
-                content: "Hola, me gustaria adoptar a este perro",
-                user: {
-                    connect: {
-                        email: ""
-                    }
-                }
             }
         });
     });
