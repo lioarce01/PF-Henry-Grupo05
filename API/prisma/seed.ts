@@ -36,16 +36,24 @@ async function run() {
 
     });
 
-    const comment = await prisma.comment.create({
-        data: {
-            content: "Hola, me gustaria adoptar a este perro",
-            user: {
-                connect: {
-                    email: ""
-                }
-            },
-        }
+    const post = await prisma.post.create({
+
+        data:{
+            title: "Proyecto de recaudacion",
+            description: "Necesitamos juntar $134.000 para conseguir stock de alimentos para perros",
+            img: 'https://edit.org/photos/img/blog/e1f-recaudar-fondos-plantillas-editar-online.jpg-1300.jpg',
+            published: true,
+            authorId: user.id,
+        } 
+    });
+    const comment= await prisma.comment.create({
+
+        data:{
+            content: "gran proyecto, exitos!",
+            postId: post.id,
+        } 
     })
+    console.log({user},{user2});
     
 }
 
