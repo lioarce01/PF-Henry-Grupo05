@@ -10,31 +10,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id   @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
-  name String?
-  isOng Boolean? @default(false) //defines if it is an ONG or a donor to ONGs
-  collection Float?  //collections that the ONG has so far
-  address String
-  country String
-  imgProfile String?
-  city String
-  role Role @default(User)
-  post Post[]
+model User {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  email        String  @unique
+  name         String?
+  imageProfile String?
+  Post         Post[]
+  ONG          ONG[]
 }
 
-model Post{
-  id String @id  @default(auto()) @map("_id") @db.ObjectId
-  title    String
-  description     String?
-  img String?
-  published Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId   String @db.ObjectId
-  comments Comment[]
+model ONG {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  imageOng    String?
+  country     String?
+  city        String?
+  address     String?
+  description String?
+  recolected  Int? // recolected money
+  author      User    @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+
+model Post {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  content  String
+  author   User      @relation(fields: [authorId], references: [id])
+  authorId String
+  Comment  Comment[]
 }
 
 model Comment {
@@ -44,8 +47,7 @@ model Comment {
   content String
 }
 
-enum Role{
+enum Role {
   User
   Admin
 }
-
