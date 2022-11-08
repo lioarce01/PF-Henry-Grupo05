@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  profilePic String?
+  name       String
+  email      String    @unique
+  role       Role      @default(User)
+  posts      Post[]
+  Comment    Comment[]
+  ONG        ONG[]
+  ongFollow  String[]  @default([]) @db.ObjectId
+  following  ONG[]     @relation("Followers", fields: [ongFollow], references: [id])
+}
+
+model ONG {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String   @unique
+  description   String?  @map("description")
+  address       String?  @map("address")
+  website       String?  @map("website")
+  author        User     @relation(fields: [authorId], references: [id])
+  authorId      String   @db.ObjectId
+  budget        Int?     @map("budget")
+  goal          Int?     @map("goal")
+  userFollowers String[] @default([]) @db.ObjectId
+  followers     User[]   @relation("Followers", fields: [userFollowers], references: [id])
+}
+
+model Post {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  author    User?     @relation(fields: [authorId], references: [id])
+  authorId  String?   @db.ObjectId
+  content   String    @map("content")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  likes     Int?      @default(0)
+  Comment   Comment[]
+}
+
+model Comment {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  content  String @map("content")
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   String @db.ObjectId
+}
+
+enum Role {
+  User
+  Admin
+}
