@@ -17,39 +17,40 @@ model User {
   email      String    @unique
   role       Role      @default(User)
   posts      Post[]
-  ong_favs   String[]
-  ong_subs   String[]
   Comment    Comment[]
   ONG        ONG[]
+  ongFollow  String[]  @default([]) @db.ObjectId
+  following  ONG[]     @relation("Followers", fields: [ongFollow], references: [id])
 }
 
 model ONG {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  name     String  @unique
-  address  String
-  website  String?
-  author   User    @relation(fields: [authorId], references: [id])
-  // sponsors  User[]  @relation(fields: [sponsorId], references: [id])
-  // sponsorId String
-  authorId String  @db.ObjectId
-  budget   Int?
-  goal     Int?
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String   @unique
+  description   String?  @map("description")
+  address       String?  @map("address")
+  website       String?  @map("website")
+  author        User     @relation(fields: [authorId], references: [id])
+  authorId      String   @db.ObjectId
+  budget        Int?     @map("budget")
+  goal          Int?     @map("goal")
+  userFollowers String[] @default([]) @db.ObjectId
+  followers     User[]   @relation("Followers", fields: [userFollowers], references: [id])
 }
 
 model Post {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   author    User?     @relation(fields: [authorId], references: [id])
   authorId  String?   @db.ObjectId
-  content   String
+  content   String    @map("content")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  likes     Int?
+  likes     Int?      @default(0)
   Comment   Comment[]
 }
 
 model Comment {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  content  String
+  content  String @map("content")
   author   User   @relation(fields: [authorId], references: [id])
   authorId String @db.ObjectId
   post     Post   @relation(fields: [postId], references: [id])
