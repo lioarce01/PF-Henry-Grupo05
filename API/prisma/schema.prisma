@@ -10,42 +10,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id   @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
-  name String?
-  isOng Boolean? @default(false) //defines if it is an ONG or a donor to ONGs
-  collection Float?  //collections that the ONG has so far
-  address String
-  country String
-  imgProfile String?
-  city String
-  role Role @default(User)
-  post Post[]
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  profilePic String?
+  name       String
+  email      String    @unique
+  role       Role      @default(User)
+  posts      Post[]
+  ong_favs   String[]
+  ong_subs   String[]
+  Comment    Comment[]
+  ONG        ONG[]
 }
 
-model Post{
-  id String @id  @default(auto()) @map("_id") @db.ObjectId
-  title    String
-  description     String?
-  img String?
-  published Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId   String @db.ObjectId
-  comments Comment[]
+model ONG {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String  @unique
+  address  String
+  website  String?
+  author   User    @relation(fields: [authorId], references: [id])
+  // sponsors  User[]  @relation(fields: [sponsorId], references: [id])
+  // sponsorId String
+  authorId String  @db.ObjectId
+  budget   Int?
+  goal     Int?
+}
+
+model Post {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  author    User?     @relation(fields: [authorId], references: [id])
+  authorId  String?   @db.ObjectId
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  likes     Int?
+  Comment   Comment[]
 }
 
 model Comment {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  post    Post   @relation(fields: [postId], references: [id])
-  postId  String @db.ObjectId
-  content String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  content  String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   String @db.ObjectId
 }
 
-enum Role{
+enum Role {
   User
   Admin
 }
-
