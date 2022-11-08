@@ -11,40 +11,49 @@ datasource db {
 }
 
 model User {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
-  email        String  @unique
-  name         String?
-  imageProfile String?
-  Post         Post[]
-  ONG          ONG[]
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  profilePic String?
+  name       String
+  email      String    @unique
+  role       Role      @default(User)
+  posts      Post[]
+  ong_favs   String[]
+  ong_subs   String[]
+  Comment    Comment[]
+  ONG        ONG[]
 }
 
 model ONG {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String?
-  imageOng    String?
-  country     String?
-  city        String?
-  address     String?
-  description String?
-  recolected  Int? // recolected money
-  author      User    @relation(fields: [authorId], references: [id])
-  authorId    String
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String  @unique
+  address  String
+  website  String?
+  author   User    @relation(fields: [authorId], references: [id])
+  // sponsors  User[]  @relation(fields: [sponsorId], references: [id])
+  // sponsorId String
+  authorId String  @db.ObjectId
+  budget   Int?
+  goal     Int?
 }
 
 model Post {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  content  String
-  author   User      @relation(fields: [authorId], references: [id])
-  authorId String
-  Comment  Comment[]
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  author    User?     @relation(fields: [authorId], references: [id])
+  authorId  String?   @db.ObjectId
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  likes     Int?
+  Comment   Comment[]
 }
 
 model Comment {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  post    Post   @relation(fields: [postId], references: [id])
-  postId  String @db.ObjectId
-  content String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  content  String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   String @db.ObjectId
 }
 
 enum Role {

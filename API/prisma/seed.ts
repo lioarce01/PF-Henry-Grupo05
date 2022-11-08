@@ -13,7 +13,19 @@ async function run() {
             name: "Paws FOunding",
         }
     });
-    
+
+    const user2 = await prisma.user.upsert({
+        where:{
+            email: "user@mail.com"
+        },
+        update:{},
+        create:{
+            id: '1',
+            email: "user@mail.com",
+            name: "user2"
+        }
+    });
+
 }
 
 run().catch((e) => {
