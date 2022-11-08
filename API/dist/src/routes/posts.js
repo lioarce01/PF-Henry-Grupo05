@@ -16,66 +16,199 @@ const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
-// router.get('/', async(req,res, next) => {
-//     try {
-//       const post = await prisma.post.findMany({
-//         where:{
-//             published: true
-//         },
-//         orderBy:{
-//             createdAt: "desc"
-//         }
-//       })
-//       res.status(200).json({post})  
-//     } catch (error: any) {
-//         next(error.message)
-//     }
-// });
-// router.post('/', async(req,res, next) =>{
-//     try {
-//         interface postInterface{
-//             authorId: string , 
-//             published: boolean, 
-//             title: string,
-//              description: string
-//         }
-//         const bodyPost: postInterface = req.body;
-//         const post = await prisma.post.create({
-//             data:{
-//                 authorId: bodyPost.authorId,
-//             }
-//         })
-//         res.status(200).json(post)
-//     } catch (error: any) {
-//         next(error.message)
-//     }
-// });
-router.get('/:id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+//route to get all posts
+router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield prisma.post.findMany({
+            include: {
+                author: true,
+                Comment: true,
+            },
+        });
+        if (posts) {
+            return res.status(200).json(posts);
+        }
+        else {
+            throw new Error('Posts not founds');
+        }
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(404).json(error);
+    }
+}));
+//route to get all posts sorted by most recents
+router.get('/mostRecents', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield prisma.post.findMany({
+            include: {
+                author: true,
+                Comment: true,
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+        if (posts) {
+            return res.status(200).json(posts);
+        }
+        else {
+            throw new Error('Posts not founds');
+        }
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(404).json(error);
+    }
+}));
+//route to get all posts sorted by oldest
+router.get('/oldest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield prisma.post.findMany({
+            include: {
+                author: true,
+                Comment: true,
+            },
+            orderBy: {
+                createdAt: 'asc'
+            }
+        });
+        if (posts) {
+            return res.status(200).json(posts);
+        }
+        else {
+            throw new Error('Posts not founds');
+        }
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(404).json(error);
+    }
+}));
+//route to sort by most likes
+router.get('/mostLikes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield prisma.post.findMany({
+            include: {
+                author: true,
+                Comment: true,
+            },
+            orderBy: {
+                likes: 'desc'
+            }
+        });
+        if (posts) {
+            return res.status(200).json(posts);
+        }
+        else {
+            throw new Error('Posts not founds');
+        }
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(404).json(error);
+    }
+}));
+//route to sort by post with less likes
+router.get('/lessLikes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield prisma.post.findMany({
+            include: {
+                author: true,
+                Comment: true,
+            },
+            orderBy: {
+                likes: 'asc'
+            }
+        });
+        if (posts) {
+            return res.status(200).json(posts);
+        }
+        else {
+            throw new Error('Posts not founds');
+        }
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(404).json(error);
+    }
+}));
+//route to make the POST of a post
+router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const bodyPost = req.body;
+        const post = yield prisma.post.create({
+            data: {
+                authorId: bodyPost.authorId,
+                content: bodyPost.content,
+                image: bodyPost.image
+            }
+        });
+        res.status(200).json(post);
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(404).json(error);
+    }
+}));
+//route to edit a post
+router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const bodyPost = req.body;
+        const updateUser = yield prisma.post.update({
+            where: {
+                id: bodyPost.id,
+            },
+            data: {
+                content: bodyPost.content,
+                image: bodyPost.image
+            },
+        });
+        res.status(200).send('Update successful');
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(404).json(error);
+    }
+}));
+//route to get posts by id
+router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const post = yield prisma.post.findUnique({
             where: {
                 id: req.params.id
-            }
+            },
+            include: {
+                author: true,
+                Comment: true,
+            },
         });
         if (post) {
             return res.status(200).json(post);
         }
+        else {
+            throw new Error('Post not found');
+        }
     }
     catch (error) {
-        next(error.message);
+        console.error(error.message);
+        res.status(404).json(error);
     }
 }));
-router.delete('/:id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+//route to delete posts by id
+router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield prisma.post.delete({
+        const post = yield prisma.post.delete({
             where: {
                 id: req.params.id
             }
         });
+        console.log(post);
         res.status(200).send('successful');
     }
     catch (error) {
-        next(error.message);
+        console.error(error.message);
+        res.status(404).json(error);
     }
 }));
 exports.default = router;
