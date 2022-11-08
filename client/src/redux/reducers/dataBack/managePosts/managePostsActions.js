@@ -14,9 +14,9 @@ export const getPostsAction = () => async dispatch => {
 export const getPostsByIdAction = (id) => async dispatch => {
     try {
         const res = await axios.get(`https://dogs-backend-bautts.herokuapp.com/dogs/${id}`);
-        dispatch(getUserById(res.data));
+        dispatch(getPostsById(res.data));
     } catch (err) {
-        dispatch(getUserById(err.response.data));
+        dispatch(getPostsById(err.response.data));
     }
 }
 
@@ -24,9 +24,9 @@ export const getPostsByIdAction = (id) => async dispatch => {
 export const getPostsByNameAction = (name) => async dispatch => {
     try {
         const res = await axios.get(`https://dogs-backend-bautts.herokuapp.com/dogs?name=${name}`);
-        dispatch(getUserByName(res.data));
+        dispatch(getPostsByName(res.data));
     } catch (err) {
-        dispatch(getUserByName(err.response.data));
+        dispatch(getPostsByName(err.response.data));
     }
 }
 
