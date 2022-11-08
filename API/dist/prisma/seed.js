@@ -29,6 +29,7 @@ function run() {
             },
             update: {},
             create: {
+                id: '1',
                 email: "user@mail.com",
                 name: "user2"
             }
