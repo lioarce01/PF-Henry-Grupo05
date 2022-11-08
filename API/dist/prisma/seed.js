@@ -23,6 +23,16 @@ function run() {
                 name: "Paws FOunding",
             }
         });
+        const user2 = yield prisma.user.upsert({
+            where: {
+                email: "user@mail.com"
+            },
+            update: {},
+            create: {
+                email: "user@mail.com",
+                name: "user2"
+            }
+        });
     });
 }
 run().catch((e) => {
