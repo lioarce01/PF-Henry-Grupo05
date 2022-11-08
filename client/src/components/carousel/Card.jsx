@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Card = ({ name, image, id }) => {
   return (
     <Link to={`/${id}/profile`}>
-      <div className="max-w-xs rounded overflow-hidden my-2 border border-gray-300 px-1 py-1 flex-reverse items-center">
+      <div className="w-fit w-48 rounded overflow-hidden my-2 border border-gray-300 px-1 py-1 flex-reverse items-center">
         <img
           className="max-w-md h-28 mx-auto rounded"
           src={image}
