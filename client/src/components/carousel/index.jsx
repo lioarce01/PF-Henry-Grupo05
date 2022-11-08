@@ -57,7 +57,7 @@ const Carousel = () => {
         className="mySwiper max-h-52"
       >
         
-        {ongs.length > 0 && ongs.slice(0,5).map((ong,index) => <SwiperSlide  key={index} ><p>#{index + 1}</p><Card id={ong.id} image="https://i.ibb.co/6JxWZYJ/ONG-image.png" name={ong.nombre}/></SwiperSlide>)}
+        {ongs.length > 0 && ongs.slice(0,5).map((ong,index) => <SwiperSlide  key={index} ><p>#{index + 1}</p><Card id={ong.id} image={ong.image} name={ong.nombre}/></SwiperSlide>)}
        
       </Swiper>
     </div>
