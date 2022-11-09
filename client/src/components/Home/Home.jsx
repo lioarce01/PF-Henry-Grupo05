@@ -12,10 +12,22 @@ const Home = () => {
         <div><SubscriptorsBar/></div>
         <div>
           <p>filtro de posts</p>
+          <select >
+          <option value="name,Asc">mas recientes</option>
+          <option value="name,Desc">Favoritas</option>
+          <option value="rating,Asc">Likes asc</option>
+          <option value="rating,Desc">likes des</option>
+        </select>
           <Posts/>
         </div>
         <div>
           <p>filtro de ongs</p>
+          <select >
+          <option value="name,Asc">A-Z</option>
+          <option value="name,Desc">Z-A</option>
+          <option value="rating,Asc">Rating +</option>
+          <option value="rating,Desc">Rating -</option>
+        </select>
           <Ongs/>
         </div>
       </div>
