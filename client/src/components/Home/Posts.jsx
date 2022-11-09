@@ -15,7 +15,7 @@ const Posts = () => {
 
   return (
     <div>
-      <div className='flex items-center h-[50rem] bg-gray-700 w-[800px] mt-14 overflow-y-scroll flex-col'>
+      <div className='flex items-center h-[48.5rem] bg-gray-700 w-[800px] mt-14 overflow-y-scroll flex-col'>
         <CardPost/>
         <CardPost/>
         <CardPost/>
