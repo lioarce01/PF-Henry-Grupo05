@@ -8,10 +8,12 @@ const express_1 = __importDefault(require("express"));
 // Ejemplo: const authRouter = require('./auth.js');
 const posts_1 = __importDefault(require("./posts"));
 const users_1 = __importDefault(require("./users"));
+const comments_1 = __importDefault(require("./comments"));
 const router = express_1.default.Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use('/posts', posts_1.default);
 router.use('/users', users_1.default);
+router.use('/comments', comments_1.default);
 exports.default = router;
 //# sourceMappingURL=index.js.map
