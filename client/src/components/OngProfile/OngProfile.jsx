@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect , useState} from "react";
 import { useParams } from "react-router-dom";
+import Posts from "../Home/Posts";
 
 
 const OngDetail  = ()=>{
@@ -61,6 +62,9 @@ return (
         <div>
             <input type="text" name="desciption" onChange={inputHandler} value={input.description} disabled={toogle2}/>
             <button onClick={editHandler2}>Edit</button>
+        </div>
+        <div>
+            <Posts/>
         </div>
     </div>
 )
