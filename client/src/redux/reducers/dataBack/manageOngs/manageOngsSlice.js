@@ -5,6 +5,7 @@ export const manageOngsSlice = createSlice({
 
     initialState: {
         ongs: [],
+        ongsTrending: [],
         details: [],
         msg: ''
     },
@@ -20,6 +21,10 @@ export const manageOngsSlice = createSlice({
 
         getOngsById: (state, action) => {
             state.details = action.payload;
+        },
+
+        getOngsTrending: (state, action) => {
+            state.ongsTrending = action.payload
         },
         
         createOngs: (state, action) => {
@@ -37,6 +42,6 @@ export const manageOngsSlice = createSlice({
 });
 
 // action creators are generated for each case reducer function
-export const { getOngs, getOngsByName, getOngsById, createOngs, updateOngs, deleteOngs } = manageOngsSlice.actions;
+export const { getOngsTrending,getOngs, getOngsByName, getOngsById, createOngs, updateOngs, deleteOngs } = manageOngsSlice.actions;
 
 export default manageOngsSlice.reducer;
