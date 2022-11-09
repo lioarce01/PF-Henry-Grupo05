@@ -4,7 +4,7 @@ import express from 'express';
 
 import posts from './posts';
 import users from './users';
-
+import ongs from './ongs';
 
 
 const router = express.Router();
@@ -12,7 +12,7 @@ const router = express.Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-
+router.use('/ongs', ongs);
 router.use('/posts', posts);
 router.use('/users', users);
 
