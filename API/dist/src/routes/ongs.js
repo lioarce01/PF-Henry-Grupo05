@@ -20,7 +20,8 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.query;
         const ongs = yield prisma.oNG.findMany({
-            where: { name: { contains: name } }
+            where: { name: { contains: name } },
+            include: { followers: true }
         });
         if (ongs.length)
             return res.status(200).send(ongs);
@@ -36,9 +37,8 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const ongs = yield prisma.oNG.findMany({
             take: 5,
-            orderBy: {
-                budget: 'desc'
-            }
+            include: { followers: true },
+            orderBy: { budget: 'desc' }
         });
         if (ongs)
             res.status(200).send(ongs);
@@ -53,7 +53,10 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
 router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const ong = yield prisma.oNG.findUnique({ where: { id } });
+        const ong = yield prisma.oNG.findUnique({
+            where: { id },
+            include: { followers: true, author: true }
+        });
         ong ? res.status(200).send(ong) : res.status(404).send("Could not find GNO.");
     }
     catch (error) {
