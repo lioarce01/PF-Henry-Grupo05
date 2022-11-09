@@ -11,7 +11,7 @@ import "swiper/css/free-mode";
 import { FreeMode, Autoplay } from "swiper";
 import Card from './Card'
 import { useDispatch, useSelector } from "react-redux";
-import { getOngsTrendingAction } from "../../redux/reducers/dataBack/manageOngs/manageOngsActions";
+import { getOngsTrendingAction } from "../../../redux/reducers/dataBack/manageOngs/manageOngsActions";
 
 
 const Carousel = () => {
@@ -29,7 +29,7 @@ const Carousel = () => {
         slidesPerView={1}
         spaceBetween={0}
         freeMode={true}
-        direction={"vertical"}
+        direction={"horizontal"}
         modules={[FreeMode, Autoplay]}
         
         breakpoints={{
