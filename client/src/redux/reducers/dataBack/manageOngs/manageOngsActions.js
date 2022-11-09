@@ -1,13 +1,24 @@
-import { getOngs, getOngsByName, getOngsById, createOngs, updateOngs, deleteOngs } from './manageOngsSlice';
+import { getOngs, getOngsByName, getOngsById, createOngs, updateOngs, deleteOngs, getOngsTrending } from './manageOngsSlice';
 import axios from 'axios';
 
 export const getOngsAction = () => async dispatch => {
     try {
         const res = await axios.get('https://dogs-backend-bautts.herokuapp.com/dogs');
+        console.log(res)
         dispatch(getOngs(res.data));
     } catch (err) {
         console.log(err);
         dispatch(getOngs(err));
+    }
+}
+
+export const getOngsTrendingAction = () => async dispatch => {
+    try {
+        const res = await axios.get('https://dogs-backend-bautts.herokuapp.com/dogs');
+        dispatch(getOngsTrending(res.data));
+    } catch (err) {
+        console.log(err);
+        dispatch(getOngsTrending(err));
     }
 }
 
