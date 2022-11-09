@@ -17,7 +17,7 @@ const Ongs = () => {
   return (
     <div>
       <h2 className='text-3xl font-bold text-center'>ONGs</h2>
-        <div className='flex items-center h-[50rem] bg-gray-700 w-[400px] mt-4 overflow-y-scroll flex-col'>
+        <div className='flex items-center h-[45rem] bg-gray-700 w-[400px] mt-4 overflow-y-scroll flex-col'>
           <div>
             <ONGCard/>
             <ONGCard/>
