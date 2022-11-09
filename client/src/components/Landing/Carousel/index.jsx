@@ -22,8 +22,13 @@ const Carousel = () => {
         distpatch(getOngsTrendingAction())
     },[distpatch])
 
+    if(ongs.length < 1) return (<div>Loading...</div>)
+
   return (
-    <div className="w-3/4 h-fit bg-gray-200 px-10 py-10 rounded shadow-lg">
+    <div className="w-3/4 h-fit    mx-auto rounded ">
+      <h2 className="mb-8 text-4xl font-bold leading-none tracking-tighter text-neutral-600 md:text-7xl lg:text-4xl">
+              Trending
+            </h2>
       <Swiper
         loop={true}
         slidesPerView={1}
@@ -54,7 +59,7 @@ const Carousel = () => {
         }}
 
         
-        className="mySwiper max-h-52"
+        className="mySwiper max-h-52 px-2  border border-gray-300  rounded"
       >
         
         {ongs.length > 0 && ongs.slice(0,5).map((ong,index) => <SwiperSlide  key={index} ><p>#{index + 1}</p><Card id={ong.id} image={ong.image} name={ong.nombre}/></SwiperSlide>)}
