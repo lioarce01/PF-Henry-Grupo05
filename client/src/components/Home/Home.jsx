@@ -6,7 +6,7 @@ import SubscriptorsBar from './SubscriptorsBar'
 
 const Home = () => {
   return (
-    <div className='w-full h-full bg-gray-200'>
+    <div className='w-full h-screen bg-gray-400'>
       <Navbar/>
       <div className='flex flex-row justify-between'>
         <div><SubscriptorsBar/></div>
