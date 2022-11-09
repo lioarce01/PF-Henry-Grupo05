@@ -9,9 +9,11 @@ const express_1 = __importDefault(require("express"));
 const posts_1 = __importDefault(require("./posts"));
 const users_1 = __importDefault(require("./users"));
 const comments_1 = __importDefault(require("./comments"));
+const ongs_1 = __importDefault(require("./ongs"));
 const router = express_1.default.Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+router.use('/ongs', ongs_1.default);
 router.use('/posts', posts_1.default);
 router.use('/users', users_1.default);
 router.use('/comments', comments_1.default);
