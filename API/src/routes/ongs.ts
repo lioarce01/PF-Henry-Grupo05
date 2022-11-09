@@ -14,7 +14,8 @@ router.get('/', async(req: Req, res) => {
         const { name } = req.query;
 
         const ongs = await prisma.oNG.findMany({
-            where: { name: { contains: name } }
+            where: { name: { contains: name } },
+            include: { followers: true }
         })
 
         if (ongs.length) return res.status(200).send(ongs);
@@ -30,9 +31,8 @@ router.get('/topFive', async(req, res)=>{
     try {
         const ongs = await prisma.oNG.findMany({
             take: 5,
-            orderBy: {
-                budget: 'desc'
-            } as any
+            include: { followers: true },
+            orderBy: { budget: 'desc' }
         })
 
         if (ongs) res.status(200).send(ongs);
@@ -46,7 +46,10 @@ router.get('/topFive', async(req, res)=>{
 router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const ong = await prisma.oNG.findUnique({ where: { id } });
+        const ong = await prisma.oNG.findUnique({ 
+            where: { id },
+            include: { followers: true, author: true } 
+        });
   
         ong ? res.status(200).send(ong) : res.status(404).send("Could not find GNO.");
     } catch (error) {
