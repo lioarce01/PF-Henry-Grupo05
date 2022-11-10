@@ -71,7 +71,7 @@ return (
         </div>
         <div>
         <div className="mr-16 flex flex-col items-center">
-            <textarea className="h-60 w-full"
+            <textarea className="h-60 w-full resize-none"
             type="text" name="desciption" onChange={inputHandler}
             disabled={toogle2} rows='1' cols='1' >{input.description}</textarea>
             <button onClick={editHandler2}>Edit</button>

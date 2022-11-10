@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPostsAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
+import { getPostsAction, getPostsByIdAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
 import CardPost from './CardPost'
 import PostFilters from './PostFilters'
 
-const Posts = () => {
+const Posts = ({id}) => {
   const dispatch = useDispatch()
   const posts = useSelector(state => state.managePosts.posts)
 
   useEffect(() => {
+    // if(id){
+    //   dispatch(getPostsByIdAction(id))
+    // }
+    //else 
     dispatch(getPostsAction()) 
   }, [dispatch])
 
