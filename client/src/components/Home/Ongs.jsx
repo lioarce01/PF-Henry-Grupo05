@@ -33,7 +33,7 @@ const Ongs = () => {
                     name={shelter.name}
                     description={shelter.description}
                     budget={shelter.budget}
-                    followers={shelter.userFollowers}
+                    followers={shelter.userFollowers?.length}
                   />
                 )
               })

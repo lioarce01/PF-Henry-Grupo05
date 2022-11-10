@@ -29,7 +29,7 @@ const Posts = () => {
                 content={post.content}
                 likes={post.likes}
                 createdAt={post.createdAt}
-                comments={post.Comment}
+                comments={post.Comment.length}
               />
             )
           })
