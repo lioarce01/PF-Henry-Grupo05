@@ -43,6 +43,7 @@ router.get("/", async (req: Req, res) => {
 
         const user = await prisma.user.findMany({
             where: { name: { contains: name } },
+            include: { posts: true }
         });
 
         user.length ? res.status(200).send(user) : res.status(404).send('ERROR: Could not find any users.');
@@ -59,7 +60,7 @@ router.get("/:id", async (req, res) => {
     try {
         const user = await prisma.user.findUnique({ 
             where: { id },
-            include: { following: true }
+            include: { following: true, posts: true }
         });
 
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
