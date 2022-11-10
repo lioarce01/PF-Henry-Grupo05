@@ -73,10 +73,12 @@ const SubscriptorsBar = () => {
                                         <TbReportMoney className='my-2 text-2xl text-black'/>
                                     </div>
                                 <div>
-                                    <SubsCard name='ONG NAME' user='username'/>
-                                    <SubsCard name='ONG NAME' user='username'/>
-                                    <SubsCard name='ONG NAME' user='username'/>
-                                    <SubsCard name='ONG NAME' user='username'/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+
                                 </div>
                                 </div>
                                 <div className='flex flex-col'>
@@ -84,15 +86,11 @@ const SubscriptorsBar = () => {
                                         <BsBookmarkHeart className='my-2 text-2xl text-black'/>
                                     </div>
                                     <div>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
-                                        <SubsCard name='ONG NAME' user='username'/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
+                                    <SubsCard name='ONG NAME' goal={'$5200'}/>
 
                                     </div>
                                 </div>
