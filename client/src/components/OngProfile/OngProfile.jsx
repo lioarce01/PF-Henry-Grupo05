@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect , useState} from "react";
 import { useParams } from "react-router-dom";
+import Posts from "../Home/Posts";
 
 
 const OngDetail  = ()=>{
@@ -13,7 +14,7 @@ const OngDetail  = ()=>{
 
 //objeto hardcodeado para ir mostrando algo hasta usar la db
 const [input, setInput] = useState({
-    image : 'https://i.ibb.co/6JxWZYJ/ONG-image.png',
+    profilePic : 'https://i.ibb.co/6JxWZYJ/ONG-image.png',
     name: 'Amigos del Perro',
     country: 'Argentina',
     city: 'San Luis',
@@ -61,6 +62,9 @@ return (
         <div>
             <input type="text" name="desciption" onChange={inputHandler} value={input.description} disabled={toogle2}/>
             <button onClick={editHandler2}>Edit</button>
+        </div>
+        <div>
+            <Posts/>
         </div>
     </div>
 )

@@ -22,7 +22,7 @@ const Carousel = () => {
         distpatch(getSheltersTopFive())
     },[distpatch])
 
-    if(ongs.length < 1) return (<div>Loading...</div>)
+    if(!ongs) return (<div>Loading...</div>)
 
   return (
     <div className="w-3/4 h-fit    mx-auto rounded ">

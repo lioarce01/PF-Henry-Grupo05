@@ -57,7 +57,10 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-        const user = await prisma.user.findUnique({ where: { id } });
+        const user = await prisma.user.findUnique({ 
+            where: { id },
+            include: { following: true }
+        });
 
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
     } catch (error) {
