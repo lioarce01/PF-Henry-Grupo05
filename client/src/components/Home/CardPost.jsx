@@ -9,7 +9,7 @@ const CardPost = ({image, author, content, likes, createdAt, comments}) => {
     image = 'https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY'
   }
 
-  const dateFormat = createdAt.split('T')[0].split('-').reverse().join('/')
+  // const dateFormat = createdAt.split('T')[0].split('-').reverse().join('/')
   
   return (
     <div className='flex flex-col'>
@@ -20,7 +20,7 @@ const CardPost = ({image, author, content, likes, createdAt, comments}) => {
           <Link to='/:ongId/profile' className="object-cover w-12 h-12 mr-4 rounded-full shadow">
         <div className="flex flex-col items-start">
             <h2 className="-mt-1 text-lg font-semibold text-gray-900">{author}</h2>
-          <small className="text-sm text-gray-700">{dateFormat}</small>
+          <small className="text-sm text-gray-700">{createdAt}</small>
         </div>
           </Link>
         <p className="text-sm text-left text-gray-700">

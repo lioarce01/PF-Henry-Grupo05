@@ -3,7 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import OngDetail from "./components/OngProfile/OngProfile";
 import Home from "./components/Home/Home";
 import Landing from "./components/Landing";
+<<<<<<< Updated upstream
 import Page404 from "./components/Page404";
+=======
+import UserProfile from "./components/UserProfile/UserProfile";
+>>>>>>> Stashed changes
 
 
 function App() {
@@ -16,6 +20,7 @@ function App() {
         <Route exact path="/home" element={<Home />} />
         <Route path="/:OngName/:post_id" element="" />
         <Route path= "/:OngId/profile" element={<OngDetail/>}/>
+        <Route path='/users/:userId' element={<UserProfile/>}/>
       </Routes>
     </div>
   );

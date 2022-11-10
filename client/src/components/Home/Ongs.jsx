@@ -9,7 +9,6 @@ import { getSheltersAction } from '../../redux/reducers/dataBack/manageShelters/
 const Ongs = () => {
   const dispatch = useDispatch()
   const shelters = useSelector(state => state.manageShelters.shelters)
-  console.log('shelters', shelters)
 
   useEffect(() => {
     dispatch(getSheltersAction())
