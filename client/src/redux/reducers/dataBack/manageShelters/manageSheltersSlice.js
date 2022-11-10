@@ -43,5 +43,6 @@ export const manageSheltersSlice = createSlice({
 
 // action creators are generated for each case reducer function
 export const { getSheltersTopFive,getShelters, getSheltersByName, getSheltersById, createShelters, updateShelters, deleteShelters } = manageSheltersSlice.actions;
+export const selectShelter = state => state.manageShelters
 
 export default manageSheltersSlice.reducer;
