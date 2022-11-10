@@ -1,4 +1,4 @@
-import { getPosts, getPostsById, createPost, updatePost, deletePost } from './managePostsSlice';
+import { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts } from './managePostsSlice';
 import axios from 'axios';
 import { toggleLoading } from '../loading/loadingSlice';
 
@@ -61,6 +61,18 @@ export const deletePostAction = (id) => async dispatch => {
         dispatch(deletePost(res.data));
     } catch (err) {
         dispatch(deletePost(err.response.data));
+    } finally {
+        dispatch(toggleLoading())
+    }
+}
+
+export const sortPostsAction = (order, type) => async dispatch => {
+    dispatch(toggleLoading())
+    try {       
+        let {data} = await axios.get(`/posts/sort?order=${order}&type=${type}`)
+        dispatch(sortPosts(data))
+    } catch (err) {
+        console.log(err)
     } finally {
         dispatch(toggleLoading())
     }
