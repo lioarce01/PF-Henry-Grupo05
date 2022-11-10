@@ -11,16 +11,16 @@ datasource db {
 }
 
 model User {
-  id             String     @id @default(auto()) @map("_id") @db.ObjectId
-  profilePic     String?
-  name           String
-  email          String     @unique
-  role           Role       @default(User)
-  posts          Post[]
-  Comment        Comment[]
-  Shelter        Shelter[]
-  shelterFollow  String[]   @default([]) @db.ObjectId
-  following      Shelter[]  @relation("Followers", fields: [shelterFollow], references: [id])
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  profilePic    String?
+  name          String
+  email         String    @unique
+  role          Role      @default(User)
+  posts         Post[]
+  Comment       Comment[]
+  Shelter       Shelter[]
+  shelterFollow String[]  @default([]) @db.ObjectId
+  following     Shelter[] @relation("Followers", fields: [shelterFollow], references: [id])
 }
 
 model Shelter {

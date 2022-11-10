@@ -11,22 +11,26 @@ import "swiper/css/free-mode";
 import { FreeMode, Autoplay } from "swiper";
 import Card from './Card'
 import { useDispatch, useSelector } from "react-redux";
-import { getSheltersTopFive } from "../../../redux/reducers/dataBack/manageShelters/manageSheltersSlice";
+import {getSheltersTopFiveAction} from '../../../redux/reducers/dataBack/manageShelters/manageSheltersActions'
+import { selectShelter } from "../../../redux/reducers/dataBack/manageShelters/manageSheltersSlice";
+import { selectLoading } from "../../../redux/reducers/dataBack/loading/loadingSlice";
 
 
 const Carousel = () => {
     const distpatch = useDispatch()
-    const ongs = useSelector(state => state.manageShelters.topShelters)
+    const { topShelters } = useSelector(selectShelter)
+    const loading = useSelector(selectLoading)
 
     useEffect(() => {
-        distpatch(getSheltersTopFive())
+        distpatch(getSheltersTopFiveAction())
     },[distpatch])
 
-    if(!ongs) return (<div>Loading...</div>)
+    if(loading) return (<div className="text-center">Loading...</div>)
+    if(!topShelters) return 
 
   return (
     <div className="w-3/4 h-fit    mx-auto rounded ">
-      <h2 className="mb-8 text-4xl font-bold leading-none tracking-tighter text-neutral-600 md:text-7xl lg:text-4xl">
+      <h2 className="mb-8 text-4xl font-bold leading-none tracking-tighter text-neutral-600 md:text-7xl lg:text-4xl text-center">
               Trending
             </h2>
       <Swiper
@@ -62,7 +66,7 @@ const Carousel = () => {
         className="mySwiper max-h-52 px-2  border border-gray-300  rounded"
       >
         
-        {ongs.length > 0 && ongs.slice(0,5).map((ong,index) => <SwiperSlide  key={index} ><p>#{index + 1}</p><Card id={ong.id} image={ong.image} name={ong.nombre}/></SwiperSlide>)}
+        {topShelters.length > 0 && topShelters.map((ong,index) => <SwiperSlide  key={index} ><p>#{index + 1}</p><Card id={ong.id} image={ong.profilePic} name={ong.name}/></SwiperSlide>)}
        
       </Swiper>
     </div>

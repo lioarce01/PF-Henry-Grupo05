@@ -45,7 +45,7 @@ router.get('/topFive', async(req, res)=>{
 // order (or filter, in the future) by what is in this Type
 type ReqSampling = { 
     query: { 
-        order: 'name' | 'budget' | 'goal', 
+        order: 'name' | 'budget' | 'followers', 
         type: 'asc' | 'desc', 
     } 
 };
@@ -59,8 +59,10 @@ router.get('/sample', async(req : ReqSampling, res) => {
         if (order && type) {
             
             const shelters = await prisma.shelter.findMany({
-                include: { followers: true, posts: true },
-                orderBy: { [order]: type }
+
+                include: { followers: true },
+                orderBy: order === "followers" ? {followers: {_count: type}} : { [order]: type }
+
             })
 
             res.status(200).send(shelters);
