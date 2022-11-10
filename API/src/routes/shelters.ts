@@ -12,7 +12,12 @@ router.get('/', async(req: ReqGet, res) => {
         const { name } = req.query;
 
         const shelters = await prisma.shelter.findMany({
-            where: { name: { contains: name } },
+            where: { 
+                name: { 
+                    contains: name,
+                    mode: 'insensitive' 
+                } 
+            },
             include: { followers: true, posts: true }
         })
 
