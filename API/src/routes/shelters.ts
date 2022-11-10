@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 
 type ReqGet = { query: { name: string } };
 
+// get all shelters or get some by name
 router.get('/', async(req: ReqGet, res) => {
     try {
-        
         const { name } = req.query;
 
         const shelters = await prisma.shelter.findMany({
@@ -16,7 +16,7 @@ router.get('/', async(req: ReqGet, res) => {
             include: { followers: true }
         })
 
-        if (shelters.length) return res.status(200).send(shelters);
+        if (shelters.length) res.status(200).send(shelters);
         else res.status(404).send('ERROR: Could not find any shelters');
 
     } catch (error) {
@@ -25,6 +25,7 @@ router.get('/', async(req: ReqGet, res) => {
     }
 });
 
+// get top five shelters by budget
 router.get('/topFive', async(req, res)=>{
     try {
         const shelters = await prisma.shelter.findMany({
@@ -41,6 +42,7 @@ router.get('/topFive', async(req, res)=>{
      }
 });
 
+// order (or filter, in the future) by what is in this Type
 type ReqSampling = { 
     query: { 
         order: 'name' | 'budget' | 'goal', 
@@ -70,6 +72,7 @@ router.get('/sample', async(req : ReqSampling, res) => {
     }
 })
 
+// get a shelter by its id
 router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -85,6 +88,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+// create a shelter
 router.post("/", async (req, res) => {
 
     try {
@@ -121,6 +125,7 @@ router.post("/", async (req, res) => {
     }
 })
 
+// update a shelter
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
 
@@ -157,6 +162,7 @@ router.put("/:id", async (req, res) => {
     }
 })
 
+// delete a shelter
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 

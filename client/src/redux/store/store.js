@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import manageUsersSlice from "../reducers/dataBack/manageUsers/manageUsersSlice"; 
 import managePostsSlice from "../reducers/dataBack/managePosts/managePostsSlice"; 
-import manageOngsSlice from "../reducers/dataBack/manageOngs/manageOngsSlice"; 
+import manageSheltersSlice from "../reducers/dataBack/manageShelters/manageSheltersSlice"; 
+import manageCommentsSlice from '../reducers/dataBack/manageComments/manageCommentsSlice';
 
 export default configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
     reducer: {
         manageUsers: manageUsersSlice,
         managePosts: managePostsSlice,
-        manageOngs: manageOngsSlice
+        manageComments: manageCommentsSlice,
+        manageShelters: manageSheltersSlice
     }
 })

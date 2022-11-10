@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import SearchBar from './SearchBar'
 import {BsSun} from 'react-icons/bs'
 import {HiMoon} from 'react-icons/hi'
 
@@ -12,12 +11,9 @@ const Navbar = () => {
   }
 
   return (
-    <div className='flex items-center justify-between w-full p-4 text-white bg-gray-800 shadow-lg h-14'>
+    <div className='fixed flex items-center justify-between w-full p-4 px-10 text-white bg-gray-800 shadow-lg h-14'>
       <div>
         LOGO
-      </div>
-      <div>
-        <SearchBar/>
       </div>
       <div className='flex items-center justify-center'>
         {
