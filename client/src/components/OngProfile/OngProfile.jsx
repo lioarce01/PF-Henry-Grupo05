@@ -14,7 +14,7 @@ const OngDetail  = ()=>{
 
 //objeto hardcodeado para ir mostrando algo hasta usar la db
 const [input, setInput] = useState({
-    image : 'https://i.ibb.co/6JxWZYJ/ONG-image.png',
+    profilePic : 'https://i.ibb.co/6JxWZYJ/ONG-image.png',
     name: 'Amigos del Perro',
     country: 'Argentina',
     city: 'San Luis',
