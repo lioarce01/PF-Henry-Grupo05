@@ -26,9 +26,9 @@ export const getSheltersTopFiveAction = () => async dispatch => {
 export const getSheltersByIdAction = (id) => async dispatch => {
     try {
         const res = await axios.get(`/shelters/${id}`);
-        dispatch(getSheltersByName(res.data));
+        dispatch(getSheltersById(res.data));
     } catch (err) {
-        dispatch(getSheltersByName(err.response.data));
+        dispatch(getSheltersById(err.response.data));
     }
 }
 
@@ -36,9 +36,9 @@ export const getSheltersByIdAction = (id) => async dispatch => {
 export const getSheltersByNameAction = (name) => async dispatch => {
     try {
         const res = await axios.get(`/shelters?name=${name}`);
-        dispatch(getSheltersById(res.data));
+        dispatch(getSheltersByName(res.data));
     } catch (err) {
-        dispatch(getSheltersById(err.response.data));
+        dispatch(getSheltersByName(err.response.data));
     }
 }
 
