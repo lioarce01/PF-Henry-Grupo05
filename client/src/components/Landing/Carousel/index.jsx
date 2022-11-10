@@ -11,15 +11,15 @@ import "swiper/css/free-mode";
 import { FreeMode, Autoplay } from "swiper";
 import Card from './Card'
 import { useDispatch, useSelector } from "react-redux";
-import { getOngsTrendingAction } from "../../../redux/reducers/dataBack/manageOngs/manageOngsActions";
+import { getSheltersTopFive } from "../../../redux/reducers/dataBack/manageShelters/manageSheltersSlice";
 
 
 const Carousel = () => {
     const distpatch = useDispatch()
-    const ongs = useSelector(state => state.manageOngs.ongsTrending)
+    const ongs = useSelector(state => state.manageShelters.topShelters)
 
     useEffect(() => {
-        distpatch(getOngsTrendingAction())
+        distpatch(getSheltersTopFive())
     },[distpatch])
 
     if(ongs.length < 1) return (<div>Loading...</div>)
