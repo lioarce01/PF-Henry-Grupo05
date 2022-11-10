@@ -3,11 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import OngDetail from "./components/OngProfile/OngProfile";
 import Home from "./components/Home/Home";
 import Landing from "./components/Landing";
-<<<<<<< Updated upstream
 import Page404 from "./components/Page404";
-=======
 import UserProfile from "./components/UserProfile/UserProfile";
->>>>>>> Stashed changes
 
 
 function App() {
