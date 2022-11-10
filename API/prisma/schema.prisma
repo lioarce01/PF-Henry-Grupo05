@@ -39,7 +39,7 @@ model Shelter {
   goal          Int?     @map("goal")
   userFollowers String[] @default([]) @db.ObjectId
   followers     User[]   @relation("Followers", fields: [userFollowers], references: [id])
-  posts         Post[]   
+  posts         Post[]
 }
 
 model Post {

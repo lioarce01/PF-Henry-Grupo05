@@ -16,15 +16,16 @@ const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
+// get all shelters or get some by name
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.query;
         const shelters = yield prisma.shelter.findMany({
             where: { name: { contains: name } },
-            include: { followers: true }
+            include: { followers: true, posts: true }
         });
         if (shelters.length)
-            return res.status(200).send(shelters);
+            res.status(200).send(shelters);
         else
             res.status(404).send('ERROR: Could not find any shelters');
     }
@@ -33,11 +34,12 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 }));
+// get top five shelters by budget
 router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const shelters = yield prisma.shelter.findMany({
             take: 5,
-            include: { followers: true },
+            include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
         });
         if (shelters)
@@ -58,7 +60,7 @@ router.get('/sample', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (order && type) {
             const shelters = yield prisma.shelter.findMany({
                 include: { followers: true },
-                orderBy: { [order]: type }
+                orderBy: order === "followers" ? { followers: { _count: type } } : { [order]: type }
             });
             res.status(200).send(shelters);
         }
@@ -70,12 +72,13 @@ router.get('/sample', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         console.log(error);
     }
 }));
+// get a shelter by its id
 router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const shelter = yield prisma.shelter.findUnique({
             where: { id },
-            include: { followers: true, author: true }
+            include: { followers: true, author: true, posts: true }
         });
         shelter ? res.status(200).send(shelter) : res.status(404).send("ERROR: Could not find shelter.");
     }
@@ -84,6 +87,7 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(error);
     }
 }));
+// create a shelter
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyShelter = req.body;
@@ -93,19 +97,22 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
+                city: bodyShelter.city,
+                country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
                 goal: bodyShelter.goal
             }
         });
-        res.status(200).json('Shelter created successfully.');
+        res.status(200).send('Shelter created successfully.');
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
 }));
+// update a shelter
 router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
@@ -116,6 +123,8 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 name: bodyShelter.name,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
+                city: bodyShelter.city,
+                country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
@@ -129,6 +138,7 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(error);
     }
 }));
+// delete a shelter
 router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
