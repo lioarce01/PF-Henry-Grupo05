@@ -5,7 +5,7 @@ export const manageUsersSlice = createSlice({
 
     initialState: {
         users: [],
-        details: [],
+        details: {},
         msg: ''
     },
 
