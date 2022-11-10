@@ -6,6 +6,7 @@ import Landing from "./components/Landing";
 import Page404 from "./components/Page404";
 import OngForm from "./components/OngForm/OngForm";
 import UserForm from "./components/UserForm/UserFom";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/home" element={<Home />} />
         <Route path="/:OngName/:post_id" element="" />
         <Route path= "/:OngId/profile" element={<OngDetail/>}/>
+        <Route path='/users/:userId' element={<UserProfile/>}/>
       </Routes>
     </div>
   );

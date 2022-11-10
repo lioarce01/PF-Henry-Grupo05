@@ -34,5 +34,6 @@ export const manageCommentsSlice = createSlice({
 
 // action creators are generated for each case reducer function
 export const { getComments, getCommentsById, createComment, updateComment, deleteComment } = manageCommentsSlice.actions;
+export const selectComment = state => state.manageCommentsSlice
 
 export default manageCommentsSlice.reducer;

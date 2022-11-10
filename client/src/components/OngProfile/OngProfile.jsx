@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect , useState} from "react";
 import { useParams } from "react-router-dom";
 import Posts from "../Home/Posts";
+import NavBar from '../Navbar/Navbar'
 
 
 const OngDetail  = ()=>{
@@ -42,30 +43,43 @@ const editHandler2 = ()=>{
 
 return (
     <div>
-        <div>
-            <div>
-                <img src={input.image} alt="imagen ONG ejemplo" />
+        <NavBar/>
+    <div className=' w-full h-full bg-slate-300 flex flex-row justify-end pt-20'>
+        <div className="fixed left-0 w-60 ml-5 h-fit border border-red-50 flex flex-col items-center">
+            <div className="w-fit h-fit border border-red-50">
+                <img src={input.profilePic} alt="imagen ONG ejemplo" />
+            </div>
+            <div className="mt-1">
                 <button>Upload image</button>
             </div>
-            <div>
+            <div className="mt-3">
                 <form>
-                    <input type="text" name="name" onChange={inputHandler} value={input.name}  disabled={toogle}/>
-                    <input type="text" name="country" onChange={inputHandler} value={input.country} disabled={toogle}/>
-                    <input type="text" name="city" onChange={inputHandler} value={input.city} disabled={toogle}/>
-                    <input type="text" name="address" onChange={inputHandler} value={input.address} disabled={toogle}/>
-                    <input type="text" name="website" onChange={inputHandler} value={input.website} disabled={toogle}/>
+                    <input className="my-2"
+                    type="text" name="name" onChange={inputHandler} value={input.name}  disabled={toogle}/>
+                    <input className="my-2"
+                    type="text" name="country" onChange={inputHandler} value={input.country} disabled={toogle}/>
+                    <input className="my-2"
+                    type="text" name="city" onChange={inputHandler} value={input.city} disabled={toogle}/>
+                    <input className="my-2"
+                    type="text" name="address" onChange={inputHandler} value={input.address} disabled={toogle}/>
+                    <input className="my-2"
+                    type="text" name="website" onChange={inputHandler} value={input.website} disabled={toogle}/>
                 </form>
                     <button onClick={editHandler}>Edit</button>
             </div>
             <button>Suscribe</button>
         </div>
         <div>
-            <input type="text" name="desciption" onChange={inputHandler} value={input.description} disabled={toogle2}/>
+        <div className="mr-16 flex flex-col items-center">
+            <textarea className="h-60 w-full"
+            type="text" name="desciption" onChange={inputHandler}
+            disabled={toogle2} rows='1' cols='1' >{input.description}</textarea>
             <button onClick={editHandler2}>Edit</button>
-        </div>
-        <div>
+            <button>New Post</button>
             <Posts/>
         </div>
+        </div>
+    </div>
     </div>
 )
 
