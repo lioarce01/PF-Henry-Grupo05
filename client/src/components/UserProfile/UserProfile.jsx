@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 import { getUserByIdAction } from '../../redux/reducers/dataBack/manageUsers/manageUsersActions'
 import CardPost from '../Home/CardPost'
 import ONGCard from '../Home/ONGCard'
-import { getTimeAgo } from '../../utils'
 
 const UserProfile = () => {
   const { userId } = useParams()
