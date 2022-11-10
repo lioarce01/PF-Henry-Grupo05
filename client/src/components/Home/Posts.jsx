@@ -5,30 +5,35 @@ import CardPost from './CardPost'
 import PostFilters from './PostFilters'
 
 const Posts = () => {
-  // const dispatch = useDispatch()
-  // const posts = useSelector(state => state.posts)
+  const dispatch = useDispatch()
+  const posts = useSelector(state => state.managePosts.posts)
 
-  // useEffect(() => {
-  //   dispatch(getPostsAction())
-  // }, [dispatch])
-
-  // if(!posts.length) return <h1>Loading...</h1>
+  useEffect(() => {
+    dispatch(getPostsAction()) 
+  }, [dispatch])
 
   return (
-    <div className='w-full px-32 py-10 mb-4 bg-slate-200 mt-14'>
+    <div className='w-full min-h-[50rem] px-32 py-10 mb-4 mt-14 bg-slate-200'>
       <div className='flex items-center justify-end'>
         <PostFilters/>
       </div>
       <div className=''>
-        <CardPost/>
-        <CardPost/>
-        <CardPost/>
-        <CardPost/>
-        <CardPost/>
-        <CardPost/>
-        <CardPost/>
-        <CardPost/>
-        <CardPost/>
+        {
+          
+          posts && posts.map(post => {
+            return (
+              <CardPost
+                key={post.id}
+                image={post.author.image}
+                author={post.author.name}
+                content={post.content}
+                likes={post.likes}
+                createdAt={post.createdAt}
+                comments={post.Comment}
+              />
+            )
+          })
+        }
       </div>
     </div>
   )

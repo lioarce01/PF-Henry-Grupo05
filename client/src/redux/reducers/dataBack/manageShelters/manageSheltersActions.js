@@ -34,9 +34,10 @@ export const getSheltersByIdAction = (id) => async dispatch => {
     dispatch(toggleLoading())
     try {
         const res = await axios.get(`/shelters/${id}`);
-        dispatch(getSheltersByName(res.data));
+        dispatch(getSheltersById(res.data));
     } catch (err) {
-        dispatch(getSheltersByName(err.response.data));
+
+        dispatch(getSheltersById(err.response.data));
     } finally {
         dispatch(toggleLoading())
     }
@@ -47,9 +48,9 @@ export const getSheltersByNameAction = (name) => async dispatch => {
     dispatch(toggleLoading())
     try {
         const res = await axios.get(`/shelters?name=${name}`);
-        dispatch(getSheltersById(res.data));
+        dispatch(getSheltersByName(res.data));
     } catch (err) {
-        dispatch(getSheltersById(err.response.data));
+        dispatch(getSheltersByName(err.response.data));
     } finally {
         dispatch(toggleLoading())
     }

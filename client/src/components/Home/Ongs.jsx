@@ -4,34 +4,41 @@ import { useDispatch, useSelector } from 'react-redux'
 import ONGCard from './ONGCard'
 import ONGFilters from './ONGFilters'
 import SearchBar from '../Navbar/SearchBar'
+import { getSheltersAction } from '../../redux/reducers/dataBack/manageShelters/manageSheltersActions'
 
 const Ongs = () => {
-  // const dispatch = useDispatch
-  // const ongs = useSelector(state => state.ongs)
+  const dispatch = useDispatch()
+  const shelters = useSelector(state => state.manageShelters.shelters)
+  console.log('shelters', shelters)
 
-  // useEffect(() => {
-  //   dispatch(getOngsAction())
-  // }, [dispatch])
-
-  // if(!ongs.length) return <h1>Loading...</h1>
+  useEffect(() => {
+    dispatch(getSheltersAction())
+  }, [dispatch])
   
   return (
     <div className='fixed right-0 pr-4'>
       <h2 className='pt-2 text-2xl font-bold text-center'>Explore Shelters</h2>
         <div className='flex items-center h-[50rem] bg-slate-200 w-[400px] mt-5 overflow-auto flex-col py-10'>
             <SearchBar/>
-          <div className='flex items-center justify-end'>
-           <ONGFilters/>
+          <div className='flex items-end justify-end w-full py-1 pr-5'>
+            <ONGFilters/>
           </div>
           <div>
-            <ONGCard/>
-            <ONGCard/>
-            <ONGCard/>
-            <ONGCard/>
-            <ONGCard/>
-            <ONGCard/>
-            <ONGCard/>
-            <ONGCard/>
+            {
+              shelters && shelters.map(shelter => {
+                return (
+                  <ONGCard
+                    key={shelter.id}
+                    id={shelter.id}
+                    image={shelter.profilePic}
+                    name={shelter.name}
+                    description={shelter.description}
+                    budget={shelter.budget}
+                    followers={shelter.userFollowers}
+                  />
+                )
+              })
+            }
           </div>
       </div>
     </div>
