@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import OngDetail from "./components/OngProfile/OngProfile";
 import Home from "./components/Home/Home";
 import Landing from "./components/Landing";
+import Page404 from "./components/Page404";
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
       
       <Routes>
-        <Route path="*" element='' />
+        <Route path="*" element={<Page404 />} />
         <Route path="/" element={<Landing />} />
         <Route exact path="/home" element={<Home />} />
         <Route path="/:OngName/:post_id" element="" />
