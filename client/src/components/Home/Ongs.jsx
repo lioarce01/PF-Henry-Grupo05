@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOngsAction } from '../../redux/reducers/dataBack/manageOngs/manageOngsActions'
 import ONGCard from './ONGCard'
 
 const Ongs = () => {

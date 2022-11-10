@@ -5,17 +5,13 @@ export const managePostsSlice = createSlice({
 
     initialState: {
         posts: [],
-        details: [],
+        details: {},
         msg: ''
     },
 
     reducers: {
         getPosts: (state, action) => {
             state.posts = action.payload
-        },
-
-        getPostsByName: (state, action) => {
-            state.posts = action.payload;
         },
 
         getPostsById: (state, action) => {
@@ -37,6 +33,6 @@ export const managePostsSlice = createSlice({
 });
 
 // action creators are generated for each case reducer function
-export const { getPosts, getPostsByName, getPostsById, createPost, updatePost, deletePost } = managePostsSlice.actions;
+export const { getPosts, getPostsById, createPost, updatePost, deletePost } = managePostsSlice.actions;
 
 export default managePostsSlice.reducer;
