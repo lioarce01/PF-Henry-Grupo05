@@ -32,11 +32,15 @@ export const managePostsSlice = createSlice({
 
         deletePost: (state, action) => {
             state.msg = action.payload;
+        },
+
+        sortPost: (state, action) => {
+            state.posts = action.payload
         }
     }
 });
 
 // action creators are generated for each case reducer function
-export const { getPosts, getPostsByName, getPostsById, createPost, updatePost, deletePost } = managePostsSlice.actions;
+export const { getPosts, getPostsByName, getPostsById, createPost, updatePost, deletePost, sortPost } = managePostsSlice.actions;
 
 export default managePostsSlice.reducer;

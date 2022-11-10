@@ -1,4 +1,4 @@
-import { getPosts, getPostsByName, getPostsById, createPost, updatePost, deletePost } from './managePostsSlice';
+import { getPosts, getPostsByName, getPostsById, createPost, updatePost, deletePost, sortPost } from './managePostsSlice';
 import axios from 'axios';
 
 export const getPostsAction = () => async dispatch => {
@@ -57,5 +57,19 @@ export const deletePostAction = (id) => async dispatch => {
         dispatch(deletePost(res.data));
     } catch (err) {
         dispatch(deletePost(err.response.data));
+    }
+}
+
+export const sortPostAction = (order, type) => async dispatch => {
+    try {
+        let res
+        switch (order && type) {
+            case ("rec" && "desc"): res = await axios.get(`http://localhost:3001/posts/mostRecents`)
+            case ("rec" && "asc"): res = await axios.get(`http://localhost:3001/posts/oldest`)
+            case ("likes" && "desc"): res = await axios.get(`http://localhost:3001/posts/mostLikes`)
+        }
+        dispatch(sortPost(res.data))
+    } catch (err) {
+      console.log(err)
     }
 }

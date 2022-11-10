@@ -1,4 +1,4 @@
-import { getOngs, getOngsByName, getOngsById, createOngs, updateOngs, deleteOngs, getOngsTrending } from './manageOngsSlice';
+import { getOngs, getOngsByName, getOngsById, createOngs, updateOngs, deleteOngs, getOngsTrending, sortOngs } from './manageOngsSlice';
 import axios from 'axios';
 
 export const getOngsAction = () => async dispatch => {
@@ -71,3 +71,12 @@ export const deleteOngsAction = (id) => async dispatch => {
         dispatch(deleteOngs(err.response.data));
     }
 }
+
+export const sortOngsAction = (order, type) => async dispatch => {
+    try {
+        const {data} = await axios.get(`http://localhost:3001/shelters/sample?order=${order}&type=${type}`)
+        dispatch(sortOngs(data))
+    } catch (err) {
+        console.log(err)
+    }
+} 
