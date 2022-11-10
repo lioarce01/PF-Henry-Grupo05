@@ -15,8 +15,8 @@ const ONGFilters = () => {
 
   return (
     <div>
-      <select onChange={(e) => handleSort(e)}>
-        <option value="" disabled selected>Sort</option>
+      <select onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
+        <option value="DEFAULT" disabled>Sort</option>
         <option value="budget,desc">Budget +</option>
         <option value="budget,asc">Budget -</option>
         <option value="followers,desc">Followers +</option>
