@@ -11,7 +11,7 @@ const Card = ({ name, image, id }) => {
           alt="ong logo"
         />
         <div className="py-2 ">
-          <h4 className="text-lg mb-2">{name}</h4>
+          <h4 className="text-lg mb-2 text-center">{name}</h4>
         </div>
       </div>
     </Link>
