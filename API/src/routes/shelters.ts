@@ -98,6 +98,8 @@ router.post("/", async (req, res) => {
             description: string,
             profilePic: string,
             address: string,
+            city: string,
+            country: string,
             website: string,
             budget: number,
             goal: number
@@ -111,6 +113,8 @@ router.post("/", async (req, res) => {
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
+                city: bodyShelter.city,
+                country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
@@ -118,7 +122,7 @@ router.post("/", async (req, res) => {
             }
         })
 
-        res.status(200).json('Shelter created successfully.')
+        res.status(200).send('Shelter created successfully.')
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
@@ -134,6 +138,8 @@ router.put("/:id", async (req, res) => {
             name: string,
             description: string,
             profilePic: string,
+            city: string,
+            country: string,
             address: string,
             website: string,
             budget: number,
@@ -148,6 +154,8 @@ router.put("/:id", async (req, res) => {
                 name: bodyShelter.name,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
+                city: bodyShelter.city,
+                country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
