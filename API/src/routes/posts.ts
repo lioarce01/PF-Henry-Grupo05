@@ -10,8 +10,9 @@ router.get('/', async(req, res) => {
     try {
        const posts = await prisma.post.findMany({
         include: {
-            author:true,
+            author: true,
             Comment: true,
+            shelter: true
           },
        })
 
@@ -40,6 +41,7 @@ router.get('/sort', async(req : ReqSampling, res) => {
                 include: {
                     author: true,
                     Comment: true,
+                    shelter: true
                 },
     
                 orderBy: {
@@ -59,14 +61,16 @@ router.get('/sort', async(req : ReqSampling, res) => {
 router.post('/', async(req, res) =>{
     try {
         interface postInterface{
-            authorId: string ,  
+            authorId: string,
+            shelterId: string,  
             content: string,
-            image:string
+            image: string
         }
         const bodyPost: postInterface = req.body;
 
         await prisma.post.create({
-            data:{
+            data: {
+                shelterId: bodyPost.shelterId,
                 authorId: bodyPost.authorId,
                 content: bodyPost.content,
                 image: bodyPost.image
@@ -86,7 +90,7 @@ router.put('/', async(req, res) =>{
         interface updateInterface {
             id: string ,  
             content: string,
-            image:string
+            image: string
         }
 
         const bodyPost: updateInterface = req.body;
@@ -116,6 +120,7 @@ router.get('/:id', async(req, res) => {
         const post = await prisma.post.findUnique({
             where: { id },
             include: {
+                shelter: true,
                 author: true,
                 Comment: true,
             },

@@ -13,7 +13,7 @@ router.get('/', async(req: ReqGet, res) => {
 
         const shelters = await prisma.shelter.findMany({
             where: { name: { contains: name } },
-            include: { followers: true }
+            include: { followers: true, posts: true }
         })
 
         if (shelters.length) res.status(200).send(shelters);
@@ -30,7 +30,7 @@ router.get('/topFive', async(req, res)=>{
     try {
         const shelters = await prisma.shelter.findMany({
             take: 5,
-            include: { followers: true },
+            include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
         })
 
@@ -59,7 +59,7 @@ router.get('/sample', async(req : ReqSampling, res) => {
         if (order && type) {
             
             const shelters = await prisma.shelter.findMany({
-                include: { followers: true },
+                include: { followers: true, posts: true },
                 orderBy: { [order]: type }
             })
 
@@ -78,7 +78,7 @@ router.get("/:id", async (req, res) => {
         const { id } = req.params;
         const shelter = await prisma.shelter.findUnique({ 
             where: { id },
-            include: { followers: true, author: true } 
+            include: { followers: true, author: true, posts: true } 
         });
   
         shelter ? res.status(200).send(shelter) : res.status(404).send("ERROR: Could not find shelter.");
