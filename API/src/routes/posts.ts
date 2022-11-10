@@ -11,7 +11,9 @@ router.get('/', async(req, res) => {
        const posts = await prisma.post.findMany({
         include: {
             author: true,
-            Comment: true,
+            Comment: {
+                include: { author: true }
+            },
             shelter: true
           },
        })
@@ -40,7 +42,9 @@ router.get('/sort', async(req : ReqSampling, res) => {
             const posts = await prisma.post.findMany({
                 include: {
                     author: true,
-                    Comment: true,
+                    Comment: {
+                        include: { author: true }
+                    },
                     shelter: true
                 },
     
@@ -122,7 +126,9 @@ router.get('/:id', async(req, res) => {
             include: {
                 shelter: true,
                 author: true,
-                Comment: true,
+                Comment: {
+                    include: { author: true }
+                },
             },
         });
 

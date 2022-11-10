@@ -20,7 +20,7 @@ const ONGCard = ({image, name, budget, followers, description}) => {
                 <div className='flex flex-col justify-start w-full'>
                   <p className="mb-2 font-normal text-gray-700">{description}</p>
                   <p className='font-bold'>Budget: <span className='font-semibold'>${budget}</span></p>
-                  <p className='pb-2 font-bold'>Followers: <span className='font-semibold'>{followers.length}</span></p>
+                  <p className='pb-2 font-bold'>Followers: <span className='font-semibold'>{followers}</span></p>
                 </div>
               <Link to="/:ongId:/profile" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                   <div className='flex flex-row '>

@@ -15,8 +15,8 @@ const PostFilters = () => {
 
   return (
     <div>
-      <select onChange={(e) => handleSort(e)}>
-        <option disabled selected>Sort</option>
+      <select onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
+        <option value="DEFAULT" disabled>Sort</option>
         <option value="createdAt,desc">Latest</option>
         <option value="createdAt,asc">Oldest</option>
         <option value="likes,desc">Likes +</option>

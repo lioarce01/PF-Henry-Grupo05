@@ -22,193 +22,116 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const posts = yield prisma.post.findMany({
             include: {
                 author: true,
-                Comment: true,
+                Comment: {
+                    include: { author: true }
+                },
+                shelter: true
             },
         });
-        if (posts) {
-            return res.status(200).json(posts);
-        }
-        else {
-            throw new Error('Posts not founds');
-        }
+        posts ? res.status(200).json(posts) : res.status(404).json('ERROR: Posts not found.');
     }
     catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
     }
 }));
-//route to get all posts sorted by most recents
-router.get('/mostRecents', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { order, type } = req.query;
     try {
-        const posts = yield prisma.post.findMany({
-            include: {
-                author: true,
-                Comment: true,
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        });
-        if (posts) {
-            return res.status(200).json(posts);
+        if (order && type) {
+            const posts = yield prisma.post.findMany({
+                include: {
+                    author: true,
+                    Comment: {
+                        include: { author: true }
+                    },
+                    shelter: true
+                },
+                orderBy: {
+                    [order]: type
+                }
+            });
+            res.status(200).json(posts);
         }
-        else {
-            throw new Error('Posts not founds');
-        }
+        else
+            res.status(404).send('ERROR: Missing parameters.');
     }
     catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
+        res.status(400).send('ERROR: Invalid parameter.');
+        console.log(error);
     }
 }));
-//route to get all posts sorted by oldest
-router.get('/oldest', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const posts = yield prisma.post.findMany({
-            include: {
-                author: true,
-                Comment: true,
-            },
-            orderBy: {
-                createdAt: 'asc'
-            }
-        });
-        if (posts) {
-            return res.status(200).json(posts);
-        }
-        else {
-            throw new Error('Posts not founds');
-        }
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
-    }
-}));
-//route to sort by most likes
-router.get('/mostLikes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const posts = yield prisma.post.findMany({
-            include: {
-                author: true,
-                Comment: true,
-            },
-            orderBy: {
-                likes: 'desc'
-            }
-        });
-        if (posts) {
-            return res.status(200).json(posts);
-        }
-        else {
-            throw new Error('Posts not founds');
-        }
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
-    }
-}));
-//route to sort by post with less likes
-router.get('/lessLikes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const posts = yield prisma.post.findMany({
-            include: {
-                author: true,
-                Comment: true,
-            },
-            orderBy: {
-                likes: 'asc'
-            }
-        });
-        if (posts) {
-            return res.status(200).json(posts);
-        }
-        else {
-            throw new Error('Posts not founds');
-        }
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
-    }
-}));
-//route to make the POST of a post
+// route to create post
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
-        const post = yield prisma.post.create({
+        yield prisma.post.create({
             data: {
+                shelterId: bodyPost.shelterId,
                 authorId: bodyPost.authorId,
                 content: bodyPost.content,
-                image: bodyPost.image,
+                image: bodyPost.image
             }
         });
-        res.status(200).json(post);
+        res.status(200).send('Post created successfully.');
     }
     catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
     }
 }));
-//route to edit a post
+// route to edit a post
 router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
-        const updateUser = yield prisma.post.update({
+        yield prisma.post.update({
             where: {
                 id: bodyPost.id,
             },
             data: {
                 content: bodyPost.content,
-                image: bodyPost.image,
+                image: bodyPost.image
             },
         });
-        res.status(200).send('Update successful');
+        res.status(200).send('Post updated sucessfully.');
     }
     catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
     }
 }));
-//route to get posts by id
+// route to get posts by id
 router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
     try {
         const post = yield prisma.post.findUnique({
-            where: {
-                id: req.params.id
-            },
+            where: { id },
             include: {
+                shelter: true,
                 author: true,
-                Comment: true,
+                Comment: {
+                    include: { author: true }
+                },
             },
         });
-        if (post) {
-            return res.status(200).json(post);
-        }
-        else {
-            throw new Error('Post not found');
-        }
+        post ? res.status(200).json(post) : res.status(404).send("ERROR: Post not found.");
     }
     catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
     }
 }));
-//route to delete posts by id
+// route to delete posts by id
 router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const post = yield prisma.post.delete({
-            where: {
-                id: req.params.id
-            }
+        yield prisma.post.delete({
+            where: { id: req.params.id }
         });
-        console.log(post);
-        res.status(200).send('successful');
+        res.status(200).send('Post deleted successfully.');
     }
     catch (error) {
-        console.error(error.message);
-        res.status(404).json(error);
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
     }
 }));
 exports.default = router;
