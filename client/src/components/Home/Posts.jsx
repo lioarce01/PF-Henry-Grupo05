@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPostsAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
 import CardPost from './CardPost'
+import PostFilters from './PostFilters'
 
 const Posts = () => {
   // const dispatch = useDispatch()
@@ -14,8 +15,11 @@ const Posts = () => {
   // if(!posts.length) return <h1>Loading...</h1>
 
   return (
-    <div>
-      <div className='flex items-center h-[48.5rem] bg-gray-700 w-[800px] mt-14 overflow-y-scroll flex-col'>
+    <div className='w-full px-32 py-10 mb-4 bg-slate-200 mt-14'>
+      <div className='flex items-center justify-end'>
+        <PostFilters/>
+      </div>
+      <div className=''>
         <CardPost/>
         <CardPost/>
         <CardPost/>

@@ -13,9 +13,9 @@ const SearchBar = () => {
   }
 
   return (
-    <div>
-      <input type="text" placeholder="Search" className="h-10 pl-2 pr-2 text-black bg-white border-2 rounded-md outline-none w-72" onChange={handleChange} value={input}/>
-      <button className="p-2 px-4 ml-2 text-white border-2 border-white rounded-md" onClick={handleSubmit}>Search</button>
+    <div className='p-2'>
+      <input type="text" placeholder="Search" className="h-10 pl-2 pr-2 mr-4 text-black bg-white border-2 rounded-md outline-none border-slate-300" onChange={handleChange} value={input}/>
+      <button className="px-4 py-1.5 text-black border-2 border-slate-300 rounded-md hover:bg-slate-300 transition duration-300" onClick={handleSubmit}>Search</button>
     </div>
   )
 }
