@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {BiCommentDetail} from 'react-icons/bi'
 import {AiFillHeart} from 'react-icons/ai'
+import {getTimeAgo} from '../../utils'
 
 const CardPost = ({image, author, content, likes, createdAt, comments}) => {
 
@@ -13,14 +14,14 @@ const CardPost = ({image, author, content, likes, createdAt, comments}) => {
   
   return (
     <div className='flex flex-col'>
-      <div className="w-[100%] max-w-xl my-4 min-w-[500px] bg-white border border-gray-200 rounded-lg shadow-md">
+      <div className="w-[100%] max-w-xl my-4 md:min-w-[500px] bg-white border border-gray-200 rounded-lg shadow-md">
         <div className="flex items-start px-4 py-6">
           <img className="object-cover mr-4 rounded-full shadow w-14 h-14" src={image} alt="avatar"/>
         <div className="">
           <Link to='/:ongId/profile' className="object-cover w-12 h-12 mr-4 rounded-full shadow">
         <div className="flex flex-col items-start">
             <h2 className="-mt-1 text-lg font-semibold text-gray-900">{author}</h2>
-          <small className="text-sm text-gray-700">{createdAt}</small>
+          <small className="px-2 py-1 text-sm text-gray-700 rounded-md bg-slate-200">{getTimeAgo(createdAt)}</small>
         </div>
           </Link>
         <p className="text-sm text-left text-gray-700">
@@ -34,7 +35,7 @@ const CardPost = ({image, author, content, likes, createdAt, comments}) => {
             <div className="flex mr-2 text-sm text-gray-700">
               <Link to='/post/:postId' className='flex flex-row'>
                 <BiCommentDetail/>
-                <span>{comments.length}</span>
+                <span>{comments}</span>
               </Link>
             </div>
             </div>
