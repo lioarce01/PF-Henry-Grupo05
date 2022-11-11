@@ -6,10 +6,10 @@ import PostFilters from './PostFilters'
 
 const Posts = () => {
   const dispatch = useDispatch()
-  const posts = useSelector(state => state.managePosts.posts)
+  const posts = useSelector(state => state.managePosts.posts);
 
   useEffect(() => {
-    dispatch(getPostsAction()) 
+    dispatch(getPostsAction())
   }, [dispatch])
 
   return (
@@ -19,7 +19,6 @@ const Posts = () => {
       </div>
       <div className=''>
         {
-          
           posts && posts.map(post => {
             return (
               <CardPost
