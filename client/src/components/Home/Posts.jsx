@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPostsAction, getPostsByIdAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
+import { getPostsAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
 import CardPost from './CardPost'
 import PostFilters from './PostFilters'
 
-const Posts = ({id}) => {
+const Posts = () => {
   const dispatch = useDispatch()
-  const posts = useSelector(state => state.managePosts.posts)
+  const posts = useSelector(state => state.managePosts.posts);
 
   useEffect(() => {
-    // if(id){
-    //   dispatch(getPostsByIdAction(id))
-    // }
-    //else 
-    dispatch(getPostsAction()) 
+    dispatch(getPostsAction())
   }, [dispatch])
 
   return (
@@ -23,7 +19,6 @@ const Posts = ({id}) => {
       </div>
       <div className=''>
         {
-          
           posts && posts.map(post => {
             return (
               <CardPost
