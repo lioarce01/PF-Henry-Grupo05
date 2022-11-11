@@ -8,16 +8,16 @@ import CardPost from '../Home/CardPost'
 import ONGCard from '../Home/ONGCard'
 
 const UserProfile = () => {
-  const { id } = useParams()
-  console.log('userId: ', id)
+  const params = useParams()
+  console.log("params:", params)
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.manageUsers.details)
   console.log("userDetail: ", user)
 
   useEffect(() => {
-    dispatch(getUserByIdAction('636c0a5c1e78d75d8edfae96'))
-  }, [dispatch])
+    dispatch(getUserByIdAction(params.userId))
+  }, [dispatch, params.userId])
 
   //traer el author de los posts
 
