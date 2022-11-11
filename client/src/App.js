@@ -7,6 +7,8 @@ import Page404 from "./components/Page404";
 import OngForm from "./components/OngForm/OngForm";
 import UserForm from "./components/UserForm/UserFom";
 import UserProfile from "./components/UserProfile/UserProfile";
+import MercadoPago from "./components/MercadoPago/MercadoPago";
+import PostDetail from "./components/PostDetail/index";
 import About from "./components/About/About";
 
 function App() {
@@ -21,8 +23,10 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route exact path="/home" element={<Home />} />
         <Route path="/:OngName/:post_id" element="" />
+        <Route path="/mp" element={<MercadoPago />} />
         <Route path= "/:id/profile" element={<OngDetail/>}/>
-        <Route path='/users/:userId' element={<UserProfile/>}/>
+        <Route exact path='/users/:userId' element={<UserProfile/>}/>
+        <Route path="/posts/:postId" element={<PostDetail />} />
       </Routes>
     </div>
   );
