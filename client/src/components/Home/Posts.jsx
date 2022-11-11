@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { getPostsAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
 import CardPost from './CardPost'
 import PostFilters from './PostFilters'
@@ -7,6 +8,7 @@ import PostFilters from './PostFilters'
 const Posts = () => {
   const dispatch = useDispatch()
   const posts = useSelector(state => state.managePosts.posts);
+  console.log(posts)
 
   useEffect(() => {
     dispatch(getPostsAction())
@@ -23,12 +25,14 @@ const Posts = () => {
             return (
               <CardPost
                 key={post.id}
-                image={post.author.image}
+                id={post.id}
+                image={post.author.profilePic}
                 author={post.author.name}
                 content={post.content}
                 likes={post.likes}
                 createdAt={post.createdAt}
                 comments={post.Comment.length}
+                authorId={post.authorId}
               />
             )
           })
