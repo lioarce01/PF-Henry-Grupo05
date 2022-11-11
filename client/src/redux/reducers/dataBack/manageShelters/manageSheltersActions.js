@@ -95,10 +95,10 @@ export const deleteSheltersAction = (id) => async dispatch => {
     }
 }
 
-export const sortSheltersAction = (order, type) => async dispatch => {
+export const sortSheltersAction = (body) => async dispatch => {
     dispatch(toggleLoading())
     try {
-        const {data} = await axios.get(`/shelters/sample?order=${order}&type=${type}`)
+        const {data} = await axios.get(`/shelters/filter-sort`, body)
         dispatch(sortShelters(data))
     } catch (err) {
         console.log(err)

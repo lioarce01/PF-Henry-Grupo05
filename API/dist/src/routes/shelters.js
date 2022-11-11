@@ -52,17 +52,18 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
-router.get('/sample', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // here we are able to expand this further, adding
     // more ordering criteria and even filters.
-    const { order, type } = req.query;
+    const { order, orderType, group, groupType } = req.body;
     try {
-        if (order && type) {
+        if ((order || group) && (orderType || groupType)) {
             const shelters = yield prisma.shelter.findMany({
+                where: { [group]: groupType },
                 include: { followers: true },
-                orderBy: order === "followers" ? { followers: { _count: type } } : { [order]: type }
+                orderBy: order === "followers" ? { followers: { _count: orderType } } : { [order]: orderType }
             });
-            res.status(200).send(shelters);
+            shelters.length ? res.status(200).send(shelters) : res.status(404).send("No shelters found.");
         }
         else
             res.status(404).send('ERROR: Missing parameters.');
