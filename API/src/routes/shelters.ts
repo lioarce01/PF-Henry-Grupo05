@@ -4,7 +4,8 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-type ReqGet = { query: { name: string } };
+type ReqGet = { 
+    query: { name: string } };
 
 // get all shelters or get some by name
 router.get('/', async(req: ReqGet, res) => {
@@ -12,8 +13,16 @@ router.get('/', async(req: ReqGet, res) => {
         const { name } = req.query;
 
         const shelters = await prisma.shelter.findMany({
-            where: { name: { contains: name } },
-            include: { followers: true, posts: true }
+            where: { 
+                name: {
+                    contains: name || '',
+                    mode: 'insensitive'
+                },
+            },
+            include: { 
+                followers: true, 
+                posts: true
+            }
         })
 
         if (shelters.length) res.status(200).send(shelters);

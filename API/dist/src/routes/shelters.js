@@ -21,8 +21,16 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.query;
         const shelters = yield prisma.shelter.findMany({
-            where: { name: { contains: name } },
-            include: { followers: true, posts: true }
+            where: {
+                name: {
+                    contains: name || '',
+                    mode: 'insensitive'
+                },
+            },
+            include: {
+                followers: true,
+                posts: true
+            }
         });
         if (shelters.length)
             res.status(200).send(shelters);

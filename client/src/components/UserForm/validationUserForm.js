@@ -5,6 +5,6 @@ const re = /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-
 export const userSchema = yup.object().shape({
     name: yup.string().required('Required Name'),
     email: yup.string().email('Please enter a valid Email').required('Required Email'),
-    profilePic: yup.string().matches(imgUrl,'please enter a valid URL'),
+    profilePic: yup.string().matches(imgUrl,'Please enter a valid URL'),
    
 })
