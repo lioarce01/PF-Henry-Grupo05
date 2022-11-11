@@ -115,6 +115,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
+                animals: bodyShelter.animals,
                 city: bodyShelter.city,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
