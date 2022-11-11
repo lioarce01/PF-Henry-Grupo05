@@ -9,14 +9,14 @@ const ONGCard = ({image, name, budget, followers, description, id}) => {
   }
   return (
     <div className='flex flex-col items-center justify-center m-4'>
-      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md">
-          <a href="/">
+      <div className="max-w-[360px] transition duration-300 bg-white border border-gray-200 rounded-lg shadow-md">
+          <div>
               <img className="rounded-t-lg" src={image} alt="ONG" />
-          </a>
-          <div className="flex flex-col items-center justify-center p-3">
-              <Link to='/:ongId'>
+          </div>
+            <div className="flex flex-col items-center justify-center p-3">
+                <div>
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{name}</h5>
-              </Link>
+                </div>
                 <div className='flex flex-col justify-start w-full'>
                   <p className="mb-2 font-normal text-gray-700">{description}</p>
                   <p className='font-bold'>Budget: <span className='font-semibold'>${budget}</span></p>
