@@ -3,9 +3,17 @@ import { Link } from 'react-router-dom'
 import {BiCommentDetail} from 'react-icons/bi'
 import {AiFillHeart} from 'react-icons/ai'
 import {getTimeAgo} from '../../utils'
+import {AiOutlineHeart} from 'react-icons/ai'
 
 const CardPost = ({image, author, content, likes, createdAt, comments}) => {
+  const [like, setLike] = React.useState(false)
 
+  const toggleLike = () => {
+    setLike(!like)
+    likes = like ? likes - 1 : likes + 1
+    console.log(likes)
+  }
+  
   if(!image) {
     image = 'https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY'
   }
@@ -28,13 +36,22 @@ const CardPost = ({image, author, content, likes, createdAt, comments}) => {
           {content}
         </p>
         <div className="flex items-center mt-4">
-          <div className="flex mr-2 text-sm text-gray-700">
-            <AiFillHeart/>
-              <span>{likes}</span>
+          <div className="flex mr-4 text-sm text-gray-700">
+            {
+                like
+                ? <button className='flex flex-row' onClick={toggleLike}>
+                    <AiFillHeart className='w-5 h-5'/>
+                    <span>{likes}</span>
+                  </button>
+                : <button className='flex flex-row' onClick={toggleLike}>
+                    <AiOutlineHeart className='w-5 h-5'/>
+                    <span>{likes}</span>
+                  </button>
+              }
             </div>
             <div className="flex mr-2 text-sm text-gray-700">
-              <Link to='/post/:postId' className='flex flex-row'>
-                <BiCommentDetail/>
+              <Link to='/post/:postId' className='flex flex-row pr-4'>
+                <BiCommentDetail className='w-5 h-5'/>
                 <span>{comments}</span>
               </Link>
             </div>
