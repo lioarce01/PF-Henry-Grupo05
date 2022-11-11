@@ -66,6 +66,11 @@ model Comment {
   postId   String @db.ObjectId
 }
 
+model Payment {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  paymentId String
+}
+
 enum Role {
   User
   Admin
