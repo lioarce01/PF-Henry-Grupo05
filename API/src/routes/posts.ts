@@ -34,6 +34,7 @@ type ReqSampling = {
     } 
 };
 
+
 router.get('/sort', async(req : ReqSampling, res) => {
     const { order, type } = req.query;
 
@@ -113,6 +114,29 @@ router.put('/', async(req, res) =>{
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.")
         console.log(error);   
+    }
+});
+
+router.put('/updateLikes', async(req,res)=>{
+    try {
+        interface updateInterface {
+            id: string ,  
+            likes: number
+        }
+        const bodyPost: updateInterface = req.body;
+        const updatedPost = await prisma.post.update({
+            where:{
+                id: bodyPost.id,
+            },
+            data:{
+                likes: bodyPost.likes
+            }
+        })
+        res.status(200).send('Post likes updated sucessfully.')
+        
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error); 
     }
 })
 

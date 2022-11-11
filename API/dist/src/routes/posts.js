@@ -100,6 +100,24 @@ router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 }));
+router.put('/updateLikes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const bodyPost = req.body;
+        const updatedPost = yield prisma.post.update({
+            where: {
+                id: bodyPost.id,
+            },
+            data: {
+                likes: bodyPost.likes
+            }
+        });
+        res.status(200).send('Post likes updated sucessfully.');
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
 // route to get posts by id
 router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
