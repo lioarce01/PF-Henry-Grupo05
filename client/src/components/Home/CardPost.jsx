@@ -35,9 +35,11 @@ const CardPost = ({image, author, content, likes, createdAt, comments, id, autho
           <small className="px-2 py-1 text-sm text-gray-700 rounded-md bg-slate-200">{getTimeAgo(createdAt)}</small>
         </div>
           </Link>
+          <Link to={`/posts/${id}`}>
         <p className="text-sm text-left text-gray-700">
           {content}
         </p>
+        </Link>
         <div className="flex items-center mt-4">
           <div className="flex mr-4 text-sm text-gray-700">
             {
