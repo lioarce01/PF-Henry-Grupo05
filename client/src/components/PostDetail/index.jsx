@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import AddComment from "./AddComment";
 import Comment from "./Comment";
 
-import { getPostsByIdAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
+import { getPostsByIdAction, updatePostAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
 import { selectPost } from "../../redux/reducers/dataBack/managePosts/managePostsSlice";
 import { getTimeAgo } from "../../utils";
 
