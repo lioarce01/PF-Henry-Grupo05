@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import AddComment from "./AddComment";
 import Comment from "./Comment";
 
-import { getPostsByIdAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
+import { getPostsByIdAction, updatePostAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
 import { selectPost } from "../../redux/reducers/dataBack/managePosts/managePostsSlice";
 import { getTimeAgo } from "../../utils";
 
@@ -14,11 +14,30 @@ const Post = () => {
   const { details } = useSelector(selectPost);
   const dispatch = useDispatch();
   const {postId} = useParams()
+  const [toogle, setToogle] = useState(true)
   console.log("details: ", details);
 
   useEffect(() => {
     dispatch(getPostsByIdAction(postId));
   }, [dispatch, postId]);
+
+  const [input, setInput] = useState({
+    id:postId,
+    content: details.content,
+    
+  })
+
+  const inputHandler = (e)=>{
+    e.preventDefault();
+    setInput({...input, [e.target.name]: e.target.value});
+}
+
+  const editHandler = ()=>{
+    setToogle(!toogle);
+}
+const saveHandler = ()=>{
+  dispatch(updatePostAction(input))
+}
 
   if (!details || Object.keys(details).length === 0) return;
 
@@ -56,7 +75,11 @@ const Post = () => {
         )
       }
 
-      <h2 className="mb-1 text-xl font-semibold">{details.content}</h2>
+      <textarea className="mb-1 text-xl font-semibold h-28 w-full resize-none"
+       type="text" name="content" onChange={inputHandler} defaultValue={details.content}
+       disabled={toogle} value={input.description} rows='1' cols='1'/>
+      <button onClick={editHandler}>Edit</button>
+      {!toogle && <button onClick={saveHandler}>Save</button>}
 
       <div className="flex flex-wrap justify-between">
         <div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
