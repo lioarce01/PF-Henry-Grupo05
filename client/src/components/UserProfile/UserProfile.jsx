@@ -19,11 +19,7 @@ const UserProfile = () => {
     dispatch(getUserByIdAction(params.userId))
   }, [dispatch, params.userId])
 
-  //traer el author de los posts
-
-  //detructuring of user.following 
   const { following } = user
-  console.log('following: ', following)
 
   return (
     <div className='bg-slate-300'>
@@ -52,13 +48,14 @@ const UserProfile = () => {
           <div className='mt-2'>
           {
             user?.posts ? user.posts.map(post => {
+              console.log('user.post: ',user.posts)
               return (
                 <CardPost
                   key={post.id}
                   id={post.id}
                   author={user.name}
                   content={post.content}
-                  image={post.image}
+                  image={user.profilePic}
                   createdAt={post.createdAt}
                   likes={post.likes}
                   comments={post.comments}
