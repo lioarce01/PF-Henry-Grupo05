@@ -1,22 +1,18 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from '@headlessui/react'
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiOutlineDown } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteCommentAction } from "../../redux/reducers/dataBack/manageComments/manageCommentsActions";
 import { getPostsByIdAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
+import { Menu } from '@headlessui/react'
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 const Comment = ({ content, author, id, postId}) => {
-  let [isOpen, setIsOpen] = useState(false)
   const dispatch = useDispatch();
-
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  function openModal() {
-    setIsOpen(true)
-  }
   
   const deleteComment = () => {
     dispatch(deleteCommentAction(id))
@@ -43,7 +39,7 @@ const Comment = ({ content, author, id, postId}) => {
             />
             <div className="w-full">
               <div className="flex flex-row items-start justify-between w-full mb-4">
-                <div> 
+                <div className="flex flex-col"> 
                   <h2 className="-mt-1 text-lg font-semibold text-gray-900">
                     <Link className="object-cover w-12 h-12 mr-4 rounded-full">
                       {author.name}
@@ -51,8 +47,65 @@ const Comment = ({ content, author, id, postId}) => {
                   </h2>
                   <small className="text-sm text-gray-700">{author.role}</small>
                 </div>
-             </div>
-                <p className="text-sm text-left text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit ut odit hic! Id, rerum quas exercitationem hic perferendis neque minus minima eos aliquid esse suscipit incidunt vero facere, optio nam.</p>
+                <div className="">
+                <Menu as="div" className="relative z-50 outline-none">
+                    <div className="flex items-center justify-center">
+                      <Menu.Button className="inline-flex justify-center w-full px-4 py-1 text-sm font-medium text-gray-700">
+                        <p className="p-1 px-2 text-xl font-bold text-black transition duration-300 rounded-full hover:bg-gray-200">...</p>
+                      </Menu.Button>
+                    </div>
+
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="px-1 py-1 rounded-sm">
+                            <Menu.Item>
+                              {({ active }) => (
+                                <button
+                                  type="submit"
+                                  className={classNames(
+                                    active ? 'bg-slate-200 text-gray-900' : 'text-gray-700',
+                                    'block w-full px-4 py-2 text-left text-sm'
+                                  )}
+                                >
+                                  <div className="flex flex-row items-start justify-start">
+                                    <span><AiFillEdit className="mx-1 text-xl"/></span>
+                                    <p className="mx-1">Edit</p>
+                                  </div>
+                                </button>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <button
+                                  type="submit"
+                                  onClick={deleteComment}
+                                  className={classNames(
+                                    active ? 'bg-red-600 text-white' : 'text-gray-700',
+                                    'block w-full px-4 py-2 text-left text-sm'
+                                  )}
+                                >
+                                  <div className="flex flex-row items-start justify-start">
+                                    <span><AiFillDelete className="mx-1 text-xl"/></span>
+                                    <p>Delete</p>
+                                  </div>
+                                </button>
+                              )}
+                            </Menu.Item>
+                        </div>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
+              </div>
+                <p className="text-sm text-left text-gray-700">{content}</p>
             </div>
           </div>
         </div>
