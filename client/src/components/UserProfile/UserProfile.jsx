@@ -8,8 +8,8 @@ import CardPost from '../Home/CardPost'
 import ONGCard from '../Home/ONGCard'
 
 const UserProfile = () => {
-  const { userId } = useParams()
-  console.log('userId: ', userId)
+  const { id } = useParams()
+  console.log('userId: ', id)
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.manageUsers.details)
@@ -71,7 +71,7 @@ const UserProfile = () => {
         <h1 className='py-4 text-3xl font-bold text-black'>
           User Shelters Following
         </h1>
-        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] h-auto max-h-[1000px] overflow-y-scroll py-2 px-4 my-4 bg-slate-200 rounded-md'>
+        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] h-auto max-h-[1000px] py-2 px-4 my-4 bg-slate-200 rounded-md'>
           <div className='flex flex-col mt-2 overflow-y-scroll '>
           {
             following ? following.map(ong => {
