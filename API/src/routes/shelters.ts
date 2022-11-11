@@ -1,5 +1,6 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
+import { group } from 'console';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -51,15 +52,8 @@ router.get('/topFive', async(req, res)=>{
      }
 });
 
-// order (or filter, in the future) by what is in this Type
-type ReqSampling = { 
-    query: { 
-        order: 'name' | 'budget' | 'followers', 
-        type: 'asc' | 'desc', 
-    } 
-};
 
-router.get('/sample', async(req : ReqSampling, res) => {
+/* router.get('/sample', async(req : ReqSampling, res) => {
     // here we are able to expand this further, adding
     // more ordering criteria and even filters.
     const { order, type } = req.query;
@@ -71,10 +65,42 @@ router.get('/sample', async(req : ReqSampling, res) => {
 
                 include: { followers: true },
                 orderBy: order === "followers" ? {followers: {_count: type}} : { [order]: type }
-
             })
 
             res.status(200).send(shelters);
+
+        } else res.status(404).send('ERROR: Missing parameters.');
+    } catch (error) {
+        res.status(400).send('ERROR: Invalid parameter.');
+        console.log(error);
+    }
+}) */
+
+// order (or filter, in the future) by what is in this Type
+type ReqSampling = { 
+    body: { 
+        group: 'country' | 'city' | 'animals'
+        groupType: string
+        order: 'name' | 'budget' | 'followers',
+        orderType: 'asc' | 'desc',
+    } 
+};
+
+router.get('/filter-sort', async(req : ReqSampling, res) => {
+    // here we are able to expand this further, adding
+    // more ordering criteria and even filters.
+    const { order, orderType, group, groupType } = req.body;
+
+    try {
+        if ((order || group) && (orderType || groupType)) {
+            
+            const shelters = await prisma.shelter.findMany({
+                where: { [group]: groupType },
+                include: { followers: true },
+                orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
+            })
+
+            shelters.length ? res.status(200).send(shelters) : res.status(404).send("No shelters found.")
 
         } else res.status(404).send('ERROR: Missing parameters.');
     } catch (error) {

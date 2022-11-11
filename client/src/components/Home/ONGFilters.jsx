@@ -6,15 +6,20 @@ const ONGFilters = () => {
 
   const dispatch = useDispatch()
 
-  const handleSort = (e) => {
+  const handleSort = e => {
     e.preventDefault()
-    let order = e.target.value.split(",")[0]
-    let type = e.target.value.split(",")[1]
-    dispatch(sortSheltersAction(order,type))
+
+    const ord = {
+      order: e.target.value.split(",")[0],
+      orderType: e.target.value.split(",")[1]
+    }
+
+    dispatch(sortSheltersAction(ord))
   }
 
   return (
     <div>
+      { /* select box: ORDENAMIENTO */ }
       <select onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
         <option value="DEFAULT" disabled>Sort</option>
         <option value="budget,desc">Budget +</option>
