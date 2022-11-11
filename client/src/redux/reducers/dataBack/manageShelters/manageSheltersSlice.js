@@ -16,7 +16,7 @@ export const manageSheltersSlice = createSlice({
         },
 
         getSheltersByName: (state, action) => {
-            state.shelters = action.payload;
+            state.shelters = action.payload
         },
 
         getSheltersById: (state, action) => {
