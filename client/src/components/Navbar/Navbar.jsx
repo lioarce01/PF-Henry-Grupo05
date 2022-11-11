@@ -64,7 +64,8 @@ const Navbar = () => {
               <form method="POST" action="#">
                 <Menu.Item>
                   {({ active }) => (
-                    <button
+                    <Link
+                      to='/'
                       type="submit"
                       className={classNames(
                         active ? 'bg-slate-200 text-gray-900' : 'text-gray-700',
@@ -72,7 +73,7 @@ const Navbar = () => {
                       )}
                     >
                       Sign out
-                    </button>
+                    </Link>
                   )}
                 </Menu.Item>
               </form>
