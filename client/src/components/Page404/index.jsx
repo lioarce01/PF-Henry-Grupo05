@@ -1,5 +1,4 @@
-import React from "react";
-import Button from "../Landing/Button";
+import { Link } from 'react-router-dom'
 
 const Page404 = () => {
   return (
@@ -17,7 +16,10 @@ const Page404 = () => {
           <p className="mt-4 mb-8 dark:text-gray-400 text-gray-500">
             But dont worry, you can find plenty of other things on our homepage.
           </p>
-          <Button name={'back to homepage'} link="/home"/>
+
+          <Link to="/home">
+            <button className="">back to homepage</button>
+          </Link>
         </div>
         
       </div>

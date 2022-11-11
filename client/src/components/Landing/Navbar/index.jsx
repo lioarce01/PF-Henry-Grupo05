@@ -1,17 +1,26 @@
-import React from "react";
-import Button from "../Button";
+import logo from './logo.png'
+import './nav-index.css'
 
 const Navbar = () => {
-  const LOGO = "https://cdn-icons-png.flaticon.com/512/1152/1152755.png"
+
   return (
-    <nav className="flex justify-between px-10 py-5 items-center absolute w-full">
-      <img src={LOGO} className="mr-3 h-6 sm:h-9" alt="" />
+    <nav className="flex justify-between px-10 py-5 items-center w-full">
+
+      <div className="flex ml-5">
+        <h1 className="flex flex-row font-bold lg:text-[2rem] text-[#3D190C]">Paws</h1>
+        <h1 className="flex flex-row font-bold lg:text-[2rem] text-[#CA7C62]">Founding</h1>
+      </div>
+
+
       <div className="flex items-center">
-        <div className="flex items-center gap-x-6">
-          <a  className=" font-bold  text-gray-500 hover:bg-gray-200 rounded-md px-10 py-1  " href="#about">About Us</a>
-          <Button name="Login" link="/home"/>
+        <div className="flex items-center mr-20">
+          <a className="font-bold mx-7 text-[#3D190C] link-underline link-underline-black lg:text-[1.2rem]" href="/about">About Us</a>
+          <a className="font-bold mx-7 text-[#3D190C] link-underline link-underline-black lg:text-[1.2rem]" href="/#">Contact</a>
         </div>
-        
+      </div>
+
+      <div>
+        <img className="w-12 h-12" src={logo} alt="LOGO" />
       </div>
     </nav>
   );

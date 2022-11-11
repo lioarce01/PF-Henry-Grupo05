@@ -37,9 +37,11 @@ router.get('/', async(req: ReqGet, res) => {
 
 // get top five shelters by budget
 router.get('/topFive', async(req, res)=>{
+    // bauti: la ruta se llama topFive, pero ahora la hago
+    // topSix para que se vea mejor el Carousel de landing
     try {
         const shelters = await prisma.shelter.findMany({
-            take: 5,
+            take: 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
         })

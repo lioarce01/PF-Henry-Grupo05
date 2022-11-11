@@ -1,45 +1,44 @@
-import React from "react";
-import Button from "../Button";
+import { Link } from 'react-router-dom'
+import image from './daschshund.png'
+import deco from './deco.png'
 
 const Introduction = () => {
 
-  const title = "Paws Founding"
-  const image = "https://pngimg.com/uploads/dog/dog_PNG50348.png"
-
   return (
     <section>
-      <div className="px-4 py-8 mx-auto max-w-max sm:px-6 md:px-12 lg:px-24 lg:py-16">
-        <div className="flex flex-wrap items-center mx-auto max-w-7xl 2xl:gap-x-28">
-        <div className="flex flex-col items-start mt-12 mb-16 text-left lg:flex-grow lg:w-1/2 lg:pl-6 xl:pl-24 md:mb-0 xl:mt-0">
-            <h1 className="mb-8 text-4xl font-bold leading-none tracking-tighter text-[#3D190C] md:text-7xl lg:text-5xl">
-              {title}
-            </h1>
-            <p className="mb-8 text-base leading-relaxed text-left text-[#3D190C]">
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            </p>
-            <div className="mt-0 lg:mt-6 max-w-7xl sm:flex">
-              <div className="mt-3 rounded-lg sm:mt-0">
-                <Button name="Explore" link="/home" />
-              </div>
-            </div>
-          </div>
-          <div className="w-full lg:max-w-lg lg:w-1/2 rounded-xl">
-            <div>
-              <div className="relative w-full max-w-lg">
-                <div className="absolute top-0 rounded-full bg-violet-300 -left-4 w-72 h-72 mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div className="ml-1/3max-w-max">
+        <div className="flex flex-row items-center mx-auto max-w-7xl 2xl:gap-x-28">
 
-                <div className="absolute rounded-full bg-fuchsia-300 -bottom-24 right-20 w-72 h-72 mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-                <div className="relative">
+          <div className="lg:max-w-lg relative top-[-90px]">
+            <div>
+              <div className="">
+                <div className="">
                   <img
-                    className="object-cover object-center mx-auto rounded-lg "
-                    alt="hero"
+                    alt="Dachshund"
                     src={image}
                   />
                 </div>
               </div>
             </div>
           </div>
-          
+
+          <div className="relative top-[-100px] flex flex-col ml-[-60px]">
+            <h1 className="mb-8 text-4xl font-[500] text-[#3D190C] md:text-7xl lg:text-[4.5rem] lg:w-[600px]">
+              You can't buy love, but you can <strong className="font-[800]">rescue</strong> it!
+            </h1>
+            <div className="mt-0 lg:mt-6 max-w-7xl sm:flex">
+              <div className="mt-3 rounded-lg sm:mt-0">
+                <Link to="/home">
+                  <button className="bg-[#CA7C62] text-white h-[60px] w-[200px] rounded-lg font-[500] hover:bg-[#7c4737] duration-500 active:bg-[#4d2c22]">Donate today</button>
+                </Link>
+                <button className="bg-none h-[60px] w-[200px] ml-5 rounded-xl border-2 border-[#CA7C62] text-[#3D190C] font-[700] hover:bg-[#ca7c62] hover:text-white duration-500 active:bg-[#7c4737]">Learn more</button>
+              </div>
+            </div>
+          </div>
+
+          <div className='absolute bottom-[500px] left-[1850px]'>
+            <img className="h-[75px] w-[25px]" src={deco} alt="puntos"/>
+          </div>
         </div>
       </div>
     </section>
