@@ -19,7 +19,7 @@ useEffect (()=>{
 dispatch(getSheltersByIdAction(id))
 // Agregar 
 },[dispatch])
-console.log(details)
+console.log('details: ', details)
 
 //objeto hardcodeado para ir mostrando algo hasta usar la db
 const [input, setInput] = useState({
@@ -55,9 +55,9 @@ return (
     <div>
         <NavBar/>
         
-    <div className=' w-full h-full bg-slate-300 flex flex-row justify-end pt-20'>
-        {details.posts?.length >0 && <div className="fixed left-0 w-60 ml-5 h-fit border border-red-50 flex flex-col items-center">
-            <div className="w-fit h-fit border border-red-50">
+    <div className='flex flex-row justify-end w-full h-full pt-20 bg-slate-300'>
+        {details.posts?.length >0 && <div className="fixed left-0 flex flex-col items-center ml-5 border w-60 h-fit border-red-50">
+            <div className="border w-fit h-fit border-red-50">
                 <img src={details.profilePic} alt="imagen ONG ejemplo" />
             </div>
             <div className="mt-1">
@@ -82,8 +82,8 @@ return (
             <button>Suscribe</button>
         </div>}
         <div>
-        <div className="mr-16 flex flex-col items-center">
-            <textarea className="h-60 w-full resize-none"
+        <div className="flex flex-col items-center mr-16">
+            <textarea className="w-full resize-none h-60"
             type="text" name="description" onChange={inputHandler} defaultValue={details.description}
             disabled={toogle2} value={input.description} rows='1' cols='1'/>
             <button onClick={editHandler2}>Edit</button>
@@ -100,10 +100,13 @@ return (
             return (
               <CardPost
                 key={post.id}
-                image={post.image}
+                id={post.id}
+                author={post.author.name}
+                image={post.author.profilePic}
                 content={post.content}
                 likes={post.likes}
                 createdAt={post.createdAt}
+                comments={post.Comment.length}
               />
             )
           })

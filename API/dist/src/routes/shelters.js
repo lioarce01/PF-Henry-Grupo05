@@ -87,7 +87,16 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const { id } = req.params;
         const shelter = yield prisma.shelter.findUnique({
             where: { id },
-            include: { followers: true, author: true, posts: true }
+            include: {
+                followers: true,
+                author: true,
+                posts: {
+                    include: {
+                        author: true,
+                        Comment: true
+                    }
+                }
+            }
         });
         shelter ? res.status(200).send(shelter) : res.status(404).send("ERROR: Could not find shelter.");
     }

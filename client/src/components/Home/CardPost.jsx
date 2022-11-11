@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {BiCommentDetail} from 'react-icons/bi'
 import {AiFillHeart} from 'react-icons/ai'
 import {getTimeAgo} from '../../utils'
 import {AiOutlineHeart} from 'react-icons/ai'
+import { useEffect } from 'react'
 
 const CardPost = ({image, author, content, likes, createdAt, comments, id, authorId}) => {
-  const [like, setLike] = React.useState(false)
+  const [like, setLike] = useState(false)
 
   const toggleLike = () => {
     setLike(!like)
     likes = like ? likes - 1 : likes + 1
     console.log(likes)
   }
+
+  useEffect(() => {
+    setLike(like)
+  }, [like])
   
   if(!image) {
     image = 'https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY'
