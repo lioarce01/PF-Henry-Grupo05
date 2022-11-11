@@ -26,7 +26,7 @@ const AddComment = ({ postId }) => {
     <form onSubmit={onSubmit} className="flex justify-center">
       <div className="mb-3 w-[100%] md:w-[80%] xl:w-[60%]">
         <h4
-          for="exampleFormControlTextarea1"
+          htmlFor="exampleFormControlTextarea1"
           className="inline-block mb-2 text-gray-700"
         >
           Add comment
@@ -53,7 +53,7 @@ const AddComment = ({ postId }) => {
           rows="3"
         ></textarea>
         <div className="flex items-end justify-end">
-          <button className="border border-gray-400 px-2 py-1 rounded mt-1 hover:bg-gray-300">
+          <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300">
             Add comment
           </button>
         </div>

@@ -8,16 +8,16 @@ import CardPost from '../Home/CardPost'
 import ONGCard from '../Home/ONGCard'
 
 const UserProfile = () => {
-  const { id } = useParams()
-  console.log('userId: ', id)
+  const params = useParams()
+  console.log("params:", params)
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.manageUsers.details)
   console.log("userDetail: ", user)
 
   useEffect(() => {
-    dispatch(getUserByIdAction('636c0a5c1e78d75d8edfae96'))
-  }, [dispatch])
+    dispatch(getUserByIdAction(params.userId))
+  }, [dispatch, params.userId])
 
   //traer el author de los posts
 
@@ -34,7 +34,7 @@ const UserProfile = () => {
         </h1>
         <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] py-4 px-4 mt-2 bg-slate-200 rounded-md md:flex-row'>
           <div className='flex justify-center'>
-            <img src="https://i.pravatar.cc/150?img=4" alt="user" className='border border-4 border-white rounded-full'/>
+            <img src={user.profilePic} alt="user" className='border-4 border-white rounded-full w-36 h-36'/>
           </div>
           <div className='mt-2'>
             <div className='flex flex-col items-center'>

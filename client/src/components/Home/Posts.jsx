@@ -23,12 +23,14 @@ const Posts = () => {
             return (
               <CardPost
                 key={post.id}
+                id={post.id}
                 image={post.author.image}
                 author={post.author.name}
                 content={post.content}
                 likes={post.likes}
                 createdAt={post.createdAt}
                 comments={post.Comment.length}
+                authorId={post.authorId}
               />
             )
           })
