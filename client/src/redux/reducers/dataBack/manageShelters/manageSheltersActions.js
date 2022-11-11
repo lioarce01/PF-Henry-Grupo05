@@ -70,10 +70,11 @@ export const createSheltersAction = (shelter) => async dispatch => {
 }
 
 
-export const updateSheltersAction = (shelters) => async dispatch => {
+export const updateSheltersAction = (shelters, id) => async dispatch => {
     dispatch(toggleLoading())
     try {
-        const res = await axios.put('/shelters', shelters);
+        const res = await axios.put('/shelters/'+id, shelters);
+        console.log(res.data)
         dispatch(updateShelters(res.data));
     } catch (err) {
         dispatch(updateShelters(err.response.data));

@@ -19,7 +19,7 @@ function App() {
         <Route path="/Login" element={<UserForm />} />
         <Route exact path="/home" element={<Home />} />
         <Route path="/:OngName/:post_id" element="" />
-        <Route path= "/:OngId/profile" element={<OngDetail/>}/>
+        <Route path= "/:id/profile" element={<OngDetail/>}/>
         <Route path='/users/:userId' element={<UserProfile/>}/>
       </Routes>
     </div>

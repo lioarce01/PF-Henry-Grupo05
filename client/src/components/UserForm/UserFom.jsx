@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import * as yup from 'yup';
 import {userSchema} from './validationUserForm';
 import {useFormik} from 'formik';
@@ -8,10 +9,12 @@ import {createUserAction} from "../../redux/reducers/dataBack/manageUsers/manage
 
 const UserForm = () => {
     const dispatch = useDispatch();
-    const onSubmit = () =>{
+    const navigate = useNavigate();
+    const onSubmit = async () =>{
       console.log('submitted')
       console.log(values);
-      dispatch(createUserAction(values)).then(res=> alert('User Created')).cath(alert('Error'))
+     await dispatch(createUserAction(values)).then(res => alert('User Created')).catch(()=> alert('error'));
+     navigate('/home')
     }
     const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
       initialValues:{
@@ -22,8 +25,6 @@ const UserForm = () => {
       validationSchema: userSchema,
       onSubmit,
     })
-    console.log({errors})
-
   return (
     <div className='w-full  min-h-screen bg-[#EEEEE6] h-full flex flex-col justify-between content-center'>
         <div>
