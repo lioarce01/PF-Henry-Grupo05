@@ -22,67 +22,88 @@ const UserProfile = () => {
   const { following } = user
 
   return (
-    <div className='bg-slate-300'>
+    <div className='bg-[#FAF2E7]'>
       <Navbar/>
       <div className='flex flex-col items-center h-full min-h-screen pt-16'>
-        <h1 className='text-4xl font-bold text-black'>
+        <h1 className='my-5 text-4xl font-bold text-[#462312]'>
           User Dashboard
         </h1>
-        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] py-4 px-4 mt-2 bg-slate-200 rounded-md md:flex-row'>
+        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] py-4 px-4 mt-2 bg-[#fffcf7] rounded-md md:flex-row'>
           <div className='flex justify-center'>
             <img src={user.profilePic} alt="user" className='border-4 border-white rounded-full w-36 h-36'/>
           </div>
           <div className='mt-2'>
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center sm:items-start sm:pl-5'>
               <p className='py-2 text-xl font-bold'>{user.name}</p>
             </div>
             <p className='py-2 md:pl-5'>Email: {user.email}</p>
             <p className='py-2 md:pl-5'>Role: {user.role}</p>
-            <button className='inline-block px-2 py-1 text-white bg-black border-2 border-black rounded-md md:ml-4'>Update Profile</button>
+            <button className='inline-block px-2 py-1 font-semibold text-[#462312] bg-[#FAF2E7] border-2 border-[#FAF2E7] hover:bg-[#462312] transition duration-300 hover:text-[#fffcf7] rounded-md md:ml-4'>Update Profile</button>
           </div>
         </div>
-        <h1 className='py-2 text-4xl font-bold text-black'>
+        <h1 className='py-2 text-4xl font-bold text-[#462312]'>
           User Posts
         </h1>
-        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] max-h-[700px] overflow-y-scroll h-auto py-2 px-4 my-4 bg-slate-200 rounded-md justify-center items-center'>
+        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] max-h-[700px] overflow-y-scroll h-auto py-2 px-4 my-4 bg-[#fffcf7] rounded-md justify-center items-center'>
           <div className='mt-2'>
-          {
-            user?.posts ? user.posts.map(post => {
-              console.log('user.post: ',user.posts)
-              return (
-                <CardPost
-                  key={post.id}
-                  id={post.id}
-                  author={user.name}
-                  content={post.content}
-                  image={user.profilePic}
-                  createdAt={post.createdAt}
-                  likes={post.likes}
-                  comments={post.comments}
-                />
-              )
-            }) : <h1>Este usuario no tiene posts</h1>
-          }
+            {
+              user.posts?.length < 1 ? (
+                <div className="my-10">
+                  <h1 className='text-xl font-bold text-[#462312]'>You have no posts!</h1>
+               </div>
+              ) : (
+                user.posts === 0 ? (
+                    <div className="my-10">
+                      <h1 className='text-xl font-bold text-[#462312]'>You have no posts!</h1>
+                    </div>
+                    ) : (
+                      user?.posts ? user.posts.map(post => {
+                        console.log('user.post: ',user.posts)
+                        return (
+                          <CardPost
+                            key={post.id}
+                            id={post.id}
+                            author={user.name}
+                            content={post.content}
+                            image={user.profilePic}
+                            createdAt={post.createdAt}
+                            likes={post.likes}
+                            comments={post.comments}
+                          />
+                        )
+                    }) : null
+                  )
+                )
+              }
           </div>
         </div>
-        <h1 className='py-4 text-3xl font-bold text-black'>
+        <h1 className='py-4 text-3xl font-bold text-[#462312]'>
           User Shelters Following
         </h1>
-        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] h-auto max-h-[1000px] py-2 px-4 my-4 bg-slate-200 rounded-md'>
+        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] h-auto max-h-[1000px] py-2 px-4 my-4 bg-[#fffcf7] rounded-md'>
           <div className='flex flex-col mt-2 overflow-y-scroll '>
           {
-            following ? following.map(ong => {
-              return (
-                <ONGCard
-                  key={ong.id}
-                  id={ong.id}
-                  name={ong.name}
-                  description={ong.description}
-                  budget={ong.budget}
-                  followers={ong.userFollowers.length}
-                />
-              )
-            }) : <h1>Este usuario no sigue a ninguna ONG</h1>
+            following?.length < 1 && (
+              <div className="my-10">
+                <h1 className='text-xl font-bold text-[#462312]'>You don't have any shelter in your list!</h1>
+              </div>
+            )
+          }
+          {
+            following?.length > 0 && (
+              following ? following.map(ong => {
+                  return (
+                    <ONGCard
+                      key={ong.id}
+                      id={ong.id}
+                      name={ong.name}
+                      description={ong.description}
+                      goal={ong.goal}
+                      followers={ong.userFollowers.length}
+                    />
+                  )
+                }) : null
+            )
           }
           </div>
         </div>

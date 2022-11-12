@@ -165,9 +165,11 @@ router.get('/:id', async(req, res) => {
 
 // route to delete posts by id
 router.delete('/:id', async(req,res) => {
+    let {id} = req.params 
+    
     try {
         await prisma.post.delete({
-            where: { id: req.params.id }
+            where: { id }
         });
         
         res.status(200).send('Post deleted successfully.')

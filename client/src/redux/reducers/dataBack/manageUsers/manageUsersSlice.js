@@ -32,12 +32,15 @@ export const manageUsersSlice = createSlice({
 
         deleteUser: (state, action) => {
             state.msg = action.payload;
+        },
+        getFollowing: (state, action) => {
+            state.users = action.payload;
         }
     }
 });
 
 // action creators are generated for each case reducer function
-export const { getUsers, getUserByName, getUserById, createUser, updateUser, deleteUser } = manageUsersSlice.actions;
+export const { getUsers, getUserByName, getUserById, createUser, updateUser, deleteUser, getFollowing } = manageUsersSlice.actions;
 export const selectUser = state => state.manageUsersSlice
 
 export default manageUsersSlice.reducer;

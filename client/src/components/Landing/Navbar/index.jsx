@@ -4,8 +4,8 @@ import './nav-index.css'
 const Navbar = () => {
 
   return (
-    <nav className="flex justify-between px-10 py-5 items-center w-full">
-
+    <nav className="flex justify-between px-10 py-5 items-center w-full absolute z-50">
+  
       <div className="flex ml-5">
         <h1 className="flex flex-row font-bold lg:text-[2rem] text-[#3D190C]">Paws</h1>
         <h1 className="flex flex-row font-bold lg:text-[2rem] text-[#CA7C62]">Founding</h1>

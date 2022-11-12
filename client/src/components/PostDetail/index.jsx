@@ -1,28 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+
 
 import AddComment from "./AddComment";
 import Comment from "./Comment";
 
-import { getPostsByIdAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
+import { getPostsByIdAction, updatePostAction, cleanDetailsAction, deletePostAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
 import { selectPost } from "../../redux/reducers/dataBack/managePosts/managePostsSlice";
 import { getTimeAgo } from "../../utils";
+import Navbar from '../Navbar/Navbar'
 
 const Post = () => {
   const { details } = useSelector(selectPost);
   const dispatch = useDispatch();
   const {postId} = useParams()
+  const [toogle, setToogle] = useState(true);
+  const navigate = useNavigate();
   console.log("details: ", details);
 
   useEffect(() => {
     dispatch(getPostsByIdAction(postId));
+    return ()=>{
+      dispatch(cleanDetailsAction())
+    }
   }, [dispatch, postId]);
+
+  const [input, setInput] = useState({
+    id:postId,
+    content: details.content,
+  })
+
+  const inputHandler = (e)=>{
+    e.preventDefault();
+    setInput({...input, [e.target.name]: e.target.value});
+}
+
+  const editHandler = ()=>{
+    setToogle(!toogle);
+}
+const saveHandler = ()=>{
+  dispatch(updatePostAction(input))
+}
+const deleteHandler = (e)=>{
+  dispatch(deletePostAction(postId));
+  // alert('Borrado Exitosamente!')
+  // navigate('/home');
+}
 
   if (!details || Object.keys(details).length === 0) return;
 
   return (
+    <div className="w-100% h-auto">
+      <Navbar/>
+      <div className="h-20 w-100%"></div>
     <div className="flex flex-col max-w-[100%] md:max-w-[80%] lg:max-w-[50%] p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100 bg-white border border-gray-200 mx-auto">
       <div className="flex space-x-4">
         <img
@@ -31,13 +63,15 @@ const Post = () => {
           alt="avatar"
         />
         <div className="flex items-center ">
+        <button className="absolute right-96 px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={deleteHandler}>Delete</button>
           <Link
             to={`/${details.shelterId}/profile`}
             className="object-cover w-max "
           >
             <div className="flex flex-col items-start">
               <h2 className="-mt-1 text-lg font-semibold text-gray-900">
-                {details.author.name}
+                {details.author.name} 
               </h2>
               <small className="text-sm text-gray-700">
                 {getTimeAgo(details.createdAt)}
@@ -56,7 +90,20 @@ const Post = () => {
         )
       }
 
-      <h2 className="mb-1 text-xl font-semibold">{details.content}</h2>
+      <textarea className="mb-1 text-xl font-semibold h-28 w-full resize-none"
+       type="text" name="content" onChange={inputHandler} defaultValue={details.content}
+       disabled={toogle} value={input.description} rows='1' cols='1'/>
+
+       <div className="flex flex-row-reverse flex-start justify-between">
+        <div className="">
+        <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={editHandler}>Edit</button>
+        </div>
+        <div className="">
+        {!toogle && <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={saveHandler}>Save</button>}
+      </div>
+        </div>
 
       <div className="flex flex-wrap justify-between">
         <div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
@@ -80,6 +127,7 @@ const Post = () => {
             );
           })}
       </div>
+    </div>
     </div>
   );
 };
