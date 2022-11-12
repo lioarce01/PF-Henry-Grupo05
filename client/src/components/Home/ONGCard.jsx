@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ONGCard = ({image, name, budget, followers, description, id}) => {
+const ONGCard = ({image, name, goal, followers, description, id}) => {
 
 
   if(!image) {
@@ -19,7 +19,7 @@ const ONGCard = ({image, name, budget, followers, description, id}) => {
                 </div>
                 <div className='flex flex-col justify-start w-full'>
                   <p className="mb-3 font-semibold text-gray-800 text-md">{description}</p>
-                  <p className='text-sm font-semibold'>Budget: <span className='font-semibold'>${budget}</span></p>
+                  <p className='text-sm font-semibold'>Goal: <span className='font-semibold'>${goal}</span></p>
                   <p className='pb-2 text-sm font-semibold'>Followers: <span className='font-semibold'>{followers}</span></p>
                 </div>
               <Link to={`/${id}/profile`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-900 border-2 hover:bg-[#fcf1e2] transition duration-300 border-[#fcf1e2] rounded-md">
