@@ -1,4 +1,4 @@
-import { getUsers, getUserById, getUserByName, createUser, updateUser, deleteUser } from './manageUsersSlice';
+import { getUsers, getUserById, getUserByName, createUser, updateUser, deleteUser, getFollowing } from './manageUsersSlice';
 import axios from 'axios';
 import { toggleLoading } from '../loading/loadingSlice';
 
@@ -60,6 +60,7 @@ export const updateUserAction = (user) => async dispatch => {
     try {
         const res = await axios.put('/users', user);
         dispatch(updateUser(res.data));
+        console.log('following: ',res.data)
     } catch (err) {
         dispatch(updateUser(err.response.data));
     } finally {
@@ -75,6 +76,18 @@ export const deleteUserAction = (id) => async dispatch => {
         dispatch(deleteUser(res.data));
     } catch (err) {
         dispatch(deleteUser(err.response.data));
+    } finally {
+        dispatch(toggleLoading())
+    }
+}
+
+export const getFollowingAction = (id) => async dispatch => {
+    dispatch(toggleLoading())
+    try {
+        const res = await axios.get(`/users/${id}/following`);
+        dispatch(getFollowing(res.data));
+    } catch (err) {
+        dispatch(getFollowing(err.response.data));
     } finally {
         dispatch(toggleLoading())
     }

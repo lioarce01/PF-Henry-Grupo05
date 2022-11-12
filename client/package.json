@@ -18,6 +18,7 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.6",
+    "redux-persist": "^6.0.0",
     "swiper": "^8.4.4",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

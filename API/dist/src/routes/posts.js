@@ -141,9 +141,10 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 }));
 // route to delete posts by id
 router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { id } = req.params;
     try {
         yield prisma.post.delete({
-            where: { id: req.params.id }
+            where: { id }
         });
         res.status(200).send('Post deleted successfully.');
     }

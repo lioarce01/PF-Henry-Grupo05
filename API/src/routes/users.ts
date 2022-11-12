@@ -43,7 +43,9 @@ router.get("/", async (req: Req, res) => {
 
         const user = await prisma.user.findMany({
             where: { name: { contains: name } },
-            include: { posts: true }
+            include: { posts: true,
+                following: true,
+             }
         });
 
         user.length ? res.status(200).send(user) : res.status(404).send('ERROR: Could not find any users.');
@@ -64,6 +66,23 @@ router.get("/:id", async (req, res) => {
         });
 
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
+    } catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+});
+
+//get followers of an user
+router.get("/:id/following", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id },
+            include: { following: true }
+        });
+
+        user ? res.status(200).send(user.following) : res.status(404).send("ERROR: User not found.");
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);

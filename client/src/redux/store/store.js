@@ -5,13 +5,14 @@ import manageSheltersSlice from "../reducers/dataBack/manageShelters/manageShelt
 import manageCommentsSlice from '../reducers/dataBack/manageComments/manageCommentsSlice';
 import loadingSlice  from '../reducers/dataBack/loading/loadingSlice';
 
+
 export default configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
     reducer: {
         manageUsers: manageUsersSlice,
         managePosts: managePostsSlice,
-        manageComments: manageCommentsSlice,
         manageShelters: manageSheltersSlice,
+        manageComments: manageCommentsSlice,
         loading: loadingSlice
     }
 })
