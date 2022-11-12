@@ -5,6 +5,7 @@ import ONGCard from './ONGCard'
 import ONGFilters from './ONGFilters'
 import SearchBar from '../Navbar/SearchBar'
 import { getSheltersAction } from '../../redux/reducers/dataBack/manageShelters/manageSheltersActions'
+import Spinner from '../Spinner/Spinner'
 
 const Ongs = () => {
   const dispatch = useDispatch()
@@ -15,16 +16,16 @@ const Ongs = () => {
   }, [dispatch])
   
   return (
-    <div className='h-screen pr-4 mt-5 rounded-md lg:right-0 lg:fixed'>
+    <div className='h-screen mt-5 rounded-md lg:right-0 lg:fixed'>
       <h2 className='pt-2 text-2xl font-bold text-center'>Explore Shelters</h2>
-        <div className='flex items-center h-[50rem] bg-[#FAF2E7] border-2 border-[#fffcf7] w-full mt-5 overflow-auto flex-col py-10 rounded-md'>
+        <div className='flex items-center h-[47.5rem] bg-[#FAF2E7] border-2 border-[#fffcf7] w-[90%] mt-5 overflow-auto flex-col py-10 rounded-md'>
             <SearchBar/>
           <div className='flex items-end justify-end w-full py-1 pr-10'>
             <ONGFilters/>
           </div>
-          <div className='w-[90%]'>
+          <div className='w-full'>
             {
-              shelters && shelters.map(shelter => {
+              shelters?.length ? shelters.map(shelter => {
                 return (
                   <ONGCard
                     key={shelter.id}
@@ -36,7 +37,7 @@ const Ongs = () => {
                     followers={shelter.userFollowers?.length}
                   />
                 )
-              })
+              }) : <Spinner/>
             }
           </div>
       </div>

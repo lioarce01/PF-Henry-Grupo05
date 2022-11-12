@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPostsAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
+import Spinner from '../Spinner/Spinner'
 import CardPost from './CardPost'
 import PostFilters from './PostFilters'
 
@@ -18,9 +19,9 @@ const Posts = () => {
       <div className='flex items-center justify-end'>
         <PostFilters/>
       </div>
-      <div className='w-full'>
+      <div className='flex flex-col justify-center w-full min-w-full'>
         {
-          posts && posts.map(post => {
+          posts.length ? posts.map(post => {
             return (
               <CardPost
                 key={post.id}
@@ -34,7 +35,7 @@ const Posts = () => {
                 authorId={post.authorId}
               />
             )
-          })
+          }) : <Spinner/>
         }
       </div>
     </div>
