@@ -37,7 +37,7 @@ const Posts = () => {
 
       </div>
       <div className='flex flex-col justify-center w-full min-w-full'>
-        {posts &&
+        {posts ?
           posts.map((post) => {
 
             return (
