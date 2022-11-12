@@ -50,7 +50,7 @@ export const getSheltersByNameAction = (name) => async dispatch => {
         const res = await axios.get(`/shelters?name=${name}`);
         dispatch(getSheltersByName(res.data));
     } catch (err) {
-        dispatch(getSheltersByName(err.response.data));
+        dispatch(getSheltersByName([]));
     } finally {
         dispatch(toggleLoading())
     }
