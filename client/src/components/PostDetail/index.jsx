@@ -80,12 +80,17 @@ const saveHandler = ()=>{
       <textarea className="mb-1 text-xl font-semibold h-28 w-full resize-none"
        type="text" name="content" onChange={inputHandler} defaultValue={details.content}
        disabled={toogle} value={input.description} rows='1' cols='1'/>
-       <div className="flex " >
-      <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
-      onClick={editHandler}>Edit</button>
-      {!toogle && <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
-      onClick={saveHandler}>Save</button>}
+
+       <div className="flex flex-row-reverse flex-start justify-between">
+        <div className="">
+        <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={editHandler}>Edit</button>
+        </div>
+        <div className="">
+        {!toogle && <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={saveHandler}>Save</button>}
       </div>
+        </div>
 
       <div className="flex flex-wrap justify-between">
         <div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
