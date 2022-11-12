@@ -1,4 +1,4 @@
-import { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts, cleanDetails } from './managePostsSlice';
+import { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts, cleanDetails, updatePostLikes } from './managePostsSlice';
 import axios from 'axios';
 import { toggleLoading } from '../loading/loadingSlice';
 
@@ -53,7 +53,18 @@ export const updatePostAction = (post) => async dispatch => {
     }
 }
    
-
+export const updatePostLikesAction = (post) => async dispatch => {
+    dispatch(toggleLoading())
+    try {
+        const res = await axios.put('/posts/updateLikes', post);
+        console.log(res.data)
+        dispatch(updatePostLikes(res.data));
+    } catch (err) {
+        dispatch(updatePostLikes(err.response.data));
+    } finally {
+        dispatch(toggleLoading())
+    }
+}
 
 export const deletePostAction = (id) => async dispatch => {
     dispatch(toggleLoading())

@@ -27,6 +27,10 @@ export const managePostsSlice = createSlice({
             state.msg = action.payload;
         },
 
+        updatePostLikes: (state, action) => {
+            state.msg = action.payload;
+        },
+
         deletePost: (state, action) => {
             state.msg = action.payload;
         },
@@ -41,7 +45,7 @@ export const managePostsSlice = createSlice({
 });
 
 // action creators are generated for each case reducer function
-export const { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts, cleanDetails } = managePostsSlice.actions;
+export const { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts, cleanDetails, updatePostLikes } = managePostsSlice.actions;
 export const selectPost = state => state.managePosts
 
 export default managePostsSlice.reducer;
