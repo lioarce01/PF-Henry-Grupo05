@@ -5,14 +5,19 @@ import {AiFillHeart} from 'react-icons/ai'
 import {getTimeAgo} from '../../utils'
 import {AiOutlineHeart} from 'react-icons/ai'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { updatePostLikesAction} from '../../redux/reducers/dataBack/managePosts/managePostsActions'
+
 
 const CardPost = ({image, author, content, likes, createdAt, comments, id, authorId}) => {
+  const [likesActuals, setLikesActuals] = useState(likes);
   const [like, setLike] = useState(false)
-
+  const dispatch = useDispatch()
   const toggleLike = () => {
+    
     setLike(!like)
-    likes = like ? likes - 1 : likes + 1
-    console.log(likes)
+    like? setLikesActuals(likesActuals - 1 ): setLikesActuals(likesActuals + 1);
+    like? dispatch(updatePostLikesAction({id, likes: likesActuals - 1})): dispatch(updatePostLikesAction({id, likes: likesActuals + 1}));
   }
 
   useEffect(() => {
@@ -46,8 +51,8 @@ const CardPost = ({image, author, content, likes, createdAt, comments, id, autho
             : null
           }
           {
-            likes > 1 ? <p className='p-1 text-sm text-gray-700'>{likes} likes</p>
-            : <p className='p-1 text-sm text-gray-700'>{likes} like</p>
+            likes > 1 ? <p className='p-1 text-sm text-gray-700'>{likesActuals} likes</p>
+            : <p className='p-1 text-sm text-gray-700'>{likesActuals} like</p>
           }
         </div>
         </Link>
