@@ -18,21 +18,21 @@ const Navbar = () => {
   }
   
   return (
-    <div className='fixed z-50 flex items-center justify-between w-full p-4 px-10 text-white bg-transparent shadow-lg backdrop-blur-sm h-14'>
+    <div className='fixed z-50 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#FAF2E7]/[.05] shadow-lg backdrop-blur-sm h-14'>
       <div>
-        LOGO
+        <img src="https://cdn-icons-png.flaticon.com/512/1152/1152755.png" alt="/" className='w-8 h-8' />
       </div>
       <div className='flex items-center justify-center'>
         {
           toggle 
-          ? <button className='px-1.5 py-1.5 mr-4 transition border-2 rounded-md hover:bg-white hover:text-black duration 300' onClick={handleToggle}><BsSun className='text-xl'/></button>
-          : <button className='px-1.5 py-1.5 mr-4 transition border-2 rounded-md hover:bg-white hover:text-black duration 300' onClick={handleToggle}><HiMoon className='text-xl'/></button>
+          ? <button className='px-3 py-1.5 mr-6 border-2 border-[#fffcf7] rounded-md hover:bg-[#fffcf7] hover:text-black transition duration-300' onClick={handleToggle}><BsSun className='text-xl'/></button>
+          : <button className='px-3 py-1.5 mr-6 transition duration-300 border-2 rounded-md border-[#fffcf7] hover:bg-[#fffcf7] hover:text-black duration 300' onClick={handleToggle}><HiMoon className='text-xl'/></button>
         }
-        <Link to="/home" className='pt-1 pb-1 pl-2 pr-2 mr-4 border-2 rounded-md hover:bg-white hover:text-black duration 300'>Home</Link>
+        <Link to="/home" className='pt-1 pb-1 pl-2 pr-2 mr-6 border-2 border-[#fffcf7] transition duration-300 rounded-md hover:bg-[#fffcf7] hover:text-black'>Home</Link>
           <Menu as="div" className="relative z-50 inline-block text-left outline-none">
         <div>
-          <Menu.Button className="inline-flex justify-center w-full px-4 py-1 text-sm font-medium text-gray-700 border border-gray-300 rounded-md shadow-sm outline-none bg-slate-200 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            <img src="https://i.pravatar.cc/150?img=4" alt="" className='rounded-full w-9 h-9' />
+          <Menu.Button className="inline-flex justify-center w-full px-4 py-1 text-sm font-medium text-gray-800 border-2 border-[#fffcf7] rounded-md shadow-sm outline-none hover:bg-[#fffcf7] transition duration-300 focus:outline-none">
+            <img src="https://i.pravatar.cc/150?img=4" alt="" className='w-8 h-8 rounded-full' />
             <AiOutlineDown className="w-5 h-5 mt-2 ml-2 -mr-1" aria-hidden="true" />
           </Menu.Button>
         </div>

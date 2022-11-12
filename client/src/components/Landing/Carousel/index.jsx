@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {getSheltersTopFiveAction} from '../../../redux/reducers/dataBack/manageShelters/manageSheltersActions'
 import { selectShelter } from "../../../redux/reducers/dataBack/manageShelters/manageSheltersSlice";
 import { selectLoading } from "../../../redux/reducers/dataBack/loading/loadingSlice";
+import Spinner from "../../Spinner/Spinner";
 
 
 const Carousel = () => {
@@ -25,12 +26,12 @@ const Carousel = () => {
         distpatch(getSheltersTopFiveAction())
     },[distpatch])
 
-    if(loading) return (<div className="text-center">Loading...</div>)
+    if(loading) return (<div className=""><Spinner/></div>)
     if(!topShelters) return 
 
   return (
-    <div className="w-3/4 h-fit    mx-auto rounded ">
-      <h2 className="mb-8 text-4xl font-bold leading-none tracking-tighter text-neutral-600 md:text-7xl lg:text-4xl text-center">
+    <div className="w-3/4 mx-auto rounded h-fit ">
+      <h2 className="mb-8 text-4xl font-bold leading-none tracking-tighter text-center text-neutral-600 md:text-7xl lg:text-4xl">
               Trending
             </h2>
       <Swiper
@@ -63,7 +64,7 @@ const Carousel = () => {
         }}
 
         
-        className="mySwiper max-h-52 px-2  border border-gray-300  rounded"
+        className="px-2 border border-gray-300 rounded mySwiper max-h-52"
       >
         
         {topShelters.length > 0 && topShelters.map((ong,index) => <SwiperSlide  key={index} ><p>#{index + 1}</p><Card id={ong.id} image={ong.profilePic} name={ong.name}/></SwiperSlide>)}
