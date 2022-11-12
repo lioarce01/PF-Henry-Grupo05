@@ -33,6 +33,7 @@ export const createPostAction = (post) => async dispatch => {
     try {
         const res = await axios.post('/posts', post);
         dispatch(createPost(res.data));
+        dispatch(getPostsAction())
     } catch (err) {
         dispatch(createPost(err.response.data));
     } finally {
