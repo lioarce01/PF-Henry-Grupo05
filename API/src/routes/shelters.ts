@@ -88,7 +88,7 @@ type ReqSampling = {
     } 
 };
 
-router.get('/filter-sort', async(req : ReqSampling, res) => {
+router.post('/filter-sort', async(req : ReqSampling, res) => {
     // here we are able to expand this further, adding
     // more ordering criteria and even filters.
     const { order, orderType, group, groupType } = req.body;

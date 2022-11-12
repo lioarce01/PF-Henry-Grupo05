@@ -99,7 +99,7 @@ export const deleteSheltersAction = (id) => async dispatch => {
 export const sortSheltersAction = (body) => async dispatch => {
     dispatch(toggleLoading())
     try {
-        const {data} = await axios.get(`/shelters/filter-sort`, body)
+        const {data} = await axios.post(`/shelters/filter-sort`, body)
         dispatch(sortShelters(data))
     } catch (err) {
         console.log(err)
