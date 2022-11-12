@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 export const managePostsSlice = createSlice({
     name: "managePosts",
 
@@ -26,18 +27,25 @@ export const managePostsSlice = createSlice({
             state.msg = action.payload;
         },
 
+        updatePostLikes: (state, action) => {
+            state.msg = action.payload;
+        },
+
         deletePost: (state, action) => {
             state.msg = action.payload;
         },
 
         sortPosts: (state, action) => {
             state.posts = action.payload
+        },
+        cleanDetails: (state) =>{
+            state.details = {}
         }
     }
 });
 
 // action creators are generated for each case reducer function
-export const { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts } = managePostsSlice.actions;
+export const { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts, cleanDetails, updatePostLikes } = managePostsSlice.actions;
 export const selectPost = state => state.managePosts
 
 export default managePostsSlice.reducer;

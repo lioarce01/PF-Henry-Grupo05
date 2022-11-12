@@ -11,10 +11,12 @@ const posts_1 = __importDefault(require("./posts"));
 const users_1 = __importDefault(require("./users"));
 const comments_1 = __importDefault(require("./comments"));
 const shelters_1 = __importDefault(require("./shelters"));
+const mercadopago_1 = __importDefault(require("./mercadopago"));
 const router = express_1.default.Router();
 router.use('/shelters', shelters_1.default);
 router.use('/posts', posts_1.default);
 router.use('/users', users_1.default);
 router.use('/comments', comments_1.default);
+router.use('/mp', mercadopago_1.default);
 exports.default = router;
 //# sourceMappingURL=index.js.map

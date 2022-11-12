@@ -1,22 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import AddComment from "./AddComment";
 import Comment from "./Comment";
 
-import { getPostsByIdAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
+import { getPostsByIdAction, updatePostAction, cleanDetailsAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
 import { selectPost } from "../../redux/reducers/dataBack/managePosts/managePostsSlice";
 import { getTimeAgo } from "../../utils";
 
-const Post = ({ postId }) => {
+const Post = () => {
   const { details } = useSelector(selectPost);
   const dispatch = useDispatch();
+  const {postId} = useParams()
+  const [toogle, setToogle] = useState(true)
+  console.log("details: ", details);
 
   useEffect(() => {
     dispatch(getPostsByIdAction(postId));
+    return ()=>{
+      dispatch(cleanDetailsAction())
+    }
   }, [dispatch, postId]);
+
+  const [input, setInput] = useState({
+    id:postId,
+    content: details.content,
+  })
+
+  const inputHandler = (e)=>{
+    e.preventDefault();
+    setInput({...input, [e.target.name]: e.target.value});
+}
+
+  const editHandler = ()=>{
+    setToogle(!toogle);
+}
+const saveHandler = ()=>{
+  dispatch(updatePostAction(input))
+}
 
   if (!details || Object.keys(details).length === 0) return;
 
@@ -44,16 +67,33 @@ const Post = ({ postId }) => {
           </Link>
         </div>
       </div>
-      <img
+      {
+        details.image && (
+          <img
         src={details.image}
         alt="post"
         className="object-cover w-full lg:max-w-[50%] mb-4  dark:bg-gray-500 mx-auto"
       />
+        )
+      }
 
-      <h2 className="mb-1 text-xl font-semibold">{details.content}</h2>
+      <textarea className="mb-1 text-xl font-semibold h-28 w-full resize-none"
+       type="text" name="content" onChange={inputHandler} defaultValue={details.content}
+       disabled={toogle} value={input.description} rows='1' cols='1'/>
+
+       <div className="flex flex-row-reverse flex-start justify-between">
+        <div className="">
+        <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={editHandler}>Edit</button>
+        </div>
+        <div className="">
+        {!toogle && <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={saveHandler}>Save</button>}
+      </div>
+        </div>
 
       <div className="flex flex-wrap justify-between">
-        <div className="flex mr-2 text-sm text-gray-700 items-center space-x-2">
+        <div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
           <AiFillHeart />
           <span>{details.likes}</span>
         </div>
@@ -65,6 +105,7 @@ const Post = ({ postId }) => {
           details.Comment.map((comment) => {
             return (
               <Comment
+                key={comment.id}
                 postId={postId}
                 author={comment.author}
                 content={comment.content}

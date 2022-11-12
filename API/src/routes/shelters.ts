@@ -117,7 +117,16 @@ router.get("/:id", async (req, res) => {
         const { id } = req.params;
         const shelter = await prisma.shelter.findUnique({ 
             where: { id },
-            include: { followers: true, author: true, posts: true } 
+            include: { 
+                followers: true, 
+                author: true, 
+                posts: {
+                    include: {
+                        author: true,
+                        Comment: true
+                    }
+                } 
+            } 
         });
   
         shelter ? res.status(200).send(shelter) : res.status(404).send("ERROR: Could not find shelter.");
@@ -137,6 +146,7 @@ router.post("/", async (req, res) => {
             description: string,
             profilePic: string,
             address: string,
+            animals: string,
             city: string,
             country: string,
             website: string,
@@ -152,6 +162,7 @@ router.post("/", async (req, res) => {
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
+                animals:    bodyShelter.animals,
                 city: bodyShelter.city,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
