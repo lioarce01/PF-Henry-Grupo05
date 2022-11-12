@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import AddComment from "./AddComment";
 import Comment from "./Comment";
 
-import { getPostsByIdAction, updatePostAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
+import { getPostsByIdAction, updatePostAction, cleanDetailsAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
 import { selectPost } from "../../redux/reducers/dataBack/managePosts/managePostsSlice";
 import { getTimeAgo } from "../../utils";
 
@@ -19,12 +19,14 @@ const Post = () => {
 
   useEffect(() => {
     dispatch(getPostsByIdAction(postId));
+    return ()=>{
+      dispatch(cleanDetailsAction())
+    }
   }, [dispatch, postId]);
 
   const [input, setInput] = useState({
     id:postId,
     content: details.content,
-    
   })
 
   const inputHandler = (e)=>{
@@ -78,13 +80,18 @@ const saveHandler = ()=>{
       <textarea className="mb-1 text-xl font-semibold h-28 w-full resize-none"
        type="text" name="content" onChange={inputHandler} defaultValue={details.content}
        disabled={toogle} value={input.description} rows='1' cols='1'/>
-       <div>
-      <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
-      onClick={editHandler}>Edit</button>
-      {!toogle && <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
-      onClick={saveHandler}>Save</button>}
+
+       <div className="flex flex-row-reverse flex-start justify-between">
+        <div className="">
+        <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={editHandler}>Edit</button>
+        </div>
+        <div className="">
+        {!toogle && <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+        onClick={saveHandler}>Save</button>}
       </div>
-      
+        </div>
+
       <div className="flex flex-wrap justify-between">
         <div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
           <AiFillHeart />
