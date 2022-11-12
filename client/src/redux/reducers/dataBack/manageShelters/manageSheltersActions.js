@@ -6,7 +6,6 @@ export const getSheltersAction = () => async dispatch => {
     dispatch(toggleLoading())
     try {
         const res = await axios.get('/shelters');
-        console.log(res)
         dispatch(getShelters(res.data));
     } catch (err) {
         console.log(err);
@@ -74,7 +73,6 @@ export const updateSheltersAction = (shelters, id) => async dispatch => {
     dispatch(toggleLoading())
     try {
         const res = await axios.put('/shelters/'+id, shelters);
-        console.log(res.data)
         dispatch(updateShelters(res.data));
     } catch (err) {
         dispatch(updateShelters(err.response.data));

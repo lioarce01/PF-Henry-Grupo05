@@ -44,9 +44,11 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 // get top five shelters by budget
 router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // bauti: la ruta se llama topFive, pero ahora la hago
+    // topSix para que se vea mejor el Carousel de landing
     try {
         const shelters = yield prisma.shelter.findMany({
-            take: 5,
+            take: 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
         });
@@ -60,7 +62,7 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
-router.get('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // here we are able to expand this further, adding
     // more ordering criteria and even filters.
     const { order, orderType, group, groupType } = req.body;
