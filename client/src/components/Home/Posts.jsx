@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostsAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
 import CardPost from "./CardPost";
+import Spinner from '../Spinner/Spinner'
 import PostFilters from "./PostFilters";
 import ModalCreatePost from "./ModalCreatePost";
+
 
 const Posts = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ const Posts = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-full min-h-[50rem] px-32 py-10 mb-4 mt-14 bg-slate-200">
+    <div className='w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#FAF2E7]'>
       <div className="flex flex-col w-full">
         <div className="flex w-full">
         <button
@@ -35,9 +36,10 @@ const Posts = () => {
         </div>
 
       </div>
-      <div className="">
+      <div className='flex flex-col justify-center w-full min-w-full'>
         {posts &&
           posts.map((post) => {
+
             return (
               <CardPost
                 key={post.id}
@@ -50,8 +52,9 @@ const Posts = () => {
                 comments={post.Comment.length}
                 authorId={post.authorId}
               />
-            );
-          })}
+            )
+          }) : <Spinner/>
+        }
       </div>
       <ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
     </div>
