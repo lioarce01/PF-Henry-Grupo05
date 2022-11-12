@@ -37,7 +37,8 @@ const Ongs = () => {
                     followers={shelter.userFollowers?.length}
                   />
                 )
-              }) : <Spinner/>
+              }) : <div className='flex text-center justify-center text-4xl mt-12'><p>Not found</p></div>
+              // <Spinner/>
             }
           </div>
       </div>
