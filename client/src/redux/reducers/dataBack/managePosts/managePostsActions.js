@@ -1,4 +1,6 @@
-import { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts, updatePostLikes } from './managePostsSlice';
+
+import { getPosts, getPostsById, createPost, updatePost, deletePost, sortPosts, updatePostLikes, cleanDetails } from './managePostsSlice';
+
 import axios from 'axios';
 import { toggleLoading } from '../loading/loadingSlice';
 
@@ -90,4 +92,8 @@ export const sortPostsAction = (order, type) => async dispatch => {
     } finally {
         dispatch(toggleLoading())
     }
+}
+
+export const cleanDetailsAction = ()=>dispatch =>{
+    dispatch(cleanDetails());
 }
