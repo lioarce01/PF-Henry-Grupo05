@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { getPostsAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
 import CardPost from './CardPost'
 import PostFilters from './PostFilters'
@@ -15,11 +14,11 @@ const Posts = () => {
   }, [dispatch])
 
   return (
-    <div className='w-full min-h-[50rem] px-32 py-10 mb-4 mt-14 bg-slate-200'>
+    <div className='w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#FAF2E7]'>
       <div className='flex items-center justify-end'>
         <PostFilters/>
       </div>
-      <div className=''>
+      <div className='w-full'>
         {
           posts && posts.map(post => {
             return (
