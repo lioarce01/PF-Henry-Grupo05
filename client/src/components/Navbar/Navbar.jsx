@@ -61,6 +61,19 @@ const Navbar = () => {
                   </Link>
                 )}
               </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    to={`/createong`}
+                    className={classNames(
+                      active ? 'bg-slate-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    Create Shelter
+                  </Link>
+                )}
+              </Menu.Item>
               <form method="POST" action="#">
                 <Menu.Item>
                   {({ active }) => (

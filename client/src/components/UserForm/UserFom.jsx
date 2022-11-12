@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import * as yup from 'yup';
 import {userSchema} from './validationUserForm';
 import {useFormik} from 'formik';
 import Navbar from '../Navbar/Navbar';
@@ -26,7 +25,7 @@ const UserForm = () => {
       onSubmit,
     })
   return (
-    <div className='w-full  min-h-screen bg-[#EEEEE6] h-full flex flex-col justify-between content-center'>
+    <div className='w-full  min-h-screen bg-[#E1D7D3] h-full flex flex-col justify-between content-center'>
         <div>
             <Navbar/>
         </div>
@@ -62,7 +61,8 @@ const UserForm = () => {
                   <button type='submit' className='pt-1 pb-1 pl-2 pr-2 mr-4 transition bg-[#FAF2E7] border border-gray-800 rounded-md hover:bg-orange-100 hover:text-black duration 300'>Submit</button>
               </div>: 
               <div>
-                  <button type='submit' className='pt-1 pb-1 pl-2 pr-2 mr-4 transition border border-gray-800 bg-[#FAF2E7] rounded-md hover:bg-orange-100 hover:text-black duration 300' disabled>Submit</button>
+                  <button type='submit' className='pt-1 pb-1 pl-2 pr-2 mr-4 transition border hidden border-gray-800 bg-[#FAF2E7] rounded-md hover:bg-orange-100 hover:text-black duration 300' disabled>Submit</button>
+                  <p className='text-red-500'>Fields Required</p>
               </div>
           }
 
