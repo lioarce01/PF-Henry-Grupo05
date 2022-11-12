@@ -13,13 +13,18 @@ export const getTimeAgo = (date) => {
 };
 
 export const uploadImage = async (preset, file) => {
-  const data = new FormData();
-  data.append("file", file);
-  data.append("upload_preset", preset);
-  const response = await axios.post(
-    `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+  try {
+    const data = new FormData();
+     data.append("file", file);
+    data.append("upload_preset", preset);
+     const response = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
     data
-  );
+    );
   return { response: response.data, image: response.data.secure_url };
+  } catch (error) {
+    return{ error: 'Error: an unexpected error has occurred'}
+  }
+  
 };
 
