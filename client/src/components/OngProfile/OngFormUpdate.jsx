@@ -41,7 +41,7 @@ const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
   return (
     <div className='w-contain'>
       <div>
-      <UploadImage image={image} setImage={setImage} />
+      <UploadImage image={image} setImage={setImage} toogle={toogle} />
       </div>
       <div >
       <form  onSubmit={handleSubmit}>
