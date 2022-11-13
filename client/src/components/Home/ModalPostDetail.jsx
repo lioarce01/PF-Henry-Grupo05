@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import Post from "../PostDetail";
 
-const ModalPostDetail  = ({ isOpen, closeModal, id }) => {
+const ModalPostDetail  = ({ isOpen, closeModal, id, setLike, like }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -30,7 +30,7 @@ const ModalPostDetail  = ({ isOpen, closeModal, id }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className=" max-w-fit transform overflow-hidden rounded-2xl text-left align-middle  transition-all">
-                <Post closeModal={closeModal} postId={id}/>
+                <Post closeModal={closeModal} postId={id} setLike={setLike} like={like} />
               </Dialog.Panel>
             </Transition.Child>
           </div>
