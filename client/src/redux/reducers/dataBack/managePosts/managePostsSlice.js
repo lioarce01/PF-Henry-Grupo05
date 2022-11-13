@@ -12,7 +12,7 @@ export const managePostsSlice = createSlice({
 
     reducers: {
         getPosts: (state, action) => {
-            state.posts = action.payload
+            state.posts = action.payload;
         },
 
         getPostsById: (state, action) => {

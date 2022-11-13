@@ -6,7 +6,7 @@ export const getPostsAction = () => async dispatch => {
     dispatch(toggleLoading())
     try {
         const res = await axios.get('/posts?perPage=5&page=1');
-        dispatch(getPosts(res.data));
+        dispatch(getPosts(res.data))
     } catch (err) {
         dispatch(getPosts(err));
     } finally {
