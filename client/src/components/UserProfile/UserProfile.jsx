@@ -9,18 +9,18 @@ import ONGCard from '../Home/ONGCard'
 import Spinner from '../Spinner/Spinner'
 
 const UserProfile = () => {
-  const params = useParams()
-  console.log("params:", params)
-  const dispatch = useDispatch()
+	const params = useParams()
+	console.log("params:", params)
+	const dispatch = useDispatch()
 
-  const user = useSelector(state => state.manageUsers.details)
-  console.log("userDetail: ", user)
+	const user = useSelector((state) => state.manageUsers.details)
+	console.log("userDetail: ", user)
 
-  useEffect(() => {
-    dispatch(getUserByIdAction(params.userId))
-  }, [dispatch, params.userId])
+	useEffect(() => {
+		dispatch(getUserByIdAction(params.userId))
+	}, [dispatch, params.userId])
 
-  const { following } = user
+	const { following } = user
 
   return (
     <div className='bg-[#FAF2E7]'>

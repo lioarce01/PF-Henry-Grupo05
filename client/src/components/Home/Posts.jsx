@@ -7,7 +7,9 @@ import PostFilters from "./PostFilters"
 import ModalCreatePost from "./ModalCreatePost"
 
 const Posts = () => {
+
 	const [isOpen, setIsOpen] = useState(false)
+	const [page, setPage] = useState(1)
 	const dispatch = useDispatch()
 	const posts = useSelector((state) => state.managePosts.posts)
 
@@ -15,7 +17,20 @@ const Posts = () => {
 
 	useEffect(() => {
 		dispatch(getPostsAction())
-	}, [dispatch])
+	}, [dispatch, page])
+
+	const handleScroll = () => {
+		if (
+			window.innerHeight + document.documentElement.scrollTop + 1 >=
+			document.documentElement.scrollHeight
+		) {
+			setPage((prev) => prev + 1)
+		}
+	}
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll)
+	}, [])
 
 	return (
 		<div className="w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#FAF2E7]">
@@ -34,6 +49,7 @@ const Posts = () => {
 			</div>
 
 			<div className="flex flex-col justify-center w-full min-w-full">
+
 				{posts.length ? (
 					posts.map((post) => {
 						return (
@@ -59,4 +75,3 @@ const Posts = () => {
 }
 
 export default Posts
-
