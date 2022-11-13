@@ -9,9 +9,9 @@ const team = [
     },
     {
       name: "Lionel Arce",
-      phrase: "FullStack Dev",
+      phrase: "FullStack Developer",
       image:
-        "https://media-exp1.licdn.com/dms/image/D4D35AQG09v3p1KFbrw/profile-framedphoto-shrink_200_200/0/1651880295214?e=1668787200&v=beta&t=_Rlcwm_JbnhTRRSN6uSMqMljnN4mCAxsH1chNYxcED8",
+        "https://media-exp1.licdn.com/dms/image/D4D35AQEFCHA6mUf83g/profile-framedphoto-shrink_200_200/0/1668198723431?e=1668952800&v=beta&t=0_XBFC_0QtCg2W32Spx8_FJGh2TuV1tNq0YzDJ2fqw4",
       linkedin: "https://www.linkedin.com/in/lionel-arce/",
       github: "https://github.com/lioarce01",
     },
@@ -49,19 +49,19 @@ const team = [
     },
     {
       name: "Samir Antonio José",
-      phrase: "Stripe and Filters expert",
+      phrase: "Stripe and Filters Expert",
       image:
         "https://media-exp1.licdn.com/dms/image/D4E35AQHrb5vvjOkhnQ/profile-framedphoto-shrink_800_800/0/1647122757964?e=1668805200&v=beta&t=Pk4VtmGLDZU6ZJJQ2UhGTMO4jsRxC-wzoDadOHPzQAM",
       linkedin: "https://www.linkedin.com/in/samirantoniojose/",
       github: "https://github.com/mihue14",
     },
     {
-      name: "Nombre Apellido",
-      phrase: "frase",
+      name: "Francisco Cia",
+      phrase: "International Relations",
       image:
-        "https://i.picsum.photos/id/663/300/300.jpg?hmac=0FqSItoYfWTkZqdWY81yKAdMaxp9wsIiJcTj8D14BoA",
-      linkedin: "#",
-      github: "#",
+        "https://media-exp1.licdn.com/dms/image/C4D03AQGu45_zn9r2xw/profile-displayphoto-shrink_200_200/0/1658025999977?e=1674086400&v=beta&t=Dy4AJ-LZBCzJXbBEK-d3AmQnGLyC6t0zHvQIwWBryXo",
+      linkedin: "https://www.linkedin.com/in/francisco-cia-1b386b1a2",
+      github: "https://github.com/FranciscoCia",
     },
   ];
 

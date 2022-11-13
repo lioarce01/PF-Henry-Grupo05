@@ -44,9 +44,10 @@ const Posts = () => {
               <CardPost
                 key={post.id}
                 id={post.id}
-                image={post.author.profilePic}
+                authorImage={post.author.profilePic}
                 author={post.author.name}
                 content={post.content}
+                postImg={post.image}
                 likes={post.likes}
                 createdAt={post.createdAt}
                 comments={post.Comment.length}

@@ -10,7 +10,7 @@ import { updatePostLikesAction } from '../../redux/reducers/dataBack/managePosts
 import ModalPostDetail from './ModalPostDetail'
 
 
-const CardPost = ({ image, author, content, likes, createdAt, comments, id, authorId }) => {
+const CardPost = ({ authorImage, author, content, postImg, likes, createdAt, comments, id, authorId }) => {
   const [likesActuals, setLikesActuals] = useState(likes);
   const [like, setLike] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
@@ -28,15 +28,15 @@ const CardPost = ({ image, author, content, likes, createdAt, comments, id, auth
     setLike(like)
   }, [like])
 
-  if (!image) {
-    image = 'https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY'
+  if (!authorImage) {
+    authorImage = 'https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY'
   }
 
   return (
     <div className='flex flex-col'>
       <div className="w-[100%] max-w-xl my-4 md:min-w-[500px] bg-[#fffcf7] border border-[#FAF2E7] rounded-lg">
         <div className="flex items-start px-4 py-4">
-          <img className="object-cover mr-4 rounded-full shadow w-14 h-14" src={image} alt="avatar" />
+          <img className="object-cover mr-4 rounded-full shadow w-14 h-14" src={authorImage} alt="avatar" />
           <div className="w-full">
             <Link to={`/users/${authorId}`} className="text-lg font-semibold text-gray-700">
               <div className="flex flex-col items-start">
@@ -45,9 +45,14 @@ const CardPost = ({ image, author, content, likes, createdAt, comments, id, auth
               </div>
             </Link>
             <button className='w-full' onClick={() => setIsOpen(true)}>
-              <p className="w-full mt-4 mb-4 font-semibold text-left text-gray-900 text-md">
-                {content}
-              </p>
+              <div>
+                <div>
+                    <img src={postImg ? postImg : authorImage} alt="" />
+                </div>
+                <p className="w-full mt-4 mb-4 font-semibold text-left text-gray-900 text-md">
+                  {content}
+                </p>
+              </div>
               <div className='flex flex-row justify-end w-full items-'>
                 {
                   comments > 1 ? <p className='p-1 text-sm text-gray-700'>{comments} comments</p>
