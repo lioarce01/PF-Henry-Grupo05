@@ -21,6 +21,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.query;
         const shelters = yield prisma.shelter.findMany({
+            orderBy: { "name": "asc" },
             where: {
                 name: {
                     contains: name || '',
@@ -79,7 +80,7 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
             res.status(404).send('ERROR: Missing parameters.');
     }
     catch (error) {
-        res.status(400).send(`${order} ${orderType} ${group} ${groupType}`);
+        res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
     }
 }));

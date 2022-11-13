@@ -1,4 +1,5 @@
-import { getShelters, getSheltersByName, getSheltersById, createShelters, updateShelters, deleteShelters, getSheltersTopFive, sortShelters } from './manageSheltersSlice';
+import { getShelters, getSheltersByName, getSheltersById, cleanSheltersDetails,
+     createShelters, updateShelters, deleteShelters, getSheltersTopFive, sortShelters } from './manageSheltersSlice';
 import axios from 'axios';
 import { toggleLoading } from '../loading/loadingSlice';
 
@@ -104,4 +105,8 @@ export const sortSheltersAction = (body) => async dispatch => {
     } finally {
         dispatch(toggleLoading())
     }
+}
+
+export const cleanSheltersDetailsAction = ()=>dispatch =>{
+    dispatch(cleanSheltersDetails());
 }

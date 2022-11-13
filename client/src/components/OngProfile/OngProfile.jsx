@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect , useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSheltersByIdAction, updateSheltersAction,  } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"; 
+import { getSheltersByIdAction, updateSheltersAction,  cleanSheltersDetailsAction} from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"; 
 import OngFormUpdate from "./OngFormUpdate";
 import CardPost from "../Home/CardPost";
 import PostFilters from "../Home/PostFilters";
@@ -22,6 +22,9 @@ const closeModal = () => setIsOpen(false);
 
 useEffect (()=>{
 dispatch(getSheltersByIdAction(id))
+return(()=>{
+    dispatch(cleanSheltersDetailsAction())
+})
 },[dispatch])
 
 
