@@ -45,11 +45,11 @@ const OngForm = () => {
 				<Navbar />
 			</div>
 
-			<div className="flex flex-col items-center justify-center min-w-full  pt-14 md:col-span-2 md:mt-0">
+			<div className="flex flex-col items-center justify-center min-w-full pt-14 md:col-span-2 md:mt-0">
 				<form
 					onSubmit={handleSubmit}
 					className="flex flex-col items-center justify-center h-auto min-w-full pt-14 md:col-span-2 md:mt-0">
-					<h1 className="text-lg text-4xl font-medium leading-6 text-black">
+					<h1 className="text-4xl font-medium leading-6 text-black">
 						Create your Shelter
 					</h1>
 					<div className="flex flex-row w-full h-full p-14">
