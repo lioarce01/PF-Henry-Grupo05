@@ -111,7 +111,7 @@ const OngForm = () => {
               </div>
             
               <div>
-                <UploadImage image={image} setImage={setImage} handleChange={handleChange} />
+                <UploadImage image={image} setImage={setImage} />
               </div>
               </div>   
             </div>
