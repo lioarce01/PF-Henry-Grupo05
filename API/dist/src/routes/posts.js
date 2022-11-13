@@ -23,13 +23,28 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //si no se envian los query params, se traen todos los posts    
     try {
         if (!perPage || !page) {
-            const posts = yield prisma.post.findMany();
-            res.status(200).json(posts);
+            const posts = yield prisma.post.findMany({
+                include: {
+                    author: true,
+                    Comment: {
+                        include: { author: true }
+                    },
+                    shelter: true
+                },
+            });
+            posts ? res.status(200).json(posts) : res.status(404).json('ERROR: Posts not found.');
         }
         else {
             const posts = yield prisma.post.findMany({
                 take: parseInt(perPage),
-                skip: (parseInt(page) - 1) * parseInt(perPage)
+                skip: (parseInt(page) - 1) * parseInt(perPage),
+                include: {
+                    author: true,
+                    Comment: {
+                        include: { author: true }
+                    },
+                    shelter: true
+                },
             });
             res.status(200).json(posts);
         }
