@@ -7,21 +7,23 @@ const prisma = new PrismaClient();
 //route to get all posts
 router.get('/', async(req, res) => {
 
-    try {
-       const posts = await prisma.post.findMany({
-        include: {
-            author: true,
-            Comment: {
-                include: { author: true }
-            },
-            shelter: true
-          },
-       })
+    //traer por query params la cantidad de posts que queremos traer por pagina y la pagina que queremos traer (por defecto 10 posts por pagina y pagina 1)
+    const { perPage, page } = req.query;
 
-       posts ? res.status(200).json(posts) : res.status(404).json('ERROR: Posts not found.')
-    } catch (error) {
-        res.status(400).send("ERROR: There was an unexpected error.")
-        console.log(error);  
+    //si no se envian los query params, se traen todos los posts    
+   try {
+    if(!perPage || !page) {
+        const posts = await prisma.post.findMany();
+        res.status(200).json(posts);
+    } else {
+        const posts = await prisma.post.findMany({
+            take: parseInt(perPage as string),
+            skip: (parseInt(page as string) - 1) * parseInt(perPage as string)
+        });
+        res.status(200).json(posts);
+    } 
+   } catch (error) {
+         res.status(500).json(error);
     }
 });
 

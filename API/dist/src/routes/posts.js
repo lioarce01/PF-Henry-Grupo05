@@ -18,21 +18,24 @@ const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 //route to get all posts
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //traer por query params la cantidad de posts que queremos traer por pagina y la pagina que queremos traer (por defecto 10 posts por pagina y pagina 1)
+    const { perPage, page } = req.query;
+    //si no se envian los query params, se traen todos los posts    
     try {
-        const posts = yield prisma.post.findMany({
-            include: {
-                author: true,
-                Comment: {
-                    include: { author: true }
-                },
-                shelter: true
-            },
-        });
-        posts ? res.status(200).json(posts) : res.status(404).json('ERROR: Posts not found.');
+        if (!perPage || !page) {
+            const posts = yield prisma.post.findMany();
+            res.status(200).json(posts);
+        }
+        else {
+            const posts = yield prisma.post.findMany({
+                take: parseInt(perPage),
+                skip: (parseInt(page) - 1) * parseInt(perPage)
+            });
+            res.status(200).json(posts);
+        }
     }
     catch (error) {
-        res.status(400).send("ERROR: There was an unexpected error.");
-        console.log(error);
+        res.status(500).json(error);
     }
 }));
 router.get('/sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -142,7 +145,6 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 // route to delete posts by id
 router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    
     try {
         const deletedPost = yield prisma.post.delete({
             where: { id }
