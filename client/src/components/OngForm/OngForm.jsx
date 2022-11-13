@@ -1,16 +1,19 @@
-import React, { useState } from "react"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { ongSchema } from "./validationOngForm"
-import { useFormik } from "formik"
-import Navbar from "../Navbar/Navbar"
-import { createSheltersAction } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"
-import UploadImage from "./UploadImage"
+import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import {ongSchema} from './validationOngForm';
+import {useFormik} from 'formik';
+import Navbar from '../Navbar/Navbar';
+import {createSheltersAction} from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions";
+import UploadImage from './UploadImage';
 
 const OngForm = () => {
-	const [image, setImage] = useState("")
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
+    const [image, setImage] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const onSubmit = async () =>{
+      if(image.length){
 
 	const onSubmit = async () => {
 		if (image.length) {
@@ -252,4 +255,4 @@ const OngForm = () => {
 	)
 }
 
-export default OngForm
+export default OngForm;
