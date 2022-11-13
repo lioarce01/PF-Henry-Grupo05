@@ -23,7 +23,7 @@ const closeModal = () => setIsOpen(false);
 useEffect (()=>{
 dispatch(getSheltersByIdAction(id))
 return(()=>{
-    dispatch(cleanSheltersDetailsAction())
+   dispatch(cleanSheltersDetailsAction())
 })
 },[dispatch])
 
@@ -99,14 +99,16 @@ return (
           details.posts?.map(post => {
             return (
               <CardPost
-                key={post.id}
-                id={post.id}
-                author={post.author.name}
-                image={post.author.profilePic}
-                content={post.content}
-                likes={post.likes}
-                createdAt={post.createdAt}
-                comments={post.Comment.length}
+              key={post.id}
+              id={post.id}
+              profilePic={post.author.profilePic}
+              postImage={post.image}
+              author={post.author.name}
+              content={post.content}
+              likes={post.likes}
+              createdAt={post.createdAt}
+              comments={post.Comment.length}
+              authorId={post.authorId}
               />
             )
           })
