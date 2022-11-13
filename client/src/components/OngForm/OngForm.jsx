@@ -7,8 +7,6 @@ import Navbar from '../Navbar/Navbar';
 import {createSheltersAction} from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions";
 import UploadImage from './UploadImage';
 
-
-
 const OngForm = () => {
     const [image, setImage] = useState('');
     const dispatch = useDispatch();
@@ -16,6 +14,7 @@ const OngForm = () => {
 
     const onSubmit = async () =>{
       if(image.length){
+
 
         console.log('submitted')
         console.log({...values, profilePic: image});
@@ -143,10 +142,39 @@ const OngForm = () => {
                 </div>
             }
 
-          </form>
-        </div>
-    </div>
-  )
+								<div>
+									<UploadImage image={image} setImage={setImage} />
+								</div>
+							</div>
+						</div>
+					</div>
+					{values.name !== "" &&
+					Object.entries(errors).length === 0 &&
+					values.description !== "" &&
+					values.address !== "" &&
+					values.city !== "" &&
+					values.country !== "" ? (
+						<div>
+							<button
+								type="submit"
+								className="pt-1 pb-1 pl-2 w-32 pr-2 mr-4 mt-0 text-xl transition bg-[#FAF2E7] border border-[#ca7c62] rounded-md hover:bg-[#ca7c62] border border-[#fffefe] hover:text-black duration 300">
+								Submit
+							</button>
+						</div>
+					) : (
+						<div>
+							<button
+								type="submit"
+								className="pt-1 pb-1 pl-2 pr-2 mr-4 transition border border-white bg-[#FAF2E7] hidden rounded-md hover:bg-orange-100 hover:text-black duration 300"
+								disabled>
+								Submit
+							</button>
+						</div>
+					)}
+				</form>
+			</div>
+		</div>
+	)
 }
 
 export default OngForm;
