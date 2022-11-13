@@ -7,11 +7,7 @@ const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 	const [input, setInput] = useState({ id: postId, content: details.content })
 	const dispatch = useDispatch()
 	const [likeDisplay, setLikeDisplay] = useState(details.likes)
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 9156ad1a2eb089ee26713ae91963dec14c83ebd3
 	const inputHandler = (e) => {
 		e.preventDefault()
 		setInput({ ...input, [e.target.name]: e.target.value })
@@ -27,15 +23,6 @@ const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 		else setLikeDisplay(likeDisplay+1)
 	}
 
-<<<<<<< HEAD
-=======
-	/*useEffect(() => {
-		like
-			? dispatch(updatePostLikesAction({ id: postId, likes: details.like - 1 }))
-			: dispatch(updatePostLikesAction({ id: postId, likes: details.like + 1 }))
-	}, [like])*/
-
->>>>>>> 9156ad1a2eb089ee26713ae91963dec14c83ebd3
 	return (
 		<>
 			{details.image && (
