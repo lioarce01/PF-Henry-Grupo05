@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect , useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSheltersByIdAction, updateSheltersAction,  } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"; 
+import { getSheltersByIdAction, updateSheltersAction,  cleanSheltersDetailsAction} from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"; 
 import OngFormUpdate from "./OngFormUpdate";
 import CardPost from "../Home/CardPost";
 import PostFilters from "../Home/PostFilters";
@@ -22,6 +22,9 @@ const closeModal = () => setIsOpen(false);
 
 useEffect (()=>{
 dispatch(getSheltersByIdAction(id))
+return(()=>{
+   dispatch(cleanSheltersDetailsAction())
+})
 },[dispatch])
 
 
@@ -53,7 +56,7 @@ return (
     <div className='w-full min-h-screen h-fit bg-[#FAF2E7]'>
         <NavBar/>   
     <div className='flex flex-row justify-end w-full h-full pt-20 '>
-        {details.posts?.length >0 && <div className="fixed left-10 flex flex-col items-center ml-5 border w-fit h-fit p-2 border-4 border-[#462312] rounded-lg ">
+        {details.description?.length >0 && <div className="fixed left-10 flex flex-col items-center ml-5 border w-fit h-fit p-2 border-4 border-[#462312] rounded-lg ">
             <div className="border w-80 h-fit border-red-50">
                     <OngFormUpdate toogle={toogle}/>
                     <button className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
@@ -96,14 +99,16 @@ return (
           details.posts?.map(post => {
             return (
               <CardPost
-                key={post.id}
-                id={post.id}
-                author={post.author.name}
-                image={post.author.profilePic}
-                content={post.content}
-                likes={post.likes}
-                createdAt={post.createdAt}
-                comments={post.Comment.length}
+              key={post.id}
+              id={post.id}
+              profilePic={post.author.profilePic}
+              postImage={post.image}
+              author={post.author.name}
+              content={post.content}
+              likes={post.likes}
+              createdAt={post.createdAt}
+              comments={post.Comment.length}
+              authorId={post.authorId}
               />
             )
           })

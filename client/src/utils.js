@@ -4,12 +4,24 @@ export const getTimeAgo = (date) => {
   const now = new Date();
   const time = new Date(date);
   const diff = now - time;
+  const seconds = Math.floor(diff / 1000);
+  const diffInMinutes = Math.floor(diff / 1000 / 60);
   const diffInHours = diff / 1000 / 60 / 60;
-  if (diffInHours < 24) {
-    return `${Math.floor(diffInHours)} hours ago`;
-  } else {
-    return `${Math.floor(diffInHours / 24)} days ago`;
+  const diffInDays = diffInHours / 24;
+  const diffInWeeks = diffInDays / 7;
+
+  if (diffInWeeks > 1) {
+    return `${Math.floor(diffInWeeks)}w`;
+  } else if (diffInDays > 1) {
+    return `${Math.floor(diffInDays)}d`;
+  } else if (diffInHours > 1) {
+    return `${Math.floor(diffInHours)}h`;
+  } else if (diffInMinutes > 1) {
+    return `${Math.floor(diffInMinutes)}m`;
+  } else if (seconds > 1) {
+    return `${Math.floor(seconds)}s`;
   }
+  return "Now";
 };
 
 export const uploadImage = async (preset, file) => {

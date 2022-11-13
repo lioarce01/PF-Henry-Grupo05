@@ -1,7 +1,7 @@
 import React from 'react';
 import { uploadImage } from '../../utils';
 
-const UploadImage = ({image, setImage}) => {
+const UploadImage = ({image, setImage, toogle}) => {
 
     const handlerChange = async  (e) => {
         const {image} = await uploadImage('preset_posts', e.target.files[0])
@@ -41,7 +41,7 @@ const UploadImage = ({image, setImage}) => {
               </div>
               <div className='flex justify-end'><div>
                 
-              {image && <button type='button' onClick={resetImage} 
+              {(image && !toogle) && <button type='button' onClick={resetImage} 
               className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto">reset</button>}
               </div></div>
             </div>
