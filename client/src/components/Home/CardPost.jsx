@@ -27,6 +27,7 @@ const CardPost = ({
 	const [isOpen, setIsOpen] = useState(false)
 	const closeModal = () => setIsOpen(false)
 
+
 	const dispatch = useDispatch()
 	const toggleLike = () => {
 		setLike(!like)
@@ -35,6 +36,7 @@ const CardPost = ({
 			? dispatch(updatePostLikesAction({ id, likes: likesActuals - 1 }))
 			: dispatch(updatePostLikesAction({ id, likes: likesActuals + 1 }))
 	}
+
 
 	useEffect(() => {
 		setLike(like)
