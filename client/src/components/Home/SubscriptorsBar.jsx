@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+// import { useDispatch, useSelector } from 'react-redux'
 import SubsCard from './SubsCard'
 import {BsArrowBarLeft, BsArrowBarRight} from 'react-icons/bs'
 import {TbReportMoney } from "react-icons/tb";
 import {AiFillHome, AiFillStar} from 'react-icons/ai'
+// import { getFollowingAction } from '../../redux/reducers/dataBack/manageUsers/manageUsersActions';
+// import { selectUser } from '../../redux/reducers/dataBack/manageUsers/manageUsersSlice';
 
 const SubscriptorsBar = () => {
+    
+
     const [open, setOpen] = useState(true);
     return (
         <div className="fixed left-0 flex">
@@ -21,7 +26,6 @@ const SubscriptorsBar = () => {
                         : (<button onClick={() => setOpen(!open)} className='px-2 py-1 text-2xl font-bold text-black border-2 border-[#fffcf7] hover:bg-[#fffcf7] transition duration-300 rounded-md outline-none'> <BsArrowBarLeft/> </button>)
                     }
                     </div>
-
                     {
                         open ? (
                             <div className="flex-1">
@@ -46,14 +50,10 @@ const SubscriptorsBar = () => {
                                         <AiFillStar className='my-2 text-2xl text-black'/>
                                     </div>
                                     <div className=''>
-                                        <SubsCard/>
-                                        <SubsCard/>
-                                        <SubsCard/>
-                                        <SubsCard/>
-                                        <SubsCard/>
-                                        <SubsCard/>
-                                        <SubsCard/>
-                                        <SubsCard/>
+                                            <SubsCard/>
+                                            <SubsCard/>
+                                            <SubsCard/>
+                                            <SubsCard/>
                                     </div>
                                 </div>
                             </div>

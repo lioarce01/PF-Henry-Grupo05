@@ -1,4 +1,5 @@
-import { getShelters, getSheltersByName, getSheltersById, createShelters, updateShelters, deleteShelters, getSheltersTopFive, sortShelters } from './manageSheltersSlice';
+import { getShelters, getSheltersByName, getSheltersById, cleanSheltersDetails,
+     createShelters, updateShelters, deleteShelters, getSheltersTopFive, sortShelters } from './manageSheltersSlice';
 import axios from 'axios';
 import { toggleLoading } from '../loading/loadingSlice';
 
@@ -6,7 +7,6 @@ export const getSheltersAction = () => async dispatch => {
     dispatch(toggleLoading())
     try {
         const res = await axios.get('/shelters');
-        console.log(res)
         dispatch(getShelters(res.data));
     } catch (err) {
         console.log(err);
@@ -50,7 +50,7 @@ export const getSheltersByNameAction = (name) => async dispatch => {
         const res = await axios.get(`/shelters?name=${name}`);
         dispatch(getSheltersByName(res.data));
     } catch (err) {
-        dispatch(getSheltersByName(err.response.data));
+        dispatch(getSheltersByName([]));
     } finally {
         dispatch(toggleLoading())
     }
@@ -74,7 +74,6 @@ export const updateSheltersAction = (shelters, id) => async dispatch => {
     dispatch(toggleLoading())
     try {
         const res = await axios.put('/shelters/'+id, shelters);
-        console.log(res.data)
         dispatch(updateShelters(res.data));
     } catch (err) {
         dispatch(updateShelters(err.response.data));
@@ -99,11 +98,15 @@ export const deleteSheltersAction = (id) => async dispatch => {
 export const sortSheltersAction = (body) => async dispatch => {
     dispatch(toggleLoading())
     try {
-        const {data} = await axios.get(`/shelters/filter-sort`, body)
+        const {data} = await axios.post(`/shelters/filter-sort`, body)
         dispatch(sortShelters(data))
     } catch (err) {
         console.log(err)
     } finally {
         dispatch(toggleLoading())
     }
+}
+
+export const cleanSheltersDetailsAction = ()=>dispatch =>{
+    dispatch(cleanSheltersDetails());
 }

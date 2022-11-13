@@ -24,7 +24,7 @@ const Posts = () => {
         <div className="flex w-full">
         <button
           onClick={() => setIsOpen(true)}
-          class="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+          className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
         >
           Create Post
         </button>

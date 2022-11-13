@@ -165,12 +165,15 @@ router.get('/:id', async(req, res) => {
 
 // route to delete posts by id
 router.delete('/:id', async(req,res) => {
+    const id = req.params.id;
+
     try {
-        await prisma.post.delete({
-            where: { id: req.params.id }
+        const deletedPost = await prisma.post.delete({
+
+            where: { id }
         });
         
-        res.status(200).send('Post deleted successfully.')
+        deletedPost ? res.status(200).send("Post deleted successfully.") : res.status(404).send("ID could not be found.")
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.")
         console.log(error); 

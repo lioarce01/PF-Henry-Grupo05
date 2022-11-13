@@ -26,8 +26,8 @@ model User {
 model Shelter {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   name          String   @unique
-  country       String  @map("country")
-  city          String  @map("city")
+  country       String   @map("country")
+  city          String   @map("city")
   animals       String?  @map("animals")
   // tiro una default img para los shelters. dsp en un futuro la cambiamos al logo de nuestra pag ~bau
   profilePic    String?  @default("https://64.media.tumblr.com/3ec5ecbbeb64030986df7251019ae4b8/b797bc944c5153a1-8e/s1280x1920/bb3c049643d41fa2ccf7442ebfc4d630a95489d6.jpg") @map("profilePic")
@@ -58,12 +58,12 @@ model Post {
 }
 
 model Comment {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  content  String @map("content")
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String @db.ObjectId
-  post     Post   @relation(fields: [postId], references: [id])
-  postId   String @db.ObjectId
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  content  String  @map("content")
+  author   User    @relation(fields: [authorId], references: [id])
+  authorId String  @db.ObjectId
+  post     Post?   @relation(fields: [postId], references: [id])
+  postId   String?
 }
 
 model Payment {

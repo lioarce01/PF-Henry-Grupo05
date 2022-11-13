@@ -26,7 +26,9 @@ const Carousel = () => {
     distpatch(getSheltersTopFiveAction())
   }, [distpatch])
 
+
   if(loading) return (<div className=""><Spinner/></div>)
+
   if (!topShelters) return
 
   return (
@@ -34,7 +36,6 @@ const Carousel = () => {
       <h2 className="mb-10 font-bold text-[#3D190C] md:text-7xl lg:text-5xl text-center">
         Trending
       </h2>
-      
       <Swiper
         loop={true}
         slidesPerView={1}
@@ -64,6 +65,7 @@ const Carousel = () => {
         }}
 
         className="mySwiper h-[400px] px-2">
+
 
         {topShelters.length > 0 && topShelters.map((ong, index) => <SwiperSlide key={index} ><Card id={ong.id} image={ong.profilePic} name={ong.name} desc={ong.description} index={index+1}/></SwiperSlide>)}
 
