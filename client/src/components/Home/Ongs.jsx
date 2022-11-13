@@ -24,8 +24,8 @@ const Ongs = () => {
             <ONGFilters/>
           </div>
           <div className='w-full'>
-            {
-              shelters?.length ? shelters.map(shelter => {
+            {Array.isArray(shelters) ? (
+              shelters.length ? shelters.map(shelter => {
                 return (
                   <ONGCard
                     key={shelter.id}
@@ -38,8 +38,8 @@ const Ongs = () => {
                   />
                 )
               }) : <div className='flex justify-center mt-12 text-4xl text-center'><p>Not found</p></div>
-              // <Spinner/>
-            }
+            )
+            : <div className="relative bottom-[60px]"><Spinner/></div> }
           </div>
       </div>
     </div>

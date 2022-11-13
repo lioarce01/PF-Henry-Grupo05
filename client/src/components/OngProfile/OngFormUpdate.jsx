@@ -37,7 +37,7 @@ const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
     validationSchema: ongSchema,
     onSubmit,
   })
-console.log('details 2',details)
+
   return (
     <div className='w-contain'>
       <div>

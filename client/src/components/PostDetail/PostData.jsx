@@ -7,7 +7,7 @@ const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 	const [input, setInput] = useState({ id: postId, content: details.content })
 	const dispatch = useDispatch()
 	const [likeDisplay, setLikeDisplay] = useState(details.likes)
-	
+
 	const inputHandler = (e) => {
 		e.preventDefault()
 		setInput({ ...input, [e.target.name]: e.target.value })
@@ -22,12 +22,6 @@ const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 		if (like) setLikeDisplay(likeDisplay-1)
 		else setLikeDisplay(likeDisplay+1)
 	}
-
-	/*useEffect(() => {
-		like
-			? dispatch(updatePostLikesAction({ id: postId, likes: details.like - 1 }))
-			: dispatch(updatePostLikesAction({ id: postId, likes: details.like + 1 }))
-	}, [like])*/
 
 	return (
 		<>

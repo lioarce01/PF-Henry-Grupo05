@@ -10,7 +10,6 @@ const Posts = () => {
 
 	const [isOpen, setIsOpen] = useState(false)
 	const [page, setPage] = useState(1)
-
 	const dispatch = useDispatch()
 	const posts = useSelector((state) => state.managePosts.posts)
 
@@ -35,7 +34,7 @@ const Posts = () => {
 
 	return (
 		<div className="w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#FAF2E7]">
-			<div className="flex flex-col w-full">
+			<div className={`flex flex-col ${posts.length ? "w-full" : "w-[580px]"}`}>
 				<div className="flex w-full">
 					<button
 						onClick={() => setIsOpen(true)}
@@ -48,29 +47,27 @@ const Posts = () => {
 					<PostFilters />
 				</div>
 			</div>
+
 			<div className="flex flex-col justify-center w-full min-w-full">
-				{posts ? (
-					Array.isArray(posts) ? (
-						posts.map((post) => {
-							return (
-								<CardPost
-									key={post.id}
-									id={post.id}
-									profilePic={post.author.profilePic}
-									postImage={post.image}
-									author={post.author.name}
-									content={post.content}
-									likes={post.likes}
-									createdAt={post.createdAt}
-									comments={post.Comment.length}
-									authorId={post.authorId}
-								/>
-							)
-						})
-					) : <h2>No posts found.</h2>
-				) : (
-					<Spinner />
-				)}
+
+				{posts.length ? (
+					posts.map((post) => {
+						return (
+							<CardPost
+								key={post.id}
+								id={post.id}
+								profilePic={post.author.profilePic}
+								postImage={post.image}
+								author={post.author.name}
+								content={post.content}
+								likes={post.likes}
+								createdAt={post.createdAt}
+								comments={post.Comment.length}
+								authorId={post.authorId}
+							/>
+						)
+					})
+				) : <Spinner />}
 			</div>
 			<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
 		</div>

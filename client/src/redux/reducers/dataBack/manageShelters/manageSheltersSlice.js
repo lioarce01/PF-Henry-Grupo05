@@ -4,7 +4,7 @@ export const manageSheltersSlice = createSlice({
     name: 'manageShelters',
 
     initialState: {
-        shelters: [],
+        shelters: {}, // initialized as an object in order to load spinners
         topShelters: [],
         details: {},
         msg: ''
