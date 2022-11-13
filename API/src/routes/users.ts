@@ -136,11 +136,11 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-        await prisma.user.delete({
+        const deletedUser = await prisma.user.delete({
             where: { id },
         });
 
-        res.status(200).send("User deleted successfully.");
+        deletedUser ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.");
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);

@@ -72,10 +72,10 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     try {
-        yield prisma.comment.delete({
+        const deletedComment = yield prisma.comment.delete({
             where: { id }
         });
-        res.status(200).send('Delete successful');
+        deletedComment ? res.status(200).send('Comment deleted successfully.') : res.status(404).send("ID could not be found.");
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");

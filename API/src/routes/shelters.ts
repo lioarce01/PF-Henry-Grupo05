@@ -14,6 +14,7 @@ router.get('/', async(req: ReqGet, res) => {
         const { name } = req.query;
 
         const shelters = await prisma.shelter.findMany({
+            orderBy: { "name": "asc" },
             where: { 
                 name: {
                     contains: name || '',
@@ -94,7 +95,7 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
     const { order, orderType, group, groupType } = req.body;
 
     try {
-        if ((order || group) && (orderType || groupType)) {
+        if (order.length || group.length) {
             
             const shelters = await prisma.shelter.findMany({
                 where: { [group]: groupType },
@@ -106,7 +107,7 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
 
         } else res.status(404).send('ERROR: Missing parameters.');
     } catch (error) {
-        res.status(400).send('ERROR: Invalid parameter.');
+        res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
     }
 })
@@ -225,11 +226,11 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-        await prisma.shelter.delete({
+        const deletedShelter = await prisma.shelter.delete({
             where: { id },
         });
 
-        res.status(200).send("Shelter deleted successfully");
+        deletedShelter ? res.status(200).send("Shelter deleted successfully") : res.status(404).send("ID could not be found.");
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
