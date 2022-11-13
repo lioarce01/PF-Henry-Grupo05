@@ -19,9 +19,11 @@ const Navbar = () => {
   
   return (
     <div className='fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#FAF2E7]/[.05] shadow-lg backdrop-blur-sm h-14'>
+      <Link to='/'>
       <div>
         <img src="https://cdn-icons-png.flaticon.com/512/1152/1152755.png" alt="/" className='w-8 h-8' />
       </div>
+      </Link>
       <div className='flex items-center justify-center'>
         {
           toggle 

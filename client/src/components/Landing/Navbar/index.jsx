@@ -1,5 +1,6 @@
 import logo from './logo.png'
 import './nav-index.css'
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -18,10 +19,11 @@ const Navbar = () => {
           <a className="font-bold mx-7 text-[#3D190C] link-underline link-underline-black lg:text-[1.2rem]" href="/#">Contact</a>
         </div>
       </div>
-
+      <Link to='/'>
       <div>
-        <img className="w-12 h-12" src={logo} alt="LOGO" />
+        <img className="w-12 h-12"  src={logo} alt="LOGO" />
       </div>
+      </Link>
     </nav>
   );
 };
