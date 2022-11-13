@@ -1,12 +1,13 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { AiFillHeart } from "react-icons/ai"
 import { useDispatch } from "react-redux"
-import { updatePostAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions"
+import { updatePostAction, updatePostLikesAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions"
 
-const PostData = ({ toogle, details, postId, closeModal }) => {
+const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 	const [input, setInput] = useState({ id: postId, content: details.content })
 	const dispatch = useDispatch()
-
+	const [likeDisplay, setLikeDisplay] = useState(details.likes)
+	
 	const inputHandler = (e) => {
 		e.preventDefault()
 		setInput({ ...input, [e.target.name]: e.target.value })
@@ -16,6 +17,17 @@ const PostData = ({ toogle, details, postId, closeModal }) => {
 		dispatch(updatePostAction(input))
 		closeModal()
 	}
+
+	const fixDisplay = () => {
+		if (like) setLikeDisplay(likeDisplay-1)
+		else setLikeDisplay(likeDisplay+1)
+	}
+
+	/*useEffect(() => {
+		like
+			? dispatch(updatePostLikesAction({ id: postId, likes: details.like - 1 }))
+			: dispatch(updatePostLikesAction({ id: postId, likes: details.like + 1 }))
+	}, [like])*/
 
 	return (
 		<>
@@ -37,7 +49,8 @@ const PostData = ({ toogle, details, postId, closeModal }) => {
 				value={input.description}
 				cols="1"
 			/>
-			{!toogle && (
+
+			{! toogle && (
 				<div className="flex flex-row-reverse justify-between flex-start">
 					<button
 						className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
@@ -46,10 +59,13 @@ const PostData = ({ toogle, details, postId, closeModal }) => {
 					</button>
 				</div>
 			)}
+
 			<div className="flex flex-wrap justify-between">
 				<div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
-					<AiFillHeart />
-					<span>{details.likes}</span>
+					<button onClick={fixDisplay}>
+						<AiFillHeart onClick={setLike} className={like && "text-red-600"} />
+					</button>
+					<span>{likeDisplay}</span>
 				</div>
 			</div>
 		</>

@@ -22,15 +22,17 @@ const CardPost = ({
 	id,
 	authorId,
 }) => {
+	const dispatch = useDispatch()
 	const [likesActuals, setLikesActuals] = useState(likes)
 	const [like, setLike] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
+
+
 	const closeModal = () => setIsOpen(false)
 
 
-	const dispatch = useDispatch()
 	const toggleLike = () => {
-		setLike(!like)
+		setLike(! like)
 		like ? setLikesActuals(likesActuals - 1) : setLikesActuals(likesActuals + 1)
 		like
 			? dispatch(updatePostLikesAction({ id, likes: likesActuals - 1 }))
@@ -42,14 +44,14 @@ const CardPost = ({
 		setLike(like)
 	}, [like])
 
+
 	useEffect(() => {
 		setLikesActuals(likes)
 	}, [likes])
 
-	if (!image) {
-		image =
-			"https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
-	}
+
+	if (! image) image = "https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
+
 
 	const executeOnClick = (isExpanded) => {
 		console.log(isExpanded)
@@ -65,6 +67,7 @@ const CardPost = ({
 							src={profilePic}
 							alt="avatar"
 						/>
+
 						<div className="flex flex-col items-start">
 							<Link
 								to={`/users/${authorId}`}
@@ -78,7 +81,9 @@ const CardPost = ({
 							</small>
 						</div>
 					</div>
+
 					<div className="flex flex-col w-full"></div>
+
 					<p className="flex flex-col w-full py-4 font-normal text-left text-gray-900 text-md">
 						<ShowMoreText
 							lines={3}
@@ -93,6 +98,7 @@ const CardPost = ({
 							{content}
 						</ShowMoreText>
 					</p>
+
 					<div>
 						<img
 							src={postImage}
@@ -100,6 +106,7 @@ const CardPost = ({
 							className="object-cover w-full max-h-[40rem] mb-2 rounded-md"
 						/>
 					</div>
+
 					<div className="flex flex-row justify-end w-full items-">
 						{comments > 1 ? (
 							<p className="p-1 text-sm text-gray-700">{comments} comments</p>
@@ -112,6 +119,7 @@ const CardPost = ({
 							<p className="p-1 text-sm text-gray-700">{likesActuals} like</p>
 						) : null}
 					</div>
+
 					<div className="flex items-center justify-end pt-2 mt-2 border-t border-gray-400">
 						<div className="flex mr-4 text-sm text-gray-700">
 							{like ? (
@@ -134,6 +142,7 @@ const CardPost = ({
 								</button>
 							)}
 						</div>
+
 						<div className="flex mr-2 text-sm text-gray-700">
 							<button
 								onClick={() => setIsOpen(true)}
@@ -149,7 +158,8 @@ const CardPost = ({
 					</div>
 				</div>
 			</div>
-			<ModalPostDetail id={id} closeModal={closeModal} isOpen={isOpen} />
+
+			<ModalPostDetail id={id} closeModal={closeModal} isOpen={isOpen} setLike={toggleLike} like={like} />
 		</div>
 	)
 }

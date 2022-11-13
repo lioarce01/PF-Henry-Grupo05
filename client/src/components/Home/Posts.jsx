@@ -7,8 +7,10 @@ import PostFilters from "./PostFilters"
 import ModalCreatePost from "./ModalCreatePost"
 
 const Posts = () => {
-	let [isOpen, setIsOpen] = useState(false)
+
+	const [isOpen, setIsOpen] = useState(false)
 	const [page, setPage] = useState(1)
+
 	const dispatch = useDispatch()
 	const posts = useSelector((state) => state.managePosts.posts)
 
@@ -48,22 +50,24 @@ const Posts = () => {
 			</div>
 			<div className="flex flex-col justify-center w-full min-w-full">
 				{posts ? (
-					posts.map((post) => {
-						return (
-							<CardPost
-								key={post.id}
-								id={post.id}
-								profilePic={post.author.profilePic}
-								postImage={post.image}
-								author={post.author.name}
-								content={post.content}
-								likes={post.likes}
-								createdAt={post.createdAt}
-								comments={post.Comment.length}
-								authorId={post.authorId}
-							/>
-						)
-					})
+					Array.isArray(posts) ? (
+						posts.map((post) => {
+							return (
+								<CardPost
+									key={post.id}
+									id={post.id}
+									profilePic={post.author.profilePic}
+									postImage={post.image}
+									author={post.author.name}
+									content={post.content}
+									likes={post.likes}
+									createdAt={post.createdAt}
+									comments={post.Comment.length}
+									authorId={post.authorId}
+								/>
+							)
+						})
+					) : <h2>No posts found.</h2>
 				) : (
 					<Spinner />
 				)}
