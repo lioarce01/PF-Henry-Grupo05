@@ -8,6 +8,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { updatePostLikesAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions"
 import ModalPostDetail from "./ModalPostDetail"
+import ShowMoreText from "react-show-more-text"
 
 const CardPost = ({
 	image,
@@ -48,6 +49,10 @@ const CardPost = ({
 			"https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
 	}
 
+	const executeOnClick = (isExpanded) => {
+		console.log(isExpanded)
+	}
+
 	return (
 		<div className="flex flex-col">
 			<div className="w-[100%] max-w-xl my-4 md:min-w-[500px] bg-[#fffcf7] border border-[#FAF2E7] rounded-lg">
@@ -72,8 +77,19 @@ const CardPost = ({
 						</div>
 					</div>
 					<div className="flex flex-col w-full"></div>
-					<p className="w-full py-4 font-normal text-left text-gray-900 text-md">
-						{content}
+					<p className="flex flex-col w-full py-4 font-normal text-left text-gray-900 text-md">
+						<ShowMoreText
+							lines={3}
+							more="Show more"
+							less="Show less"
+							className="content-css"
+							anchorClass="show-more-less-clickable"
+							onClick={executeOnClick}
+							expanded={false}
+							// width={500}
+							truncatedEndingComponent={"... "}>
+							{content}
+						</ShowMoreText>
 					</p>
 					<div>
 						<img
