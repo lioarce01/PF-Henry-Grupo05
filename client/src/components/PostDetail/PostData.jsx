@@ -7,7 +7,7 @@ const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 	const [input, setInput] = useState({ id: postId, content: details.content })
 	const dispatch = useDispatch()
 	const [likeDisplay, setLikeDisplay] = useState(details.likes)
-	console.log(like)
+	
 	const inputHandler = (e) => {
 		e.preventDefault()
 		setInput({ ...input, [e.target.name]: e.target.value })
@@ -66,8 +66,6 @@ const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 						<AiFillHeart onClick={setLike} className={like && "text-red-600"} />
 					</button>
 					<span>{likeDisplay}</span>
-					{console.log("Details likes:", details.likes)}
-					{console.log("LikeDisplay:", likeDisplay)}
 				</div>
 			</div>
 		</>
