@@ -8,7 +8,6 @@ import OngForm from "./components/OngForm/OngForm";
 import UserForm from "./components/UserForm/UserFom";
 import UserProfile from "./components/UserProfile/UserProfile";
 import MercadoPago from "./components/MercadoPago/MercadoPago";
-import PostDetail from "./components/PostDetail/index";
 import About from "./components/About/About";
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
         <Route path="/mp" element={<MercadoPago />} />
         <Route path= "/:id/profile" element={<OngDetail/>}/>
         <Route exact path='/users/:userId' element={<UserProfile/>}/>
-        <Route path="/posts/:postId" element={<PostDetail />} />
       </Routes>
     </div>
   );

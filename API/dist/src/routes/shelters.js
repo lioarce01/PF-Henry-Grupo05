@@ -67,7 +67,7 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
     // more ordering criteria and even filters.
     const { order, orderType, group, groupType } = req.body;
     try {
-        if ((order || group) && (orderType || groupType)) {
+        if (order.length || group.length) {
             const shelters = yield prisma.shelter.findMany({
                 where: { [group]: groupType },
                 include: { followers: true },
@@ -79,7 +79,7 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
             res.status(404).send('ERROR: Missing parameters.');
     }
     catch (error) {
-        res.status(400).send('ERROR: Invalid parameter.');
+        res.status(400).send(`${order} ${orderType} ${group} ${groupType}`);
         console.log(error);
     }
 }));
@@ -163,10 +163,10 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        yield prisma.shelter.delete({
+        const deletedShelter = yield prisma.shelter.delete({
             where: { id },
         });
-        res.status(200).send("Shelter deleted successfully");
+        deletedShelter ? res.status(200).send("Shelter deleted successfully") : res.status(404).send("ID could not be found.");
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");

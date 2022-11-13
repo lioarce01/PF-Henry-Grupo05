@@ -72,11 +72,11 @@ router.delete('/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
-        await prisma.comment.delete({
+        const deletedComment = await prisma.comment.delete({
             where: { id }
         });
 
-        res.status(200).send('Delete successful')
+        deletedComment ? res.status(200).send('Comment deleted successfully.') : res.status(404).send("ID could not be found.");
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.")
         console.log(error)
