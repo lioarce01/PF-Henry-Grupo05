@@ -11,17 +11,17 @@ export const getTimeAgo = (date) => {
   const diffInWeeks = diffInDays / 7;
 
   if (diffInWeeks > 1) {
-    return `${Math.floor(diffInWeeks)} weeks ago`;
+    return `${Math.floor(diffInWeeks)}w`;
   } else if (diffInDays > 1) {
-    return `${Math.floor(diffInDays)} days ago`;
+    return `${Math.floor(diffInDays)}d`;
   } else if (diffInHours > 1) {
-    return `${Math.floor(diffInHours)} hours ago`;
+    return `${Math.floor(diffInHours)}h`;
   } else if (diffInMinutes > 1) {
-    return `${Math.floor(diffInMinutes)} minutes ago`;
+    return `${Math.floor(diffInMinutes)}m`;
   } else if (seconds > 1) {
-    return `${Math.floor(seconds)} seconds ago`;
+    return `${Math.floor(seconds)}s`;
   }
-  return "Just now";
+  return "Now";
 };
 
 export const uploadImage = async (preset, file) => {
