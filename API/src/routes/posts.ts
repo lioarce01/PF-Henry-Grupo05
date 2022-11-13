@@ -21,6 +21,9 @@ router.get('/', async(req, res) => {
                 },
                 shelter: true
               },
+              orderBy: {
+                createdAt: 'desc'
+                }
            })
     
            posts ? res.status(200).json(posts) : res.status(404).json('ERROR: Posts not found.')
@@ -36,6 +39,9 @@ router.get('/', async(req, res) => {
                 },
                 shelter: true
               },
+                orderBy: {
+                    createdAt: 'desc'
+                }
         });
         res.status(200).json(posts);
     } 

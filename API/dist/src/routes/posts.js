@@ -31,6 +31,9 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     },
                     shelter: true
                 },
+                orderBy: {
+                    createdAt: 'desc'
+                }
             });
             posts ? res.status(200).json(posts) : res.status(404).json('ERROR: Posts not found.');
         }
@@ -45,6 +48,9 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     },
                     shelter: true
                 },
+                orderBy: {
+                    createdAt: 'desc'
+                }
             });
             res.status(200).json(posts);
         }
