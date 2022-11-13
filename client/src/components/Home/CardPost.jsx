@@ -55,8 +55,9 @@ const CardPost = ({ image, author, content, likes, createdAt, comments, id, auth
                       : null
                 }
                 {
-                  likes > 1 ? <p className='p-1 text-sm text-gray-700'>{likesActuals} likes</p>
-                    : <p className='p-1 text-sm text-gray-700'>{likesActuals} like</p>
+                  likes > 1 ? <p className='p-1 text-sm text-gray-700'>{likes} likes</p>
+                    : likes === 1 ? <p className='p-1 text-sm text-gray-700'>{likes} like</p>
+                      : null
                 }
               </div>
             </button>
