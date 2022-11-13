@@ -43,7 +43,9 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { name } = req.query;
         const user = yield prisma.user.findMany({
             where: { name: { contains: name } },
-            include: { posts: true }
+            include: { posts: true,
+                following: true,
+            }
         });
         user.length ? res.status(200).send(user) : res.status(404).send('ERROR: Could not find any users.');
     }
@@ -61,6 +63,21 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             include: { following: true, posts: true }
         });
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
+    }
+    catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+}));
+//get followers of an user
+router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    try {
+        const user = yield prisma.user.findUnique({
+            where: { id },
+            include: { following: true }
+        });
+        user ? res.status(200).send(user.following) : res.status(404).send("ERROR: User not found.");
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');

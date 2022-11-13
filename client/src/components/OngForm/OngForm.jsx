@@ -1,28 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import * as yup from 'yup';
 import {ongSchema} from './validationOngForm';
 import {useFormik} from 'formik';
 import Navbar from '../Navbar/Navbar';
 import {createSheltersAction} from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions";
-
+import UploadImage from './UploadImage';
 
 const OngForm = () => {
+    const [image, setImage] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const onSubmit = async () =>{
-      console.log('submitted')
-      console.log(values);
-      await dispatch(createSheltersAction(values)).then(res => alert('Ong Created')).catch(()=> alert('error'));
-      navigate('/home')
+      if(image.length){
+
+        console.log('submitted')
+        console.log({...values, profilePic: image});
+        await dispatch(createSheltersAction({...values, profilePic: image})).then(res => alert('Shelter Created')).catch(()=> alert('error'));
+        navigate('/home')
+      }
     }
+    console.log(image)
     const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
       initialValues:{
         name:'',
         authorId: '636cfde16804f7dc836bda73', //id user hardcodeado
         description: '',
-        profilePic:'',
         city:'',
         country: '',
         goal: 0,
@@ -32,95 +36,93 @@ const OngForm = () => {
       validationSchema: ongSchema,
       onSubmit,
     })
+    console.log('values:', {...values, profilePic: image})
   return (
-    <div className='w-full  min-h-screen bg-[#EEEEE6] flex flex-col justify-between content-center'>
+    <div className='w-full min-h-screen h-fit bg-[#FAF2E7]'>
         <div >
             <Navbar/>
         </div>
         
-        <div className="mt-32 min-w-full  flex flex-col items-center  justify-center md:col-span-2 md:mt-0" >
-        <form onSubmit={handleSubmit} className="mt-5 min-w-full h-auto flex flex-col items-center justify-center md:col-span-2 md:mt-0">
+        <div className=" min-w-full  flex flex-col items-center pt-14 justify-center md:col-span-2 md:mt-0" >
+        <form onSubmit={handleSubmit} className="pt-14 min-w-full h-auto flex flex-col items-center justify-center md:col-span-2 md:mt-0">
           <h1 className="text-lg text-4xl font-medium leading-6 text-black">Create your Shelter</h1>
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">Name: </label>
-            <div className="flex items-center justify-arround w-full">
+          <div className='flex flex-row w-full p-14 h-full' >
+            <div className='flex flex-col w-full p-14 h-full'>
+              <div className="mb-6 w-full ">
+                <label className="block mb-2 text-xl font-medium text-black dark:text-black">Name: </label>
+                <div className="flex items-center justify-arround w-full">
+                  <input type="text" value={values.name} name= 'name'  placeholder='Add name...' onChange={handleChange} onBlur={handleBlur} className="bg-gray-50 border w-2/4 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6] dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                  {errors.name && <p className='text-red-500'>  {errors.name}</p>}
+                </div>
+              </div>
+              <div className="mb-6 w-full">
+                <label className="block mb-2 text-xl font-medium text-black dark:text-black">Country: </label>
+                <div className="flex items-center">
+                  <input type="text" value={values.country} name= 'country'  placeholder='Add country..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                  {errors.country && <p className='text-red-500 '>{errors.country}</p>}   
+                </div>
+              </div>
+              <div className="mb-6 w-full">
+                <label className="block mb-2 text-xl font-medium text-black dark:text-black">City: </label>
+                <div className="flex items-center">
+                  <input type="text" value={values.city} name= 'city'  placeholder='Add city..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                  {errors.city && <p className='text-red-500'>{errors.city}</p>}   
+                </div>
+              </div>
+              <div className="mb-6 w-full">
+                <label className="block mb-2 text-xl font-medium text-black dark:text-black">Address: </label>
+                <div className="flex items-center">
+                  <input type="text" value={values.address} name= 'address'  placeholder='Add address..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                  {errors.address && <p className='text-red-500'>{errors.address}</p>}   
+                </div>
+              </div>
+              <div className="mb-6 w-full">
+                <label className="block mb-2 text-xl font-medium text-black dark:text-black">Website: </label>
+                <div className="flex items-center">
+                  <input type="text" value={values.website} name= 'website'  placeholder='Add website..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>  
+                  {errors.website && <p className='text-red-500'>{errors.website}</p>}
+                </div>
+              </div>
+              <div className="mb-6 w-full">
+                <label className="block mb-2 text-xl font-medium text-black dark:text-black">Goal: </label>
+                <div className="flex items-center">
+                  <input type="number" value={values.goal} name= 'goal' min='1' placeholder='Add goal..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
+                  {errors.goal && <p className='text-red-500'>{errors.goal}</p>} 
+                </div>
+              </div>
+            </div>
+            <div className='flex flex-col w-full p-14 h-full'>
+            <div className="grid grid-cols-1 space-y-2">
+              <div>
 
-            <input type="text" 
-            value={values.name} 
-            name= 'name'  
-            placeholder='Add name...' 
-            onChange={handleChange} 
-            onBlur={handleBlur} 
-            className="bg-gray-50 border w-3/4 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6] dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-            {errors.name && <p className='text-red-500'>  {errors.name}</p>}
+                <label className="text-xl  font-bold text-black tracking-wide">
+                  Description:
+                </label>
+                <textarea
+                  name= 'description'
+                  placeholder='Add description..'
+                  value={values.description}
+                  onChange={handleChange} 
+                  onBlur={handleBlur}
+                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700  bg-[#FAF2E7] bg-clip-padding border border-solid border-gray-300 rounded transitionease-in-out m-0 focus:text-[#462312] focus:bg-[#FAF2E7] focus:border-gray-600 focus:outline-none"
+                  rows="3"
+                ></textarea>
+                {errors.description && <p className='text-red-500'>{errors.description}</p>} 
+              </div>
+            
+              <div>
+                <UploadImage image={image} setImage={setImage} handleChange={handleChange} />
+              </div>
+              </div>   
             </div>
           </div>
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">Description: </label>
-            <div className="flex items-center">
-            <input type="text" value={values.description} name= 'description'  placeholder='Add description..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-3/4 border  border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
-            {errors.description && <p className='text-red-500'>{errors.description}</p>}           
-
-            </div>
-          </div>
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">Country: </label>
-            <div className="flex items-center">
-
-            <input type="text" value={values.country} name= 'country'  placeholder='Add country..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-            {errors.country && <p className='text-red-500'>{errors.country}</p>}   
-            </div>
-          </div>
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">City: </label>
-            <div className="flex items-center">
-
-            <input type="text" value={values.city} name= 'city'  placeholder='Add city..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-            {errors.city && <p className='text-red-500'>{errors.city}</p>}   
-            </div>
-          </div>
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">Address: </label>
-            <div className="flex items-center">
-
-            <input type="text" value={values.address} name= 'address'  placeholder='Add address..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-            {errors.address && <p className='text-red-500'>{errors.address}</p>}   
-            </div>
-          </div>
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">Website: </label>
-            <div className="flex items-center">
-
-            <input type="text" value={values.website} name= 'website'  placeholder='Add website..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>  
-            {errors.website && <p className='text-red-500'>{errors.website}</p>}
-            </div>
-          </div>
-
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">Goal: </label>
-            <div className="flex items-center">
-
-            <input type="number" value={values.goal} name= 'goal' min='1' placeholder='Add goal..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
-            {errors.goal && <p className='text-red-500'>{errors.goal}</p>} 
-            </div>
-          </div>
-          <div className="mb-6 w-3/4">
-            <label className="block mb-2 text-sm font-medium text-black dark:text-black">Profile Pic: </label>
-            <div className="flex items-center">
-            <input type="text" value={values.profilePic} name= 'profilePic'  placeholder='Add Profile Pic..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
-            {errors.profilePic && <p className='text-red-500'>{errors.profilePic}</p>} 
-
-            </div>
-          </div>
-
-
           {((values.name !== '') && (Object.entries(errors).length === 0) &&  (values.description !=='')&& (values.address !=='') && (values.city !=='') && (values.country !=='')) ?
                          
-              <div>
-                  <button type='submit' className='pt-1 pb-1 pl-2 pr-2 mr-4 transition bg-[#FAF2E7] border border-gray-800 rounded-md hover:bg-orange-100 hover:text-black duration 300'>Submit</button>
+              <div >
+                  <button type='submit' className='pt-1 pb-1 pl-2 w-32 pr-2 mr-4 mt-0 text-xl transition bg-[#FAF2E7] border border-[#ca7c62] rounded-md hover:bg-[#ca7c62] border border-[#fffefe] hover:text-black duration 300'>Submit</button>
               </div>: 
               <div>
-                  <button type='submit' className='pt-1 pb-1 pl-2 pr-2 mr-4 transition border border-gray-800 bg-[#FAF2E7] rounded-md hover:bg-orange-100 hover:text-black duration 300' disabled>Submit</button>
+                  <button type='submit' className='pt-1 pb-1 pl-2 pr-2 mr-4 transition border border-white bg-[#FAF2E7] hidden rounded-md hover:bg-orange-100 hover:text-black duration 300' disabled>Submit</button>
               </div>
           }
 

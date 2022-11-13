@@ -169,6 +169,7 @@ router.delete('/:id', async(req,res) => {
 
     try {
         const deletedPost = await prisma.post.delete({
+
             where: { id }
         });
         

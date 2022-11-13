@@ -41,7 +41,7 @@ export const manageSheltersSlice = createSlice({
 
         sortShelters : (state, action) => {
             state.shelters = action.payload
-        }
+        },
     }
 });
 

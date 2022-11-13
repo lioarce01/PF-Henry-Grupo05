@@ -33,11 +33,12 @@ const Ongs = () => {
                     image={shelter.profilePic}
                     name={shelter.name}
                     description={shelter.description}
-                    budget={shelter.budget}
+                    goal={shelter.goal}
                     followers={shelter.userFollowers?.length}
                   />
                 )
-              }) : <Spinner/>
+              }) : <div className='flex justify-center mt-12 text-4xl text-center'><p>Not found</p></div>
+              // <Spinner/>
             }
           </div>
       </div>
