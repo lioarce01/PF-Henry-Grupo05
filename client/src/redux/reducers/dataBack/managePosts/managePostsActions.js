@@ -20,7 +20,6 @@ export const getPostsByIdAction = (id) => async dispatch => {
     try {
         const res = await axios.get(`/posts/${id}`);
         dispatch(getPostsById(res.data));
-        console.log('res:' , res.data, id)
     } catch (err) {
         dispatch(getPostsById(err.response.data));
     } finally {

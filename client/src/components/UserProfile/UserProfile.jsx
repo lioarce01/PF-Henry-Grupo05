@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { getUserByIdAction } from '../../redux/reducers/dataBack/manageUsers/manageUsersActions'
 import CardPost from '../Home/CardPost'
 import ONGCard from '../Home/ONGCard'
+import Spinner from '../Spinner/Spinner'
 
 const UserProfile = () => {
   const params = useParams()
@@ -44,7 +45,7 @@ const UserProfile = () => {
         <h1 className='py-2 text-4xl font-bold text-[#462312]'>
           User Posts
         </h1>
-        <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] max-h-[700px] overflow-y-scroll h-auto py-2 px-4 my-4 bg-[#fffcf7] rounded-md justify-center items-center'>
+        <div className={`flex flex-col w-[90%] md:w-[640px] lg:w-[768px] ${user.posts?.length < 1 ? 'max-h-[700px]' : 'max-h-[160px]'} overflow-y-scroll h-auto py-2 px-4 my-4 bg-[#fffcf7] rounded-md justify-center items-center`}>
           <div className='mt-2'>
             {
               user.posts?.length < 1 ? (
@@ -58,7 +59,6 @@ const UserProfile = () => {
                     </div>
                     ) : (
                       user?.posts ? user.posts.map(post => {
-                        console.log('user.post: ',user.posts)
                         return (
                           <CardPost
                             key={post.id}
@@ -71,7 +71,7 @@ const UserProfile = () => {
                             comments={post.comments}
                           />
                         )
-                    }) : null
+                    }) : <div className='mb-[40px]'><Spinner /></div>
                   )
                 )
               }
@@ -82,29 +82,21 @@ const UserProfile = () => {
         </h1>
         <div className='flex flex-col w-[90%] md:w-[640px] lg:w-[768px] h-auto max-h-[1000px] py-2 px-4 my-4 bg-[#fffcf7] rounded-md'>
           <div className='flex flex-col mt-2 overflow-y-scroll '>
-          {
-            following?.length < 1 && (
-              <div className="my-10">
-                <h1 className='text-xl font-bold text-[#462312]'>You don't have any shelter in your list!</h1>
-              </div>
-            )
-          }
-          {
-            following?.length > 0 && (
-              following ? following.map(ong => {
-                  return (
-                    <ONGCard
-                      key={ong.id}
-                      id={ong.id}
-                      name={ong.name}
-                      description={ong.description}
-                      goal={ong.goal}
-                      followers={ong.userFollowers.length}
-                    />
-                  )
-                }) : null
-            )
-          }
+              {Array.isArray(following) ? (
+                following?.length ? (
+                  following?.map(ong => {
+                    return (
+                      <ONGCard
+                        key={ong.id}
+                        id={ong.id}
+                        name={ong.name}
+                        description={ong.description}
+                        goal={ong.goal}
+                        followers={ong.userFollowers.length}
+                      />
+                    )})
+                ) : <h2>You are not following any shelters.</h2>
+              ) : <Spinner />}
           </div>
         </div>
       </div>
