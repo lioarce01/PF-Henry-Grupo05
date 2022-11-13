@@ -109,10 +109,10 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        yield prisma.user.delete({
+        const deletedUser = yield prisma.user.delete({
             where: { id },
         });
-        res.status(200).send("User deleted successfully.");
+        deletedUser ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.");
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
