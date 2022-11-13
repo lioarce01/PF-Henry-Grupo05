@@ -1,51 +1,22 @@
-import React, { useState } from "react"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { ongSchema } from "./validationOngForm"
-import { useFormik } from "formik"
-import Navbar from "../Navbar/Navbar"
-import { createSheltersAction } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"
-import UploadImage from "./UploadImage"
+import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import {ongSchema} from './validationOngForm';
+import {useFormik} from 'formik';
+import Navbar from '../Navbar/Navbar';
+import {createSheltersAction} from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions";
+import UploadImage from './UploadImage';
 
 
 
 const OngForm = () => {
-	const [image, setImage] = useState("")
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
+    const [image, setImage] = useState('');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-	const onSubmit = async () => {
-		if (image.length) {
-			console.log("submitted")
-			console.log({ ...values, profilePic: image })
-			await dispatch(createSheltersAction({ ...values, profilePic: image }))
-				.then((res) => alert("Shelter Created"))
-				.catch(() => alert("error"))
-			navigate("/home")
-		}
-	}
-	console.log(image)
-	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-		initialValues: {
-			name: "",
-			authorId: "636cfde16804f7dc836bda73", //id user hardcodeado
-			description: "",
-			city: "",
-			animals: "",
-			country: "",
-			goal: 0,
-			address: "",
-			website: "",
-		},
-		validationSchema: ongSchema,
-		onSubmit,
-	})
-	console.log("values:", { ...values, profilePic: image })
-	return (
-		<div className="w-full min-h-screen h-fit bg-[#FAF2E7]">
-			<div>
-				<Navbar />
-			</div>
+    const onSubmit = async () =>{
+      if(image.length){
+
         console.log('submitted')
         console.log({...values, profilePic: image});
         await dispatch(createSheltersAction({...values, profilePic: image})).then(res => alert('Shelter Created')).catch(()=> alert('error'));
@@ -81,28 +52,28 @@ const OngForm = () => {
             <div className='flex flex-row w-full p-14 h-full' >
               <div className='flex flex-col w-full h-full'>
                 <div className="mb-6 w-full ">
-                  <label className="block mb-2 text-xl font-medium text-black dark:text-black">Name: </label>
+                  <label className="block mb-2 text-xl font-medium text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">Name</label>
                   <div className="flex items-center justify-arround w-full">
                     <input type="text" value={values.name} name= 'name'  placeholder='Add name...' onChange={handleChange} onBlur={handleBlur} className="bg-gray-50 border w-2/4 border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6] dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                     {errors.name && <p className='text-red-500'>  {errors.name}</p>}
                   </div>
                 </div>
                 <div className="mb-6 w-full">
-                  <label className="block mb-2 text-xl font-medium text-black dark:text-black">Country: </label>
+                  <label className="block mb-2 text-xl font-medium text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">Country</label>
                   <div className="flex items-center">
                     <input type="text" value={values.country} name= 'country'  placeholder='Add country..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                     {errors.country && <p className='text-red-500 '>{errors.country}</p>}   
                   </div>
                 </div>
                 <div className="mb-6 w-full">
-                  <label className="block mb-2 text-xl font-medium text-black dark:text-black">City: </label>
+                  <label className="block mb-2 text-xl font-medium text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">City</label>
                   <div className="flex items-center">
                     <input type="text" value={values.city} name= 'city'  placeholder='Add city..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                     {errors.city && <p className='text-red-500'>{errors.city}</p>}   
                   </div>
                 </div>
                 <div className="mb-6 w-full">
-                  <label className="block mb-2 text-xl font-medium text-black dark:text-black">Address: </label>
+                  <label className="block mb-2 text-xl font-medium text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">Address</label>
                   <div className="flex items-center">
                     <input type="text" value={values.address} name= 'address'  placeholder='Add address..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                     {errors.address && <p className='text-red-500'>{errors.address}</p>}   
@@ -116,7 +87,7 @@ const OngForm = () => {
                   </div>
                 </div>
                 <div className="mb-6 w-full">
-                  <label className="block mb-2 text-xl font-medium text-black dark:text-black">Goal: </label>
+                  <label className="block mb-2 text-xl font-medium text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">Goal</label>
                   <div className="flex items-center">
                     <input type="number" value={values.goal} name= 'goal' min='1' placeholder='Add goal..' onChange={handleChange} onBlur={handleBlur}  className="bg-gray-50 w-2/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"/> 
                     {errors.goal && <p className='text-red-500'>{errors.goal}</p>} 
@@ -141,8 +112,8 @@ const OngForm = () => {
               <div className="grid grid-cols-1 space-y-2">
                 <div>
 
-                  <label className="text-xl  font-bold text-black tracking-wide">
-                    Description:
+                  <label className="text-xl  font-bold text-black tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500">
+                    Description
                   </label>
                   <textarea
                     name= 'description'
@@ -178,4 +149,4 @@ const OngForm = () => {
   )
 }
 
-export default OngForm
+export default OngForm;
