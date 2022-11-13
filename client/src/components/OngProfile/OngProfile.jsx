@@ -56,7 +56,7 @@ return (
     <div className='w-full min-h-screen h-fit bg-[#FAF2E7]'>
         <NavBar/>   
     <div className='flex flex-row justify-end w-full h-full pt-20 '>
-        {details.posts?.length >0 && <div className="fixed left-10 flex flex-col items-center ml-5 border w-fit h-fit p-2 border-4 border-[#462312] rounded-lg ">
+        {details.description?.length >0 && <div className="fixed left-10 flex flex-col items-center ml-5 border w-fit h-fit p-2 border-4 border-[#462312] rounded-lg ">
             <div className="border w-80 h-fit border-red-50">
                     <OngFormUpdate toogle={toogle}/>
                     <button className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
