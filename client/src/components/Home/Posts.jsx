@@ -7,7 +7,6 @@ import PostFilters from "./PostFilters"
 import ModalCreatePost from "./ModalCreatePost"
 
 const Posts = () => {
-
 	const [isOpen, setIsOpen] = useState(false)
 	const [page, setPage] = useState(1)
 	const dispatch = useDispatch()
@@ -49,7 +48,6 @@ const Posts = () => {
 			</div>
 
 			<div className="flex flex-col justify-center w-full min-w-full">
-
 				{posts.length ? (
 					posts.map((post) => {
 						return (
@@ -67,7 +65,11 @@ const Posts = () => {
 							/>
 						)
 					})
-				) : <Spinner />}
+				) : (
+					<div className="mt-[140px]">
+						<Spinner />
+					</div>
+				)}
 			</div>
 			<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
 		</div>
