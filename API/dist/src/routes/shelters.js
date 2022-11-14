@@ -68,13 +68,16 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
     // more ordering criteria and even filters.
     const { order, orderType, group, groupType } = req.body;
     try {
-        if (order || group) {
+        if (order || group) { // if there is an order or a group by 
             const shelters = yield prisma.shelter.findMany({
                 where: { [group]: groupType },
                 include: { followers: true },
-                orderBy: order === "followers" ? { followers: { _count: orderType } } : { [order]: orderType }
+                orderBy: { [order]: orderType }
             });
-            shelters.length ? res.status(200).send(shelters) : res.status(404).send("No shelters found.");
+            if (shelters)
+                res.status(200).send(shelters);
+            else
+                res.status(404).send('ERROR: Could not find any shelters');
         }
         else {
             res.status(404).send('ERROR: Missing parameters.');
