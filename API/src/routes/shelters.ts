@@ -1,6 +1,5 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
-import { group } from 'console';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -72,13 +71,12 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
     const { order, orderType, group, groupType } = req.body;
 
     try {
-        if (order || group) { // if there is an order or a group by 
+        if (order || group) { 
             
             const shelters = await prisma.shelter.findMany({
-                where: { [group]: groupType},
-                
+                where: { [group]: groupType },
                 include: { followers: true },
-                orderBy: { [order]: orderType }
+                orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
             })
 
             if (shelters) res.status(200).send(shelters);
