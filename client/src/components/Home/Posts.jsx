@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import CardPost from "./CardPost"
 import Spinner from "../Spinner/Spinner"
@@ -10,8 +10,12 @@ import { selectPost } from "../../redux/slices/managePosts"
 const Posts = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const {sort} = useSelector(selectPost)
-	const {data: posts, isLoading, error, isSuccess} = useGetPostsQuery(sort)
+	const {data: posts, isLoading, error, isSuccess, refetch} = useGetPostsQuery(sort)
 	const closeModal = () => setIsOpen(false)
+	useEffect(() => {
+		refetch()
+	}, [])
+	
 
 	
 
