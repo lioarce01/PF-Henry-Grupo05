@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useAddNewCommentMutation } from "../../../redux/api/posts";
-
-
 
 const AddComment = ({ postId }) => {
   const [content, setContent] = useState("");
-  const [addNewComment, {data, isLoading, error}] = useAddNewCommentMutation()
-
+  const [addNewComment, { data, isLoading, error }] =
+    useAddNewCommentMutation();
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addNewComment({content, authorId: '636cfde16804f7dc836bda73', postId})
+    addNewComment({ content, authorId: "636cfde16804f7dc836bda73", postId });
   };
 
   const handleChange = (e) => {

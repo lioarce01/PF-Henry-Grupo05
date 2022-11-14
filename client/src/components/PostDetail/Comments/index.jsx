@@ -2,7 +2,6 @@ import React from 'react'
 import AddComment from './AddComment';
 import Comment from './Comment';
 
-
 const Comments = ({ postId, details }) => {
   return (
     <div>

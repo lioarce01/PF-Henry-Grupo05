@@ -1,26 +1,25 @@
-import React from 'react'
+import React from "react";
 import { AiFillDelete, AiFillEdit, AiOutlineEllipsis } from "react-icons/ai";
-import { Menu } from '@headlessui/react'
-import { Fragment } from 'react'
-import { Transition } from '@headlessui/react'
-
-import { useDeletePostMutation } from '../../redux/api/posts';
-
+import { Menu } from "@headlessui/react";
+import { Fragment } from "react";
+import { Transition } from "@headlessui/react";
+import { useDeletePostMutation } from "../../redux/api/posts";
 
 const ModalEditPost = ({ setToogle, postId }) => {
-  const [deletePost, {data, isLoading, error}] = useDeletePostMutation()
-
+  const [deletePost, { data, isLoading, error }] = useDeletePostMutation();
 
   function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(" ");
   }
   return (
     <div className="w-full relative z-50 inline-block text-right outline-none">
-      <Menu as="div" className="relative z-50 inline-block text-left outline-none">
+      <Menu
+        as="div"
+        className="relative z-50 inline-block text-left outline-none"
+      >
         <div>
           <Menu.Button className="inline-flex justify-center w-full px-2 py-1 text-sm font-medium text-gray-800 border-2 border-[#fffcf7] rounded-md shadow-sm outline-none hover:bg-[#fffcf7] transition duration-300 focus:outline-none">
             <AiOutlineEllipsis className="w-8 h-8 " aria-hidden="true" />
-
           </Menu.Button>
         </div>
 
@@ -35,18 +34,20 @@ const ModalEditPost = ({ setToogle, postId }) => {
         >
           <Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1">
-
               <Menu.Item>
                 {({ active }) => (
-                  <button onClick={() => setToogle(toogle => !toogle)}
+                  <button
+                    onClick={() => setToogle((toogle) => !toogle)}
                     type="submit"
                     className={classNames(
-                      active ? 'bg-slate-200 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
+                      active ? "bg-slate-200 text-gray-900" : "text-gray-700",
+                      "block w-full px-4 py-2 text-left text-sm"
                     )}
                   >
                     <div className="flex flex-row items-start justify-start">
-                      <span><AiFillEdit className="mx-1 text-xl" /></span>
+                      <span>
+                        <AiFillEdit className="mx-1 text-xl" />
+                      </span>
                       <p className="mx-1">Edit</p>
                     </div>
                   </button>
@@ -55,15 +56,16 @@ const ModalEditPost = ({ setToogle, postId }) => {
               <Menu.Item>
                 {({ active }) => (
                   <button
-
                     onClick={() => deletePost(postId)}
                     className={classNames(
-                      active ? 'bg-red-600 text-white' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
+                      active ? "bg-red-600 text-white" : "text-gray-700",
+                      "block w-full px-4 py-2 text-left text-sm"
                     )}
                   >
                     <div className="flex flex-row items-start justify-start">
-                      <span><AiFillDelete className="mx-1 text-xl" /></span>
+                      <span>
+                        <AiFillDelete className="mx-1 text-xl" />
+                      </span>
                       <p>Delete</p>
                     </div>
                   </button>
@@ -74,8 +76,7 @@ const ModalEditPost = ({ setToogle, postId }) => {
         </Transition>
       </Menu>
     </div>
+  );
+};
 
-  )
-}
-
-export default ModalEditPost
+export default ModalEditPost;
