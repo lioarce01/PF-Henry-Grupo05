@@ -76,8 +76,9 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
             });
             shelters.length ? res.status(200).send(shelters) : res.status(404).send("No shelters found.");
         }
-        else
+        else {
             res.status(404).send('ERROR: Missing parameters.');
+        }
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");

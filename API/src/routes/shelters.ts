@@ -75,14 +75,17 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
         if (order || group) {
             
             const shelters = await prisma.shelter.findMany({
-                where: { [group]: groupType },
+                where: { [group]: groupType},
                 include: { followers: true },
                 orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
             })
 
             shelters.length ? res.status(200).send(shelters) : res.status(404).send("No shelters found.")
 
-        } else res.status(404).send('ERROR: Missing parameters.');
+        } else {
+            res.status(404).send('ERROR: Missing parameters.');
+        }
+
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
