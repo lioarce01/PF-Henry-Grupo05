@@ -32,7 +32,7 @@ const Posts = () => {
 	}, [])
 
 	return (
-		<div className="w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#FAF2E7]">
+		<div className="w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#EEEEE6]">
 			<div className={`flex flex-col ${posts.length ? "w-full" : "w-[580px]"}`}>
 				<div className="flex w-full">
 					<button
