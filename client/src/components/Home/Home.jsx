@@ -7,7 +7,7 @@ import Footer from '../Landing/Footer/Footer'
 
 const Home = () => {
   return (
-    <div className='w-full min-h-screen h-fit bg-[#FAF2E7]'>
+    <div className='w-full min-h-screen h-fit bg-[#EEEEE6]'>
       <Navbar />
       <div className='flex flex-row justify-between pt-14'>
         <div>

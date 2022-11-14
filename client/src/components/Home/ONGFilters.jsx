@@ -74,14 +74,15 @@ const ONGFilters = () => {
 	}, [queriesSelected])
 
 	return (
-		<div className="relative left-[25px]">
+		<div className="w-[285px]">
 			{/* select box: CRITERIO FILTRO */}
 			<select
-				className="bg-white"
+				className="bg-white w-[100px]"
 				name="group"
 				onChange={(e) => handleSelect(e)}
-				defaultValue={"All"}
+				defaultValue={"Default"}
 				ref={listGroup}>
+				<option value="Default" disabled>Filter by:</option>
 				<option value="All">All</option>
 				<option value="country">Country</option>
 				<option value="city">City</option>
@@ -90,13 +91,14 @@ const ONGFilters = () => {
 
 			{/* select box: DETALLE FILTRO */}
 			<select
-				className="ml-2 bg-white"
+				className="bg-white w-[180px] ml-[5px]"
 				name="groupType"
 				onChange={(e) => handleSelect(e)}
 				defaultValue={"DEFAULT"}
 				ref={listDetail}>
 				<option value="DEFAULT" disabled>
-					By:
+					{listGroup.current?.value ? (listGroup.current?.value !== 'Default' && listGroup.current?.value !== 'All'
+					? `By ${listGroup.current?.value.charAt(0).toUpperCase() + listGroup.current?.value.slice(1)}:` : 'By:') : null}
 				</option>
 				{detailsOptions
 					? detailsOptions.map((op) => (
@@ -109,7 +111,7 @@ const ONGFilters = () => {
 
 			{/* select box: ORDENAMIENTO */}
 			<select
-				className="ml-2 bg-white"
+				className="bg-white w-[100px] mt-[5px]"
 				name="order"
 				onChange={(e) => handleSelect(e)}
 				defaultValue={"DEFAULT"}
@@ -124,7 +126,7 @@ const ONGFilters = () => {
 			</select>
 
 			{/* button: RESET */}
-			<button className="bg-white ml-2 w-[60px]" onClick={handleReset}>
+			<button className="text-black w-[60px] mt-[5px] ml-[5px] float-right" onClick={handleReset}>
 				Reset
 			</button>
 		</div>
