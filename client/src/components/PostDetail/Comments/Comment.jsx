@@ -3,22 +3,19 @@ import { Transition } from '@headlessui/react'
 import { AiFillDelete, AiFillEdit, AiOutlineEllipsis } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteCommentAction } from "../../../redux/reducers/dataBack/manageComments/manageCommentsActions";
-import { getPostsByIdAction } from "../../../redux/reducers/dataBack/managePosts/managePostsActions";
 import { Menu } from '@headlessui/react'
+import { useDeleteCommentMutation } from "../../../redux/api/posts";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
 const Comment = ({ content, author, id, postId }) => {
-  const dispatch = useDispatch();
-
-  const deleteComment = () => {
-    dispatch(deleteCommentAction(id))
-      .then(() => dispatch(getPostsByIdAction(postId)));
-  };
-
+  const [deleteComment, {data, isLoading, error}] = useDeleteCommentMutation()
+  
   return (
     <div className="flex flex-col mx-auto">
       <div className="w-[100%] max-w-xl my-4 md:min-w-[500px] bg-white border border-gray-200 rounded-lg shadow-md mx-auto">
@@ -66,6 +63,7 @@ const Comment = ({ content, author, id, postId }) => {
                             {({ active }) => (
                               <button
                                 type="submit"
+                                onClick={() => deleteComment(id)}
                                 className={classNames(
                                   active ? 'bg-slate-200 text-gray-900' : 'text-gray-700',
                                   'block w-full px-4 py-2 text-left text-sm'

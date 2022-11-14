@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDispatch} from "react-redux"
-import { sortPostsAction } from '../../redux/reducers/dataBack/managePosts/managePostsActions'
+import { sortPostsAction } from '../../redux/slices/managePosts/actions'
 
 const PostFilters = () => {
 

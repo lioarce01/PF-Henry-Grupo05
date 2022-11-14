@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import manageUsersSlice from "../reducers/dataBack/manageUsers/manageUsersSlice"; 
-import managePostsSlice from "../reducers/dataBack/managePosts/managePostsSlice"; 
+import managePostsSlice from '../slices/managePosts';
 import manageSheltersSlice from "../reducers/dataBack/manageShelters/manageSheltersSlice"; 
 import manageCommentsSlice from '../reducers/dataBack/manageComments/manageCommentsSlice';
 import loadingSlice  from '../reducers/dataBack/loading/loadingSlice';
@@ -15,6 +15,7 @@ export default configureStore({
         managePosts: managePostsSlice,
         manageShelters: manageSheltersSlice,
         manageComments: manageCommentsSlice,
-        loading: loadingSlice
+        loading: loadingSlice,
+        managePosts: managePostsSlice,
     }
 })

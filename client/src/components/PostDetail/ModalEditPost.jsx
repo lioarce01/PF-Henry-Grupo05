@@ -3,11 +3,14 @@ import { AiFillDelete, AiFillEdit, AiOutlineEllipsis } from "react-icons/ai";
 import { Menu } from '@headlessui/react'
 import { Fragment } from 'react'
 import { Transition } from '@headlessui/react'
-import { deletePostAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions";
-import { useDispatch } from 'react-redux';
+
+import { useDeletePostMutation } from '../../redux/api/posts';
+
 
 const ModalEditPost = ({ setToogle, postId }) => {
-  const dispatch = useDispatch()
+  const [deletePost, {data, isLoading, error}] = useDeletePostMutation()
+
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -53,7 +56,7 @@ const ModalEditPost = ({ setToogle, postId }) => {
                 {({ active }) => (
                   <button
 
-                    onClick={() => dispatch(deletePostAction(postId))}
+                    onClick={() => deletePost(postId)}
                     className={classNames(
                       active ? 'bg-red-600 text-white' : 'text-gray-700',
                       'block w-full px-4 py-2 text-left text-sm'

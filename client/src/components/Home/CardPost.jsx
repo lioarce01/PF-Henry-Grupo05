@@ -5,10 +5,9 @@ import { AiFillHeart } from "react-icons/ai"
 import { getTimeAgo } from "../../utils"
 import { AiOutlineHeart } from "react-icons/ai"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { updatePostLikesAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions"
 import ModalPostDetail from "./ModalPostDetail"
 import ShowMoreText from "react-show-more-text"
+import { useUpdatePostLikesMutation } from "../../redux/api/posts"
 
 const CardPost = ({
 	image,
@@ -22,19 +21,20 @@ const CardPost = ({
 	id,
 	authorId,
 }) => {
-	const dispatch = useDispatch()
 	const [likesActuals, setLikesActuals] = useState(likes)
 	const [like, setLike] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
 
 	const closeModal = () => setIsOpen(false)
 
+	const [updateLikes, {data, isLoading, error}] = useUpdatePostLikesMutation()
+
 	const toggleLike = () => {
 		setLike(!like)
 		like ? setLikesActuals(likesActuals - 1) : setLikesActuals(likesActuals + 1)
 		like
-			? dispatch(updatePostLikesAction({ id, likes: likesActuals - 1 }))
-			: dispatch(updatePostLikesAction({ id, likes: likesActuals + 1 }))
+			? updateLikes({ id, likes: likesActuals - 1 })
+			: updateLikes({ id, likes: likesActuals + 1 })
 	}
 
 	useEffect(() => {
@@ -109,9 +109,9 @@ const CardPost = ({
 						) : comments === 1 ? (
 							<p className="p-1 text-sm text-gray-700">{comments} comment</p>
 						) : null}
-						{likes > 1 ? (
+						{likesActuals > 1 ? (
 							<p className="p-1 text-sm text-gray-700">{likesActuals} likes</p>
-						) : likes === 1 ? (
+						) : likesActuals === 1 ? (
 							<p className="p-1 text-sm text-gray-700">{likesActuals} like</p>
 						) : null}
 					</div>
@@ -161,6 +161,7 @@ const CardPost = ({
 				isOpen={isOpen}
 				setLike={toggleLike}
 				like={like}
+				likes={likesActuals}
 			/>
 		</div>
 	)

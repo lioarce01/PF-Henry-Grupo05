@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API = "https://pf-henry-05.onrender.com";
+const API = process.env.REACT_APP_API || 'http://localhost:3001';
 
 export const postApi = createApi({
   reducerPath: "postApi",
@@ -62,7 +62,7 @@ export const postApi = createApi({
         method: "put",
         body: post,
       }),
-      invalidatesTags: ["Posts", "PostId"],
+      invalidatesTags: [],
     }),
 
 

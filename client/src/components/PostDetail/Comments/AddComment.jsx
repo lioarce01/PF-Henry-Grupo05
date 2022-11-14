@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createCommentAction } from "../../../redux/reducers/dataBack/manageComments/manageCommentsActions";
-import { getPostsByIdAction } from "../../../redux/reducers/dataBack/managePosts/managePostsActions";
+import { useAddNewCommentMutation } from "../../../redux/api/posts";
 
 
 
 const AddComment = ({ postId }) => {
-  const dispatch = useDispatch();
   const [content, setContent] = useState("");
+  const [addNewComment, {data, isLoading, error}] = useAddNewCommentMutation()
+
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createCommentAction({
-      content,
-      authorId: "636cfde16804f7dc836bda73",
-      postId: postId
-    })
-    ).then(() => dispatch(getPostsByIdAction(postId)));
+    addNewComment({content, authorId: '636cfde16804f7dc836bda73', postId})
   };
 
   const handleChange = (e) => {
