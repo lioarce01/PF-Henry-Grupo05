@@ -5,7 +5,7 @@ import { toggleLoading } from '../loading/loadingSlice';
 export const getPostsAction = () => async dispatch => {
     dispatch(toggleLoading())
     try {
-        const res = await axios.get('/posts?perPage=5&page=1');
+        const res = await axios.get('/posts');
         dispatch(getPosts(res.data))
     } catch (err) {
         dispatch(getPosts(err));

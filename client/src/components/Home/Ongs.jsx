@@ -34,7 +34,7 @@ const Ongs = () => {
 										image={shelter.profilePic}
 										name={shelter.name}
 										description={shelter.description}
-										goal={shelter.goal}
+										budget={shelter.budget}
 										followers={shelter.userFollowers?.length}
 									/>
 								)
