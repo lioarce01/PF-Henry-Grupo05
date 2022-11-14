@@ -56,29 +56,6 @@ router.get('/topFive', async(req, res)=>{
 });
 
 
-/* router.get('/sample', async(req : ReqSampling, res) => {
-    // here we are able to expand this further, adding
-    // more ordering criteria and even filters.
-    const { order, type } = req.query;
-
-    try {
-        if (order && type) {
-            
-            const shelters = await prisma.shelter.findMany({
-
-                include: { followers: true },
-                orderBy: order === "followers" ? {followers: {_count: type}} : { [order]: type }
-            })
-
-            res.status(200).send(shelters);
-
-        } else res.status(404).send('ERROR: Missing parameters.');
-    } catch (error) {
-        res.status(400).send('ERROR: Invalid parameter.');
-        console.log(error);
-    }
-}) */
-
 // order (or filter, in the future) by what is in this Type
 type ReqSampling = { 
     body: { 
@@ -95,17 +72,22 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
     const { order, orderType, group, groupType } = req.body;
 
     try {
-        if (order.length || group.length) {
+        if (order || group) { // if there is an order or a group by 
             
             const shelters = await prisma.shelter.findMany({
-                where: { [group]: groupType },
+                where: { [group]: groupType},
+                
                 include: { followers: true },
-                orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
+                orderBy: { [order]: orderType }
             })
 
-            shelters.length ? res.status(200).send(shelters) : res.status(404).send("No shelters found.")
+            if (shelters) res.status(200).send(shelters);
+            else res.status(404).send('ERROR: Could not find any shelters');
 
-        } else res.status(404).send('ERROR: Missing parameters.');
+        } else {
+            res.status(404).send('ERROR: Missing parameters.');
+        }
+
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);

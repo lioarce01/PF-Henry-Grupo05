@@ -2,7 +2,7 @@ const Footer = () => {
     const image = "https://cdn-icons-png.flaticon.com/512/1152/1152755.png"
 
     return (
-        <footer className="w-full h-[100px] mt-40 px-12">
+        <footer className="w-full h-[100px] mt-24 px-12">
             <div className="border-t-[1px] border-[#3D190C] pt-7 flex flex-row">
 
 

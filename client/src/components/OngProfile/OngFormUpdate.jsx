@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect , useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSheltersByIdAction, updateSheltersAction } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"; 
+import { getSheltersByIdAction, updateSheltersAction,cleanSheltersDetailsAction } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"; 
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { ongSchema } from "../OngForm/validationOngForm";
@@ -17,6 +17,9 @@ const OngFormUpdate = ({toogle}) => {
   
   useEffect (()=>{
   dispatch(getSheltersByIdAction(id))
+  return(()=>{
+    dispatch(cleanSheltersDetailsAction())
+})
   },[dispatch])
 
   const onSubmit = ()=>{
@@ -38,7 +41,7 @@ const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
   return (
     <div className='w-contain'>
       <div>
-      <UploadImage image={image} setImage={setImage} />
+      <UploadImage image={image} setImage={setImage} toogle={toogle} />
       </div>
       <div >
       <form  onSubmit={handleSubmit}>
