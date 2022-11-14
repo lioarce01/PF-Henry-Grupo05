@@ -1,9 +1,6 @@
 import { useEffect, useState, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {
-	getSheltersAction,
-	sortSheltersAction,
-} from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"
+import { getSheltersAction, sortSheltersAction } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"
 
 const ONGFilters = () => {
 	const listGroup = useRef()
@@ -11,7 +8,7 @@ const ONGFilters = () => {
 	const listOrder = useRef()
 
 	const dispatch = useDispatch()
-	const shelters = useSelector((state) => state.manageShelters.shelters)
+	const shelters = useSelector((state) => state.manageShelters.sheltersCopy)
 
 	const [queriesSelected, setQueriesSelected] = useState({
 		group: undefined,
@@ -24,7 +21,7 @@ const ONGFilters = () => {
 		? Array.from(new Set(shelters.map((s) => s[queriesSelected.group])))
 		: null
 
-	const handleSelect = (e) => {
+	const handleSelect = e => {
 		if (e.target.value === "All") {
 			if (queriesSelected.order) {
 				setQueriesSelected({
@@ -103,10 +100,10 @@ const ONGFilters = () => {
 				</option>
 				{detailsOptions
 					? detailsOptions.map((op) => (
-							<option value={op} key={op}>
-								{op}
-							</option>
-					  ))
+						<option value={op} key={op}>
+							{op}
+						</option>
+					))
 					: null}
 			</select>
 
@@ -126,7 +123,7 @@ const ONGFilters = () => {
 				<option value="followers,asc">Followers -</option>
 			</select>
 
-			{/* select box: ORDENAMIENTO */}
+			{/* button: RESET */}
 			<button className="bg-white ml-2 w-[60px]" onClick={handleReset}>
 				Reset
 			</button>
