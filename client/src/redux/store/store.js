@@ -4,11 +4,13 @@ import managePostsSlice from "../reducers/dataBack/managePosts/managePostsSlice"
 import manageSheltersSlice from "../reducers/dataBack/manageShelters/manageSheltersSlice"; 
 import manageCommentsSlice from '../reducers/dataBack/manageComments/manageCommentsSlice';
 import loadingSlice  from '../reducers/dataBack/loading/loadingSlice';
+import { postApi } from '../api/posts';
 
 
 export default configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware),
     reducer: {
+        [postApi.reducerPath]: postApi.reducer,
         manageUsers: manageUsersSlice,
         managePosts: managePostsSlice,
         manageShelters: manageSheltersSlice,
