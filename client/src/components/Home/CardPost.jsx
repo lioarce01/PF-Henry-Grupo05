@@ -27,31 +27,27 @@ const CardPost = ({
 	const [like, setLike] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
 
-
 	const closeModal = () => setIsOpen(false)
 
-
 	const toggleLike = () => {
-		setLike(! like)
+		setLike(!like)
 		like ? setLikesActuals(likesActuals - 1) : setLikesActuals(likesActuals + 1)
 		like
 			? dispatch(updatePostLikesAction({ id, likes: likesActuals - 1 }))
 			: dispatch(updatePostLikesAction({ id, likes: likesActuals + 1 }))
 	}
 
-
 	useEffect(() => {
 		setLike(like)
 	}, [like])
-
 
 	useEffect(() => {
 		setLikesActuals(likes)
 	}, [likes])
 
-
-	if (! image) image = "https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
-
+	if (!image)
+		image =
+			"https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
 
 	const executeOnClick = (isExpanded) => {
 		console.log(isExpanded)
@@ -84,7 +80,7 @@ const CardPost = ({
 
 					<div className="flex flex-col w-full"></div>
 
-					<p className="flex flex-col w-full py-4 font-normal text-left text-gray-900 text-md">
+					<div className="flex flex-col w-full py-4 font-normal text-left text-gray-900 text-md">
 						<ShowMoreText
 							lines={3}
 							more="Show more"
@@ -97,7 +93,7 @@ const CardPost = ({
 							truncatedEndingComponent={"... "}>
 							{content}
 						</ShowMoreText>
-					</p>
+					</div>
 
 					<div>
 						<img
@@ -148,18 +144,24 @@ const CardPost = ({
 								onClick={() => setIsOpen(true)}
 								className="flex flex-row items-center pr-4 border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300">
 								<BiCommentDetail className="w-5 h-5" />
-								<button
+								<p
 									className="pl-2 text-lg font-semibold"
 									onClick={() => setIsOpen(true)}>
 									Comment
-								</button>
+								</p>
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<ModalPostDetail id={id} closeModal={closeModal} isOpen={isOpen} setLike={toggleLike} like={like} />
+			<ModalPostDetail
+				id={id}
+				closeModal={closeModal}
+				isOpen={isOpen}
+				setLike={toggleLike}
+				like={like}
+			/>
 		</div>
 	)
 }
