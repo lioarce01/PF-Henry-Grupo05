@@ -4,7 +4,8 @@ export const manageSheltersSlice = createSlice({
     name: 'manageShelters',
 
     initialState: {
-        shelters: [],
+        shelters: {}, // initialized as an object in order to load spinners
+        sheltersCopy: [], // needed for filters to run properly
         topShelters: [],
         details: {},
         msg: ''
@@ -13,6 +14,7 @@ export const manageSheltersSlice = createSlice({
     reducers: {
         getShelters: (state, action) => {
             state.shelters = action.payload
+            state.sheltersCopy = action.payload
         },
 
         getSheltersByName: (state, action) => {

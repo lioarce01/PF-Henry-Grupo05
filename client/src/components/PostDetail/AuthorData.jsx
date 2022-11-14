@@ -1,11 +1,15 @@
-import React from 'react'
-import { getTimeAgo } from '../../utils'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { getTimeAgo } from "../../utils";
+import { Link } from "react-router-dom";
 
 const AuthorData = ({ details }) => {
   return (
     <>
-      <img src={details.author.profilePic} alt="avatar" className="object-cover mr-4 rounded-full shadow w-14 h-14" />
+      <img
+        src={details.author.profilePic}
+        alt="avatar"
+        className="object-cover mr-4 rounded-full shadow w-14 h-14"
+      />
       <div className="flex items-center ">
         <Link
           to={`/${details.shelterId}/profile`}
@@ -22,7 +26,7 @@ const AuthorData = ({ details }) => {
         </Link>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AuthorData
+export default AuthorData;

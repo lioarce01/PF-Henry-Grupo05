@@ -3,22 +3,25 @@ import Navbar from '../Navbar/Navbar'
 import Ongs from './Ongs'
 import Posts from './Posts'
 import SubscriptorsBar from './SubscriptorsBar'
+import Footer from '../Landing/Footer/Footer'
 
 const Home = () => {
   return (
-    <div className='w-full min-h-screen h-fit bg-[#FAF2E7]'>
-      <Navbar/>
+    <div className='w-full min-h-screen h-fit bg-[#EEEEE6]'>
+      <Navbar />
       <div className='flex flex-row justify-between pt-14'>
         <div>
-          <SubscriptorsBar/>
+          <SubscriptorsBar />
         </div>
         <div>
-          <Posts/>
+          <Posts />
         </div>
         <div>
-          <Ongs/>
+          <Ongs />
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }
