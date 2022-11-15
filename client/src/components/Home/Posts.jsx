@@ -9,21 +9,22 @@ import { selectPost } from "../../redux/slices/managePosts"
 import { useAuth0 } from "@auth0/auth0-react"
 
 const Posts = () => {
-	const [isOpen, setIsOpen] = useState(false)
-	const { sort } = useSelector((state) => state.localStorage.postState)
-	const { isAuthenticated } = useAuth0()
-	console.log(sort)
-	const {
-		data: posts,
-		isLoading,
-		error,
-		isSuccess,
-		refetch,
-	} = useGetPostsQuery(sort)
-	const closeModal = () => setIsOpen(false)
-	useEffect(() => {
-		refetch()
-	}, [])
+  const [isOpen, setIsOpen] = useState(false);
+  const {sort} = useSelector(state => state.localStorage.postState)
+  const { isAuthenticated } = useAuth0()
+  console.log(sort)
+  const {
+    data: posts,
+    isLoading,
+    error,
+    isSuccess,
+    refetch,
+  } = useGetPostsQuery(sort);
+  const closeModal = () => setIsOpen(false);
+  
+  useEffect(() => {
+    refetch();
+  }, []);
 
 	// const handleScroll = () => {
 	// 	if (

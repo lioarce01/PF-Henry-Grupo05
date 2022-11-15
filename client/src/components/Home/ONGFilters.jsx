@@ -1,14 +1,18 @@
 import { useEffect, useState, useRef } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { getSheltersAction, sortSheltersAction } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"
+import { dispatch, useDispatch, useSelector } from "react-redux"
+import { selectShelters } from "../../redux/slices/manageShelters";
+import { useLazyGetSheltersQuery } from "../../redux/api/shelters"
+import { sortSheltersAction } from "../../redux/slices/manageShelters/actions"
 
-const ONGFilters = () => {
+const ONGFilters = ({sortShelters}) => {
+	const dispatch = useDispatch()
+	const sorting = useSelector(state => state.manageShelters.sort)
+
+	const [getShelters, {data: shelters}] = useLazyGetSheltersQuery()
+
 	const listGroup = useRef()
 	const listDetail = useRef()
 	const listOrder = useRef()
-
-	const dispatch = useDispatch()
-	const shelters = useSelector((state) => state.manageShelters.sheltersCopy)
 
 	const [queriesSelected, setQueriesSelected] = useState({
 		group: undefined,
@@ -66,12 +70,16 @@ const ONGFilters = () => {
 	}
 
 	useEffect(() => {
-		dispatch(getSheltersAction())
-	}, [dispatch])
+		getShelters("")
+	}, [getShelters])
 
 	useEffect(() => {
-		dispatch(sortSheltersAction(queriesSelected))
+		dispatch(sortSheltersAction(queriesSelected.order, queriesSelected.orderType, queriesSelected.group, queriesSelected.groupType))
 	}, [queriesSelected])
+
+	useEffect(() => {
+		sortShelters(sorting)
+	}, [sorting])
 
 	return (
 		<div className="w-[285px]">

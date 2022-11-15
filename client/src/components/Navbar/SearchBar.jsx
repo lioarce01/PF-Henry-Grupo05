@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getSheltersByNameAction } from '../../redux/reducers/dataBack/manageShelters/manageSheltersActions';
+import { useDispatch } from 'react-redux'
+import { searchSheltersAction } from "../../redux/slices/manageShelters/actions";
 import { BsSearch } from 'react-icons/bs'
 
 const SearchBar = () => {
+  const dispatch = useDispatch()
   const [input, setInput] = useState('')
-  const dispatch = useDispatch();
   
   const handleChange = (e) => {
     e.preventDefault();
@@ -14,7 +14,7 @@ const SearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getSheltersByNameAction(input))
+    dispatch(searchSheltersAction(input))
     setInput('')
   }
 

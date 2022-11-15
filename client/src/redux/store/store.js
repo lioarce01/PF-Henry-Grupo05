@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import manageUsersSlice from "../reducers/dataBack/manageUsers/manageUsersSlice"; 
 import managePostsSlice from '../slices/managePosts';
-import manageSheltersSlice from "../reducers/dataBack/manageShelters/manageSheltersSlice"; 
-import manageCommentsSlice from '../reducers/dataBack/manageComments/manageCommentsSlice';
-import loadingSlice  from '../reducers/dataBack/loading/loadingSlice';
+import manageSheltersSlice from "../slices/manageShelters"; 
 import { postApi } from '../api/posts';
+import { usersApi } from '../api/users';
+import { sheltersApi } from '../api/shelters';
 import storage from 'redux-persist/lib/storage'
 import {persistReducer} from 'redux-persist'
 import { combineReducers } from '@reduxjs/toolkit';
-
 
 const persistConfig = {
     key: 'root',
@@ -23,16 +21,14 @@ const rootReducer = combineReducers({
 
 const localStorage = persistReducer(persistConfig, rootReducer)
 
-
 export default configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware, sheltersApi.middleware, usersApi.middleware),
     reducer: {
         localStorage,
         [postApi.reducerPath]: postApi.reducer,
-        manageUsers: manageUsersSlice,
-        manageShelters: manageSheltersSlice,
-        manageComments: manageCommentsSlice,
-        loading: loadingSlice,
+        [sheltersApi.reducerPath]: sheltersApi.reducer,
+        [usersApi.reducerPath]: usersApi.reducer,
         managePosts: managePostsSlice,
+        manageShelters: manageSheltersSlice,
     }
 })

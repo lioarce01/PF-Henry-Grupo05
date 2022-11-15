@@ -11,7 +11,7 @@ export const postApi = createApi({
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: ({ order, type }) => {
-        if (!order || !type) return "/posts";
+        if (! order || ! type) return "/posts";
         return `/posts/sort?order=${order}&type=${type}`;
       },
       providesTags: ["Posts"],
@@ -24,11 +24,11 @@ export const postApi = createApi({
 
     addNewPost: builder.mutation({
       query: ({accessToken, newPost}) => ({
-            url: "/posts",
-            method: "post",
-            body: newPost,
-            headers: {
-            Authorization: `Bearer ${accessToken}`,
+        url: "/posts",
+        method: "post",
+        body: newPost,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
         }
       }),
       invalidatesTags: ["Posts"],
