@@ -33,11 +33,14 @@ export const sheltersApi = createApi({
         }),
 
         addShelter: builder.mutation({
-            query: (newShelter) => {
+            query: ({accessToken, newShelter}) => {
             return {
                 url: "/shelters/",
                 method: "post",
-                body: newShelter
+                body: newShelter,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                  }
             }},
             invalidatesTags: ["ShelterId"]
         }),
