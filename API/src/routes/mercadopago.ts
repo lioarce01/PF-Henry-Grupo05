@@ -3,12 +3,13 @@ import express from 'express';
 import mercadopago from "mercadopago"
 import axios from "axios"
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck';
 
 const prisma = new PrismaClient()
 
 const router = express.Router();
 
-router.post("/", async (req,res) => {
+router.post("/", jwtCheck, async (req,res) => {
 
     let {shelter, donation, id} = req.body
 
