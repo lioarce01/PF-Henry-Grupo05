@@ -17,11 +17,11 @@ const SubscriptorsBar = () => {
 	console.log("following: ", following)
 
 	return (
-		<div className="fixed left-0 flex">
+		<div className="fixed left-0 flex h-full">
 			<div
 				className={` ${
 					open ? "w-28" : "w-60 "
-				} flex flex-col h-[54rem] overflow-y-scroll p-2 bg-[#fffcf7]`}>
+				} flex flex-col h-full overflow-y-scroll p-2 bg-[#E1D7D3]`}>
 				<div className="space-y-3">
 					<div className="flex items-center justify-end">
 						{open ? (

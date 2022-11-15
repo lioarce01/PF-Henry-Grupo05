@@ -7,7 +7,7 @@ const LoginButton = () => {
 	
 	return (
 		<div>
-			<button onClick={loginWithPopup}>Log In</button>
+			<button onClick={loginWithPopup} className="text-[#201008] font-bold">Log In</button>
 		</div>
 	)
 }
