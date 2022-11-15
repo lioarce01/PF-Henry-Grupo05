@@ -69,7 +69,7 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(error);
     }
 }));
-//get followers of an user
+// get followers of an user
 router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
