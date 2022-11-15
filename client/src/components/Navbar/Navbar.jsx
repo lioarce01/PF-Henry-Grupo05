@@ -107,18 +107,7 @@ const Navbar = () => {
 											</Link>
 										)}
 									</Menu.Item>
-									<Menu.Item>
-										{({ active }) => (
-											<LogoutButton
-												className={classNames(
-													active
-														? "bg-slate-200 text-gray-900"
-														: "text-gray-700",
-													"block w-full px-4 py-2 text-left text-sm"
-												)}
-											/>
-										)}
-									</Menu.Item>
+									<Menu.Item>{({ active }) => <LogoutButton />}</Menu.Item>
 								</div>
 							</Menu.Items>
 						</Transition>

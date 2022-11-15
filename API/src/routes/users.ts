@@ -147,12 +147,14 @@ router.post("/", jwtCheck, async (req: Req, res) => {
     const { name, email, profilePic } = req.body;
 
     try {
-        await prisma.user.create({
-            data: {
+        await prisma.user.upsert({
+            where: { email },
+            update: {},
+            create: {
                 name,
                 email,
-                profilePic,
-            },
+                profilePic
+            }
         });
 
         res.status(200).send("User created successfully.");
