@@ -1,5 +1,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck'
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -72,7 +73,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// get followers of an user
+// get a shelter followed by an user
 router.get("/:id/following", async (req, res) => {
     const { id } = req.params;
 
@@ -89,8 +90,60 @@ router.get("/:id/following", async (req, res) => {
     }
 });
 
+// route to follow a shelter by an user
+router.post("/:id/follow", async (req, res) => {
+    const { id } = req.params;
+    const { shelterId } = req.body;
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id },
+            include: { following: true }
+        });
+    
+        if (user) {
+            const shelter = await prisma.shelter.findUnique({
+                where: { id: shelterId },
+                include: { followers: true }
+            });
+
+            if (shelter) {
+                const following = await prisma.user.update({
+                    where: { id },
+                    data: {
+                        following: {
+                            connect: { id: shelterId }
+                        }
+                    },
+                    include: { following: true }
+                });
+
+                const followers = await prisma.shelter.update({
+                    where: { id: shelterId },
+                    data: {
+                        followers: {
+                            connect: { id }
+                        }
+                    },
+                    include: { followers: true }
+                });
+
+                res.status(200).send({ following, followers });
+            } else {
+                
+                res.status(404).send("ERROR: Shelter not found.");
+            }
+        } else {
+            res.status(404).send("ERROR: User not found.");
+        }
+    } catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+});
+
 // create an user
-router.post("/", async (req: Req, res) => {
+router.post("/", jwtCheck, async (req: Req, res) => {
     const { name, email, profilePic } = req.body;
 
     try {
@@ -115,7 +168,7 @@ router.post("/", async (req: Req, res) => {
 });
 
 // update an user
-router.put("/:id", async (req, res) => {
+router.put("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
     const { name, email, profilePic } = req.body;
 
@@ -137,7 +190,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete an user
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {

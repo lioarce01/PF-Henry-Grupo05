@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 /* router.get('/:id/posts', async(req,res, next) => {
@@ -69,7 +70,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(error);
     }
 }));
-// get followers of an user
+
+// get a shelter followed by an user
+
 router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
@@ -84,8 +87,56 @@ router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, fun
         console.log(error);
     }
 }));
+// click a button in the front end to follow a shelter
+router.post("/:id/follow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const { shelterId } = req.body;
+    try {
+        const user = yield prisma.user.findUnique({
+            where: { id },
+            include: { following: true }
+        });
+        if (user) {
+            const shelter = yield prisma.shelter.findUnique({
+                where: { id: shelterId },
+                include: { followers: true }
+            });
+            if (shelter) {
+                const following = yield prisma.user.update({
+                    where: { id },
+                    data: {
+                        following: {
+                            connect: { id: shelterId }
+                        }
+                    },
+                    include: { following: true }
+                });
+                const followers = yield prisma.shelter.update({
+                    where: { id: shelterId },
+                    data: {
+                        followers: {
+                            connect: { id }
+                        }
+                    },
+                    include: { followers: true }
+                });
+                res.status(200).send({ following, followers });
+            }
+            else {
+                res.status(404).send("ERROR: Shelter not found.");
+            }
+        }
+        else {
+            res.status(404).send("ERROR: User not found.");
+        }
+    }
+    catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+}));
 // create an user
-router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, profilePic } = req.body;
     try {
         yield prisma.user.create({
@@ -103,7 +154,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 // update an user
-router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const { name, email, profilePic } = req.body;
     try {
@@ -123,7 +174,7 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // delete an user
-router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const deletedUser = yield prisma.user.delete({
