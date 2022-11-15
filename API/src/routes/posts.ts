@@ -1,5 +1,6 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -88,7 +89,7 @@ router.get('/sort', async(req : ReqSampling, res) => {
 })
 
 // route to create post
-router.post('/', async(req, res) =>{
+router.post('/', jwtCheck, async(req, res) =>{
     try {
         interface postInterface{
             authorId: string,
