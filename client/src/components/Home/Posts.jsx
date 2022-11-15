@@ -19,6 +19,7 @@ const Posts = () => {
     refetch,
   } = useGetPostsQuery(sort);
   const closeModal = () => setIsOpen(false);
+  
   useEffect(() => {
     refetch();
   }, []);

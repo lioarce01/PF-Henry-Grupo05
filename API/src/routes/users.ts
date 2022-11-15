@@ -72,7 +72,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-//get followers of an user
+// get followers of an user
 router.get("/:id/following", async (req, res) => {
     const { id } = req.params;
 

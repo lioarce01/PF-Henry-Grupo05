@@ -10,26 +10,19 @@ import "swiper/css/free-mode";
 // import required modules
 import { FreeMode, Autoplay } from "swiper";
 import Card from './Card'
-import { useDispatch, useSelector } from "react-redux";
-import { getSheltersTopFiveAction } from '../../../redux/reducers/dataBack/manageShelters/manageSheltersActions'
-import { selectShelter } from "../../../redux/reducers/dataBack/manageShelters/manageSheltersSlice";
-import { selectLoading } from "../../../redux/reducers/dataBack/loading/loadingSlice";
+import { useTopFiveSheltersQuery } from "../../../redux/api/shelters"
 import Spinner from "../../Spinner/Spinner";
 
 
 const Carousel = () => {
-  const distpatch = useDispatch()
-  const { topShelters } = useSelector(selectShelter)
-  const loading = useSelector(selectLoading)
+  const { data: topShelters, isLoading, error, isSuccess, refetch } = useTopFiveSheltersQuery();
 
   useEffect(() => {
-    distpatch(getSheltersTopFiveAction())
-  }, [distpatch])
+    refetch()
+  }, [])
 
-
-  if(loading) return (<div className=""><Spinner/></div>)
-
-  if (!topShelters) return
+  if (isLoading) return (<div className=""><Spinner/></div>)
+  if (! topShelters) return
 
   return (
     <div className="w-[80%] h-fit mx-auto rounded ">
