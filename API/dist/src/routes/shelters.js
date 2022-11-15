@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 // get all shelters or get some by name
@@ -113,7 +114,7 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // create a shelter
-router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyShelter = req.body;
         yield prisma.shelter.create({

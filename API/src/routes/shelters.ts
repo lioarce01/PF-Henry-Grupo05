@@ -1,5 +1,6 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck'
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -118,7 +119,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create a shelter
-router.post("/", async (req, res) => {
+router.post("/", jwtCheck, async (req, res) => {
 
     try {
         interface shelterInterface {

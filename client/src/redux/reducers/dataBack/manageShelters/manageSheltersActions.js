@@ -2,6 +2,7 @@ import { getShelters, getSheltersByName, getSheltersById, cleanSheltersDetails,
      createShelters, updateShelters, deleteShelters, getSheltersTopFive, sortShelters } from './manageSheltersSlice';
 import axios from 'axios';
 import { toggleLoading } from '../loading/loadingSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const getSheltersAction = () => async dispatch => {
     dispatch(toggleLoading())
@@ -55,12 +56,17 @@ export const getSheltersByNameAction = (name) => async dispatch => {
     }
 }
 
-
-export const createSheltersAction = (shelter) => async dispatch => {
+export const createSheltersAction = (getAccessTokenSilently, shelter) => async dispatch => {
     dispatch(toggleLoading())
     try {
-        const res = await axios.post('/shelters', shelter);
-        dispatch(createShelters(res.data));
+        const accessToken = await getAccessTokenSilently();
+        const res = await axios.post('/shelters', shelter, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+
+        dispatch(createShelters(res.data, getAccessTokenSilently));
     } catch (err) {
         dispatch(createShelters(err.response.data));
     } finally {

@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const API = process.env.REACT_APP_API || 'http://localhost:3001';
