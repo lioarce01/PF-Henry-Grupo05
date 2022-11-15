@@ -6,20 +6,20 @@ import PostFilters from "./PostFilters";
 import ModalCreatePost from "./ModalCreatePost";
 import { useGetPostsQuery } from "../../redux/api/posts";
 import { selectPost } from "../../redux/slices/managePosts";
+import { PuffLoader } from "react-spinners";
 
 const Posts = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {sort} = useSelector(state => state.localStorage.postState)
-  console.log(sort)
+  const { sort } = useSelector((state) => state.localStorage.postState);
   const {
     data: posts,
     isLoading,
     error,
     isSuccess,
+    isFetching,
     refetch,
   } = useGetPostsQuery(sort);
   const closeModal = () => setIsOpen(false);
-  
   useEffect(() => {
     refetch();
   }, []);
@@ -49,13 +49,19 @@ const Posts = () => {
           </button>
         </div>
 
-        <div className="flex items-center justify-end">
+        <div className={`flex items-center ${isFetching ? 'justify-between' : "justify-end"}`}>
+          {isFetching && <PuffLoader color="#462312" loading size={60} />}
           <PostFilters />
         </div>
       </div>
 
       <div className="flex flex-col justify-center w-full min-w-full">
-        {isSuccess ? (
+        {isLoading ? (
+          <div className="mt-[140px]">
+            <Spinner />
+          </div>
+        ) : null}
+        {isSuccess &&
           posts.map((post) => {
             return (
               <CardPost
@@ -71,12 +77,7 @@ const Posts = () => {
                 authorId={post.authorId}
               />
             );
-          })
-        ) : (
-          <div className="mt-[140px]">
-            <Spinner />
-          </div>
-        )}
+          })}
       </div>
       <ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
     </div>
