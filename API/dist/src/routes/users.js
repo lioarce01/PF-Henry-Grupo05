@@ -70,7 +70,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(error);
     }
 }));
+
 // get a shelter followed by an user
+
 router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
