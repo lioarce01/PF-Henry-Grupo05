@@ -23,30 +23,39 @@ export const usersApi = createApi({
         }),
 
         createUser: builder.mutation({
-            query: (newUser) => {
+            query: ({ accessToken, newUser }) => {
                 return {
                     url: "/users/",
                     method: "post",
-                    body: newUser
+                    body: newUser,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    }
                 }},
             invalidatesTags: ["UserId"]
         }),
 
         updateUser: builder.mutation({
-            query: (newUser) => {
+            query: ({ accessToken, newUser }) => {
                 return {
                     url: "/users/",
                     method: "put",
-                    body: newUser
+                    body: newUser,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    }
                 }},
             invalidatesTags: ["UserId"]
         }),
 
         deleteUser: builder.mutation({
-            query: (userId) => {
+            query: ({ accessToken, userId }) => {
                 return {
                     url: `/users/${userId}`,
                     method: "delete",
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    }
                 }},
             invalidatesTags: ["UserId"]
         })

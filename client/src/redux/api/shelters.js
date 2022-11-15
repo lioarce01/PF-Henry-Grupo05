@@ -33,28 +33,38 @@ export const sheltersApi = createApi({
         }),
 
         addShelter: builder.mutation({
-            query: (newShelter) => {
-            return {
-                url: "/shelters/",
-                method: "post",
-                body: newShelter
-            }},
+            query: ({ accessToken, newShelter }) => {
+                return {
+                    url: "/shelters/",
+                    method: "post",
+                    body: newShelter,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    }
+                }
+            },
             invalidatesTags: ["ShelterId"]
         }),
 
         updateShelter: builder.mutation({
-            query: ({updatedShelter, id }) => ({   
+            query: ({ accessToken, updatedShelter, id }) => ({
                 url: `/shelters/${id}`,
                 method: "put",
-                body: updatedShelter
+                body: updatedShelter,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
             }),
             invalidatesTags: ["ShelterId"]
         }),
 
         deleteShelter: builder.mutation({
-            query: (id) => ({
-              url: `/shelters/${id}`,
-              method: "delete",
+            query: ({ accessToken, id }) => ({
+                url: `/shelters/${id}`,
+                method: "delete",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                }
             }),
             invalidatesTags: ["Shelters"]
         })

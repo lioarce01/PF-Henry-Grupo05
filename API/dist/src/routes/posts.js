@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 //route to get all posts
@@ -86,7 +87,7 @@ router.get('/sort', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 }));
 // route to create post
-router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         yield prisma.post.create({
@@ -105,7 +106,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 // route to edit a post
-router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         yield prisma.post.update({
@@ -124,7 +125,7 @@ router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 }));
-router.put('/updateLikes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/updateLikes', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         const updatedPost = yield prisma.post.update({
@@ -164,7 +165,7 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // route to delete posts by id
-router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete('/:id', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     try {
         const deletedPost = yield prisma.post.delete({

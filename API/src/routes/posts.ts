@@ -1,5 +1,6 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -12,7 +13,7 @@ router.get('/', async(req, res) => {
 
     //si no se envian los query params, se traen todos los posts    
    try {
-    if(!perPage || !page) {
+    if(! perPage || ! page) {
         const posts = await prisma.post.findMany({
             include: {
                 author: true,
@@ -88,7 +89,7 @@ router.get('/sort', async(req : ReqSampling, res) => {
 })
 
 // route to create post
-router.post('/', async(req, res) =>{
+router.post('/', jwtCheck, async(req, res) =>{
     try {
         interface postInterface{
             authorId: string,
@@ -115,7 +116,7 @@ router.post('/', async(req, res) =>{
 });
 
 // route to edit a post
-router.put('/', async(req, res) =>{
+router.put('/', jwtCheck, async(req, res) =>{
     try {
         interface updateInterface {
             id: string ,  
@@ -142,7 +143,7 @@ router.put('/', async(req, res) =>{
     }
 });
 
-router.put('/updateLikes', async(req,res)=>{
+router.put('/updateLikes', jwtCheck, async(req,res)=>{
     try {
         interface updateInterface {
             id: string ,  
@@ -189,7 +190,7 @@ router.get('/:id', async(req, res) => {
 });
 
 // route to delete posts by id
-router.delete('/:id', async(req,res) => {
+router.delete('/:id', jwtCheck, async(req,res) => {
     const id = req.params.id;
 
     try {
