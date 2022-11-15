@@ -90,7 +90,7 @@ router.get("/:id/following", async (req, res) => {
     }
 });
 
-// click a button in the front end to follow a shelter
+// route to follow a shelter by an user
 router.post("/:id/follow", async (req, res) => {
     const { id } = req.params;
     const { shelterId } = req.body;
