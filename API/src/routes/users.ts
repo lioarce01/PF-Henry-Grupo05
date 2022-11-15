@@ -1,5 +1,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck'
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -90,7 +91,7 @@ router.get("/:id/following", async (req, res) => {
 });
 
 // create an user
-router.post("/", async (req: Req, res) => {
+router.post("/", jwtCheck, async (req: Req, res) => {
     const { name, email, profilePic } = req.body;
 
     try {
@@ -110,7 +111,7 @@ router.post("/", async (req: Req, res) => {
 });
 
 // update an user
-router.put("/:id", async (req, res) => {
+router.put("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
     const { name, email, profilePic } = req.body;
 
@@ -132,7 +133,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete an user
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {

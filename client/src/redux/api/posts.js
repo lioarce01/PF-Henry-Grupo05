@@ -10,7 +10,7 @@ export const postApi = createApi({
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: ({ order, type }) => {
-        if (! order || ! type) return "/posts";
+        if (!order || !type) return "/posts";
         return `/posts/sort?order=${order}&type=${type}`;
       },
       providesTags: ["Posts"],
@@ -22,7 +22,7 @@ export const postApi = createApi({
     }),
 
     addNewPost: builder.mutation({
-      query: ({accessToken, newPost}) => ({
+      query: ({ accessToken, newPost }) => ({
         url: "/posts",
         method: "post",
         body: newPost,
@@ -34,47 +34,61 @@ export const postApi = createApi({
     }),
 
     addNewComment: builder.mutation({
-      query: (comment) => ({
+      query: ({ accessToken, comment }) => ({
         url: "/comments",
         method: "post",
         body: comment,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
       }),
       invalidatesTags: ["PostId"],
     }),
 
     deletePost: builder.mutation({
-      query: (id) => ({
+      query: ({ accessToken, id }) => ({
         url: `/posts/${id}`,
         method: "delete",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
       }),
       invalidatesTags: ["Posts"],
     }),
 
     updatePost: builder.mutation({
-      query: (post) => ({
+      query: ({ accessToken, post }) => ({
         url: `/posts/`,
         method: "put",
         body: post,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
       }),
       invalidatesTags: ["Posts"],
     }),
 
     updatePostLikes: builder.mutation({
-      query: (post) => ({
+      query: ({ accessToken, post }) => ({
         url: `/posts/updateLikes`,
         method: "put",
         body: post,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
       }),
       invalidatesTags: [],
     }),
 
-
     deleteComment: builder.mutation({
-        query: (id) => ({
-            url: `/comments/${id}`,
-            method: 'delete',
-        }),
-        invalidatesTags: ["PostId"]
+      query: ({ accessToken, id }) => ({
+        url: `/comments/${id}`,
+        method: 'delete',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      }),
+      invalidatesTags: ["PostId"]
     })
 
 
