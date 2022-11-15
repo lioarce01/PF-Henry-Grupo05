@@ -4,10 +4,27 @@ import manageSheltersSlice from "../slices/manageShelters";
 import { postApi } from '../api/posts';
 import { usersApi } from '../api/users';
 import { sheltersApi } from '../api/shelters';
+import storage from 'redux-persist/lib/storage'
+import {persistReducer} from 'redux-persist'
+import { combineReducers } from '@reduxjs/toolkit';
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ["postState"]
+}
+
+const rootReducer = combineReducers({
+    postState: managePostsSlice
+    
+})
+
+const localStorage = persistReducer(persistConfig, rootReducer)
 
 export default configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware, sheltersApi.middleware, usersApi.middleware),
     reducer: {
+        localStorage,
         [postApi.reducerPath]: postApi.reducer,
         [sheltersApi.reducerPath]: sheltersApi.reducer,
         [usersApi.reducerPath]: usersApi.reducer,

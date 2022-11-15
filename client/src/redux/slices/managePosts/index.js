@@ -17,6 +17,6 @@ export const managePostsSlice = createSlice({
 
 // action creators are generated for each case reducer function
 export const { sortPosts } = managePostsSlice.actions;
-export const selectPost = state => state.managePosts
+export const selectPost = state => console.log(state.postState.sort)
 
 export default managePostsSlice.reducer;
