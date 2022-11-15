@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 //route to get all posts
@@ -86,7 +87,7 @@ router.get('/sort', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 }));
 // route to create post
-router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         yield prisma.post.create({
