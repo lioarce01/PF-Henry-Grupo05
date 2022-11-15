@@ -1,9 +1,12 @@
-import React, { useState } from "react"
-import ContentInput from "./ContentInput"
-import UploadImage from "./UploadInput"
-import { AiOutlineClose } from "react-icons/ai"
-import { useAddNewPostMutation } from "../../../redux/api/posts"
+
+import React, { useState } from "react";
+import ContentInput from "./ContentInput";
+import UploadImage from "./UploadInput";
+import { AiOutlineClose } from "react-icons/ai";
+import { useAddNewPostMutation } from "../../../redux/api/posts";
+import toast from 'react-hot-toast'
 import { useAuth0 } from "@auth0/auth0-react"
+
 
 const shelterId = "636bccfcce65cefec651aeca"
 const authorId = "636c0a4f1e78d75d8edfae92"
@@ -13,17 +16,24 @@ const PostForm = ({ closeModal }) => {
 	const [image, setImage] = useState(false)
 	const { getAccessTokenSilently, isAuthenticated } = useAuth0()
 
-	const [addNewPost, { data, isLoading, error }] = useAddNewPostMutation()
 
-	const onSubmit = async (e) => {
-		e.preventDefault()
-		const accessToken = await getAccessTokenSilently()
-		if (!image || !content) return alert("content and image are needed")
-		const newPost = { content, image, shelterId, authorId }
-		console.log({ accessToken, newPost })
-		addNewPost({ accessToken, newPost })
-		closeModal()
-	}
+  const [addNewPost, { data, isLoading, error, isSuccess }] = useAddNewPostMutation();
+ 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const accessToken = await getAccessTokenSilently()
+    if (!image || !content) return alert("content and image are needed");
+    const newPost = { content, image, shelterId, authorId }
+    const myPromise = addNewPost({ accessToken, newPost })
+    toast.promise(myPromise, {
+      loading: 'Creating post',
+      success: 'Post created',
+      error: 'There was an error creating post',
+    });
+    setContent("")
+    setImage(false)
+  };
+
 
 	return (
 		<div className="">
@@ -55,4 +65,6 @@ const PostForm = ({ closeModal }) => {
 	)
 }
 
+
 export default PostForm
+

@@ -10,24 +10,20 @@ import {
 } from "../../redux/api/shelters"
 import Spinner from "../Spinner/Spinner"
 import { useState } from "react"
+import { PuffLoader } from "react-spinners"
 
 const Ongs = () => {
 	const { search } = useSelector((state) => state.manageShelters)
-	const [sortShelters, { data: sorted }] = useSortSheltersMutation()
-	const {
-		data: shelters,
-		isLoading,
-		error,
-		isSuccess,
-		refetch,
-	} = useGetSheltersQuery(search)
 
-	useEffect(() => {
-		refetch()
-	}, [])
+	const [sortShelters, {data: sorted}] = useSortSheltersMutation()
+	const { data: shelters, isLoading, error, isSuccess, refetch, isFetching} = useGetSheltersQuery(search);
 
+
+
+	
 	return (
 		<div className="h-screen mt-5 rounded-md lg:right-0 lg:fixed">
+			
 			<h2 className="pt-2 text-2xl font-bold text-center">Explore Shelters</h2>
 			<div className="flex items-center h-[47.5rem] bg-[#fffcf7] shadow-lg border-2 border-[#fffcf7] w-[90%] mt-5 overflow-auto flex-col py-10 rounded-md">
 				<SearchBar />
@@ -35,6 +31,7 @@ const Ongs = () => {
 					<ONGFilters sortShelters={sortShelters} />
 				</div>
 				<div className="w-full">
+				{isFetching &&  <PuffLoader className="mx-auto" color="#462312" loading size={60} />}
 					{isSuccess ? (
 						shelters.length ? (
 							sorted ? (
