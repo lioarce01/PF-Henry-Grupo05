@@ -29,7 +29,7 @@ const Ongs = () => {
 	return (
 		<div className="h-screen mt-5 rounded-md lg:right-0 lg:fixed">
 			<h2 className="pt-2 text-2xl font-bold text-center">Explore Shelters</h2>
-			<div className="flex items-center h-[47.5rem] bg-[#EEEEE6] shadow-xl border-2 border-[#dbdbd5] w-[90%] mt-5 overflow-auto flex-col py-10 rounded-md">
+			<div className="flex items-center h-[47.5rem] bg-[#fffcf7] shadow-lg border-2 border-[#fffcf7] w-[90%] mt-5 overflow-auto flex-col py-10 rounded-md">
 				<SearchBar />
 				<div className="flex items-end justify-end w-full py-1 pr-10">
 					<ONGFilters sortShelters={sortShelters} />

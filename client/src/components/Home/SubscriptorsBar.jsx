@@ -21,7 +21,7 @@ const SubscriptorsBar = () => {
 			<div
 				className={` ${
 					open ? "w-28" : "w-60 "
-				} flex flex-col h-[54rem] overflow-y-scroll p-2 bg-[#EEEEE6]`}>
+				} flex flex-col h-[54rem] overflow-y-scroll p-2 bg-[#fffcf7]`}>
 				<div className="space-y-3">
 					<div className="flex items-center justify-end">
 						{open ? (
