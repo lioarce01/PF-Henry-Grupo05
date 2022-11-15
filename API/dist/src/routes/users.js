@@ -87,7 +87,7 @@ router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, fun
         console.log(error);
     }
 }));
-// click a button in the front end to follow a shelter
+// route to follow a shelter by an user
 router.post("/:id/follow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const { shelterId } = req.body;
@@ -139,12 +139,14 @@ router.post("/:id/follow", (req, res) => __awaiter(void 0, void 0, void 0, funct
 router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, profilePic } = req.body;
     try {
-        yield prisma.user.create({
-            data: {
+        yield prisma.user.upsert({
+            where: { email },
+            update: {},
+            create: {
                 name,
                 email,
-                profilePic,
-            },
+                profilePic
+            }
         });
         res.status(200).send("User created successfully.");
     }
