@@ -1,19 +1,21 @@
 import React from "react"
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux" 
 import ONGCard from "./ONGCard"
 import ONGFilters from "./ONGFilters"
 import SearchBar from "../Navbar/SearchBar"
-import { getSheltersAction } from "../../redux/reducers/dataBack/manageShelters/manageSheltersActions"
-import Spinner from "../Spinner/Spinner"
+import { useGetSheltersQuery, useSortSheltersMutation } from "../../redux/api/shelters"
+import Spinner from "../Spinner/Spinner" 
+import { useState } from "react"
 
 const Ongs = () => {
-	const dispatch = useDispatch()
-	const shelters = useSelector((state) => state.manageShelters.shelters)
+	const { search } = useSelector((state) => state.manageShelters)
+	const [sortShelters, {data: sorted}] = useSortSheltersMutation()
+	const { data: shelters, isLoading, error, isSuccess, refetch } = useGetSheltersQuery(search);
 
 	useEffect(() => {
-		dispatch(getSheltersAction())
-	}, [dispatch])
+		refetch()
+	}, [])
 
 	return (
 		<div className="h-screen mt-5 rounded-md lg:right-0 lg:fixed">
@@ -21,24 +23,40 @@ const Ongs = () => {
 			<div className="flex items-center h-[47.5rem] bg-[#FAF2E7] border-2 border-[#fffcf7] w-[90%] mt-5 overflow-auto flex-col py-10 rounded-md">
 				<SearchBar />
 				<div className="flex items-end justify-end w-full py-1 pr-10">
-					<ONGFilters />
+					<ONGFilters sortShelters={sortShelters} />
 				</div>
 				<div className="w-full">
-					{Array.isArray(shelters) ? (
+					{isSuccess ? (
 						shelters.length ? (
-							shelters.map((shelter) => {
-								return (
-									<ONGCard
-										key={shelter.id}
-										id={shelter.id}
-										image={shelter.profilePic}
-										name={shelter.name}
-										description={shelter.description}
-										budget={shelter.budget}
-										followers={shelter.userFollowers?.length}
-									/>
-								)
-							})
+							sorted ? (
+								sorted.map((shelter) => {
+									return (
+										<ONGCard
+											key={shelter.id}
+											id={shelter.id}
+											image={shelter.profilePic}
+											name={shelter.name}
+											description={shelter.description}
+											budget={shelter.budget}
+											followers={shelter.userFollowers?.length}
+										/>
+									)
+								})
+							) : (
+								shelters.map((shelter) => {
+									return (
+										<ONGCard
+											key={shelter.id}
+											id={shelter.id}
+											image={shelter.profilePic}
+											name={shelter.name}
+											description={shelter.description}
+											budget={shelter.budget}
+											followers={shelter.userFollowers?.length}
+										/>
+									)
+								})
+							)
 						) : (
 							<div className="flex justify-center mt-12 text-4xl text-center">
 								<p>Not found</p>
