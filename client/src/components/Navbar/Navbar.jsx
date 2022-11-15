@@ -26,7 +26,7 @@ const Navbar = () => {
 
 	const ref = React.createRef()
 	return (
-		<div className="fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#FAF2E7]/[.05] shadow-lg backdrop-blur-sm h-14">
+		<div className="fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#CA7C62] shadow-lg backdrop-blur-sm h-14">
 			<Link to="/">
 				<div>
 					<img
@@ -39,20 +39,20 @@ const Navbar = () => {
 			<div className="flex items-center justify-center">
 				{toggle ? (
 					<button
-						className="px-3 py-1.5 mr-6 border-2 border-[#fffcf7] rounded-md hover:bg-[#fffcf7] hover:text-black transition duration-300"
+						className="px-3 py-1.5 mr-6 border-2 border-[#201008] rounded-md hover:bg-[#fffcf7] hover:text-black transition duration-300"
 						onClick={handleToggle}>
-						<BsSun className="text-xl" />
+						<BsSun className="text-xl text-[#201008]" />
 					</button>
 				) : (
 					<button
-						className="px-3 py-1.5 mr-6 transition duration-300 border-2 rounded-md border-[#fffcf7] hover:bg-[#fffcf7] hover:text-black duration 300"
+						className="px-3 py-1.5 mr-6 transition duration-300 border-2 rounded-md border-[#201008] hover:bg-[#fffcf7] hover:text-black duration 300"
 						onClick={handleToggle}>
-						<HiMoon className="text-xl" />
+						<HiMoon className="text-xl text-[#201008]" />
 					</button>
 				)}
 				<Link
 					to="/home"
-					className="pt-1 pb-1 pl-2 pr-2 mr-6 border-2 border-[#fffcf7] transition duration-300 rounded-md hover:bg-[#fffcf7] hover:text-black">
+					className="pt-1 pb-1 pl-2 pr-2 mr-6 border-2 border-[#201008] text-[#201008] font-bold transition duration-300 rounded-md hover:bg-[#fffcf7] hover:text-black">
 					Home
 				</Link>
 				{isAuth ? (
