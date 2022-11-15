@@ -73,7 +73,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// get followers of an user
+// get a shelter followed by an user
 router.get("/:id/following", async (req, res) => {
     const { id } = req.params;
 
@@ -84,6 +84,58 @@ router.get("/:id/following", async (req, res) => {
         });
 
         user ? res.status(200).send(user.following) : res.status(404).send("ERROR: User not found.");
+    } catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+});
+
+// route to follow a shelter by an user
+router.post("/:id/follow", async (req, res) => {
+    const { id } = req.params;
+    const { shelterId } = req.body;
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id },
+            include: { following: true }
+        });
+    
+        if (user) {
+            const shelter = await prisma.shelter.findUnique({
+                where: { id: shelterId },
+                include: { followers: true }
+            });
+
+            if (shelter) {
+                const following = await prisma.user.update({
+                    where: { id },
+                    data: {
+                        following: {
+                            connect: { id: shelterId }
+                        }
+                    },
+                    include: { following: true }
+                });
+
+                const followers = await prisma.shelter.update({
+                    where: { id: shelterId },
+                    data: {
+                        followers: {
+                            connect: { id }
+                        }
+                    },
+                    include: { followers: true }
+                });
+
+                res.status(200).send({ following, followers });
+            } else {
+                
+                res.status(404).send("ERROR: Shelter not found.");
+            }
+        } else {
+            res.status(404).send("ERROR: User not found.");
+        }
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
