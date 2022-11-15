@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import ContentInput from "./ContentInput";
-import { createPostAction } from "../../../redux/reducers/dataBack/managePosts/managePostsActions";
 import UploadImage from "./UploadInput";
 import { AiOutlineClose } from "react-icons/ai";
+import { useAddNewPostMutation } from "../../../redux/api/posts";
 
 const shelterId = "636bccfcce65cefec651aeca";
 const authorId = "636c0a4f1e78d75d8edfae92";
@@ -11,13 +10,14 @@ const authorId = "636c0a4f1e78d75d8edfae92";
 const PostForm = ({ closeModal }) => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(false);
-  const dispatch = useDispatch();
+
+  const [addNewPost, {data, isLoading, error}] = useAddNewPostMutation()
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (!image || !content) return alert("content and image are needed");
     const post = { content, image, shelterId, authorId };
-    dispatch(createPostAction(post));
+    addNewPost(post)
     closeModal()
   };
 
