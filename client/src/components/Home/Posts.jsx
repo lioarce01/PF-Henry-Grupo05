@@ -12,7 +12,6 @@ const Posts = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {sort} = useSelector(state => state.localStorage.postState)
   const { isAuthenticated } = useAuth0()
-  console.log(sort)
   const {
     data: posts,
     isLoading,
