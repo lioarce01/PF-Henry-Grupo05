@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 // get all comments
@@ -51,7 +52,7 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // create a comment
-router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         yield prisma.comment.create({
@@ -69,7 +70,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 // delete comment
-router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete('/:id', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     try {
         const deletedComment = yield prisma.comment.delete({
@@ -83,7 +84,7 @@ router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 }));
 // edit a comment
-router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPut = req.body;
         yield prisma.comment.update({
