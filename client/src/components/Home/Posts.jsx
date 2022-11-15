@@ -9,7 +9,8 @@ import { selectPost } from "../../redux/slices/managePosts";
 
 const Posts = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { sort } = useSelector(selectPost);
+  const {sort} = useSelector(state => state.localStorage.postState)
+  console.log(sort)
   const {
     data: posts,
     isLoading,
