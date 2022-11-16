@@ -20,6 +20,7 @@ const OngDetail = () => {
     const { data: details, isLoading, error, isSuccess, isFetching, refetch } = useGetShelterByIdQuery(id)
 
     const [updateShelter, { data: updated, updaterLoading, updaterError }] = useUpdateShelterMutation()
+    
 
     const [isOpen, setIsOpen] = useState(false);
     const closeModal = () => setIsOpen(false);

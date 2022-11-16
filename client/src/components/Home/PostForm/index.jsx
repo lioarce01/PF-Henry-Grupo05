@@ -19,7 +19,7 @@ const PostForm = ({ closeModal }) => {
 
   const [addNewPost, { data, isLoading, error, isSuccess }] = useAddNewPostMutation();
  
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     const accessToken = await getAccessTokenSilently()
     if (!image || !content) return alert("content and image are needed");
