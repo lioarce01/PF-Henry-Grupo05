@@ -11,43 +11,54 @@ import PostFilters from "../Home/PostFilters"
 import NavBar from "../Navbar/Navbar"
 import CreatePostModal from "../Home/ModalCreatePost"
 import Spinner from "../Spinner/Spinner"
-import ModalDonate from "./Donate/ModalDonate";
-import MapView from '../Maps/MapView/MapView';
+import ModalDonate from "./Donate/ModalDonate"
+import MapView from "../Maps/MapView/MapView"
 
 const OngDetail = () => {
-    const { id } = useParams();
-   
-    let [isOpenDonate, setIsOpenDonate] = useState(false);
-    const closeModalDonate = () => setIsOpenDonate(false);
-    
-    const { data: details, isLoading, error, isSuccess, isFetching, refetch } = useGetShelterByIdQuery(id)
+	const { id } = useParams()
 
-    const [updateShelter, { data: updated, updaterLoading, updaterError }] = useUpdateShelterMutation()
-    const [updateFollowers] = useUpdateFollowersMutation()
+	let [isOpenDonate, setIsOpenDonate] = useState(false)
+	const closeModalDonate = () => setIsOpenDonate(false)
 
-	  const userId = "636c0a4f1e78d75d8edfae92"
-    
+	const {
+		data: details,
+		isLoading,
+		error,
+		isSuccess,
+		isFetching,
+		refetch,
+	} = useGetShelterByIdQuery(id)
 
-    const [isOpen, setIsOpen] = useState(false);
-    const closeModal = () => setIsOpen(false);
+	const [updateShelter, { data: updated, updaterLoading, updaterError }] =
+		useUpdateShelterMutation()
+	const [updateFollowers] = useUpdateFollowersMutation()
 
-    const [input, setInput] = useState({
-        description: details?.description
-    })
+	const userId = "636c0a4f1e78d75d8edfae92"
 
-    const [toggle, setToggle] = useState(true)
-    const [toggle2, setToggle2] = useState(true)
-    
-    const inputHandler = (e) => {
-        e.preventDefault();
-        setInput({ description: e.target.value });
-    }
+	const [isOpen, setIsOpen] = useState(false)
+	const closeModal = () => setIsOpen(false)
 
-    const editHandler = () => setToggle(! toggle)
-    const editHandler2 = () => setToggle2(! toggle2)
-    const saveHandler = () => updateShelter({updatedShelter: {...details, description: input.description}, id})
-    
-    const setFollow = () => {
+	const [input, setInput] = useState({
+		description: details?.description,
+	})
+
+	const [toggle, setToggle] = useState(true)
+	const [toggle2, setToggle2] = useState(true)
+
+	const inputHandler = (e) => {
+		e.preventDefault()
+		setInput({ description: e.target.value })
+	}
+
+	const editHandler = () => setToggle(!toggle)
+	const editHandler2 = () => setToggle2(!toggle2)
+	const saveHandler = () =>
+		updateShelter({
+			updatedShelter: { ...details, description: input.description },
+			id,
+		})
+
+	const setFollow = () => {
 		//set follow on click button follow
 		//update followers on db
 		updateFollowers({
@@ -68,99 +79,171 @@ const OngDetail = () => {
 		refetch()
 	}
 
-    return (
-        <div>
-        {! isLoading ? (
-            <div className='w-full min-h-screen h-fit bg-[#FAF2E7]'>
-            <NavBar />
-            <div className='flex flex-row justify-end w-full h-full pt-20 '>
-                {details?.description?.length > 0 && <div className="fixed left-10 flex flex-col items-center ml-5 border w-fit h-fit p-2 border-4 border-[#462312] rounded-lg ">
-                    <div className="border w-80 h-fit border-red-50">
-                        <OngFormUpdate toggle={toggle} name={details?.name} country={details?.country} 
-                        city={details?.city} address={details?.address} website={details?.website} description={details?.description} />
-                        <button className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-                            onClick={editHandler}>Edit</button>
-                    </div>
-                    <div className="flex items-center justify-between row">
+	const deleteFollow = () => {
+		if (details?.followers.includes(userId)) {
+			const newFollowers = details?.followers.filter(
+				(follower) => follower !== userId
+			)
+			updateShelter({
+				id: id,
+				followers: newFollowers,
+			})
+		}
+
+		//refetch data
+		refetch()
+	}
+
+	return (
+		<div>
+			{!isLoading ? (
+				<div className="w-full min-h-screen h-fit bg-[#FAF2E7]">
+					<NavBar />
+					<div className="flex flex-row justify-end w-full h-full pt-20 ">
+						{details?.description?.length > 0 && (
+							<div className="fixed left-10 flex flex-col items-center ml-5 border w-fit h-fit p-2 border-4 border-[#462312] rounded-lg ">
+								<div className="border w-80 h-fit border-red-50">
+									<OngFormUpdate
+										toggle={toggle}
+										name={details?.name}
+										country={details?.country}
+										city={details?.city}
+										address={details?.address}
+										website={details?.website}
+										description={details?.description}
+									/>
+									<button
+										className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+										onClick={editHandler}>
+										Edit
+									</button>
+								</div>
+								<div className="flex items-center justify-between row">
 									<button
 										className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
 										onClick={() => setIsOpenDonate(true)}>
 										Donate
 									</button>
-									<button
-										className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
-										onClick={() => setFollow()}>
-										Follow
-									</button>
+									{
+										//if user is not following the shelter
+										!details?.followers?.includes(userId) ? (
+											<button
+												className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
+												onClick={() => setFollow()}>
+												Follow
+											</button>
+										) : (
+											<button
+												className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
+												onClick={() => deleteFollow()}>
+												Unfollow
+											</button>
+										)
+									}
 								</div>
-                </div>}
-                <div>
-                    <div className="flex flex-col items-center mr-16">
-                        <div className="w-full border-4 border-[#462312] rounded-lg p-4">
-                            <textarea className="w-full resize-none h-60 text-[#462312] font-semibold text-lg"
-                                type="text" name="description" onChange={inputHandler} defaultValue={details?.description}
-                                disabled={toggle2} value={input.description} rows='1' cols='1' />
-                            <div className="flex flex-row-reverse justify-between w-full">
-                                <div>
-                                    <button className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-                                        onClick={editHandler2}>Edit</button>
-                                </div>
-                                <div>
-                                    {!toggle2 && <button className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-                                        onClick={saveHandler}>Save</button>}
-                                </div>
-                            </div>
-                        </div>
-                        <MapView name={details?.name} country={details?.country} 
-                        city={details?.city} address={details?.address}/>
-                        {/* componente post */}
-                        <div className={`${details?.posts && details?.posts.length ? "w-full" : "w-[360px]"} min-h-[50rem] py-10 mb-4 mt-14`}>
-                            <button
-                                onClick={() => setIsOpen(true)}
-                                className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto flex"
-                            >
-                                Create Post
-                            </button>
+							</div>
+						)}
+						<div>
+							<div className="flex flex-col items-center mr-16">
+								<div className="w-full border-4 border-[#462312] rounded-lg p-4">
+									<textarea
+										className="w-full resize-none h-60 text-[#462312] font-semibold text-lg"
+										type="text"
+										name="description"
+										onChange={inputHandler}
+										defaultValue={details?.description}
+										disabled={toggle2}
+										value={input.description}
+										rows="1"
+										cols="1"
+									/>
+									<div className="flex flex-row-reverse justify-between w-full">
+										<div>
+											<button
+												className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+												onClick={editHandler2}>
+												Edit
+											</button>
+										</div>
+										<div>
+											{!toggle2 && (
+												<button
+													className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+													onClick={saveHandler}>
+													Save
+												</button>
+											)}
+										</div>
+									</div>
+								</div>
+								<MapView
+									name={details?.name}
+									country={details?.country}
+									city={details?.city}
+									address={details?.address}
+								/>
+								{/* componente post */}
+								<div
+									className={`${
+										details?.posts && details?.posts.length
+											? "w-full"
+											: "w-[360px]"
+									} min-h-[50rem] py-10 mb-4 mt-14`}>
+									<button
+										onClick={() => setIsOpen(true)}
+										className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto flex">
+										Create Post
+									</button>
 
-                            {(details?.posts && details?.posts.length) ? (
-                                <div className='flex items-center justify-end'>
-                                    <PostFilters />
-                                </div>
-                            ) : null}
+									{details?.posts && details?.posts.length ? (
+										<div className="flex items-center justify-end">
+											<PostFilters />
+										</div>
+									) : null}
 
-                            <div className=''>
-                                {details?.posts.length ? details?.posts.map(post => {
-                                    return (
-                                        <CardPost
-                                            key={post.id}
-                                            id={post.id}
-                                            profilePic={post.author.profilePic}
-                                            postImage={post.image}
-                                            author={post.author.name}
-                                            content={post.content}
-                                            likes={post.likes}
-                                            createdAt={post.createdAt}
-                                            comments={post.Comment.length}
-                                            authorId={post.authorId}
-                                        />
-                                    )
-                                }) : <h2 className="mt-[40px] text-center">No posts available.</h2>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+									<div className="">
+										{details?.posts.length ? (
+											details?.posts.map((post) => {
+												return (
+													<CardPost
+														key={post.id}
+														id={post.id}
+														profilePic={post.author.profilePic}
+														postImage={post.image}
+														author={post.author.name}
+														content={post.content}
+														likes={post.likes}
+														createdAt={post.createdAt}
+														comments={post.Comment.length}
+														authorId={post.authorId}
+													/>
+												)
+											})
+										) : (
+											<h2 className="mt-[40px] text-center">
+												No posts available.
+											</h2>
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-            <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
+					<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
-            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details.name} id={id}/>
-
-        </div>
-        ) : (<Spinner />)}
-        </div>
-    )
-
-
+					<ModalDonate
+						isOpen={isOpenDonate}
+						closeModal={closeModalDonate}
+						name={details.name}
+						id={id}
+					/>
+				</div>
+			) : (
+				<Spinner />
+			)}
+		</div>
+	)
 }
 
 export default OngDetail
