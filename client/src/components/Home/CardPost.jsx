@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import ModalPostDetail from "./ModalPostDetail";
 import ShowMoreText from "react-show-more-text";
 import { useUpdatePostLikesMutation } from "../../redux/api/posts";
+import { useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 
 const CardPost = ({
   image,
@@ -24,13 +26,14 @@ const CardPost = ({
   const [likesActuals, setLikesActuals] = useState(likes);
   const [like, setLike] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuth } = useSelector((state) => state.localStorage.userState);
 
   const closeModal = () => setIsOpen(false);
 
-  const [updateLikes, { data, isLoading, error }] =
-    useUpdatePostLikesMutation();
+  const [updateLikes, {}] = useUpdatePostLikesMutation();
 
   const toggleLike = () => {
+    if (!isAuth) return toast.error("you are not logged in");
     setLike(!like);
     like
       ? setLikesActuals(likesActuals - 1)

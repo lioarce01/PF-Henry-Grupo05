@@ -8,12 +8,7 @@ import { useGetPostByIdQuery } from "../../redux/api/posts";
 const Post = ({ postId, closeModal, setLike, like, likes }) => {
   const [toogle, setToogle] = useState(true);
 
-  const {
-    data: details,
-    error,
-    isLoading,
-    isFetching,
-  } = useGetPostByIdQuery(postId);
+  const { data: details, isFetching } = useGetPostByIdQuery(postId);
 
   if (!details || Object.keys(details).length === 0) return;
 
@@ -21,7 +16,12 @@ const Post = ({ postId, closeModal, setLike, like, likes }) => {
     <div className="flex flex-col w-[50rem]  p-6 space-y-6 overflow-hidden rounded-lg shadow-md  bg-[#FAF2E7] border border-gray-200 mx-auto">
       <div className="flex flex-row space-x-4">
         <AuthorData details={details} />
-        <ModalEditPost closeModal={closeModal} setToogle={setToogle} postId={postId} />
+        <ModalEditPost
+          authorId={details.author.id}
+          closeModal={closeModal}
+          setToogle={setToogle}
+          postId={postId}
+        />
       </div>
 
       <PostData
