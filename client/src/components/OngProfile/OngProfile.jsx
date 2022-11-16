@@ -13,7 +13,6 @@ import CreatePostModal from "../Home/ModalCreatePost"
 import Spinner from "../Spinner/Spinner"
 import ModalDonate from "./Donate/ModalDonate";
 import MapView from '../Maps/MapView/MapView';
-import { useUpdateShelterMutation } from "../../redux/api/shelters"
 
 const OngDetail = () => {
     const { id } = useParams();
