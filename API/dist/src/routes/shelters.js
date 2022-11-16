@@ -125,6 +125,8 @@ router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
                 profilePic: bodyShelter.profilePic,
                 animals: bodyShelter.animals,
                 city: bodyShelter.city,
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
