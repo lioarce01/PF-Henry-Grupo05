@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import {
-	useUpdateFollowersMutation,
+	useAddFollowersMutation,
+	useDeleteFollowersMutation,
 	useUpdateShelterMutation,
 } from "../../redux/api/shelters"
 import { useGetShelterByIdQuery } from "../../redux/api/shelters"
@@ -13,6 +14,7 @@ import CreatePostModal from "../Home/ModalCreatePost"
 import Spinner from "../Spinner/Spinner"
 import ModalDonate from "./Donate/ModalDonate"
 import MapView from "../Maps/MapView/MapView"
+import { RiUserUnfollowLine, RiUserFollowLine } from "react-icons/ri"
 
 const OngDetail = () => {
 	const { id } = useParams()
@@ -31,7 +33,9 @@ const OngDetail = () => {
 
 	const [updateShelter, { data: updated, updaterLoading, updaterError }] =
 		useUpdateShelterMutation()
-	const [updateFollowers] = useUpdateFollowersMutation()
+	const [addFollowers] = useAddFollowersMutation()
+
+	const [deleteFollowers] = useDeleteFollowersMutation()
 
 	const userId = "636c0a4f1e78d75d8edfae92"
 
@@ -58,18 +62,14 @@ const OngDetail = () => {
 			id,
 		})
 
-	const setFollow = () => {
-		//set follow on click button follow
-		//update followers on db
-		updateFollowers({
+	const addFollow = () => {
+		addFollowers({
 			shelterId: id,
 			userId: userId,
 		})
 
-		//refetch data
 		refetch()
 
-		//update followers on redux
 		updateShelter({
 			id: id,
 			followers: details?.followers,
@@ -80,19 +80,21 @@ const OngDetail = () => {
 	}
 
 	const deleteFollow = () => {
-		if (details?.followers.includes(userId)) {
-			const newFollowers = details?.followers.filter(
-				(follower) => follower !== userId
-			)
-			updateShelter({
-				id: id,
-				followers: newFollowers,
-			})
-		}
+		deleteFollowers({
+			shelterId: id,
+			userId: userId,
+		})
+		refetch()
 
-		//refetch data
+		updateShelter({
+			id: id,
+			followers: details?.followers,
+		})
+
 		refetch()
 	}
+
+	console.log("followers: ", details?.followers?.length)
 
 	return (
 		<div>
@@ -124,26 +126,61 @@ const OngDetail = () => {
 										onClick={() => setIsOpenDonate(true)}>
 										Donate
 									</button>
-									{
-										//if user is not following the shelter
-										!details?.followers?.includes(userId) ? (
-											<button
-												className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
-												onClick={() => setFollow()}>
-												Follow
-											</button>
-										) : (
-											<button
-												className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
-												onClick={() => deleteFollow()}>
-												Unfollow
-											</button>
-										)
-									}
 								</div>
 							</div>
 						)}
 						<div>
+							<div>
+								<h1 className="text-xl">Shelter stats</h1>
+							</div>
+							<div className="border-2 border-black rounded-md w-[360px] my-2 p-2">
+								<div className="flex flex-col justify-between">
+									<div className="flex flex-col">
+										<p>
+											Followers: <span>{details?.followers?.length}</span>
+										</p>
+										<p>
+											Posts: <span>{details?.posts?.length}</span>
+										</p>
+										<p>
+											Donations: <span>{details?.donations?.length}</span>
+										</p>
+										<p>
+											Budget: <span>{details?.budget}</span>
+										</p>
+										<p>
+											Goal: <span>{details?.goal}</span>
+										</p>
+									</div>
+									<div>
+										{
+											//check if user is logged in and if he is following the shelter already
+											userId &&
+											details?.followers?.find(
+												(follower) => follower.id === userId
+											) ? (
+												<button
+													className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border"
+													onClick={deleteFollow}>
+													Unfollow{" "}
+													<span className="pl-2">
+														<RiUserUnfollowLine />
+													</span>
+												</button>
+											) : (
+												<button
+													className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center"
+													onClick={addFollow}>
+													Follow{" "}
+													<span className="pl-2">
+														<RiUserFollowLine />
+													</span>
+												</button>
+											)
+										}
+									</div>
+								</div>
+							</div>
 							<div className="flex flex-col items-center mr-16">
 								<div className="w-full border-4 border-[#462312] rounded-lg p-4">
 									<textarea

@@ -169,6 +169,33 @@ router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
+router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, shelterId } = req.body;
+        yield prisma.user.update({
+            where: { id: userId },
+            data: {
+                following: {
+                    disconnect: { id: shelterId }
+                }
+            }
+        });
+        yield prisma.shelter.update({
+            where: { id: shelterId },
+            data: {
+                followers: {
+                    disconnect: { id: userId
+                    }
+                }
+            }
+        });
+        res.status(200).send('Shelter unfollowed successfully.');
+    }
+    catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+}));
 // update a shelter
 router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
