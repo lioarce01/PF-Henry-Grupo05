@@ -14,8 +14,6 @@ const PostForm = ({ closeModal }) => {
 	const [image, setImage] = useState(false)
 	const { getAccessTokenSilently, isAuthenticated } = useAuth0()
 
-	const [addNewPost, { data, isLoading, error, isSuccess }] =
-		useAddNewPostMutation()
 
   const [addNewPost, { data, isLoading, error, isSuccess }] = useAddNewPostMutation();
  
