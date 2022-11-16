@@ -58,7 +58,7 @@ export const usersApi = createApi({
                     }
                 }},
             invalidatesTags: ["UserId"]
-        })
+        }),
     })
 })
 
@@ -69,5 +69,6 @@ export const {
     useGetUserFollowingQuery,
     useCreateUserMutation,
     useUpdateUserMutation,
-    useDeleteUserMutation
+    useDeleteUserMutation,
+    useSetFollowMutation
 } = usersApi;

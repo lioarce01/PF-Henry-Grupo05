@@ -161,6 +161,39 @@ router.post("/", jwtCheck, async (req, res) => {
     }
 })
 
+//on click follow button in shelter profile page, add shelter to user's following list and add user to shelter's followers list 
+
+router.post("/follow", async (req, res) => {
+    try {
+        const { userId, shelterId } = req.body;
+
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                following: {
+                    connect: { id: shelterId }
+                }
+            }
+        })
+
+        await prisma.shelter.update({
+            where: { id: shelterId },
+            data: {
+                followers: {
+                    connect: { id: userId
+                    }
+                }
+            }
+        })
+
+        res.status(200).send('Shelter followed successfully.')
+        
+    } catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+})
+
 // update a shelter
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
