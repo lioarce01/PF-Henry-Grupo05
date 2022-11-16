@@ -169,6 +169,7 @@ router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
+
 // logical disabled to shelters(Admin)
 router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -181,6 +182,31 @@ router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
+
+router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, shelterId } = req.body;
+        yield prisma.user.update({
+            where: { id: userId },
+            data: {
+                following: {
+                    disconnect: { id: shelterId }
+                }
+            }
+        });
+        yield prisma.shelter.update({
+            where: { id: shelterId },
+            data: {
+                followers: {
+                    disconnect: { id: userId
+                    }
+                }
+            }
+        });
+        res.status(200).send('Shelter unfollowed successfully.');
+    }
+    catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
 }));
