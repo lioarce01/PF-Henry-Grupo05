@@ -9,10 +9,10 @@ import NavBar from '../Navbar/Navbar'
 import CreatePostModal from "../Home/ModalCreatePost";
 import Spinner from "../Spinner/Spinner"
 import ModalDonate from "./Donate/ModalDonate";
+import MapView from '../Maps/MapView/MapView';
 
 const OngDetail = () => {
     const { id } = useParams();
-    const details = useSelector(state => state.manageShelters.details);
    
     let [isOpenDonate, setIsOpenDonate] = useState(false);
     const closeModalDonate = () => setIsOpenDonate(false);
@@ -20,6 +20,7 @@ const OngDetail = () => {
     const { data: details, isLoading, error, isSuccess, isFetching, refetch } = useGetShelterByIdQuery(id)
 
     const [updateShelter, { data: updated, updaterLoading, updaterError }] = useUpdateShelterMutation()
+    
 
     const [isOpen, setIsOpen] = useState(false);
     const closeModal = () => setIsOpen(false);
@@ -73,7 +74,8 @@ const OngDetail = () => {
                                 </div>
                             </div>
                         </div>
-
+                        <MapView name={details?.name} country={details?.country} 
+                        city={details?.city} address={details?.address}/>
                         {/* componente post */}
                         <div className={`${details?.posts && details?.posts.length ? "w-full" : "w-[360px]"} min-h-[50rem] py-10 mb-4 mt-14`}>
                             <button
