@@ -17,20 +17,22 @@ const PostForm = ({ closeModal }) => {
 	const [addNewPost, { data, isLoading, error, isSuccess }] =
 		useAddNewPostMutation()
 
-	const onSubmit = async (e) => {
-		e.preventDefault()
-		const accessToken = await getAccessTokenSilently()
-		if (!image || !content) return alert("content and image are needed")
-		const newPost = { content, image, shelterId, authorId }
-		const myPromise = addNewPost({ accessToken, newPost })
-		toast.promise(myPromise, {
-			loading: "Creating post",
-			success: "Post created",
-			error: "There was an error creating post",
-		})
-		setContent("")
-		setImage(false)
-	}
+  const [addNewPost, { data, isLoading, error, isSuccess }] = useAddNewPostMutation();
+ 
+  const onSubmit = async(e) => {
+    e.preventDefault();
+    const accessToken = await getAccessTokenSilently()
+    if (!image || !content) return alert("content and image are needed");
+    const newPost = { content, image, shelterId, authorId }
+    const myPromise = addNewPost({ accessToken, newPost })
+    toast.promise(myPromise, {
+      loading: 'Creating post'
+      success: 'Post created',
+      error: 'There was an error creating post',
+    });
+    setContent("")
+    setImage(false)
+  };
 
 	return (
 		<div className="">
