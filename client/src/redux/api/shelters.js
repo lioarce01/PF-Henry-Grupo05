@@ -78,7 +78,7 @@ export const sheltersApi = createApi({
                 method: "post",
                 body: { userId, shelterId },
             })},
-            invalidatesTags: ["Shelters"]
+            invalidatesTags: ["Shelters", "ShelterId"]
         }),
 
         deleteFollowers: builder.mutation({
@@ -90,7 +90,7 @@ export const sheltersApi = createApi({
                 method: "delete", 
                 body: { userId, shelterId },
             })},
-            invalidatesTags: ["Shelters"]
+            invalidatesTags: ["Shelters", "ShelterId"]
         })
     })
 })

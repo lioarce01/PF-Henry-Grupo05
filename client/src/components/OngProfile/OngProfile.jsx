@@ -15,6 +15,7 @@ import Spinner from "../Spinner/Spinner"
 import ModalDonate from "./Donate/ModalDonate"
 import MapView from "../Maps/MapView/MapView"
 import { RiUserUnfollowLine, RiUserFollowLine } from "react-icons/ri"
+import { useGetUserByIdQuery } from "../../redux/api/users"
 
 const OngDetail = () => {
 	const { id } = useParams()
@@ -36,6 +37,11 @@ const OngDetail = () => {
 	const [addFollowers] = useAddFollowersMutation()
 
 	const [deleteFollowers] = useDeleteFollowersMutation()
+	const { data: users, refetch: refetchUser } = useGetUserByIdQuery(
+		"636c0a4f1e78d75d8edfae92"
+	)
+
+	console.log("users: ", users)
 
 	const userId = "636c0a4f1e78d75d8edfae92"
 
@@ -68,15 +74,12 @@ const OngDetail = () => {
 			userId: userId,
 		})
 
-		refetch()
+		refetchUser()
 
 		updateShelter({
 			id: id,
 			followers: details?.followers,
 		})
-
-		//refetch data
-		refetch()
 	}
 
 	const deleteFollow = () => {
@@ -84,14 +87,12 @@ const OngDetail = () => {
 			shelterId: id,
 			userId: userId,
 		})
-		refetch()
+		refetchUser()
 
 		updateShelter({
 			id: id,
 			followers: details?.followers,
 		})
-
-		refetch()
 	}
 
 	console.log("followers: ", details?.followers?.length)
@@ -153,31 +154,27 @@ const OngDetail = () => {
 										</p>
 									</div>
 									<div>
-										{
-											//check if user is logged in and if he is following the shelter already
-											userId &&
-											details?.followers?.find(
-												(follower) => follower.id === userId
-											) ? (
-												<button
-													className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border"
-													onClick={deleteFollow}>
-													Unfollow{" "}
-													<span className="pl-2">
-														<RiUserUnfollowLine />
-													</span>
-												</button>
-											) : (
-												<button
-													className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center"
-													onClick={addFollow}>
-													Follow{" "}
-													<span className="pl-2">
-														<RiUserFollowLine />
-													</span>
-												</button>
-											)
-										}
+										{users?.following?.find(
+											(shelter) => shelter.id === details.id
+										) ? (
+											<button
+												className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border"
+												onClick={deleteFollow}>
+												Unfollow{" "}
+												<span className="pl-2">
+													<RiUserUnfollowLine />
+												</span>
+											</button>
+										) : (
+											<button
+												className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center"
+												onClick={addFollow}>
+												Follow{" "}
+												<span className="pl-2">
+													<RiUserFollowLine />
+												</span>
+											</button>
+										)}
 									</div>
 								</div>
 							</div>
