@@ -65,7 +65,7 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { id } = req.params;
     try {
         const user = yield prisma.user.findUnique({
-            where: { id },
+            where: { id: id },
             include: { following: true, posts: true }
         });
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
@@ -127,6 +127,21 @@ router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, 
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+}));
+// logical disabled to users(Admin)
+router.put('/disable/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        yield prisma.user.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`User ${id} disabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
     }
 }));
