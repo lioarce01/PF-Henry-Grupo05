@@ -9,7 +9,7 @@ export const usersApi = createApi({
 
     endpoints: (builder) => ({
         getUsers: builder.query({
-            query: (userName) => `/users?name=${userName}`,
+            query: (user) => `/users?name=${user}`,
             providesTags: ["Users"]
         }),
 
@@ -28,7 +28,6 @@ export const usersApi = createApi({
                     url: "/users/",
                     method: "post",
                     body: newUser,
-        
                 }},
             invalidatesTags: ["UserId"]
         }),

@@ -235,6 +235,39 @@ const OngDetail = () => {
 										</div>
 									) : null}
 
+<<<<<<< HEAD
+                            <div className=''>
+                                {details?.posts.length ? details?.posts.map(post => {
+                                    return (
+                                        <CardPost
+                                            key={post.id}
+                                            id={post.id}
+                                            profilePic={post.author.profilePic}
+                                            postImage={post.image}
+                                            author={post.author.name}
+                                            content={post.content}
+                                            likes={post.likes}
+                                            createdAt={post.createdAt}
+                                            comments={post.Comment.length}
+                                            authorId={post.authorId}
+                                        />
+                                    )
+                                }) : <h2 className="mt-[40px] text-center">No posts available.</h2>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
+
+            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} id={id}/>
+
+        </div>
+        ) : (<Spinner />)}
+        </div>
+    )
+=======
 									<div className="">
 										{details?.posts.length ? (
 											details?.posts.map((post) => {
@@ -263,6 +296,7 @@ const OngDetail = () => {
 							</div>
 						</div>
 					</div>
+>>>>>>> 24f22c6c41f6aec9724382457b5460eaddd2840f
 
 					<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 

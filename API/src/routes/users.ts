@@ -6,7 +6,10 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 type Req = {
-    query: { name: string };
+    query: {
+        name: string,
+        email: string
+    };
     body: {
         name: string
         email: string
@@ -101,7 +104,7 @@ router.post("/", async (req: Req, res) => {
     const { name, email, profilePic } = req.body;
 
     try {
-        await prisma.user.upsert({
+        const newUser = await prisma.user.upsert({
             where: { email },
             update: {},
             create: {
@@ -111,7 +114,7 @@ router.post("/", async (req: Req, res) => {
             }
         });
 
-        res.status(200).send("User created successfully.");
+        res.status(200).send({message: "User created successfully.", newUser: newUser});
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
