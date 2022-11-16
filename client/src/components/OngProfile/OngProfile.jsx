@@ -234,7 +234,6 @@ const OngDetail = () => {
 											<PostFilters />
 										</div>
 									) : null}
-
 									<div className="">
 										{details?.posts.length ? (
 											details?.posts.map((post) => {
