@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css'
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import axios from 'axios';
+import { useGetCoordsQuery } from '../../../redux/api/map';
 
 
 
@@ -12,6 +13,8 @@ const MapView = ({name, country, city, address}) => {
 const [position, setPosition] = useState([-33.305619, -66.343286]);
 
 const urlApi = `https://api.mymappi.com/v2/geocoding/direct?apikey=${process.env.REACT_APP_MAPPI_KEY}&q=${address}, ${city}, ${country}&layers=address`
+const {data, isLoading, error} = useGetCoordsQuery(urlApi)
+
 const coords = async ()=>{
     try {
          const data = await axios.get(urlApi)

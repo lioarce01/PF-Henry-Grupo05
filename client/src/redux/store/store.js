@@ -7,6 +7,7 @@ import { sheltersApi } from '../api/shelters';
 import storage from 'redux-persist/lib/storage'
 import {persistReducer} from 'redux-persist'
 import { combineReducers } from '@reduxjs/toolkit';
+import { mapApi } from '../api/map';
 
 const persistConfig = {
     key: 'root',
@@ -22,9 +23,10 @@ const rootReducer = combineReducers({
 const localStorage = persistReducer(persistConfig, rootReducer)
 
 export default configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware, sheltersApi.middleware, usersApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware, sheltersApi.middleware, usersApi.middleware, mapApi.middleware),
     reducer: {
         localStorage,
+        [mapApi.reducerPath]: mapApi.reducer,
         [postApi.reducerPath]: postApi.reducer,
         [sheltersApi.reducerPath]: sheltersApi.reducer,
         [usersApi.reducerPath]: usersApi.reducer,
