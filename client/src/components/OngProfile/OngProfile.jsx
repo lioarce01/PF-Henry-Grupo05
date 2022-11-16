@@ -266,7 +266,6 @@ const OngDetail = () => {
         ) : (<Spinner />)}
         </div>
     )
-=======
 									<div className="">
 										{details?.posts.length ? (
 											details?.posts.map((post) => {
@@ -295,7 +294,6 @@ const OngDetail = () => {
 							</div>
 						</div>
 					</div>
->>>>>>> 24f22c6c41f6aec9724382457b5460eaddd2840f
 
 					<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
