@@ -24,7 +24,7 @@ const PostForm = ({ closeModal }) => {
     const newPost = { content, image, shelterId, authorId }
     const myPromise = addNewPost({ accessToken, newPost })
     toast.promise(myPromise, {
-      loading: 'Creating post'
+      loading: 'Creating post',
       success: 'Post created',
       error: 'There was an error creating post',
     });
