@@ -86,7 +86,7 @@ router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 // create an user
-router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, profilePic } = req.body;
     try {
         yield prisma.user.upsert({

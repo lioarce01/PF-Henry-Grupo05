@@ -91,7 +91,7 @@ router.get("/:id/following", async (req, res) => {
 });
 
 // create an user
-router.post("/", jwtCheck, async (req: Req, res) => {
+router.post("/", async (req: Req, res) => {
     const { name, email, profilePic } = req.body;
 
     try {
