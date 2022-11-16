@@ -98,7 +98,7 @@ router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const shelter = await prisma.shelter.findUnique({ 
-            where: { id },
+            where: { id: id},
             include: { 
                 followers: true, 
                 author: true, 
@@ -130,6 +130,8 @@ router.post("/", jwtCheck, async (req, res) => {
             address: string,
             animals: string,
             city: string,
+            lat: number,
+            lon: number,
             country: string,
             website: string,
             budget: number,
@@ -146,6 +148,8 @@ router.post("/", jwtCheck, async (req, res) => {
                 profilePic: bodyShelter.profilePic,
                 animals:    bodyShelter.animals,
                 city: bodyShelter.city,
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
@@ -193,9 +197,56 @@ router.post("/follow", async (req, res) => {
         console.log(error);
     }
 })
+// logical disabled to shelters(Admin)
+router.put("/disable/:id", async (req, res) => {    
+    try {
+        const id = req.params.id;
+        await prisma.shelter.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Shelter ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+})
+
+
+router.delete("/unfollow", async (req, res) => {
+    try {
+        const { userId, shelterId } = req.body;
+
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                following: {
+                    disconnect: { id: shelterId }
+                }
+            }
+        })
+
+        await prisma.shelter.update({
+            where: { id: shelterId },
+            data: {
+                followers: {
+                    disconnect: { id: userId
+                    }
+                }
+            }
+        })
+
+        res.status(200).send('Shelter unfollowed successfully.')
+
+    } catch (error) {   
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+})
+
 
 // update a shelter
-router.put("/:id", async (req, res) => {
+router.put("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -236,7 +287,7 @@ router.put("/:id", async (req, res) => {
 })
 
 // delete a shelter
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {

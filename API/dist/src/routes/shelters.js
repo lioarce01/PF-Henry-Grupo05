@@ -94,7 +94,7 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { id } = req.params;
         const shelter = yield prisma.shelter.findUnique({
-            where: { id },
+            where: { id: id },
             include: {
                 followers: true,
                 author: true,
@@ -125,6 +125,8 @@ router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
                 profilePic: bodyShelter.profilePic,
                 animals: bodyShelter.animals,
                 city: bodyShelter.city,
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
@@ -167,8 +169,49 @@ router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
+
+// logical disabled to shelters(Admin)
+router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        yield prisma.shelter.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Shelter ${id} disabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+
+router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, shelterId } = req.body;
+        yield prisma.user.update({
+            where: { id: userId },
+            data: {
+                following: {
+                    disconnect: { id: shelterId }
+                }
+            }
+        });
+        yield prisma.shelter.update({
+            where: { id: shelterId },
+            data: {
+                followers: {
+                    disconnect: { id: userId
+                    }
+                }
+            }
+        });
+        res.status(200).send('Shelter unfollowed successfully.');
+    }
+    catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+}));
 // update a shelter
-router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const bodyShelter = req.body;
@@ -194,7 +237,7 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // delete a shelter
-router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const deletedShelter = yield prisma.shelter.delete({

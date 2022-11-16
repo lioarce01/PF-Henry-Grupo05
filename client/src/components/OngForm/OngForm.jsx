@@ -6,25 +6,26 @@ import Navbar from "../Navbar/Navbar"
 import UploadImage from "./UploadImage"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useAddShelterMutation } from "../../redux/api/shelters";
-
+import location from './location'
 const OngForm = () => {
 	const [createShelter, { data, isLoading, error }] = useAddShelterMutation()
+	
 	const [image, setImage] = useState("")
 	const navigate = useNavigate()
 	const { isAuthenticated, getAccessTokenSilently } = useAuth0()
 
 	const onSubmit = async () => {
 		if (image.length && isAuthenticated) {
-			console.log("submitted")
-			console.log({ ...values, profilePic: image })
+			const data = await location({address: values.address, city: values.city, country: values.country});
+			let {lat, lon}= data;
+			console.log(lat, lon);
 			const accessToken = await getAccessTokenSilently()
-			await createShelter({accessToken, newShelter: { ...values, profilePic: image }}).then(res => alert('Shelter Created')).catch(() => alert('error'))
+			await createShelter({accessToken, newShelter: { ...values, profilePic: image, lat: lat , lon: lon }}).then(res => alert('Shelter Created')).catch(() => alert('error'))
 			navigate("/home")
 		} else {
 			alert("Please login")
 		}
 	}
-	console.log(image)
 	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
 		initialValues: {
 			name: "",
@@ -40,7 +41,9 @@ const OngForm = () => {
 		validationSchema: ongSchema,
 		onSubmit,
 	})
-	console.log("values:", { ...values, profilePic: image })
+	
+
+	//[data?.data[0].lat,data?.data[0].lon]
 	return (
 		<div className="w-full min-h-screen h-fit bg-[#FAF2E7]">
 			<div>

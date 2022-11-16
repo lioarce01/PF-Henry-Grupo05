@@ -14,6 +14,7 @@ import { useCreateUserMutation } from "./redux/api/users";
 import { useEffect } from "react";
 import { setUserAction } from "./redux/slices/manageUsers/actions";
 import { useDispatch, useSelector } from "react-redux";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 function App() {
   const { user, isAuthenticated } = useAuth0()
@@ -51,6 +52,7 @@ function App() {
         <Route path="/mp" element={<MercadoPago />} />
         <Route path= "/:id/profile" element={<OngDetail/>}/>
         <Route exact path='/users/:userId' element={<UserProfile/>}/>
+        <Route exact path='/admin' element={<AdminDashboard/>}/>
       </Routes>
     </div>
   );
