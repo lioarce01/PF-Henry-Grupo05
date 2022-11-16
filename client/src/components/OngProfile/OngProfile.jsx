@@ -8,10 +8,14 @@ import PostFilters from "../Home/PostFilters";
 import NavBar from '../Navbar/Navbar'
 import CreatePostModal from "../Home/ModalCreatePost";
 import Spinner from "../Spinner/Spinner"
+import ModalDonate from "./Donate/ModalDonate";
 import MapView from '../Maps/MapView/MapView';
 
 const OngDetail = () => {
     const { id } = useParams();
+   
+    let [isOpenDonate, setIsOpenDonate] = useState(false);
+    const closeModalDonate = () => setIsOpenDonate(false);
     
     const { data: details, isLoading, error, isSuccess, isFetching, refetch } = useGetShelterByIdQuery(id)
 
@@ -49,8 +53,8 @@ const OngDetail = () => {
                         <button className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
                             onClick={editHandler}>Edit</button>
                     </div>
-                    <button className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-                    >Suscribe</button>
+                    <button className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto" onClick={() => setIsOpenDonate(true)}
+                    >Donate</button>
                 </div>}
                 <div>
                     <div className="flex flex-col items-center mr-16">
@@ -110,6 +114,8 @@ const OngDetail = () => {
             </div>
 
             <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
+
+            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details.name} id={id}/>
 
         </div>
         ) : (<Spinner />)}

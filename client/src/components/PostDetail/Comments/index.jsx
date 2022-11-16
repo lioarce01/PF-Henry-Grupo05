@@ -1,11 +1,14 @@
 import React from 'react'
+import { PuffLoader } from 'react-spinners';
 import AddComment from './AddComment';
 import Comment from './Comment';
 
-const Comments = ({ postId, details }) => {
+const Comments = ({ postId, details, isFetching }) => {
   return (
     <div>
+      
       <AddComment postId={postId} />
+      {isFetching && <div className="w-full"><PuffLoader className="mx-auto" color="#462312" loading size={60} /></div>}
       {details.Comment &&
         details.Comment.map((comment) => {
           return (
