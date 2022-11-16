@@ -1,5 +1,6 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -42,7 +43,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // create a comment
-router.post('/', async (req, res) => {
+router.post('/', jwtCheck, async (req, res) => {
     try {
         interface commentInterface {
             authorId: string,
@@ -68,7 +69,7 @@ router.post('/', async (req, res) => {
 });
 
 // delete comment
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', jwtCheck, async (req, res) => {
     const id = req.params.id;
 
     try {
@@ -84,7 +85,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // edit a comment
-router.put('/', async (req, res) => {
+router.put('/', jwtCheck, async (req, res) => {
     try {
 
         interface commentInterface {

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect  } from "react"
 import { Link } from "react-router-dom"
 import { BsSun } from "react-icons/bs"
 import { HiMoon } from "react-icons/hi"
@@ -8,6 +8,7 @@ import { AiOutlineDown } from "react-icons/ai"
 import { useAuth0 } from "@auth0/auth0-react"
 import LogoutButton from "./LogoutButton"
 import LoginButton from "./LoginButton"
+import { useCreateUserMutation } from '../../redux/api/users';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ")
@@ -16,10 +17,19 @@ function classNames(...classes) {
 const Navbar = () => {
 	const [toggle, setToggle] = useState(false)
 	const { user, isAuthenticated } = useAuth0()
+	const [createUser, {}] = useCreateUserMutation();
 
 	const handleToggle = () => {
 		setToggle(!toggle)
 	}
+
+	useEffect(() => {
+		isAuthenticated && createUser({
+			name: user.nickname,
+			email: user.email,
+			profilePic: user.picture
+		})
+	}, [isAuthenticated, user, createUser])
 
 	return (
 		<div className="fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#FAF2E7]/[.05] shadow-lg backdrop-blur-sm h-14">
@@ -107,18 +117,7 @@ const Navbar = () => {
 											</Link>
 										)}
 									</Menu.Item>
-									<Menu.Item>
-										{({ active }) => (
-											<LogoutButton
-												className={classNames(
-													active
-														? "bg-slate-200 text-gray-900"
-														: "text-gray-700",
-													"block w-full px-4 py-2 text-left text-sm"
-												)}
-											/>
-										)}
-									</Menu.Item>
+									<Menu.Item>{({ active }) => <LogoutButton />}</Menu.Item>
 								</div>
 							</Menu.Items>
 						</Transition>

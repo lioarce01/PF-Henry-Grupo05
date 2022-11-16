@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { PuffLoader } from "react-spinners";
 import { useAddNewCommentMutation } from "../../../redux/api/posts";
 
 const AddComment = ({ postId }) => {
@@ -9,6 +10,7 @@ const AddComment = ({ postId }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     addNewComment({ content, authorId: "636cfde16804f7dc836bda73", postId });
+    setContent("")
   };
 
   const handleChange = (e) => {
@@ -16,6 +18,7 @@ const AddComment = ({ postId }) => {
   };
 
   return (
+    <>
     <form onSubmit={onSubmit} className="flex justify-center">
       <div className="mb-3 w-[100%] md:w-[80%] xl:w-[60%]">
         <h4
@@ -35,7 +38,11 @@ const AddComment = ({ postId }) => {
           </button>
         </div>
       </div>
+      
     </form>
+    {isLoading && <div className="w-full"><PuffLoader className="mx-auto" color="#462312" loading size={60} /></div>}
+    </>
+      
   );
 };
 

@@ -4,9 +4,20 @@ import { Menu } from "@headlessui/react";
 import { Fragment } from "react";
 import { Transition } from "@headlessui/react";
 import { useDeletePostMutation } from "../../redux/api/posts";
+import toast from 'react-hot-toast'
+ 
+const ModalEditPost = ({ setToogle, postId, closeModal }) => {
+  const [trigger, { data, isLoading, error }] = useDeletePostMutation();
 
-const ModalEditPost = ({ setToogle, postId }) => {
-  const [deletePost, { data, isLoading, error }] = useDeletePostMutation();
+  const deletePost = () => {
+    const myPromise = trigger(postId)
+    toast.promise(myPromise, {
+      loading: 'deleting post',
+      success: 'post deleted',
+      error: 'error deleting post',
+    });
+    closeModal()
+  }
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
