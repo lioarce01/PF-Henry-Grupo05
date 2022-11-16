@@ -31,9 +31,6 @@ router.get('/', async(req, res) => {
 
     } else {
         const posts = await prisma.post.findMany({
-            where:{
-                enable: true,
-            },
             take: parseInt(perPage as string),
             skip: (parseInt(page as string) - 1) * parseInt(perPage as string),
             include: {

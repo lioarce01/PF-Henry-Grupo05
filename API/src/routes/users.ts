@@ -43,9 +43,7 @@ router.get("/", async (req: Req, res) => {
         const { name } = req.query;
 
         const user = await prisma.user.findMany({
-            where: { name: { contains: name },
-                    enable: true 
-                },
+            where: { name: { contains: name }},
             include: { posts: true,
                 following: true,
              }
