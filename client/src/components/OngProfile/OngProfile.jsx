@@ -8,6 +8,7 @@ import PostFilters from "../Home/PostFilters";
 import NavBar from '../Navbar/Navbar'
 import CreatePostModal from "../Home/ModalCreatePost";
 import Spinner from "../Spinner/Spinner"
+import MapView from '../Maps/MapView/MapView';
 
 const OngDetail = () => {
     const { id } = useParams();
@@ -68,7 +69,8 @@ const OngDetail = () => {
                                 </div>
                             </div>
                         </div>
-
+                        <MapView name={details?.name} country={details?.country} 
+                        city={details?.city} address={details?.address}/>
                         {/* componente post */}
                         <div className={`${details?.posts && details?.posts.length ? "w-full" : "w-[360px]"} min-h-[50rem] py-10 mb-4 mt-14`}>
                             <button
