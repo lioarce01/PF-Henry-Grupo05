@@ -9,7 +9,7 @@ export const usersApi = createApi({
 
     endpoints: (builder) => ({
         getUsers: builder.query({
-            query: (userName) => `/users?name=${userName}`,
+            query: (user) => `/users?name=${user}`,
             providesTags: ["Users"]
         }),
 
@@ -23,14 +23,11 @@ export const usersApi = createApi({
         }),
 
         createUser: builder.mutation({
-            query: ({ accessToken, newUser }) => {
+            query: ( newUser ) => {
                 return {
                     url: "/users/",
                     method: "post",
                     body: newUser,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    }
                 }},
             invalidatesTags: ["UserId"]
         }),

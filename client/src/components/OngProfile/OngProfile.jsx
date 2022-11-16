@@ -153,7 +153,7 @@ const OngDetail = () => {
 
             <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
-            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details.name} id={id}/>
+            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} id={id}/>
 
         </div>
         ) : (<Spinner />)}

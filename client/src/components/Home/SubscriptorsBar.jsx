@@ -14,8 +14,6 @@ const SubscriptorsBar = () => {
 		refetch,
 	} = useGetUserFollowingQuery("636c0a4f1e78d75d8edfae92")
 
-	console.log("following: ", following)
-
 	return (
 		<div className="fixed left-0 flex">
 			<div

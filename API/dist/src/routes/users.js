@@ -41,9 +41,9 @@ const prisma = new client_1.PrismaClient();
 // get all users, or search them by name
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name } = req.query;
+        const { name, email } = req.query;
         const user = yield prisma.user.findMany({
-            where: { name: { contains: name } },
+            where: name ? { name: { contains: name } } : { email },
             include: { posts: true,
                 following: true,
             }
@@ -86,10 +86,10 @@ router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 // create an user
-router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, profilePic } = req.body;
     try {
-        yield prisma.user.upsert({
+        const newUser = yield prisma.user.upsert({
             where: { email },
             update: {},
             create: {
@@ -98,7 +98,7 @@ router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
                 profilePic
             }
         });
-        res.status(200).send("User created successfully.");
+        res.status(200).send({ message: "User created successfully.", newUser: newUser });
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
