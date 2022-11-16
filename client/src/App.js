@@ -9,6 +9,7 @@ import UserForm from "./components/UserForm/UserFom";
 import UserProfile from "./components/UserProfile/UserProfile";
 import MercadoPago from "./components/MercadoPago/MercadoPago";
 import About from "./components/About/About";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/mp" element={<MercadoPago />} />
         <Route path= "/:id/profile" element={<OngDetail/>}/>
         <Route exact path='/users/:userId' element={<UserProfile/>}/>
+        <Route exact path='/admin' element={<AdminDashboard/>}/>
       </Routes>
     </div>
   );
