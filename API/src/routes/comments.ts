@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
     try {
         const getComment = await prisma.comment.findMany({
-            where: { id },
+            where: { id: id },
             include: {
                 author: true,
                 post: true
@@ -67,7 +67,21 @@ router.post('/', jwtCheck, async (req, res) => {
         console.log(error)
     }
 });
-
+// logical disabled to comments(Admin)
+router.put('/disable/:id', async(req, res)=>{
+    try {
+        const id = req.params.id;
+        await prisma.comment.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Comment ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
 // delete comment
 router.delete('/:id', jwtCheck, async (req, res) => {
     const id = req.params.id;

@@ -31,6 +31,9 @@ router.get('/', async(req, res) => {
 
     } else {
         const posts = await prisma.post.findMany({
+            where:{
+                enable: true,
+            },
             take: parseInt(perPage as string),
             skip: (parseInt(page as string) - 1) * parseInt(perPage as string),
             include: {
@@ -115,6 +118,21 @@ router.post('/', jwtCheck, async(req, res) =>{
     }
 });
 
+// logical disabled to posts(Admin)
+router.put('/disable/:id', async(req, res)=>{
+    try {
+        const id = req.params.id;
+        await prisma.post.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Post ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
 // route to edit a post
 router.put('/', jwtCheck, async(req, res) =>{
     try {

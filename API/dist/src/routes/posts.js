@@ -40,6 +40,9 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else {
             const posts = yield prisma.post.findMany({
+                where: {
+                    enable: true,
+                },
                 take: parseInt(perPage),
                 skip: (parseInt(page) - 1) * parseInt(perPage),
                 include: {
@@ -99,6 +102,21 @@ router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
             }
         });
         res.status(200).send('Post created successfully.');
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to posts(Admin)
+router.put('/disable/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        yield prisma.post.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Post ${id} disabled successfully`);
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
