@@ -128,7 +128,7 @@ router.post("/", jwtCheck, async (req, res) => {
             description: string,
             profilePic: string,
             address: string,
-            animals: string[],
+            animals: string,
             city: string,
             lat: number,
             lon: number,
