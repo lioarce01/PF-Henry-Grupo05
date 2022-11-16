@@ -1,12 +1,10 @@
-
-import React, { useState } from "react";
-import ContentInput from "./ContentInput";
-import UploadImage from "./UploadInput";
-import { AiOutlineClose } from "react-icons/ai";
-import { useAddNewPostMutation } from "../../../redux/api/posts";
-import toast from 'react-hot-toast'
+import React, { useState } from "react"
+import ContentInput from "./ContentInput"
+import UploadImage from "./UploadInput"
+import { AiOutlineClose } from "react-icons/ai"
+import { useAddNewPostMutation } from "../../../redux/api/posts"
+import toast from "react-hot-toast"
 import { useAuth0 } from "@auth0/auth0-react"
-
 
 const shelterId = "636bccfcce65cefec651aeca"
 const authorId = "636c0a4f1e78d75d8edfae92"
@@ -33,7 +31,6 @@ const PostForm = ({ closeModal }) => {
     setContent("")
     setImage(false)
   };
-
 
 	return (
 		<div className="">
@@ -65,6 +62,4 @@ const PostForm = ({ closeModal }) => {
 	)
 }
 
-
 export default PostForm
-

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API = process.env.REACT_APP_API || 'http://localhost:3001';
+const API = 'http://localhost:3001';
 
 export const sheltersApi = createApi({
     reducerPath: "sheltersApi",
@@ -67,6 +67,18 @@ export const sheltersApi = createApi({
                 }
             }),
             invalidatesTags: ["Shelters"]
+        }),
+
+        updateFollowers: builder.mutation({
+            query: ({  userId, shelterId }) => {
+                console.log("userId", userId);
+                console.log("shelterId", shelterId);
+                return ({
+                url: `/shelters/follow`,
+                method: "post",
+                body: { userId, shelterId },
+            })},
+            invalidatesTags: ["Shelters"]
         })
     })
 })
@@ -80,5 +92,6 @@ export const {
     useSortSheltersMutation,
     useAddShelterMutation,
     useUpdateShelterMutation,
-    useDeleteShelterMutation
+    useDeleteShelterMutation,
+    useUpdateFollowersMutation
 } = sheltersApi;
