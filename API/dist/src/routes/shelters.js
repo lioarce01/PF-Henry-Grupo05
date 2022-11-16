@@ -94,7 +94,7 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { id } = req.params;
         const shelter = yield prisma.shelter.findUnique({
-            where: { id },
+            where: { id: id },
             include: {
                 followers: true,
                 author: true,
@@ -169,6 +169,20 @@ router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
+
+// logical disabled to shelters(Admin)
+router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        yield prisma.shelter.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Shelter ${id} disabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+
 router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, shelterId } = req.body;
@@ -197,7 +211,7 @@ router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 // update a shelter
-router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const bodyShelter = req.body;
@@ -223,7 +237,7 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // delete a shelter
-router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const deletedShelter = yield prisma.shelter.delete({

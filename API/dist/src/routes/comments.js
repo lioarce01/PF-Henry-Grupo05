@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const id = req.params.id;
     try {
         const getComment = yield prisma.comment.findMany({
-            where: { id },
+            where: { id: id },
             include: {
                 author: true,
                 post: true
@@ -63,6 +63,21 @@ router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
             }
         });
         res.status(200).send('Comment posted succesfully.');
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to comments(Admin)
+router.put('/disable/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        yield prisma.comment.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Comment ${id} disabled successfully`);
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");

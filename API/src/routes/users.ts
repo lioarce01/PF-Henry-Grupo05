@@ -43,7 +43,7 @@ router.get("/", async (req: Req, res) => {
         const { name } = req.query;
 
         const user = await prisma.user.findMany({
-            where: { name: { contains: name } },
+            where: { name: { contains: name }},
             include: { posts: true,
                 following: true,
              }
@@ -62,7 +62,7 @@ router.get("/:id", async (req, res) => {
 
     try {
         const user = await prisma.user.findUnique({ 
-            where: { id },
+            where: { id: id },
             include: { following: true, posts: true }
         });
 
@@ -134,6 +134,21 @@ router.put("/:id", jwtCheck, async (req, res) => {
     }
 });
 
+// logical disabled to users(Admin)
+router.put('/disable/:id',  async(req, res)=>{
+    try {
+        const id = req.params.id;
+        await prisma.user.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`User ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
 // delete an user
 router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
