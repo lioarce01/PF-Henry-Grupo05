@@ -235,7 +235,6 @@ const OngDetail = () => {
 										</div>
 									) : null}
 
-<<<<<<< HEAD
                             <div className=''>
                                 {details?.posts.length ? details?.posts.map(post => {
                                     return (
