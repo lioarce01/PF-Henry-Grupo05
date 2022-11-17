@@ -130,6 +130,36 @@ router.post("/", async (req: Req, res) => {
     }
 });
 
+// logical enabled to users(Admin)
+router.put('/enable',  async(req, res)=>{
+    try {
+        const id = req.body.userId;
+        await prisma.user.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`User ${id} enabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
+// logical disabled to users(Admin)
+router.put('/disable',  async(req, res)=>{
+    try {
+        const id = req.body.userId;
+        await prisma.user.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`User ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
 // update an user
 router.put("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
@@ -152,21 +182,7 @@ router.put("/:id", jwtCheck, async (req, res) => {
     }
 });
 
-// logical disabled to users(Admin)
-router.put('/disable/:id',  async(req, res)=>{
-    try {
-        const id = req.params.id;
-        await prisma.user.update({
-            where: { id: id },
-            data: { enable: false },
-        });
-        res.status(200).send(`User ${id} disabled successfully`)
-    } catch (error) {
-        res.status(400).send("ERROR: There was an unexpected error.")
-        console.log(error)
-    }
-   
-})
+
 // delete an user
 router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;

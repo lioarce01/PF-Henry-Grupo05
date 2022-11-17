@@ -46,11 +46,11 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 // get top five shelters by budget
 router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // bauti: la ruta se llama topFive, pero ahora la hago
-    // topSix para que se vea mejor el Carousel de landing
+    // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
+    const cant = Math.floor(req.query.cant);
     try {
         const shelters = yield prisma.shelter.findMany({
-            take: 6,
+            take: cant ? cant : 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
         });
@@ -117,7 +117,7 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyShelter = req.body;
-        yield prisma.shelter.create({
+        const shelterCreated = yield prisma.shelter.create({
             data: {
                 name: bodyShelter.name,
                 authorId: bodyShelter.authorId,
@@ -134,7 +134,7 @@ router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
                 goal: bodyShelter.goal
             }
         });
-        res.status(200).send('Shelter created successfully.');
+        res.status(200).send(shelterCreated);
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
@@ -169,10 +169,25 @@ router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
-// logical disabled to shelters(Admin)
-router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// logical enabled to shelters(Admin)
+router.put("/enable", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.body.shelterId;
+        yield prisma.shelter.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Shelter ${id} enabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to shelters(Admin)
+router.put("/disable", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.shelterId;
         yield prisma.shelter.update({
             where: { id: id },
             data: { enable: false },

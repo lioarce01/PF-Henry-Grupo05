@@ -105,10 +105,25 @@ router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
         console.log(error);
     }
 }));
-// logical disabled to posts(Admin)
-router.put('/disable/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// logical enabled to posts(Admin)
+router.put('/enable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.body.postId;
+        yield prisma.post.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Post ${id} enabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to posts(Admin)
+router.put('/disable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.postId;
         yield prisma.post.update({
             where: { id: id },
             data: { enable: false },

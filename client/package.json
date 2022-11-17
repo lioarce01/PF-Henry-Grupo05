@@ -25,9 +25,10 @@
     "react-show-more-text": "^1.6.2",
     "react-spinners": "^0.13.6",
     "redux-persist": "^6.0.0",
-    "sweetalert2": "^11.6.8",
     "redux-thunk": "^2.4.2",
+    "sweetalert2": "^11.6.8",
     "swiper": "^8.4.4",
+    "tailwind-scrollbar": "^2.0.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

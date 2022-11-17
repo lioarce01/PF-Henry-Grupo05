@@ -118,6 +118,36 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 }));
+// logical enabled to users(Admin)
+router.put('/enable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.userId;
+        yield prisma.user.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`User ${id} enabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to users(Admin)
+router.put('/disable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.userId;
+        yield prisma.user.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`User ${id} disabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
 // update an user
 router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
@@ -135,21 +165,6 @@ router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, 
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
-        console.log(error);
-    }
-}));
-// logical disabled to users(Admin)
-router.put('/disable/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const id = req.params.id;
-        yield prisma.user.update({
-            where: { id: id },
-            data: { enable: false },
-        });
-        res.status(200).send(`User ${id} disabled successfully`);
-    }
-    catch (error) {
-        res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
     }
 }));

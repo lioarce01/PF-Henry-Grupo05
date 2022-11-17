@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import CardPost from "./CardPost";
-import Spinner from "../Spinner/Spinner";
-import PostFilters from "./PostFilters";
-import ModalCreatePost from "./ModalCreatePost";
-import { useGetPostsQuery } from "../../redux/api/posts";
-import { PuffLoader } from "react-spinners";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react"
+import { useSelector } from "react-redux"
+import CardPost from "./CardPost"
+import Spinner from "../Spinner/Spinner"
+import PostFilters from "./PostFilters"
+import { useGetPostsQuery } from "../../redux/api/posts"
+import { useAuth0 } from "@auth0/auth0-react"
+import { PuffLoader } from "react-spinners"
 
 const Posts = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const { sort } = useSelector((state) => state.localStorage.postState);
-  const { userDetail } = useSelector((state) => state.localStorage.userState);
   const { isAuthenticated } = useAuth0();
 
   const {
@@ -21,44 +18,16 @@ const Posts = () => {
     isFetching,
     refetch,
   } = useGetPostsQuery(sort);
-  const closeModal = () => setIsOpen(false);
+  
   useEffect(() => {
     refetch();
   }, []);
 
-  // const handleScroll = () => {
-  // 	if (
-  // 		window.innerHeight + document.documentElement.scrollTop + 1 >=
-  // 		document.documentElement.scrollHeight
-  // 	) {
-  // 		setPage((prev) => prev + 1)
-  // 	}
-  // }
+	return (
+		<div className="w-auto h-screen min-h-[50rem] mt-[25px] px-6 mb-4 bg-none overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+			<div className={`flex flex-col ${isLoading ? "w-full" : "w-[580px]"}`}>
 
-  // useEffect(() => {
-  // 	window.addEventListener("scroll", handleScroll)
-  // }, [])
-
-  return (
-    <div className="w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#EEEEE6]">
-      <div className={`flex flex-col ${isLoading ? "w-full" : "w-[580px]"}`}>
-        <div className="flex w-full">
-          {isAuthenticated && userDetail?.Shelter?.length > 0 && (
-            <button
-              onClick={() => setIsOpen(true)}
-              className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-            >
-              Create Post
-            </button>
-          )}
-        </div>
-
-        <div
-          className={`flex items-center ${
-            isFetching ? "justify-between" : "justify-end"
-          }`}
-        >
-          {isFetching && <PuffLoader color="#462312" loading size={60} />}
+        <div className={`absolute top-[33px] ${isAuthenticated ? "left-[1160px]" : "left-[1310px]"} flex items-center ${isFetching ? 'justify-between' : "justify-end"}`}>
           <PostFilters />
         </div>
       </div>
@@ -87,7 +56,6 @@ const Posts = () => {
             );
           })}
       </div>
-      <ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
     </div>
   );
 };

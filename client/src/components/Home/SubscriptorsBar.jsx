@@ -1,114 +1,60 @@
-import React, { useEffect, useState } from "react"
 import SubsCard from "./SubsCard"
-import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs"
 import { TbReportMoney } from "react-icons/tb"
-import { AiFillHome, AiFillStar } from "react-icons/ai"
-import { useGetUserFollowingQuery } from "../../redux/api/users"
+import { AiFillStar } from "react-icons/ai"
 import { useSelector } from "react-redux"
 
 const SubscriptorsBar = () => {
-	const [open, setOpen] = useState(true)
-	const { isAuth, userDetail } = useSelector(
-		(state) => state.localStorage.userState
-	)
-
-	console.log("following: ", userDetail.following)
+	const { isAuth, userDetail } = useSelector((state) => state.localStorage.userState)
 
 	return (
-		<div className="fixed left-0 flex">
-			<div
-				className={` ${
-					open ? "w-28" : "w-60 "
-				} flex flex-col h-[54rem] overflow-y-scroll p-2 bg-[#fffcf7]`}>
-				<div className="space-y-3">
-					<div className="flex items-center justify-end">
-						{open ? (
-							<button
-								onClick={() => setOpen(!open)}
-								className="px-2 py-1 text-2xl font-bold text-black border-2 mx-2 border-[#fffcf7] hover:bg-[#fffcf7] transition duration-300 rounded-md outline-none">
-								{" "}
-								<BsArrowBarRight />{" "}
-							</button>
-						) : (
-							<button
-								onClick={() => setOpen(!open)}
-								className="px-2 py-1 text-2xl font-bold text-black border-2 border-[#fffcf7] hover:bg-[#fffcf7] transition duration-300 rounded-md outline-none">
-								{" "}
-								<BsArrowBarLeft />{" "}
-							</button>
-						)}
+		<div className="mt-[40px] absolute flex h-full w-[350px] bg-white rounded-tr-[30px] shadow-[16px_0px_44px_15px_rgba(255,213,201,0.85)]">
+			<div className="w-[350px] pb-[30px]  pr-[20px] mt-[20px] mr-[10px] flex flex-col overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+				<div className="space-y-3 ">
+					<div className="items-center flex-1">
+						<div className="border-b pb-[25px] mx-[15px]">
+							<div className="mt-[10px]">
+								<div className="flex flex-col items-start ml-[20px]">
+									<h2 className="font-bold font-mono tracking-tight">SUBBED SHELTERS</h2>
+								</div>
+								<div className="flex flex-col items-end mt-[-20px]">
+									<TbReportMoney className="text-2xl text-[#d45f37]" />
+								</div>
+							</div>
+							<div className="mt-[35px] block mx-auto w-[280px]">
+								{isAuth &&
+									userDetail?.following?.map((shelter) => (
+										<SubsCard
+											key={shelter.id}
+											id={shelter.id}
+											image={shelter.profilePic}
+										/>
+								))}
+							</div>
+						</div>
+						<div className="flex flex-col">
+							<div className="mt-[20px]">
+								<div className="flex flex-col items-start ml-[30px]">
+									<h2 className="font-bold font-mono tracking-tight">FOLLOWING</h2>
+								</div>
+								<div className="flex flex-col items-end mr-[10px] mt-[-30px]">
+									<AiFillStar className="my-2 text-2xl text-[#d45f37]" />
+								</div>
+							</div>
+
+							<div className="mt-[20px] block mx-auto">
+								{isAuth &&
+									userDetail?.following?.map((shelter) => (
+										<SubsCard
+											key={shelter.id}
+											id={shelter.id}
+											name={shelter.name}
+											goal={shelter.goal}
+											image={shelter.profilePic}
+										/>
+									))}
+							</div>
+						</div>
 					</div>
-					{open ? (
-						<div className="flex-1">
-							<div className="flex items-center justify-center py-2 my-2 text-black border-b-2 border-gray-800">
-								<span>
-									<AiFillHome className="text-2xl" />
-								</span>
-							</div>
-							<div className="flex flex-col items-center justify-center border-b-2 border-gray-800">
-								<div className="flex flex-col items-center justify-center">
-									<TbReportMoney className="my-2 text-2xl text-black" />
-								</div>
-								<div className="">
-									<SubsCard />
-									<SubsCard />
-									<SubsCard />
-									<SubsCard />
-								</div>
-							</div>
-							<div className="flex flex-col items-center justify-center">
-								<div className="flex flex-row py-1">
-									<AiFillStar className="my-2 text-2xl text-black" />
-								</div>
-								<div className="">
-									{isAuth &&
-										userDetail.following.map((shelter) => (
-											<SubsCard
-												key={shelter.id}
-												id={shelter.id}
-												image={shelter.profilePic}
-											/>
-										))}
-								</div>
-							</div>
-						</div>
-					) : (
-						<div className="items-center flex-1">
-							<div className="flex items-center justify-end py-2 my-2 text-black border-b-2 border-gray-800">
-								<span className="flex items-center justify-center w-full">
-									<AiFillHome className="text-2xl" />
-								</span>
-							</div>
-							<div className="transition duration-300 border-b-2 border-gray-800">
-								<div className="flex flex-col items-center justify-center">
-									<TbReportMoney className="my-2 text-2xl text-black" />
-								</div>
-								<div>
-									<SubsCard name="ONG NAME" goal={"$5200"} />
-									<SubsCard name="ONG NAME" goal={"$5200"} />
-									<SubsCard name="ONG NAME" goal={"$5200"} />
-									<SubsCard name="ONG NAME" goal={"$5200"} />
-								</div>
-							</div>
-							<div className="flex flex-col">
-								<div className="flex flex-row items-center justify-center py-1">
-									<AiFillStar className="my-2 text-2xl text-black" />
-								</div>
-								<div>
-									{isAuth &&
-										userDetail.following.map((shelter) => (
-											<SubsCard
-												key={shelter.id}
-												id={shelter.id}
-												name={shelter.name}
-												goal={shelter.goal}
-												image={shelter.profilePic}
-											/>
-										))}
-								</div>
-							</div>
-						</div>
-					)}
 				</div>
 			</div>
 		</div>

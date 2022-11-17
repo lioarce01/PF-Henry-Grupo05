@@ -1,18 +1,27 @@
 import React, { useState } from "react"
 import { useGetSheltersQuery } from "../../redux/api/shelters"
 import { useGetUsersQuery } from "../../redux/api/users"
+import {
+	useDisableShelterMutation,
+	useEnableShelterMutation,
+} from "../../redux/api/shelters"
+import {
+	useDisableUserMutation,
+	useEnableUserMutation,
+} from "../../redux/api/users"
 
 const AdminDashboard = () => {
 	const [user, setUser] = useState("")
 	const [shelter, setShelter] = useState("")
-	const { data: users, userLoading, userRefetch } = useGetUsersQuery(user)
-	const {
-		data: shelters,
-		shelterLoading,
-		shelterRefetch,
-	} = useGetSheltersQuery(shelter)
+	const { data: users, userLoading } = useGetUsersQuery(user)
+	const { data: shelters, shelterLoading } = useGetSheltersQuery(shelter)
+	const [disableShelter] = useDisableShelterMutation()
+	const [enableShelter] = useEnableShelterMutation()
+	const [disableUser] = useDisableUserMutation()
+	const [enableUser] = useEnableUserMutation()
 
-	console.log(users)
+	console.log("users: ", users)
+	console.log("shelters: ", shelters)
 
 	const handleUserInput = (e) => {
 		e.preventDefault()
@@ -24,12 +33,20 @@ const AdminDashboard = () => {
 		setShelter(e.target.value)
 	}
 
-	const handleUserSearch = (e) => {
-		e.preventDefault()
+	const disableUserHandler = (id) => {
+		disableUser({ userId: id })
 	}
 
-	const handleShelterSearch = (e) => {
-		e.preventDefault()
+	const enableUserHandler = (id) => {
+		enableUser({ userId: id })
+	}
+
+	const disableShelterHandler = (id) => {
+		disableShelter({ shelterId: id })
+	}
+
+	const enableShelterHandler = (id) => {
+		enableShelter({ shelterId: id })
 	}
 
 	return (
@@ -45,9 +62,7 @@ const AdminDashboard = () => {
 							onChange={handleUserInput}
 							value={user}
 						/>
-						<button
-							className="px-2 py-1 transition duration-300 border-2 border-red-700 rounded-md hover:bg-red-700 hover:text-white"
-							onClick={handleUserSearch}>
+						<button className="px-2 py-1 transition duration-300 border-2 border-red-700 rounded-md hover:bg-red-700 hover:text-white">
 							Search
 						</button>
 					</div>
@@ -59,6 +74,7 @@ const AdminDashboard = () => {
 								users?.map((user) => (
 									<li
 										key={user.id}
+										id={user.id}
 										className="flex flex-row items-center justify-between p-2">
 										<div className="flex flex-col">
 											<span className="font-bold">{user.name}</span>
@@ -67,9 +83,19 @@ const AdminDashboard = () => {
 											<button className="px-2 py-1 mr-1 text-white bg-blue-500 rounded-md">
 												Edit
 											</button>
-											<button className="px-2 py-1 text-white bg-red-500 rounded-md">
-												Delete
-											</button>
+											{user.enable === true ? (
+												<button
+													className="px-2 py-1 text-white bg-red-500 rounded-md"
+													onClick={() => disableUserHandler(user.id)}>
+													Disable
+												</button>
+											) : (
+												<button
+													className="px-2 py-1 text-white bg-green-500 rounded-md"
+													onClick={() => enableUserHandler(user.id)}>
+													Enable
+												</button>
+											)}
 										</div>
 									</li>
 								))
@@ -88,9 +114,7 @@ const AdminDashboard = () => {
 							onChange={handleShelterInput}
 							value={shelter}
 						/>
-						<button
-							className="px-2 py-1 transition duration-300 border-2 border-red-700 rounded-md hover:bg-red-700 hover:text-white"
-							onClick={handleShelterSearch}>
+						<button className="px-2 py-1 transition duration-300 border-2 border-red-700 rounded-md hover:bg-red-700 hover:text-white">
 							Search
 						</button>
 					</div>
@@ -102,6 +126,7 @@ const AdminDashboard = () => {
 								shelters?.map((shelter) => (
 									<li
 										key={shelter.id}
+										id={shelter.id}
 										className="flex flex-row items-center justify-between p-2">
 										<div className="flex flex-col">
 											<span className="font-bold">{shelter.name}</span>
@@ -110,9 +135,19 @@ const AdminDashboard = () => {
 											<button className="px-2 py-1 mr-1 text-white bg-blue-500 rounded-md">
 												Edit
 											</button>
-											<button className="px-2 py-1 text-white bg-red-500 rounded-md">
-												Delete
-											</button>
+											{shelter.enable === true ? (
+												<button
+													className="px-2 py-1 text-white bg-red-500 rounded-md"
+													onClick={() => disableShelterHandler(shelter.id)}>
+													Disable
+												</button>
+											) : (
+												<button
+													className="px-2 py-1 text-white bg-green-500 rounded-md"
+													onClick={() => enableShelterHandler(shelter.id)}>
+													Enable
+												</button>
+											)}
 										</div>
 									</li>
 								))
