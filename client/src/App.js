@@ -29,6 +29,7 @@ function App() {
             email: user.email,
             profilePic: user.picture
       }).unwrap()
+      console.log(newUser)
       dispatch(setUserAction(newUser, isAuthenticated))
     }
   }
