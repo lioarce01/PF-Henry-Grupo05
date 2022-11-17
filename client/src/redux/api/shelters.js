@@ -91,7 +91,24 @@ export const sheltersApi = createApi({
                 body: { userId, shelterId },
             })},
             invalidatesTags: ["Shelters", "ShelterId"]
-        })
+        }),
+        disableShelter: builder.mutation({
+            query: ({ shelterId }) => ({
+                url: `/shelters/disable`,
+                method: "put",
+                body: { shelterId },
+            }),
+            invalidatesTags: ["Shelters", "ShelterId"]
+        }),
+
+        enableShelter: builder.mutation({
+            query: ({ shelterId }) => ({
+                url: `/shelters/enable`,
+                method: "put",
+                body: { shelterId },
+            }),
+            invalidatesTags: ["Shelters", "ShelterId"]
+        }),
     })
 })
 
@@ -106,5 +123,7 @@ export const {
     useUpdateShelterMutation,
     useDeleteShelterMutation,
     useAddFollowersMutation,
-    useDeleteFollowersMutation
+    useDeleteFollowersMutation,
+    useDisableShelterMutation,
+    useEnableShelterMutation,
 } = sheltersApi;

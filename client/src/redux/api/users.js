@@ -56,6 +56,28 @@ export const usersApi = createApi({
                 }},
             invalidatesTags: ["UserId"]
         }),
+
+        disableUser: builder.mutation({
+            query: ({ accessToken, userId }) => {
+                return {
+                    url: `/users/disable`,
+                    method: "put",
+                    body: { userId },
+                }
+            },
+            invalidatesTags: ["UserId", "Users"]
+        }),
+
+        enableUser: builder.mutation({
+            query: ({ accessToken, userId }) => {
+                return {
+                    url: `/users/enable`,
+                    method: "put",
+                    body: { userId },
+                }
+            },
+            invalidatesTags: ["UserId", "Users"]
+        }),
     })
 })
 
@@ -67,5 +89,7 @@ export const {
     useCreateUserMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
-    useSetFollowMutation
+    useSetFollowMutation,
+    useDisableUserMutation,
+    useEnableUserMutation,
 } = usersApi;
