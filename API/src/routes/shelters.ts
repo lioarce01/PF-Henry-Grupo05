@@ -140,7 +140,7 @@ router.post("/", jwtCheck, async (req, res) => {
 
         const bodyShelter: shelterInterface = req.body;
 
-        await prisma.shelter.create({
+        const shelterCreated = await prisma.shelter.create({
             data: {
                 name: bodyShelter.name,
                 authorId: bodyShelter.authorId,
@@ -158,7 +158,7 @@ router.post("/", jwtCheck, async (req, res) => {
             }
         })
 
-        res.status(200).send('Shelter created successfully.')
+        res.status(200).send(shelterCreated);
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
