@@ -5,22 +5,34 @@ import { useFormik } from "formik"
 import Navbar from "../Navbar/Navbar"
 import UploadImage from "./UploadImage"
 import { useAuth0 } from "@auth0/auth0-react"
-import { useAddShelterMutation } from "../../redux/api/shelters";
-import location from './location'
+import { useAddShelterMutation } from "../../redux/api/shelters"
+import location from "./location"
+import { useSelector } from "react-redux"
 const OngForm = () => {
 	const [createShelter, { data, isLoading, error }] = useAddShelterMutation()
-	
+
 	const [image, setImage] = useState("")
 	const navigate = useNavigate()
 	const { isAuthenticated, getAccessTokenSilently } = useAuth0()
 
+	const { userDetail } = useSelector((state) => state.localStorage.userState)
+
 	const onSubmit = async () => {
 		if (image.length && isAuthenticated) {
-			const data = await location({address: values.address, city: values.city, country: values.country});
-			let {lat, lon}= data;
-			console.log(lat, lon);
+			const data = await location({
+				address: values.address,
+				city: values.city,
+				country: values.country,
+			})
+			let { lat, lon } = data
+			console.log(lat, lon)
 			const accessToken = await getAccessTokenSilently()
-			await createShelter({accessToken, newShelter: { ...values, profilePic: image, lat: lat , lon: lon }}).then(res => alert('Shelter Created')).catch(() => alert('error'))
+			await createShelter({
+				accessToken,
+				newShelter: { ...values, profilePic: image, lat: lat, lon: lon },
+			})
+				.then((res) => alert("Shelter Created"))
+				.catch(() => alert("error"))
 			navigate("/home")
 		} else {
 			alert("Please login")
@@ -29,7 +41,7 @@ const OngForm = () => {
 	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
 		initialValues: {
 			name: "",
-			authorId: "636cfde16804f7dc836bda73", //id user hardcodeado
+			authorId: userDetail.id,
 			description: "",
 			city: "",
 			animals: "",
@@ -41,7 +53,6 @@ const OngForm = () => {
 		validationSchema: ongSchema,
 		onSubmit,
 	})
-	
 
 	//[data?.data[0].lat,data?.data[0].lon]
 	return (

@@ -91,7 +91,11 @@ const OngDetail = () => {
 		})
 	}
 
-	console.log("followers: ", details?.followers?.length)
+	//como hacer que se actualice el componente cuando se actualiza el estado de los seguidores
+
+	useEffect(() => {
+		refetch()
+	}, [updated, details?.followers])
 
 	return (
 		<div>
@@ -138,9 +142,6 @@ const OngDetail = () => {
 										</p>
 										<p>
 											Posts: <span>{details?.posts?.length}</span>
-										</p>
-										<p>
-											Donations: <span>{details?.donations?.length}</span>
 										</p>
 										<p>
 											Budget: <span>{details?.budget}</span>
