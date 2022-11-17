@@ -169,7 +169,6 @@ router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
-
 // logical disabled to shelters(Admin)
 router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -182,7 +181,9 @@ router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
-
+        console.log(error);
+    }
+}));
 router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, shelterId } = req.body;
@@ -210,8 +211,8 @@ router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, funct
         console.log(error);
     }
 }));
-// update a shelter
-router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// update a shelter ALERTA saque jwtCheck
+router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const bodyShelter = req.body;
@@ -226,7 +227,9 @@ router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, 
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
+                goal: bodyShelter.goal,
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon
             },
         });
         res.status(200).json('Shelter updated successfully.');

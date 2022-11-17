@@ -47,13 +47,13 @@ export const sheltersApi = createApi({
         }),
 
         updateShelter: builder.mutation({
-            query: ({ accessToken, updatedShelter, id }) => ({
+            query: ({ updatedShelter, id }) => ({
                 url: `/shelters/${id}`,
                 method: "put",
                 body: updatedShelter,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
+                // headers: {
+                //     Authorization: `Bearer ${accessToken}`,
+                // }
             }),
             invalidatesTags: ["ShelterId"]
         }),
