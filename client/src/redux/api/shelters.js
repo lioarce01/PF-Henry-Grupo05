@@ -19,7 +19,7 @@ export const sheltersApi = createApi({
         }),
 
         topFiveShelters: builder.query({
-            query: () => `/shelters/topFive`,
+            query: (cant = null) => `/shelters/topFive?cant=${cant}`,
             providesTags: ["Shelters"]
         }),
 

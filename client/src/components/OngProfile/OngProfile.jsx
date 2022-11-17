@@ -12,7 +12,6 @@ import ModalDonate from "./Donate/ModalDonate";
 
 const OngDetail = () => {
     const { id } = useParams();
-    const details = useSelector(state => state.manageShelters.details);
    
     let [isOpenDonate, setIsOpenDonate] = useState(false);
     const closeModalDonate = () => setIsOpenDonate(false);

@@ -6,7 +6,11 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 type ReqGet = { 
-    query: { name: string } };
+    query: { 
+        name: string,
+        cant: number 
+    } 
+};
 
 // get all shelters or get some by name
 router.get('/', async(req: ReqGet, res) => {
@@ -37,12 +41,13 @@ router.get('/', async(req: ReqGet, res) => {
 });
 
 // get top five shelters by budget
-router.get('/topFive', async(req, res)=>{
-    // bauti: la ruta se llama topFive, pero ahora la hago
-    // topSix para que se vea mejor el Carousel de landing
+router.get('/topFive', async(req: ReqGet, res)=>{
+    // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
+    const cant = Math.floor(req.query.cant)
+
     try {
         const shelters = await prisma.shelter.findMany({
-            take: 6,
+            take: cant ? cant : 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
         })

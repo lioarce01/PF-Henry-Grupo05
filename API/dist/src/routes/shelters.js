@@ -46,11 +46,11 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 // get top five shelters by budget
 router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // bauti: la ruta se llama topFive, pero ahora la hago
-    // topSix para que se vea mejor el Carousel de landing
+    // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
+    const cant = Math.floor(req.query.cant);
     try {
         const shelters = yield prisma.shelter.findMany({
-            take: 6,
+            take: cant ? cant : 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
         });

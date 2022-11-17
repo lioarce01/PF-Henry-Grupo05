@@ -1,27 +1,30 @@
-import React, { useState, useEffect  } from "react"
-import { Link } from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { BsSun } from "react-icons/bs"
 import { HiMoon } from "react-icons/hi"
 import { Fragment } from "react"
 import { Menu, Transition } from "@headlessui/react"
 import { AiOutlineDown } from "react-icons/ai"
+import { GrHomeRounded } from "react-icons/gr"
 import { useAuth0 } from "@auth0/auth0-react"
 import LogoutButton from "./LogoutButton"
 import LoginButton from "./LoginButton"
 import { useCreateUserMutation } from '../../redux/api/users';
+import ModalCreatePost from "../Home/ModalCreatePost";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ")
 }
 
 const Navbar = () => {
+	const location = useLocation();
+	const [isOpen, setIsOpen] = useState(false);
 	const [toggle, setToggle] = useState(false)
 	const { user, isAuthenticated } = useAuth0()
-	const [createUser, {}] = useCreateUserMutation();
+	const [createUser, { }] = useCreateUserMutation();
 
-	const handleToggle = () => {
-		setToggle(!toggle)
-	}
+	const handleToggle = () => setToggle(!toggle)
+	const closeModal = () => setIsOpen(false)
 
 	useEffect(() => {
 		isAuthenticated && createUser({
@@ -32,50 +35,75 @@ const Navbar = () => {
 	}, [isAuthenticated, user, createUser])
 
 	return (
-		<div className="fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#CA7C62] shadow-lg backdrop-blur-sm h-14">
-			<Link to="/">
-				<div>
-					<img
-						src="https://cdn-icons-png.flaticon.com/512/1152/1152755.png"
-						alt="/"
-						className="w-8 h-8"
-					/>
-				</div>
-			</Link>
-			<div className="flex items-center justify-center">
-				{toggle ? (
-					<button
-						className="px-3 py-1.5 mr-6 border-2 border-[#201008] rounded-md hover:bg-[#fffcf7] hover:text-black transition duration-300"
-						onClick={handleToggle}>
-						<BsSun className="text-xl text-[#201008]" />
-					</button>
-				) : (
-					<button
-						className="px-3 py-1.5 mr-6 transition duration-300 border-2 rounded-md border-[#201008] hover:bg-[#fffcf7] hover:text-black duration 300"
-						onClick={handleToggle}>
-						<HiMoon className="text-xl text-[#201008]" />
-					</button>
-				)}
-				<Link
-					to="/home"
-					className="pt-1 pb-1 pl-2 pr-2 mr-6 border-2 border-[#201008] text-[#201008] font-bold transition duration-300 rounded-md hover:bg-[#fffcf7] hover:text-black">
-					Home
+		<div className="z-10 flex items-center justify-between w-full p-4 px-10 bg-none h-14 absolute">
+			<div className="flex">
+				<Link to="/">
+					<div className="flex mt-[30px] ml-[-20px]">
+						<h1 className="flex flex-row font-bold lg:text-[1.8rem] text-[#201008] ml-[10px]">Paws</h1>
+						<h1 className="flex flex-row font-bold lg:text-[1.8rem] text-[#d45f37]">Founding</h1>
+					</div>
 				</Link>
+
+				<div className={`${location.pathname === "/home" && "pb-[5px] border-b-[3px] border-[#d45f37]"} ml-[100px]`}>
+					<Link to="/home">
+						<GrHomeRounded className={`text-[#201008] w-[25px] h-[25px] flex flex-row mt-[43px] `} />
+					</Link>
+				</div>
+
+				{location.pathname === "/home" && (
+					<div className="flex">
+						<h1 className="text-[#201008] ml-[150px] mt-[40px] font-bold text-[1.5rem]">Homepage</h1>
+					</div>
+				)}
+			</div>
+
+			<div className="flex items-center justify-center">
+				<div className="flex w-full">
+					{isAuthenticated && location.pathname === "/home" && (
+						<button
+							onClick={() => setIsOpen(true)}
+							className="mr-[100px] mt-[40px] bg-[#ff7b76] hover:bg-[#d6635f] font-semibold text-white py-[8px] px-[27px] hover:border-transparent rounded-[30px]">
+							Create Post
+						</button>
+					)}
+				</div>
+
+				<div>
+					{toggle ? (
+						<button
+							className="hover:bg-[#d6635f] p-[5px] rounded-full transition duration-300 mt-[40px] mr-[210px]"
+							onClick={handleToggle}>
+							<BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white" />
+						</button>
+					) : (
+						<button
+							className="hover:bg-[#d6635f] p-[5px] rounded-full transition duration-300 mt-[40px] mr-[210px]"
+							onClick={handleToggle}>
+							<HiMoon className="text-[#201008] w-[25px] h-[25px] hover:text-white" />
+						</button>
+					)}
+				</div>
+
 				{isAuthenticated ? (
 					<Menu
 						as="div"
-						className="relative z-50 inline-block text-left outline-none">
+						className="w-[120px] relative z-50 inline-block text-left outline-none mt-[40px]">
 						<div>
-							<Menu.Button className="inline-flex justify-center w-full px-4 py-1 text-sm font-medium text-gray-800 border-2 border-[#fffcf7] rounded-md shadow-sm outline-none hover:bg-[#fffcf7] transition duration-300 focus:outline-none">
-								<img
-									src={user.picture}
-									alt=""
-									className="w-8 h-8 rounded-full"
-								/>
-								<AiOutlineDown
-									className="w-5 h-5 mt-2 ml-2 -mr-1"
-									aria-hidden="true"
-								/>
+							<Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-800">
+								<h2 className="absolute right-[70px] mt-[10px]">{user.nickname}</h2>
+								<div className="w-[40px]">
+									<img
+										src={user.picture}
+										alt=""
+										className="w-[40px] h-[40px] rounded-[15px]"
+									/>
+								</div>
+								<div className="mr-[-10px]">
+									<AiOutlineDown
+										className="w-5 h-5 mt-2 ml-2 -mr-1"
+										aria-hidden="true"
+									/>
+								</div>
 							</Menu.Button>
 						</div>
 
@@ -123,9 +151,13 @@ const Navbar = () => {
 						</Transition>
 					</Menu>
 				) : (
-					<LoginButton />
+					<div className="mt-[35px] mr-[-20px]">
+						<LoginButton />
+					</div>
 				)}
 			</div>
+
+			<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
 		</div>
 	)
 }
