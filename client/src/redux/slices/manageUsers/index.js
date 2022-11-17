@@ -25,7 +25,9 @@ export const manageUsersSlice = createSlice({
 });
 
 // action creators are generated for each case reducer function
+
 export const { setUser, logOutUser, addShelter } = manageUsersSlice.actions;
 export const selectUsers = state => state.manageUsers
+
 
 export default manageUsersSlice.reducer;

@@ -16,6 +16,7 @@ import ModalDonate from "./Donate/ModalDonate"
 import MapView from "../Maps/MapView/MapView"
 import { RiUserUnfollowLine, RiUserFollowLine } from "react-icons/ri"
 import { useGetUserByIdQuery } from "../../redux/api/users"
+import { useSelector } from "react-redux"
 
 const OngDetail = () => {
 	const { id } = useParams()
@@ -37,13 +38,11 @@ const OngDetail = () => {
 	const [addFollowers] = useAddFollowersMutation()
 
 	const [deleteFollowers] = useDeleteFollowersMutation()
-	const { data: users, refetch: refetchUser } = useGetUserByIdQuery(
-		"636c0a4f1e78d75d8edfae92"
+	const { isAuth, userDetail } = useSelector(
+		(state) => state.localStorage.userState
 	)
 
-	console.log("users: ", users)
-
-	const userId = "636c0a4f1e78d75d8edfae92"
+	const userId = userDetail.id
 
 	const [isOpen, setIsOpen] = useState(false)
 	const closeModal = () => setIsOpen(false)
@@ -74,8 +73,6 @@ const OngDetail = () => {
 			userId: userId,
 		})
 
-		refetchUser()
-
 		updateShelter({
 			id: id,
 			followers: details?.followers,
@@ -87,7 +84,6 @@ const OngDetail = () => {
 			shelterId: id,
 			userId: userId,
 		})
-		refetchUser()
 
 		updateShelter({
 			id: id,
@@ -95,7 +91,11 @@ const OngDetail = () => {
 		})
 	}
 
-	console.log("followers: ", details?.followers?.length)
+	//como hacer que se actualice el componente cuando se actualiza el estado de los seguidores
+
+	useEffect(() => {
+		refetch()
+	}, [updated, details?.followers])
 
 	return (
 		<div>
@@ -144,9 +144,6 @@ const OngDetail = () => {
 											Posts: <span>{details?.posts?.length}</span>
 										</p>
 										<p>
-											Donations: <span>{details?.donations?.length}</span>
-										</p>
-										<p>
 											Budget: <span>{details?.budget}</span>
 										</p>
 										<p>
@@ -154,7 +151,7 @@ const OngDetail = () => {
 										</p>
 									</div>
 									<div>
-										{users?.following?.find(
+										{userDetail?.following?.find(
 											(shelter) => shelter.id === details.id
 										) ? (
 											<button

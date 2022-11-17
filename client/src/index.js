@@ -23,6 +23,7 @@ root.render(
     redirectUri={window.location.origin}
     audience="https://pf-henry-05.onrender.com"
     scope="openid profile email"
+    cacheLocation="localstorage"
   >
     <PersistGate persistor={persistor}>
       <Provider store={store}>

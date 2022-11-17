@@ -5,32 +5,36 @@ import { AiOutlineClose } from "react-icons/ai"
 import { useAddNewPostMutation } from "../../../redux/api/posts"
 import toast from "react-hot-toast"
 import { useAuth0 } from "@auth0/auth0-react"
-
-const shelterId = "636bccfcce65cefec651aeca"
-const authorId = "636c0a4f1e78d75d8edfae92"
+import { useSelector } from "react-redux"
 
 const PostForm = ({ closeModal }) => {
 	const [content, setContent] = useState("")
 	const [image, setImage] = useState(false)
-	const { getAccessTokenSilently, isAuthenticated } = useAuth0()
+	const { getAccessTokenSilently } = useAuth0()
+	const { userDetail } = useSelector((state) => state.localStorage.userState)
 
+	const [addNewPost, {}] = useAddNewPostMutation()
 
-  const [addNewPost, { data, isLoading, error, isSuccess }] = useAddNewPostMutation();
- 
-  const onSubmit = async(e) => {
-    e.preventDefault();
-    const accessToken = await getAccessTokenSilently()
-    if (!image || !content) return alert("content and image are needed");
-    const newPost = { content, image, shelterId, authorId }
-    const myPromise = addNewPost({ accessToken, newPost })
-    toast.promise(myPromise, {
-      loading: 'Creating post',
-      success: 'Post created',
-      error: 'There was an error creating post',
-    });
-    setContent("")
-    setImage(false)
-  };
+	const onSubmit = async (e) => {
+		e.preventDefault()
+		const accessToken = await getAccessTokenSilently()
+		if (!image || !content) return alert("content and image are needed")
+		const newPost = {
+			content,
+			image,
+			shelterId: userDetail.Shelter[0].id,
+			authorId: userDetail.id,
+		}
+		console.log("shelter: ", userDetail.Shelter[0])
+		const myPromise = addNewPost({ accessToken, newPost })
+		toast.promise(myPromise, {
+			loading: "Creating post",
+			success: "Post created",
+			error: "There was an error creating post",
+		})
+		setContent("")
+		setImage(false)
+	}
 
 	return (
 		<div className="">

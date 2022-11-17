@@ -2,15 +2,23 @@ import { useNavigate } from "react-router-dom";
 import { userSchema } from './validationUserForm';
 import { useFormik } from 'formik';
 import Navbar from '../Navbar/Navbar';
-import { useCreateUserMutation } from "../../redux/api/users";
+import { useUpdateUserMutation } from "../../redux/api/users";
+import { useAuth0 } from "@auth0/auth0-react"
+import { useSelector } from "react-redux";
 
 const UserForm = () => {
-  const [createUser, { }] = useCreateUserMutation()
+  const [updateUser, {}] = useUpdateUserMutation()
   const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0()
+  const { userDetail, isAuth } = useSelector(state => state.localStorage.userState);
 
   const onSubmit = async () => {
-    await createUser(values).then(res => alert('User Created')).catch(() => alert('error'));
-    navigate('/home')
+    if (!isAuth) alert("You must be logged in to update your user information")
+    else {
+      const accessToken = await getAccessTokenSilently()
+      await updateUser({accessToken, userId: userDetail.id, updatedUser: values}).then(res => alert('User Created')).catch(() => alert('error'));
+      navigate('/home')
+    }
   }
   const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -30,7 +38,7 @@ const UserForm = () => {
 
       <div className="mt-50 min-w-full min-h-screen flex flex-col items-center justify-center md:col-span-2 md:mt-0 " >
         <form onSubmit={handleSubmit} className="mt-5 min-w-full h-auto flex flex-col items-center justify-center md:col-span-2 md:mt-0">
-          <h1 className="text-lg text-4xl font-medium leading-6 text-black">Create your User</h1>
+          <h1 className="text-lg text-4xl font-medium leading-6 text-black">Update your User information</h1>
           <div className="mb-6 w-3/4">
             <label className="block mb-2 text-sm font-medium text-black dark:text-black">Name: </label>
             <input type="text"

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API = process.env.REACT_APP_API || 'http://localhost:3001';
+const API = process.env.REACT_APP_API || "http://localhost:3001";
 
 export const postApi = createApi({
   reducerPath: "postApi",
@@ -18,7 +18,7 @@ export const postApi = createApi({
 
     getPostById: builder.query({
       query: (postId) => `/posts/${postId}`,
-      providesTags: ["PostId"]
+      providesTags: ["PostId"],
     }),
 
     addNewPost: builder.mutation({
@@ -28,7 +28,7 @@ export const postApi = createApi({
         body: newPost,
         headers: {
           Authorization: `Bearer ${accessToken}`,
-        }
+        },
       }),
       invalidatesTags: ["Posts"],
     }),
@@ -40,7 +40,7 @@ export const postApi = createApi({
         body: comment,
         headers: {
           Authorization: `Bearer ${accessToken}`,
-        }
+        },
       }),
       invalidatesTags: ["PostId"],
     }),
@@ -51,7 +51,7 @@ export const postApi = createApi({
         method: "delete",
         headers: {
           Authorization: `Bearer ${accessToken}`,
-        }
+        },
       }),
       invalidatesTags: ["Posts"],
     }),
@@ -63,9 +63,9 @@ export const postApi = createApi({
         body: post,
         headers: {
           Authorization: `Bearer ${accessToken}`,
-        }
+        },
       }),
-      invalidatesTags: ["Posts"],
+      invalidatesTags: ["Posts", "PostId"],
     }),
 
     updatePostLikes: builder.mutation({
@@ -75,23 +75,23 @@ export const postApi = createApi({
         body: post,
         headers: {
           Authorization: `Bearer ${accessToken}`,
-        }
+        },
       }),
       invalidatesTags: [],
     }),
 
     deleteComment: builder.mutation({
-      query: ({ accessToken, id }) => ({
-        url: `/comments/${id}`,
-        method: 'delete',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        }
-      }),
-      invalidatesTags: ["PostId"]
-    })
-
-
+      query: ({ accessToken, id }) => {
+        return {
+          url: `/comments/${id}`,
+          method: "delete",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      },
+      invalidatesTags: ["PostId"],
+    }),
   }),
 });
 
@@ -104,5 +104,5 @@ export const {
   useGetPostByIdQuery,
   useDeleteCommentMutation,
   useAddNewCommentMutation,
-  useUpdatePostLikesMutation
+  useUpdatePostLikesMutation,
 } = postApi;

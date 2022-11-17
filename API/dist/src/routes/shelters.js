@@ -169,7 +169,6 @@ router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.log(error);
     }
 }));
-
 // logical disabled to shelters(Admin)
 router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -182,7 +181,9 @@ router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
-
+        console.log(error);
+    }
+}));
 router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, shelterId } = req.body;

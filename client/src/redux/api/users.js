@@ -33,11 +33,11 @@ export const usersApi = createApi({
         }),
 
         updateUser: builder.mutation({
-            query: ({ accessToken, newUser }) => {
+            query: ({ accessToken, userId, updatedUser }) => {
                 return {
-                    url: "/users/",
+                    url: `/users/${userId}`,
                     method: "put",
-                    body: newUser,
+                    body: updatedUser,
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     }

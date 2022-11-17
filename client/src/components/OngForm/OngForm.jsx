@@ -40,6 +40,7 @@ const OngForm = () => {
 			navigate("/home")
 		} else if(user.userDetail.Shelter.length) {
 			Swal.fire({icon:'error', title: 'You already own a shelter'})
+
 			navigate("/home")
 		}
 	}
@@ -58,7 +59,6 @@ const OngForm = () => {
 		validationSchema: ongSchema,
 		onSubmit,
 	})
-	
 	return (
 		<div className="w-full min-h-screen h-fit bg-[#FAF2E7]">
 			<div>

@@ -4,15 +4,15 @@ import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs"
 import { TbReportMoney } from "react-icons/tb"
 import { AiFillHome, AiFillStar } from "react-icons/ai"
 import { useGetUserFollowingQuery } from "../../redux/api/users"
+import { useSelector } from "react-redux"
 
 const SubscriptorsBar = () => {
 	const [open, setOpen] = useState(true)
-	const {
-		data: following,
-		isLoading,
-		isSuccess,
-		refetch,
-	} = useGetUserFollowingQuery("636c0a4f1e78d75d8edfae92")
+	const { isAuth, userDetail } = useSelector(
+		(state) => state.localStorage.userState
+	)
+
+	console.log("following: ", userDetail.following)
 
 	return (
 		<div className="fixed left-0 flex">
@@ -61,8 +61,8 @@ const SubscriptorsBar = () => {
 									<AiFillStar className="my-2 text-2xl text-black" />
 								</div>
 								<div className="">
-									{isSuccess &&
-										following.map((shelter) => (
+									{isAuth &&
+										userDetail.following.map((shelter) => (
 											<SubsCard
 												key={shelter.id}
 												id={shelter.id}
@@ -95,8 +95,8 @@ const SubscriptorsBar = () => {
 									<AiFillStar className="my-2 text-2xl text-black" />
 								</div>
 								<div>
-									{isSuccess &&
-										following.map((shelter) => (
+									{isAuth &&
+										userDetail.following.map((shelter) => (
 											<SubsCard
 												key={shelter.id}
 												id={shelter.id}
