@@ -15,30 +15,58 @@ const MapView =  ({name, lat, lon, id}) => {
 const [position, setPosition] = useState([lat, lon]);
 const center = [40.78093334132345, -73.96678400687304]
 const [updateShelter, { error }] = useUpdateShelterMutation()
+const [cpos, setCpos] = useState([])
+const [update, setUpdate] = useState(false)
+
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  const crd = pos.coords;
+  setCpos([crd?.latitude, crd?.longitude])
+  setUpdate(true)
+  // console.log('Your current position is:');
+  // console.log(`Latitude : ${crd.latitude}`);
+  // console.log(`Longitude: ${crd.longitude}`);
+  // console.log(`More or less ${crd.accuracy} meters.`);
+}
+
+function error2(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+useEffect(()=>{
+  navigator.geolocation.getCurrentPosition(success, error2, options);
+  console.log('current location', cpos)
+},[update])
+
+const handleclick = ()=>{
+  updateShelter({updateShelter:{lat: cpos[0], lon: cpos[1]}, id})
+}
 
 
-
-function LocationMarker ({center, name, id}) {
+function LocationMarker ({center, name}) {
     const nolocation = 'No location detected, double click on map to set current location'
-    const [position, setPosition] = useState(center)
+    const [position2, setPosition2] = useState(center)
     const map = useMapEvents({
       dblclick() {
         map.locate()
       },
       locationfound(e) {
-        setPosition(e.latlng)
+        setPosition2(e.latlng)
         map.flyTo(e.latlng, map.getZoom())
-        console.log('latitude', position[0])
-        updateShelter({updateShelter:{lat: position[0], lon: position[1]}, id}) 
       },
     })
-  
-    return position === center ? (
-            <Marker position={position}>
+
+    return position2 === center ? (
+            <Marker position={position2}>
               <Popup>{nolocation}</Popup>
             </Marker>
     ) : (
-      <Marker position={position}>
+      <Marker position={position2}>
         <Popup>{name}</Popup>
       </Marker>
     )
@@ -69,8 +97,9 @@ function LocationMarker ({center, name, id}) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <LocationMarker center={center} name={name} id={id} />
+                <LocationMarker center={center} name={name} />
             </MapContainer>
+                <button onClick={handleclick}>Set current</button>
         </div>
   )
 }

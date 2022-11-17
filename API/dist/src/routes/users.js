@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const jwtCheck_1 = require("../jwtCheck");
+const nodemailer_1 = require("../middleware/nodemailer");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 /* router.get('/:id/posts', async(req,res, next) => {
@@ -101,8 +102,15 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 name,
                 email,
                 profilePic
+            },
+            include: {
+                posts: true,
+                Shelter: true,
+                Comment: true,
+                following: true
             }
         });
+        (0, nodemailer_1.sendMailCreate)(name, email);
         res.status(200).send({ message: "User created successfully.", newUser: newUser });
     }
     catch (error) {
