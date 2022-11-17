@@ -23,6 +23,6 @@ export const manageUsersSlice = createSlice({
 
 // action creators are generated for each case reducer function
 export const { setUser, logOutUser } = manageUsersSlice.actions;
-export const selectUsers = state => state.manageUsers
+export const selectUsers = state => state.localStorage.userState;
 
 export default manageUsersSlice.reducer;

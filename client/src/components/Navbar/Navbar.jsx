@@ -16,13 +16,15 @@ function classNames(...classes) {
 const Navbar = () => {
 	const [toggle, setToggle] = useState(false)
 
-	const {userDetail, isAuth} = useSelector(state => state.localStorage.userState);
+	const { userDetail, isAuth } = useSelector(
+		(state) => state.localStorage.userState
+	)
 
 	const handleToggle = () => {
 		setToggle(!toggle)
 	}
 
-
+	const ref = React.createRef()
 	return (
 		<div className="fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#FAF2E7]/[.05] shadow-lg backdrop-blur-sm h-14">
 			<Link to="/">
@@ -62,7 +64,7 @@ const Navbar = () => {
 								<img
 									src={userDetail.profilePic}
 									alt=""
-									className="w-8 h-8 rounded-full"
+									className="object-cover w-8 h-8 rounded-full"
 								/>
 								<AiOutlineDown
 									className="w-5 h-5 mt-2 ml-2 -mr-1"
@@ -109,7 +111,11 @@ const Navbar = () => {
 											</Link>
 										)}
 									</Menu.Item>
-									<Menu.Item>{({ active }) => <LogoutButton />}</Menu.Item>
+									<Menu.Item>
+										{({ active }) => (
+											<LogoutButton ref={ref}>Logout</LogoutButton>
+										)}
+									</Menu.Item>
 								</div>
 							</Menu.Items>
 						</Transition>

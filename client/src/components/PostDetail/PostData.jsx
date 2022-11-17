@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 import {
   useUpdatePostLikesMutation,
   useUpdatePostMutation,
 } from "../../redux/api/posts";
+import { useAuth0 } from "@auth0/auth0-react";
 const PostData = ({
   toogle,
   setToogle,
@@ -15,8 +18,10 @@ const PostData = ({
 }) => {
   const [input, setInput] = useState({ id: postId, content: details.content });
   const [likesActuals, setLikesActuals] = useState(likes);
-  const [updatePost, { data, isLoading, error }] = useUpdatePostMutation();
-  const [updateLikes, { isLoading: loading }] = useUpdatePostLikesMutation();
+  const [updatePost, {}] = useUpdatePostMutation();
+  const [updateLikes, {}] = useUpdatePostLikesMutation();
+  const { getAccessTokenSilently } = useAuth0();
+  const { isAuth } = useSelector((state) => state.localStorage.userState);
 
   const inputHandler = (e) => {
     e.preventDefault();
@@ -24,6 +29,7 @@ const PostData = ({
   };
 
   const toggleLike = () => {
+    if (!isAuth) return toast.error("you are not logged in");
     setLike(!like);
     like
       ? setLikesActuals(likesActuals - 1)
@@ -33,9 +39,11 @@ const PostData = ({
       : updateLikes({ id: postId, likes: likes + 1 });
   };
 
-  const saveHandler = () => {
+  const saveHandler = async () => {
+    const accessToken = await getAccessTokenSilently();
     setToogle(true);
-    updatePost(input);
+    updatePost({ accessToken, post: input });
+    toast.success("post edited");
   };
 
   return (
@@ -73,7 +81,7 @@ const PostData = ({
       <div className="flex flex-wrap justify-between">
         <div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
           <button onClick={toggleLike}>
-            <AiFillHeart onClick={setLike} className={like && "text-red-600"} />
+            <AiFillHeart className={like && "text-red-600"} />
           </button>
           <span>{likesActuals}</span>
         </div>
