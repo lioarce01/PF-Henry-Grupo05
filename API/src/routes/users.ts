@@ -40,21 +40,45 @@ type Req = {
          console.error(error.message)
      }
 }); */
+router.get("/all", async (req, res) => {
+    const user = await prisma.user.findMany({
+        include:{
+            posts: true,
+            Shelter: true,
+            Comment:true,
+            following:true
+        }
+    })
+})
 
-// get all users, or search them by name
+// get all users, or search them by name enables
 router.get("/", async (req: Req, res) => {
     try {
         const { name } = req.query;
-
+        const state : boolean= true
         const user = await prisma.user.findMany({
             where: { 
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
+                AND:{
+                    enable: true
+                }
             },
 
-            include: { posts: true,
+            include: { posts: {
+                        where:{
+                            enable: state
+                        },
+                        include:{
+                            Comment:{
+                                where:{
+                                    enable: state
+                                }
+                            }
+                        }
+                },
                 following: true,
              }
         });
@@ -69,11 +93,24 @@ router.get("/", async (req: Req, res) => {
 // get an user by its id
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
-
+    const state : boolean = true;
     try {
         const user = await prisma.user.findUnique({ 
             where: { id: id },
-            include: { following: true, posts: true }
+            include: { following: true, 
+                posts: {
+                    where:{
+                        enable: state
+                    },
+                    include:{
+                        Comment:{
+                            where:{
+                                enable: state
+                            }
+                        }
+                    }
+                } 
+            }
         });
 
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
