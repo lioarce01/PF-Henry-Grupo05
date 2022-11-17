@@ -202,10 +202,24 @@ router.post("/follow", async (req, res) => {
         console.log(error);
     }
 })
-// logical disabled to shelters(Admin)
-router.put("/disable/:id", async (req, res) => {    
+// logical enabled to shelters(Admin)
+router.put("/enable", async (req, res) => {    
     try {
-        const id = req.params.id;
+        const id = req.body.shelterId;
+        await prisma.shelter.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Shelter ${id} enabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+})
+// logical disabled to shelters(Admin)
+router.put("/disable", async (req, res) => {    
+    try {
+        const id = req.body.shelterId;
         await prisma.shelter.update({
             where: { id: id },
             data: { enable: false },
