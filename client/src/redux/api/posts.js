@@ -42,7 +42,18 @@ export const postApi = createApi({
           Authorization: `Bearer ${accessToken}`,
         },
       }),
-      invalidatesTags: ["PostId"],
+      invalidatesTags: ["PostId", "Posts"],
+    }),
+    updateComment: builder.mutation({
+      query: ({ accessToken, comment }) => ({
+        url: "/comments",
+        method: "put",
+        body: comment,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }),
+      invalidatesTags: ["PostId", "Posts"],
     }),
 
     deletePost: builder.mutation({
@@ -90,7 +101,7 @@ export const postApi = createApi({
           },
         };
       },
-      invalidatesTags: ["PostId"],
+      invalidatesTags: ["PostId", "Posts"],
     }),
   }),
 });
@@ -105,4 +116,5 @@ export const {
   useDeleteCommentMutation,
   useAddNewCommentMutation,
   useUpdatePostLikesMutation,
+  useUpdateCommentMutation
 } = postApi;

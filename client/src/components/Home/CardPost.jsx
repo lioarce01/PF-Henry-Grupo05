@@ -8,8 +8,11 @@ import { useEffect } from "react";
 import ModalPostDetail from "./ModalPostDetail";
 import ShowMoreText from "react-show-more-text";
 import { useUpdatePostLikesMutation } from "../../redux/api/posts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import { useAuth0 } from "@auth0/auth0-react";
+import { removeLike, selectUser } from "../../redux/slices/manageUsers";
+import { addLikeAction, removeLikeAction } from "../../redux/slices/manageUsers/actions";
 
 const CardPost = ({
   image,
@@ -23,24 +26,39 @@ const CardPost = ({
   id,
   authorId,
 }) => {
+  const {likes: userLikes} = useSelector(selectUser)
   const [likesActuals, setLikesActuals] = useState(likes);
-  const [like, setLike] = useState(false);
+  const dispatch = useDispatch()
+  const myLike = () => {
+    if(userLikes.length < 1) return false
+    if(userLikes.includes(id)) return true
+    console.log(userLikes, id)
+    return false
+  }
+  const [like, setLike] = useState(myLike);
   const [isOpen, setIsOpen] = useState(false);
   const { isAuth } = useSelector((state) => state.localStorage.userState);
-
   const closeModal = () => setIsOpen(false);
+
+  const {getAccessTokenSilently} = useAuth0()
 
   const [updateLikes, {}] = useUpdatePostLikesMutation();
 
-  const toggleLike = () => {
+  const toggleLike = async () => {
     if (!isAuth) return toast.error("you are not logged in");
+    
     setLike(!like);
     like
       ? setLikesActuals(likesActuals - 1)
       : setLikesActuals(likesActuals + 1);
+      const accessToken = await getAccessTokenSilently()
     like
-      ? updateLikes({ id, likes: likesActuals - 1 })
-      : updateLikes({ id, likes: likesActuals + 1 });
+      ? updateLikes({post: { id, likes: likesActuals - 1 }, accessToken})
+      : updateLikes({post: { id, likes: likesActuals + 1 }, accessToken})
+
+    like
+     ? dispatch(removeLikeAction(id))
+     : dispatch(addLikeAction(id))
   };
 
   useEffect(() => {

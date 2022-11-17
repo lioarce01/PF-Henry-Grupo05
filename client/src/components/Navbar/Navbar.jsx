@@ -50,7 +50,7 @@ const Navbar = () => {
 
 			<div className="flex items-center justify-center">
 				<div className="flex w-full">
-					{isAuth && location.pathname === "/home" && (
+					{isAuth && location.pathname === "/home" && userDetail.Shelter.length > 0 && (
 						<button
 							onClick={() => setIsOpen(true)}
 							className="mr-[100px] mt-[40px] bg-[#ff7b76] hover:bg-[#d6635f] font-semibold text-white py-[8px] px-[27px] hover:border-transparent rounded-[30px]">
