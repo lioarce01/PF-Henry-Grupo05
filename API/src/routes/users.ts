@@ -111,6 +111,12 @@ router.post("/", async (req: Req, res) => {
                 name,
                 email,
                 profilePic
+            },
+            include:{
+                posts: true,
+                Shelter: true,
+                Comment: true,
+                following: true 
             }
         });
 
