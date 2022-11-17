@@ -15,7 +15,7 @@ const UserProfile = () => {
 	useEffect(() => {
 		getUserById(userId)
 	}, [getUserById, userId])
-	console.log(details);
+	console.log(details)
 	const following = details?.shelterFollow
 
 	return (
@@ -30,7 +30,7 @@ const UserProfile = () => {
 						<img
 							src={details?.profilePic}
 							alt="user"
-							className="border-4 border-white rounded-full w-36 h-36"
+							className="object-cover border-4 border-white rounded-full w-36 h-36"
 						/>
 					</div>
 					<div className="mt-2">
@@ -39,7 +39,7 @@ const UserProfile = () => {
 						</div>
 						<p className="py-2 md:pl-5">Email: {details?.email}</p>
 						<p className="py-2 md:pl-5">Role: {details?.role}</p>
-						<UpdateProfileButton userId={userId}/>
+						<UpdateProfileButton userId={userId} />
 					</div>
 				</div>
 				<h1 className="py-2 text-4xl font-bold text-[#462312]">User Posts</h1>
