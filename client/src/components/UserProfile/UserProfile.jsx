@@ -1,12 +1,12 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
 import Navbar from "../Navbar/Navbar"
 import { useEffect } from "react"
 import { useLazyGetUserByIdQuery } from "../../redux/api/users"
 import CardPost from "../Home/CardPost"
 import ONGCard from "../Home/ONGCard"
 import Spinner from "../Spinner/Spinner"
+import UpdateProfileButton from "./UpdateProfileButton"
 
 const UserProfile = () => {
 	const { userId } = useParams()
@@ -15,7 +15,7 @@ const UserProfile = () => {
 	useEffect(() => {
 		getUserById(userId)
 	}, [getUserById, userId])
-
+	console.log(details);
 	const following = details?.shelterFollow
 
 	return (
@@ -39,9 +39,7 @@ const UserProfile = () => {
 						</div>
 						<p className="py-2 md:pl-5">Email: {details?.email}</p>
 						<p className="py-2 md:pl-5">Role: {details?.role}</p>
-						<button className="inline-block px-2 py-1 font-semibold text-[#462312] bg-[#FAF2E7] border-2 border-[#FAF2E7] hover:bg-[#462312] transition duration-300 hover:text-[#fffcf7] rounded-md md:ml-4">
-							Update Profile
-						</button>
+						<UpdateProfileButton userId={userId}/>
 					</div>
 				</div>
 				<h1 className="py-2 text-4xl font-bold text-[#462312]">User Posts</h1>
