@@ -67,10 +67,26 @@ router.post('/', jwtCheck, async (req, res) => {
         console.log(error)
     }
 });
-// logical disabled to comments(Admin)
-router.put('/disable/:id', async(req, res)=>{
+// logical enabled to comments(Admin)
+router.put('/enable', async(req, res)=>{
     try {
-        const id = req.params.id;
+        const id = req.body.commentId;
+        await prisma.comment.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Comment ${id} enabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
+
+// logical disabled to comments(Admin)
+router.put('/disable', async(req, res)=>{
+    try {
+        const id = req.body.commentId;
         await prisma.comment.update({
             where: { id: id },
             data: { enable: false },
