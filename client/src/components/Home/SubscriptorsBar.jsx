@@ -22,7 +22,7 @@ const SubscriptorsBar = () => {
 							</div>
 							<div className="mt-[35px] block mx-auto w-[280px]">
 								{isAuth &&
-									userDetail.following.map((shelter) => (
+									userDetail?.following?.map((shelter) => (
 										<SubsCard
 											key={shelter.id}
 											id={shelter.id}
@@ -43,7 +43,7 @@ const SubscriptorsBar = () => {
 
 							<div className="mt-[20px] block mx-auto">
 								{isAuth &&
-									userDetail.following.map((shelter) => (
+									userDetail?.following?.map((shelter) => (
 										<SubsCard
 											key={shelter.id}
 											id={shelter.id}

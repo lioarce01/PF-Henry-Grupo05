@@ -7,7 +7,7 @@ export const manageUsersSlice = createSlice({
     initialState: {
         userDetail: {},
         isAuth: false,
-        likes: [],
+        likes: 0,
     },
 
     reducers: {
@@ -23,7 +23,7 @@ export const manageUsersSlice = createSlice({
             state.userDetail.Shelter = [action.payload]
         },
         addLike: (state, action) =>{
-            state.likes = [...state.likes, action.payload]
+            state.likes = action.payload
         },
         removeLike: (state, action) =>{
             state.likes = [...state.likes].filter(postId => postId !== action.payload)

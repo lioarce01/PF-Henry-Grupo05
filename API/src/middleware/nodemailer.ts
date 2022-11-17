@@ -273,9 +273,9 @@ export const sendMailCreate = (name: string, email: string) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error)
-            res.status(500).send(error?.message) 
+            res?.status(500).send(error?.message) 
         } else {
-            res.status(200).send("Email sent")
+            res?.status(200).send("Email sent")
         }
     })
 }

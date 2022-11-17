@@ -26,15 +26,17 @@ const CardPost = ({
   id,
   authorId,
 }) => {
+
   const {likes: userLikes} = useSelector(selectUser)
   const [likesActuals, setLikesActuals] = useState(likes);
   const dispatch = useDispatch()
+
   const myLike = () => {
-    if(userLikes.length < 1) return false
-    if(userLikes.includes(id)) return true
-    console.log(userLikes, id)
+    if (userLikes?.length < 1) return false
+    if (userLikes?.includes(id)) return true
     return false
   }
+
   const [like, setLike] = useState(myLike);
   const [isOpen, setIsOpen] = useState(false);
   const { isAuth } = useSelector((state) => state.localStorage.userState);
