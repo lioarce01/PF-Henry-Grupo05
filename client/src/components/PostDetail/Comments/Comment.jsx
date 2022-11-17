@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { AiFillDelete, AiFillEdit, AiOutlineEllipsis } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { Menu } from "@headlessui/react";
-import { useDeleteCommentMutation } from "../../../redux/api/posts";
+import { useDeleteCommentMutation, useUpdateCommentMutation } from "../../../redux/api/posts";
 import { useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -12,8 +12,22 @@ function classNames(...classes) {
 }
 const Comment = ({ content, author, id }) => {
   const [trigger, {}] = useDeleteCommentMutation();
+  const [update] = useUpdateCommentMutation()
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const { userDetail } = useSelector((state) => state.localStorage.userState);
+  const [commentContent, setCommentContent] = useState(content)
+  const [toggle, setToggle] = useState(true)
+
+  const handleChange = (e) => {
+    setCommentContent(e.target.value)
+
+  }
+
+  const saveHandler =  async() => {
+    const accessToken = await getAccessTokenSilently();
+    update({accessToken, comment: {id, content: commentContent}})
+    setToggle(!toggle)
+  }
 
   const deleteComment = async () => {
     const accessToken = await getAccessTokenSilently();
@@ -65,7 +79,7 @@ const Comment = ({ content, author, id }) => {
                               {({ active }) => (
                                 <button
                                   type="submit"
-                                  onClick={deleteComment}
+                                  onClick={() => setToggle(!toggle)}
                                   className={classNames(
                                     active
                                       ? "bg-slate-200 text-gray-900"
@@ -110,7 +124,8 @@ const Comment = ({ content, author, id }) => {
                   )}
                 </div>
               </div>
-              <p className="text-sm text-left text-gray-700">{content}</p>
+              <input onChange={handleChange} disabled={toggle}  className={`text-sm w-full text-left text-gray-700 bg-white ${!toggle && "border border-gray-300"}`} type="text" value={commentContent}/>
+              {!toggle && <button onClick={saveHandler} className="border border-gray-300 px-2 py-1 hover:bg-gray-300">Save</button>}
             </div>
           </div>
         </div>
