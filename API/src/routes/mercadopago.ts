@@ -4,6 +4,7 @@ import mercadopago from "mercadopago"
 import axios from "axios"
 import { PrismaClient } from "@prisma/client";
 import { jwtCheck } from '../jwtCheck';
+import { sendMailDonate } from '../middleware/nodemailer';
 
 const prisma = new PrismaClient()
 
@@ -11,7 +12,7 @@ const router = express.Router();
 
 router.post("/", jwtCheck, async (req,res) => {
 
-    let {shelter, donation, id} = req.body
+    let {shelter, donation, id, email} = req.body
 
     mercadopago.configure({access_token: process.env.ACCESS_TOKEN!})
 
@@ -22,7 +23,8 @@ router.post("/", jwtCheck, async (req,res) => {
                 id: id,
                 title: `Donación para ${shelter}`,
                 unit_price: donation,
-                quantity: 1
+                quantity: 1,
+                description: email
             }
         ],
         payment_methods: {
@@ -32,7 +34,6 @@ router.post("/", jwtCheck, async (req,res) => {
         },
         back_urls: {success: "http://localhost:3000/mp"},
         auto_return: "approved",
-
     }
 
     mercadopago.preferences.create(preference).then((response) => {
@@ -42,8 +43,8 @@ router.post("/", jwtCheck, async (req,res) => {
 
 router.get('/feedback', async function (req, res) {
     let payment_id = req.query.payment_id
-	let {data} = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
-    console.log(data)
+    let {data} = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
+	
     let paymentID = await prisma.payment.findMany({where: {paymentId: data.id.toString()}})
 
     if (data.status === "approved" && !paymentID.length) {
@@ -53,6 +54,9 @@ router.get('/feedback', async function (req, res) {
         await prisma.shelter.update({where: {id}, data: {
             budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price)
         }})
+
+        sendMailDonate(data.additional_info.items[0].description, shelter?.name!)
+
         res.status(200).send("Approved payment")
     } else {
         res.status(403).send("Failed payment")

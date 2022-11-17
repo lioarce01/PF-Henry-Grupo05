@@ -1,6 +1,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { jwtCheck } from '../jwtCheck'
+import { sendMailCreate } from "../middleware/nodemailer";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -114,6 +115,8 @@ router.post("/", async (req: Req, res) => {
             }
         });
 
+        sendMailCreate(name, email)
+        
         res.status(200).send({message: "User created successfully.", newUser: newUser});
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
