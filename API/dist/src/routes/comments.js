@@ -69,10 +69,25 @@ router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
         console.log(error);
     }
 }));
-// logical disabled to comments(Admin)
-router.put('/disable/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// logical enabled to comments(Admin)
+router.put('/enable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
+        const id = req.body.commentId;
+        yield prisma.comment.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Comment ${id} enabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to comments(Admin)
+router.put('/disable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.commentId;
         yield prisma.comment.update({
             where: { id: id },
             data: { enable: false },

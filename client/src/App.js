@@ -13,14 +13,13 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { useCreateUserMutation } from "./redux/api/users";
 import { useEffect } from "react";
 import { setUserAction } from "./redux/slices/manageUsers/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 function App() {
   const { user, isAuthenticated } = useAuth0()
   const dispatch = useDispatch()
   const [createUser, {}] = useCreateUserMutation();
-  const userState = useSelector(state => state.localStorage.userState);
 
   const loadUser = async () => {
     if (isAuthenticated) {
@@ -29,14 +28,12 @@ function App() {
             email: user.email,
             profilePic: user.picture
       }).unwrap()
-      console.log("new user: ", newUser)
       dispatch(setUserAction(newUser, isAuthenticated))
     }
   }
 
   useEffect(() => {
     loadUser()
-    console.log(userState);
   }, [isAuthenticated])
 
   return (
