@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { sortPostsAction } from "../../redux/slices/managePosts/actions";
 
@@ -14,7 +13,7 @@ const PostFilters = () => {
 
   return (
     <div>
-      <select onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
+      <select className="bg-[#F8D44B] px-[10px] py-[5px] rounded-[20px] font-[500]" onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
         <option value="DEFAULT" disabled>
           Sort
         </option>

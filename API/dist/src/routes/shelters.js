@@ -1,157 +1,129 @@
-import express from 'express';
-import { PrismaClient } from "@prisma/client";
-import { jwtCheck } from '../jwtCheck'
-
-const router = express.Router();
-const prisma = new PrismaClient();
-
-type ReqGet = { 
-    query: { 
-        name: string,
-        cant: number 
-    } 
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
+const router = express_1.default.Router();
+const prisma = new client_1.PrismaClient();
 // get all shelters or get some by name
-router.get('/', async(req: ReqGet, res) => {
+router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.query;
-
-        const shelters = await prisma.shelter.findMany({
+        const shelters = yield prisma.shelter.findMany({
             orderBy: { "name": "asc" },
-            where: { 
+            where: {
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
             },
-            include: { 
-                followers: true, 
+            include: {
+                followers: true,
                 posts: true
             }
-        })
-
-        if (shelters.length) res.status(200).send(shelters);
-        else res.status(404).send('ERROR: Could not find any shelters');
-
-    } catch (error) {
+        });
+        if (shelters.length)
+            res.status(200).send(shelters);
+        else
+            res.status(404).send('ERROR: Could not find any shelters');
+    }
+    catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
-});
-
+}));
 // get top five shelters by budget
-router.get('/topFive', async(req: ReqGet, res)=>{
+router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
-    const cant = Math.floor(req.query.cant)
-
+    const cant = Math.floor(req.query.cant);
     try {
-        const shelters = await prisma.shelter.findMany({
+        const shelters = yield prisma.shelter.findMany({
             take: cant ? cant : 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
-        })
-
-        if (shelters) res.status(200).send(shelters);
-        else res.status(404).send(shelters);
-     } catch (error) {
+        });
+        if (shelters)
+            res.status(200).send(shelters);
+        else
+            res.status(404).send(shelters);
+    }
+    catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
-     }
-});
-
-
-// order (or filter, in the future) by what is in this Type
-type ReqSampling = { 
-    body: { 
-        group: 'country' | 'city' | 'animals'
-        groupType: string
-        order: 'name' | 'budget' | 'followers',
-        orderType: 'asc' | 'desc',
-    } 
-};
-
-router.post('/filter-sort', async(req : ReqSampling, res) => {
+    }
+}));
+router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // here we are able to expand this further, adding
     // more ordering criteria and even filters.
     const { order, orderType, group, groupType } = req.body;
-
     try {
-        if (order || group) { 
-            
-            const shelters = await prisma.shelter.findMany({
+        if (order || group) {
+            const shelters = yield prisma.shelter.findMany({
                 where: { [group]: groupType },
                 include: { followers: true },
-                orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
-            })
-
-            if (shelters) res.status(200).send(shelters);
-            else res.status(404).send('ERROR: Could not find any shelters');
-
-        } else {
+                orderBy: order === "followers" ? { followers: { _count: orderType } } : { [order]: orderType }
+            });
+            if (shelters)
+                res.status(200).send(shelters);
+            else
+                res.status(404).send('ERROR: Could not find any shelters');
+        }
+        else {
             res.status(404).send('ERROR: Missing parameters.');
         }
-
-    } catch (error) {
+    }
+    catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
     }
-})
-
+}));
 // get a shelter by its id
-router.get("/:id", async (req, res) => {
+router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const shelter = await prisma.shelter.findUnique({ 
-            where: { id: id},
-            include: { 
-                followers: true, 
-                author: true, 
+        const shelter = yield prisma.shelter.findUnique({
+            where: { id: id },
+            include: {
+                followers: true,
+                author: true,
                 posts: {
                     include: {
                         author: true,
                         Comment: true
                     }
-                } 
-            } 
+                }
+            }
         });
-  
         shelter ? res.status(200).send(shelter) : res.status(404).send("ERROR: Could not find shelter.");
-    } catch (error) {
+    }
+    catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
-});
-
+}));
 // create a shelter
-router.post("/", jwtCheck, async (req, res) => {
-
+router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        interface shelterInterface {
-            name: string,
-            authorId: string ,  
-            description: string,
-            profilePic: string,
-            address: string,
-            animals: string,
-            city: string,
-            lat: number,
-            lon: number,
-            country: string,
-            website: string,
-            budget: number,
-            goal: number
-        }
-
-        const bodyShelter: shelterInterface = req.body;
-
-        const shelterCreated = await prisma.shelter.create({
+        const bodyShelter = req.body;
+        yield prisma.shelter.create({
             data: {
                 name: bodyShelter.name,
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
-                animals:    bodyShelter.animals,
+                animals: bodyShelter.animals,
                 city: bodyShelter.city,
                 lat: bodyShelter.lat,
                 lon: bodyShelter.lon,
@@ -161,31 +133,27 @@ router.post("/", jwtCheck, async (req, res) => {
                 budget: bodyShelter.budget,
                 goal: bodyShelter.goal
             }
-        })
-
-        res.status(200).send(shelterCreated);
-    } catch (error) {
+        });
+        res.status(200).send('Shelter created successfully.');
+    }
+    catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
-})
-
+}));
 //on click follow button in shelter profile page, add shelter to user's following list and add user to shelter's followers list 
-
-router.post("/follow", async (req, res) => {
+router.post("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, shelterId } = req.body;
-
-        await prisma.user.update({
+        yield prisma.user.update({
             where: { id: userId },
             data: {
                 following: {
                     connect: { id: shelterId }
                 }
             }
-        })
-
-        await prisma.shelter.update({
+        });
+        yield prisma.shelter.update({
             where: { id: shelterId },
             data: {
                 followers: {
@@ -193,45 +161,41 @@ router.post("/follow", async (req, res) => {
                     }
                 }
             }
-        })
-
-        res.status(200).send('Shelter followed successfully.')
-        
-    } catch (error) {
+        });
+        res.status(200).send('Shelter followed successfully.');
+    }
+    catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
-})
+}));
 // logical disabled to shelters(Admin)
-router.put("/disable/:id", async (req, res) => {    
+router.put("/disable/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
-        await prisma.shelter.update({
+        yield prisma.shelter.update({
             where: { id: id },
             data: { enable: false },
         });
-        res.status(200).send(`Shelter ${id} disabled successfully`)
-    } catch (error) {
-        res.status(400).send("ERROR: There was an unexpected error.")
-        console.log(error)
+        res.status(200).send(`Shelter ${id} disabled successfully`);
     }
-})
-
-
-router.delete("/unfollow", async (req, res) => {
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+router.delete("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, shelterId } = req.body;
-
-        await prisma.user.update({
+        yield prisma.user.update({
             where: { id: userId },
             data: {
                 following: {
                     disconnect: { id: shelterId }
                 }
             }
-        })
-
-        await prisma.shelter.update({
+        });
+        yield prisma.shelter.update({
             where: { id: shelterId },
             data: {
                 followers: {
@@ -239,37 +203,20 @@ router.delete("/unfollow", async (req, res) => {
                     }
                 }
             }
-        })
-
-        res.status(200).send('Shelter unfollowed successfully.')
-
-    } catch (error) {   
+        });
+        res.status(200).send('Shelter unfollowed successfully.');
+    }
+    catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
-})
-
-
+}));
 // update a shelter
-router.put("/:id", jwtCheck, async (req, res) => {
+router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-
     try {
-        interface updateInterface {
-            name: string,
-            description: string,
-            profilePic: string,
-            city: string,
-            country: string,
-            address: string,
-            website: string,
-            budget: number,
-            goal: number
-        }
-
-        const bodyShelter: updateInterface = req.body;
-
-        await prisma.shelter.update({
+        const bodyShelter = req.body;
+        yield prisma.shelter.update({
             where: { id },
             data: {
                 name: bodyShelter.name,
@@ -282,29 +229,27 @@ router.put("/:id", jwtCheck, async (req, res) => {
                 budget: bodyShelter.budget,
                 goal: bodyShelter.goal
             },
-        })
-
-        res.status(200).json('Shelter updated successfully.')
-    } catch (error) {
+        });
+        res.status(200).json('Shelter updated successfully.');
+    }
+    catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
-})
-
+}));
 // delete a shelter
-router.delete("/:id", jwtCheck, async (req, res) => {
+router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-
     try {
-        const deletedShelter = await prisma.shelter.delete({
+        const deletedShelter = yield prisma.shelter.delete({
             where: { id },
         });
-
         deletedShelter ? res.status(200).send("Shelter deleted successfully") : res.status(404).send("ID could not be found.");
-    } catch (error) {
+    }
+    catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
         console.log(error);
     }
-});
-
-export default router;
+}));
+exports.default = router;
+//# sourceMappingURL=shelters.js.map
