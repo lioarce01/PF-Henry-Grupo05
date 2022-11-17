@@ -47,6 +47,7 @@ const ONGCard = ({ image, name, goal, budget, followers, description, id }) => {
 						</p>
 					</div>
 					<Link
+						key={id}
 						to={`/${id}/profile`}
 						className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-900 border-2 hover:bg-[#fcf1e2] transition duration-300 border-[#fcf1e2] rounded-md">
 						<div className="flex flex-row ">

@@ -24,6 +24,7 @@ const Navbar = () => {
 		setToggle(!toggle)
 	}
 
+	const ref = React.createRef()
 	return (
 		<div className="fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#FAF2E7]/[.05] shadow-lg backdrop-blur-sm h-14">
 			<Link to="/">
@@ -110,7 +111,11 @@ const Navbar = () => {
 											</Link>
 										)}
 									</Menu.Item>
-									<Menu.Item>{({ active }) => <LogoutButton />}</Menu.Item>
+									<Menu.Item>
+										{({ active }) => (
+											<LogoutButton ref={ref}>Logout</LogoutButton>
+										)}
+									</Menu.Item>
 								</div>
 							</Menu.Items>
 						</Transition>
