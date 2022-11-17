@@ -7,29 +7,46 @@ import UploadImage from "./UploadImage"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useAddShelterMutation } from "../../redux/api/shelters";
 import location from './location'
+import { useDispatch, useSelector } from "react-redux"
+import {addShelterAction} from '../../redux/slices/manageUsers/actions'; 
+import Swal from "sweetalert2"
+
 const OngForm = () => {
-	const [createShelter, { data, isLoading, error }] = useAddShelterMutation()
-	
+	const [createShelter, { data1, isLoading, error }] = useAddShelterMutation()
+	const user = useSelector(state=> state.localStorage.userState)
+	console.log(user)
 	const [image, setImage] = useState("")
 	const navigate = useNavigate()
-	const { isAuthenticated, getAccessTokenSilently } = useAuth0()
-
+	const { getAccessTokenSilently, loginWithPopup } = useAuth0()
+	const dispatch= useDispatch();
+	
 	const onSubmit = async () => {
-		if (image.length && isAuthenticated) {
+		if(!user.isAuth){
+			Swal.fire({icon:'error', title: 'You need to be logged in to create a shelter'})
+			setTimeout(async()=>{
+				navigate("/home")
+				await loginWithPopup()
+			},4500)
+			
+		}
+		if (user.isAuth && !user.userDetail.Shelter.length) {
 			const data = await location({address: values.address, city: values.city, country: values.country});
 			let {lat, lon}= data;
-			console.log(lat, lon);
 			const accessToken = await getAccessTokenSilently()
-			await createShelter({accessToken, newShelter: { ...values, profilePic: image, lat: lat , lon: lon }}).then(res => alert('Shelter Created')).catch(() => alert('error'))
+			const newShelter = { ...values, authorId: user.userDetail.id ,profilePic: image, lat: lat , lon: lon };
+			const newShelterCreated = await createShelter({accessToken, newShelter}).unwrap()
+			dispatch(addShelterAction(newShelterCreated));
+			Swal.fire({icon:'success', title: 'Shelter Created'})
 			navigate("/home")
-		} else {
-			alert("Please login")
+		} else if(user.userDetail.Shelter.length) {
+			Swal.fire({icon:'error', title: 'You already own a shelter'})
+			navigate("/home")
 		}
 	}
+
 	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
 		initialValues: {
 			name: "",
-			authorId: "636cfde16804f7dc836bda73", //id user hardcodeado
 			description: "",
 			city: "",
 			animals: "",
@@ -42,8 +59,6 @@ const OngForm = () => {
 		onSubmit,
 	})
 	
-
-	//[data?.data[0].lat,data?.data[0].lon]
 	return (
 		<div className="w-full min-h-screen h-fit bg-[#FAF2E7]">
 			<div>
@@ -192,11 +207,20 @@ const OngForm = () => {
 										<option value="Cats" name="Cats">
 											Cats
 										</option>
+										<option value="Cats and Dogss" name="Cats and Dogs">
+											Cats and Dogs
+										</option>
+										<option value="Domestic Animals" name="Domestic Animals">
+											Domestic Animals
+										</option>
 										<option value="Wild Animals" name="Wild Animals">
 											Wild Animals
 										</option>
 										<option value="Farm Animals" name="Farm Animals">
 											Farm Animals
+										</option>
+										<option value="Wild and Farm Animals" name="Wild and Farm Animals">
+											Wild and Farm Animals
 										</option>
 									</select>
 								</div>
@@ -233,7 +257,9 @@ const OngForm = () => {
 					values.description !== "" &&
 					values.address !== "" &&
 					values.city !== "" &&
-					values.country !== "" ? (
+					values.country !== "" &&
+					values.animals.length &&
+					image.length ? (
 						<div>
 							<button
 								type="submit"

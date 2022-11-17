@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API = 'http://localhost:3001';
+const API = process.env.REACT_APP_API || 'http://localhost:3001';
 
 export const sheltersApi = createApi({
     reducerPath: "sheltersApi",
