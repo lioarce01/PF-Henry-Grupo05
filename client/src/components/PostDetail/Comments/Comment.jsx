@@ -124,7 +124,7 @@ const Comment = ({ content, author, id }) => {
                   )}
                 </div>
               </div>
-              <input onChange={handleChange} disabled={toggle}  className={`text-sm text-left text-gray-700 bg-white ${!toggle && "border border-gray-300"}`} type="text" value={commentContent}/>
+              <input onChange={handleChange} disabled={toggle}  className={`text-sm w-full text-left text-gray-700 bg-white ${!toggle && "border border-gray-300"}`} type="text" value={commentContent}/>
               {!toggle && <button onClick={saveHandler} className="border border-gray-300 px-2 py-1 hover:bg-gray-300">Save</button>}
             </div>
           </div>
