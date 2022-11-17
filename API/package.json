@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js",
+    "start": "npx nodemon ./index.ts",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
     "seed": "ts-node prisma/seed.ts",
     "build": "tsc"
@@ -39,6 +39,7 @@
     "mercadopago": "^1.5.14",
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
+    "nodemon": "^2.0.20",
     "pg": "^8.8.0"
   }
 }
