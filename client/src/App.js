@@ -46,7 +46,7 @@ function App() {
         <Route path="*" element={<Page404 />} />
         <Route path="/" element={<Landing />} />
         <Route path="/createOng" element={<OngForm />} />
-        <Route path="/Login" element={<UserForm />} />
+        <Route path="/updateUser" element={<UserForm />} />
         <Route path="/About" element={<About />} />
         <Route exact path="/home" element={<Home />} />
         <Route path="/:OngName/:post_id" element="" />
