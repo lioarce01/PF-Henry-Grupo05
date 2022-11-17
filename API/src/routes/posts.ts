@@ -5,19 +5,46 @@ import { jwtCheck } from '../jwtCheck';
 const router = express.Router();
 const prisma = new PrismaClient();
 
-//route to get all posts
-router.get('/', async(req, res) => {
 
-    //traer por query params la cantidad de posts que queremos traer por pagina y la pagina que queremos traer (por defecto 10 posts por pagina y pagina 1)
-    const { perPage, page } = req.query;
-
-    //si no se envian los query params, se traen todos los posts    
-   try {
-    if(! perPage || ! page) {
+router.get('/all', async(req, res) => {
+    try {
         const posts = await prisma.post.findMany({
             include: {
                 author: true,
                 Comment: {
+                    include: { author: true }
+                },
+                shelter: true 
+            }
+        });
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(400).send('ERROR: posts not founds.');
+        console.log(error);
+    }
+   
+})
+
+
+//route to get all posts enables
+router.get('/', async(req, res) => {
+
+    //traer por query params la cantidad de posts que queremos traer por pagina y la pagina que queremos traer (por defecto 10 posts por pagina y pagina 1)
+    const { perPage, page } = req.query;
+    const state: boolean = true;
+    //si no se envian los query params, se traen todos los posts    
+   try {
+    if(! perPage || ! page) {
+        const posts = await prisma.post.findMany({
+            where:{
+                enable: state
+            },
+            include: {
+                author: true,
+                Comment: {
+                    where:{
+                        enable: state
+                    },
                     include: { author: true }
                 },
                 shelter: true
@@ -31,11 +58,17 @@ router.get('/', async(req, res) => {
 
     } else {
         const posts = await prisma.post.findMany({
+            where:{
+                enable: state
+            },
             take: parseInt(perPage as string),
             skip: (parseInt(page as string) - 1) * parseInt(perPage as string),
             include: {
                 author: true,
                 Comment: {
+                    where:{
+                        enable: state
+                    },
                     include: { author: true }
                 },
                 shelter: true
@@ -63,13 +96,19 @@ type ReqSampling = {
 
 router.get('/sort', async(req : ReqSampling, res) => {
     const { order, type } = req.query;
-
+    const state: boolean = true;
     try {
         if (order && type) {
             const posts = await prisma.post.findMany({
+                where:{
+                    enable: state
+                },
                 include: {
                     author: true,
                     Comment: {
+                        where:{
+                            enable: state
+                        },
                         include: { author: true }
                     },
                     shelter: true
@@ -198,7 +237,7 @@ router.put('/updateLikes', jwtCheck, async(req,res)=>{
 // route to get posts by id
 router.get('/:id', async(req, res) => {
     const id = req.params.id;
-
+    const state : boolean = true;
     try {
         const post = await prisma.post.findUnique({
             where: { id },
@@ -206,6 +245,9 @@ router.get('/:id', async(req, res) => {
                 shelter: true,
                 author: true,
                 Comment: {
+                    where: {
+                        enable: state
+                    },
                     include: { author: true }
                 },
             },
