@@ -25,7 +25,7 @@ const ONGCard = ({ image, name, goal, budget, followers, description, id }) => {
 						</h5>
 					</div>
 					<div className="flex flex-col justify-start w-full">
-						<p className="mb-3 font-semibold text-gray-800 text-md">
+						<div className="mb-3 font-semibold text-gray-800 text-md">
 							<ShowMoreText
 								lines={3}
 								more="Show more"
@@ -38,7 +38,7 @@ const ONGCard = ({ image, name, goal, budget, followers, description, id }) => {
 								truncatedEndingComponent={"... "}>
 								{description}
 							</ShowMoreText>
-						</p>
+						</div>
 						<p className="text-sm font-semibold">
 							Budget: <span className="font-semibold">${budget}</span>
 						</p>
