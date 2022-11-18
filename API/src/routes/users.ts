@@ -9,7 +9,8 @@ const prisma = new PrismaClient();
 type Req = {
     query: {
         name: string,
-        email: string
+        email: string,
+        status: boolean
     };
     body: {
         name: string
@@ -19,62 +20,28 @@ type Req = {
     };
 };
 
-/* router.get('/:id/posts', async(req,res, next) => {
-     try {
-         const userWhitPosts = await prisma.user.findUnique({
-             where:{
-                 id: req.params.id,
-             },
-             include:{
-                 post: {
-                     where:{
-                         published: true,
-                     }
-                 }
-             },
-         }) ;
-
-         const posts = userWhitPosts?.post;
-         res.status(200).json(userWhitPosts);
-     } catch (error: any) {
-         console.error(error.message)
-     }
-}); */
-router.get("/all", async (req, res) => {
-    const user = await prisma.user.findMany({
-        include:{
-            posts: true,
-            Shelter: true,
-            Comment:true,
-            following:true
-        }
-    })
-})
-
 // get all users, or search them by name enables
 router.get("/", async (req: Req, res) => {
     try {
-        const { name } = req.query;
-        const state : boolean= true
+        const { name, status } = req.query;
+
         const user = await prisma.user.findMany({
             where: { 
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
-                AND:{
-                    enable: true
-                }
+                enable: status
             },
 
             include: { posts: {
-                        where:{
-                            enable: state
+                        where: {
+                            enable: status
                         },
-                        include:{
+                        include: {
                             Comment:{
-                                where:{
-                                    enable: state
+                                where: {
+                                    enable: status
                                 }
                             }
                         }

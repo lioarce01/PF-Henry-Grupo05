@@ -8,8 +8,9 @@ import { useEffect, useState } from "react"
 
 const ModalShelters = ({ setOpen }) => {
 
-    const { data: allShelters } = useGetSheltersQuery()
+    const { data: allShelters } = useGetSheltersQuery({name: "", enabled: true})
     const [shelters, setShelters] = useState(allShelters)
+    
     const closeModal = () => setOpen(false)
 
     return (

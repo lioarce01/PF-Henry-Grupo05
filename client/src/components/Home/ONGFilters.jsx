@@ -90,7 +90,7 @@ const ONGFilters = ({ setShelters }) => {
 	}, [queriesSelected])
 
 	useEffect(() => {
-		getShelters("")
+		getShelters(({name: "", enabled: true}))
 	}, [])
 
 	return (
