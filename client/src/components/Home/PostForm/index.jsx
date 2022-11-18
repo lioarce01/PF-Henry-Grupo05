@@ -40,7 +40,7 @@ const PostForm = ({ closeModal }) => {
 
 	return (
 		<div className="">
-			<div className="sm:max-w-lg  max-w-full p-10 bg-[#FAF2E7] rounded-xl z-10">
+			<div className="sm:max-w-lg  max-w-full p-10 bg-[#fff5f4] rounded-xl z-10">
 				<div className="flex items-center justify-end">
 					<button onClick={closeModal}>
 						<AiOutlineClose className="flex w-6 h-6 " />
@@ -58,7 +58,7 @@ const PostForm = ({ closeModal }) => {
 					<div>
 						<button
 							type="submit"
-							className="my-5 w-[60%] mx-auto flex justify-center bg-[#ca7c62] text-gray-100 p-3  rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300">
+							className="my-5 w-[60%] mx-auto flex justify-center bg-[#ca7c62] text-gray-100 p-3  rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#c95d27] shadow-lg cursor-pointer transition ease-in duration-300">
 							CREATE
 						</button>
 					</div>
