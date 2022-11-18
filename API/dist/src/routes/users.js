@@ -39,18 +39,43 @@ const prisma = new client_1.PrismaClient();
          console.error(error.message)
      }
 }); */
-// get all users, or search them by name
+router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma.user.findMany({
+        include: {
+            posts: true,
+            Shelter: true,
+            Comment: true,
+            following: true
+        }
+    });
+}));
+// get all users, or search them by name enables
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.query;
+        const state = true;
         const user = yield prisma.user.findMany({
             where: {
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
+                AND: {
+                    enable: true
+                }
             },
-            include: { posts: true,
+            include: { posts: {
+                    where: {
+                        enable: state
+                    },
+                    include: {
+                        Comment: {
+                            where: {
+                                enable: state
+                            }
+                        }
+                    }
+                },
                 following: true,
             }
         });
@@ -64,10 +89,24 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 // get an user by its id
 router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    const state = true;
     try {
         const user = yield prisma.user.findUnique({
             where: { id: id },
-            include: { following: true, posts: true }
+            include: { following: true,
+                posts: {
+                    where: {
+                        enable: state
+                    },
+                    include: {
+                        Comment: {
+                            where: {
+                                enable: state
+                            }
+                        }
+                    }
+                }
+            }
         });
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
     }
@@ -127,6 +166,25 @@ router.put('/enable', (req, res) => __awaiter(void 0, void 0, void 0, function* 
             data: { enable: true },
         });
         res.status(200).send(`User ${id} enabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+router.put('/admin', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, adminId, removeAdmin = false } = req.body;
+        const admin = yield prisma.user.findUnique({ where: { id: adminId }, });
+        if (!admin)
+            return res.status(404).send('your username is not found');
+        if ((admin === null || admin === void 0 ? void 0 : admin.role) === 'User')
+            return res.status(400).send("you are not admin");
+        const newAdmin = yield prisma.user.update({
+            where: { id: userId },
+            data: { role: removeAdmin ? "User" : "Admin" },
+        });
+        res.status(200).send({ message: `User ${newAdmin.name} is now ${removeAdmin ? "User" : "Admin"}`, payload: newAdmin });
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
