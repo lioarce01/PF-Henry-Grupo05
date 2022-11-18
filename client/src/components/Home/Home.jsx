@@ -4,9 +4,10 @@ import Ongs from './Ongs'
 import Posts from './Posts'
 import SubscriptorsBar from './SubscriptorsBar'
 import { Toaster } from 'react-hot-toast'
+import PostFilters from "./PostFilters"
 
 const Home = () => {
-  return (
+	return (
 		<div className="w-full h-full bg-[#fff5f4] min-h-screen overflow-y-hidden">
 			<Toaster />
 			<Navbar />
@@ -15,6 +16,9 @@ const Home = () => {
 					<SubscriptorsBar />
 				</div>
 				<div>
+					<div className="flex justify-end w-full mt-[40px]">
+						<PostFilters />
+					</div>
 					<Posts />
 				</div>
 				<div>

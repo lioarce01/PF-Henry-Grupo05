@@ -27,18 +27,7 @@ const Posts = () => {
 	}, [])
 
 	return (
-		<div className="w-auto h-screen min-h-[50rem] mt-[25px] px-6 mb-4 bg-none overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
-			<div className={`flex flex-col ${isLoading ? "w-full" : "w-[580px]"}`}>
-				<div
-					className={`absolute top-[33px] ${
-						isAuthenticated ? "left-[1160px]" : "left-[1310px]"
-					} flex items-center ${
-						isFetching ? "justify-between" : "justify-end"
-					}`}>
-					<PostFilters />
-				</div>
-			</div>
-
+		<div className="w-auto h-screen min-h-[50rem] mt-[20px] px-6 mb-4 bg-none overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
 			<div className="flex flex-col justify-center w-full min-w-full">
 				{isLoading ? (
 					<div className="mt-[140px]">

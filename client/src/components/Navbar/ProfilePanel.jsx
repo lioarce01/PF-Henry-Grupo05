@@ -19,9 +19,7 @@ const ProfilePanel = () => {
 	return (
 		<div>
 			{isAuth ? (
-				<Menu
-					as="div"
-					className="w-[120px] relative z-50 inline-block text-left outline-none mt-[40px]">
+				<Menu as="div" className="w-[120px] outline-none">
 					<div>
 						<Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-800">
 							<h2 className="absolute right-[70px] mt-[10px]">
