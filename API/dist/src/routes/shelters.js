@@ -20,15 +20,8 @@ const prisma = new client_1.PrismaClient();
 // get all shelters or get some by name
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name } = req.query;
         const shelters = yield prisma.shelter.findMany({
             orderBy: { "name": "asc" },
-            where: {
-                name: {
-                    contains: name || '',
-                    mode: 'insensitive'
-                },
-            },
             include: {
                 followers: true,
                 posts: true
@@ -66,12 +59,20 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // here we are able to expand this further, adding
-    // more ordering criteria and even filters.
-    const { order, orderType, group, groupType } = req.body;
+    // more ordering criteria, filters and name search.
+    const { order, orderType, filter, name } = req.body;
     try {
-        if (order || group) {
+        if (order || filter) {
             const shelters = yield prisma.shelter.findMany({
-                where: { [group]: groupType },
+                where: {
+                    animals: filter === null || filter === void 0 ? void 0 : filter.animals,
+                    country: filter === null || filter === void 0 ? void 0 : filter.country,
+                    city: filter === null || filter === void 0 ? void 0 : filter.city,
+                    name: {
+                        contains: name || '',
+                        mode: 'insensitive'
+                    },
+                },
                 include: { followers: true },
                 orderBy: order === "followers" ? { followers: { _count: orderType } } : { [order]: orderType }
             });

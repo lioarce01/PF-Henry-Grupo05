@@ -7,10 +7,10 @@ const prisma = new PrismaClient();
 
 type ReqGet = { 
     query: { 
-        name: string,
         cant: number 
     } 
 };
+
 router.get('/all', async(req, res) =>{
     try {
         const shelters = await prisma.shelter.findMany({
@@ -25,19 +25,15 @@ router.get('/all', async(req, res) =>{
         console.log(error);
     }
 })
+
 // get all shelters or get some by name enables
-router.get('/', async(req: ReqGet, res) => {
+router.get('/', async(req, res) => {
     try {
-        const { name } = req.query;
         const status : boolean = true;
         const shelters = await prisma.shelter.findMany({
             orderBy: { "name": "asc" },
             where: { 
-                name: {
-                    contains: name || '',
-                    mode: 'insensitive'
-                },
-                AND:{
+                AND: {
                     enable: status
                 }
             },
@@ -80,29 +76,46 @@ router.get('/topFive', async(req: ReqGet, res)=>{
 });
 
 
-// order (or filter, in the future) by what is in this Type
+// interface used to define objects which contain
+// the type of filter the user wants to use
+interface allFilters {
+    animals: string,
+    country: string,
+    city: string
+}
+
+// type definition of body parameters
 type ReqSampling = { 
     body: { 
-        group: 'country' | 'city' | 'animals'
-        groupType: string
+        filter: allFilters 
         order: 'name' | 'budget' | 'followers',
         orderType: 'asc' | 'desc',
+        name: string
     } 
 };
 
 router.post('/filter-sort', async(req : ReqSampling, res) => {
     // here we are able to expand this further, adding
-    // more ordering criteria and even filters.
-    const { order, orderType, group, groupType } = req.body;
+    // more ordering criteria, filters and name search.
+    const { order, orderType, filter, name } = req.body;
     const state : boolean = true;
+
     try {
-        if (order || group) { 
+        if (order || filter) { 
             
             const shelters = await prisma.shelter.findMany({
-                where: { [group]: groupType,
-                        AND:{
-                            enable: state
-                }},
+                where: {
+                    animals: filter?.animals,
+                    country: filter?.country,
+                    city:    filter?.city,
+                    name: {
+                        contains: name || '',
+                        mode: 'insensitive'
+                    },
+                    AND: {
+                      enable: state
+                    }
+                },
                 include: { followers: true },
                 orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
             })
