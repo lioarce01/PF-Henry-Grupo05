@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { MdComment } from "react-icons/md";
+import { MdAdminPanelSettings, MdComment } from "react-icons/md";
 import { AiFillHeart } from "react-icons/ai";
 import { getTimeAgo } from "../../utils";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -25,6 +25,7 @@ const CardPost = ({
   comments,
   id,
   authorId,
+  authorRole
 }) => {
 
   const {likes: userLikes} = useSelector(selectUser)
@@ -90,8 +91,8 @@ const CardPost = ({
                 to={`/users/${authorId}`}
                 className=""
               >
-                <h2 className="mb-1 text-lg font-bold text-[#201008] border-b border-[#fffcf7] hover:border-black transition duration-300">
-                  {author}
+                <h2 className="flex items-center justify-center mb-1 text-lg font-bold text-[#201008] border-b border-[#fffcf7] hover:border-black transition duration-300">
+                  {author} {authorRole === "Admin" && <MdAdminPanelSettings className="text-yellow-500 ml-2" />}
                 </h2>
               </Link>
               <small className="px-2 py-0.5 text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
