@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leafl
 import { useState, useEffect } from 'react';
 import { useUpdateShelterMutation } from '../../../redux/api/shelters';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2"
 import 'leaflet/dist/leaflet.css'
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -17,8 +19,9 @@ const [position, setPosition] = useState([lat, lon]);
 const center = [40.78093334132345, -73.96678400687304]
 const [updateShelter, { error }] = useUpdateShelterMutation()
 const [cpos, setCpos] = useState([])
-const [update, setUpdate] = useState(false)
+const [toogle, setToogle] = useState(false)
 const { userDetail } = useSelector((state) => state.localStorage.userState);
+const navigate = useNavigate()
 
 const options = {
   enableHighAccuracy: true,
@@ -29,11 +32,6 @@ const options = {
 function success(pos) {
   const crd = pos.coords;
   setCpos([crd?.latitude, crd?.longitude])
-  setUpdate(true)
-  // console.log('Your current position is:');
-  // console.log(`Latitude : ${crd.latitude}`);
-  // console.log(`Longitude: ${crd.longitude}`);
-  // console.log(`More or less ${crd.accuracy} meters.`);
 }
 
 function error2(err) {
@@ -41,29 +39,29 @@ function error2(err) {
 }
 
 useEffect(()=>{
+  //navigator.geolocation.getCurrentPosition(success, error2, options);
+},[toogle, updateShelter])
+
+
+const handleClick = ()=>{
   navigator.geolocation.getCurrentPosition(success, error2, options);
   console.log('current location', cpos)
-},[update, updateShelter])
-
-const handleclick = ()=>{
+  setToogle(true)
+}
+const handleSave = ()=>{
   updateShelter({updatedShelter:{lat: cpos[0], lon: cpos[1]}, id})
-  
+  setToogle(false)
+  Swal.fire({icon:'success',
+            title: 'Shelter´s Coordinates Saved!',
+            preConfirm: ()=>{
+              navigate(0)
+            }})
 }
 
 
 function LocationMarker ({center, name}) {
-    const nolocation = 'No location detected, double click on map to set current location'
+    const nolocation = 'No location detected. Set new one by using Change Location button'
     const [position2, setPosition2] = useState(center)
-    const map = useMapEvents({
-      dblclick() {
-        map.locate()
-      },
-      locationfound(e) {
-        setPosition2(e.latlng)
-        map.flyTo(e.latlng, map.getZoom())
-      },
-    })
-
     return position2 === center ? (
             <Marker position={position2}>
               <Popup>{nolocation}</Popup>
@@ -90,6 +88,10 @@ function LocationMarker ({center, name}) {
                     </Popup>
                 </Marker>
             </MapContainer>
+            <div>
+                {shelter.author.id === userDetail?.id && <button onClick={handleClick}>Change Location</button>}
+                {(shelter.author.id === userDetail?.id && cpos.length > 0) && <button onClick={handleSave}>Save</button>}
+            </div>
         </div>
       )
   }
@@ -102,7 +104,10 @@ function LocationMarker ({center, name}) {
                 />
                 <LocationMarker center={center} name={name} />
             </MapContainer>
-                {shelter.author.id === userDetail?.id && <button onClick={handleclick}>Set current</button>}
+            <div>
+                {shelter.author.id === userDetail?.id && <button onClick={handleClick}>Change Location</button>}
+                {(shelter.author.id === userDetail?.id && cpos.length > 0) && <button onClick={handleSave}>Save</button>}
+            </div>
         </div>
   )
 }

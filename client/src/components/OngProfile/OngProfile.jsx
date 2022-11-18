@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDisableShelterMutation, useEnableShelterMutation, useGetShelterByIdQuery } from "../../redux/api/shelters";
 import OngFormUpdate from "./OngFormUpdate";
@@ -25,7 +25,9 @@ const OngDetail = () => {
   const closeModalDonate = () => setIsOpenDonate(false);
   const closeModal = () => setIsOpen(false);
  
-
+  useEffect(()=>{
+      shelterRefetch()  
+  },[isOpen])
 
   return (
     <div>
