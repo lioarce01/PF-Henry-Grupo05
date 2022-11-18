@@ -24,9 +24,11 @@ const SubscriptorsBar = () => {
 								{isAuth &&
 									userDetail?.following?.map((shelter) => (
 										<SubsCard
-											key={shelter.id}
-											id={shelter.id}
-											image={shelter.profilePic}
+										key={shelter.id}
+										id={shelter.id}
+										name={shelter.name}
+										goal={shelter.goal}
+										image={shelter.profilePic}
 										/>
 								))}
 							</div>

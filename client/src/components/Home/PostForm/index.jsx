@@ -7,6 +7,8 @@ import toast from "react-hot-toast"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useSelector } from "react-redux"
 
+
+
 const PostForm = ({ closeModal }) => {
 	const [content, setContent] = useState("")
 	const [image, setImage] = useState(false)
@@ -26,7 +28,7 @@ const PostForm = ({ closeModal }) => {
 			authorId: userDetail.id,
 		}
 		console.log("shelter: ", userDetail.Shelter[0])
-		const myPromise = addNewPost({ accessToken, newPost })
+		const myPromise =  addNewPost({ accessToken, newPost })
 		toast.promise(myPromise, {
 			loading: "Creating post",
 			success: "Post created",

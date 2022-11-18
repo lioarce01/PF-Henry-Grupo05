@@ -49,9 +49,9 @@ const OngDetail = () => {
                 <Description id={id} details={details} />
                 <MapView
                   name={details?.name}
-                  country={details?.country}
-                  city={details?.city}
-                  address={details?.address}
+                  lat={details?.lat}
+				  lon={details?.lon}
+				  id={id}
                 />
                 <Posts setIsOpen={setIsOpen} details={details} />
               </div>

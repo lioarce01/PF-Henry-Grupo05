@@ -2,6 +2,7 @@ import React from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet';
 import { useState, useEffect } from 'react';
 import { useUpdateShelterMutation } from '../../../redux/api/shelters';
+import { useSelector } from 'react-redux';
 import 'leaflet/dist/leaflet.css'
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -17,6 +18,7 @@ const center = [40.78093334132345, -73.96678400687304]
 const [updateShelter, { error }] = useUpdateShelterMutation()
 const [cpos, setCpos] = useState([])
 const [update, setUpdate] = useState(false)
+const { userDetail } = useSelector((state) => state.localStorage.userState);
 
 const options = {
   enableHighAccuracy: true,
@@ -41,10 +43,11 @@ function error2(err) {
 useEffect(()=>{
   navigator.geolocation.getCurrentPosition(success, error2, options);
   console.log('current location', cpos)
-},[update])
+},[update, updateShelter])
 
 const handleclick = ()=>{
-  updateShelter({updateShelter:{lat: cpos[0], lon: cpos[1]}, id})
+  updateShelter({updatedShelter:{lat: cpos[0], lon: cpos[1]}, id})
+  
 }
 
 
@@ -99,7 +102,7 @@ function LocationMarker ({center, name}) {
                 />
                 <LocationMarker center={center} name={name} />
             </MapContainer>
-                <button onClick={handleclick}>Set current</button>
+                {userDetail.Shelter[0].id === id && <button onClick={handleclick}>Set current</button>}
         </div>
   )
 }

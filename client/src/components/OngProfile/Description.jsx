@@ -1,10 +1,14 @@
 
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { useUpdateShelterMutation } from '../../redux/api/shelters';
+
 
 function Description({ details, id}) {
 
     const [toggle, setToggle] = useState(true)
+    const { userDetail } = useSelector((state) => state.localStorage.userState);
+    console.log('User Details',userDetail)
     const [updateShelter] = useUpdateShelterMutation();
     const [input, setInput] = useState({
         description: details?.description,
@@ -35,12 +39,12 @@ function Description({ details, id}) {
     />
     <div className="flex flex-row-reverse justify-between w-full">
       <div>
-        <button
+        { userDetail.Shelter[0].id === id && <button
           className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
           onClick={() => setToggle(!toggle)}
         >
           Edit
-        </button>
+        </button>}
       </div>
       <div>
         {!toggle && (
