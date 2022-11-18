@@ -21,7 +21,7 @@ const Ongs = () => {
 						<div className="mt-[40px]">
 							{topShelters?.map(shelter => {
 								return (
-									<div className="ml-[30px] bg-white mt-[20px] rounded-[40px] pl-[20px] pt-[20px] pr-[20px] pb-[15px] mr-[30px] shadow-[0px_19px_23px_-6px_rgba(235,174,158,1)]">
+									<div key={shelter.id} className="ml-[30px] bg-white mt-[20px] rounded-[40px] pl-[20px] pt-[20px] pr-[20px] pb-[15px] mr-[30px] shadow-[0px_19px_23px_-6px_rgba(235,174,158,1)]">
 										<div className="flex flex-row">
 											<img src={shelter.profilePic} className="object-cover w-[60px] h-[60px] rounded-[25px]" />
 
@@ -60,7 +60,7 @@ const Ongs = () => {
 
 						{shelters?.slice(0, 5).map(s => {
 							return (
-								<div className="flex mt-[20px] ml-[20px]">
+								<div key={s.id} className="flex mt-[20px] ml-[20px]">
 									<div className="flex flex-row">
 										<img src={s.profilePic} className="object-cover w-[80px] h-[80px] rounded-[25px]"/>
 									</div>

@@ -26,7 +26,7 @@ const Navbar = () => {
 
 	const ref = React.createRef()
 	return (
-		<div className="z-10 flex items-center justify-between w-full p-4 px-10 bg-none h-14 absolute">
+		<div className={`${location.pathname === "/home" ? "z-10 flex items-center justify-between w-full p-4 px-10 bg-none h-14 absolute" : "z-10 flex items-center justify-between w-full p-4 px-10 bg-none h-14 relative"}`}>
 			<div className="flex">
 				<Link to="/">
 					<div className="flex mt-[30px] ml-[-20px]">
