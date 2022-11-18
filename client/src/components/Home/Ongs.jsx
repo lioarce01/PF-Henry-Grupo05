@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Ongs = () => {
-	const { data: shelters } = useGetSheltersQuery();
+	const { data: shelters } = useGetSheltersQuery(({name: "", enabled: true}));
 	const { data: topShelters, topIsSuccess } = useTopFiveSheltersQuery("3");
 
 	const [open, setOpen] = useState(false)

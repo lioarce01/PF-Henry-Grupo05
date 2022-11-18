@@ -9,7 +9,7 @@ export const sheltersApi = createApi({
 
     endpoints: (builder) => ({
         getShelters: builder.query({
-            query: (shelterName) => `/shelters?name=${shelterName}`,
+            query: ({ name = null, enabled = null }) => `/shelters?name=${name}&?status=${enabled}`,
             providesTags: ["Shelters"]
         }),
 
@@ -24,13 +24,11 @@ export const sheltersApi = createApi({
         }),
 
         sortShelters: builder.mutation({
-            query: ({ order, orderType, filter, name }) => {
-                console.log(order, orderType, filter, name)
-                return ({
+            query: ({ order, orderType, filter, name }) => ({
                 url: "/shelters/filter-sort",
                 method: "post",
                 body: { order, orderType, filter, name }
-            })},
+            }),
             invalidatesTags: ["Shelters"]
         }),
 

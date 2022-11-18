@@ -17,35 +17,26 @@ const client_1 = require("@prisma/client");
 const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
-router.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const shelters = yield prisma.shelter.findMany({
-            include: {
-                author: true,
-                followers: true,
-                posts: true
-            }
-        });
-    }
-    catch (error) {
-        res.status(400).send('ERROR: shelters not founds.');
-        console.log(error);
-    }
-}));
 // get all shelters or get some by name enables
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { status, name } = req.query;
     try {
-        const status = true;
         const shelters = yield prisma.shelter.findMany({
-            orderBy: { "name": "asc" },
             where: {
-                AND: {
-                    enable: status
-                }
+                enable: status,
+                name: {
+                    contains: name || '',
+                    mode: 'insensitive'
+                },
             },
+            orderBy: { "name": "asc" },
             include: {
                 followers: true,
-                posts: true
+                posts: {
+                    where: {
+                        enable: status
+                    }
+                }
             }
         });
         if (shelters.length)
@@ -98,9 +89,6 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
                         contains: name || '',
                         mode: 'insensitive'
                     },
-                    AND: {
-                        enable: state
-                    }
                 },
                 include: { followers: true },
                 orderBy: order === "followers" ? { followers: { _count: orderType } } : { [order]: orderType }

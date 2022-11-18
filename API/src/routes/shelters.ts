@@ -6,40 +6,30 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 type ReqGet = { 
-    query: { 
-        cant: number 
-    } 
+    query: { name: string, cant: number, status: boolean } 
 };
 
-router.get('/all', async(req, res) =>{
-    try {
-        const shelters = await prisma.shelter.findMany({
-            include: { 
-                author: true,
-                followers: true, 
-                posts: true
-            }
-        })
-    } catch (error) {
-        res.status(400).send('ERROR: shelters not founds.');
-        console.log(error);
-    }
-})
-
 // get all shelters or get some by name enables
-router.get('/', async(req, res) => {
+router.get('/', async(req: ReqGet, res) => {
+    const { status, name } = req.query
+
     try {
-        const status : boolean = true;
         const shelters = await prisma.shelter.findMany({
-            orderBy: { "name": "asc" },
             where: { 
-                AND: {
-                    enable: status
-                }
+                enable: status, 
+                name: {
+                    contains: name || '',
+                    mode: 'insensitive'
+                },
             },
+            orderBy: { "name": "asc" },
             include: { 
                 followers: true, 
-                posts: true
+                posts: {
+                    where: {
+                        enable: status
+                    }
+                }
             }
         })
 
@@ -57,6 +47,7 @@ router.get('/topFive', async(req: ReqGet, res)=>{
     // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
     const cant = Math.floor(req.query.cant)
     const state = true;
+    
     try {
         const shelters = await prisma.shelter.findMany({
             where:{
@@ -112,9 +103,6 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
                         contains: name || '',
                         mode: 'insensitive'
                     },
-                    AND: {
-                      enable: state
-                    }
                 },
                 include: { followers: true },
                 orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
@@ -165,6 +153,7 @@ router.get("/:id", async (req, res) => {
         console.log(error);
     }
 });
+
 // logical enabled to shelters(Admin)
 router.put("/enable", async (req, res) => {    
     try {
@@ -179,6 +168,7 @@ router.put("/enable", async (req, res) => {
         console.log(error)
     }
 })
+
 // logical disabled to shelters(Admin)
 router.put("/disable", async (req, res) => {    
     try {

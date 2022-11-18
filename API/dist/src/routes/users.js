@@ -18,60 +18,26 @@ const jwtCheck_1 = require("../jwtCheck");
 const nodemailer_1 = require("../middleware/nodemailer");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
-/* router.get('/:id/posts', async(req,res, next) => {
-     try {
-         const userWhitPosts = await prisma.user.findUnique({
-             where:{
-                 id: req.params.id,
-             },
-             include:{
-                 post: {
-                     where:{
-                         published: true,
-                     }
-                 }
-             },
-         }) ;
-
-         const posts = userWhitPosts?.post;
-         res.status(200).json(userWhitPosts);
-     } catch (error: any) {
-         console.error(error.message)
-     }
-}); */
-router.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield prisma.user.findMany({
-        include: {
-            posts: true,
-            Shelter: true,
-            Comment: true,
-            following: true
-        }
-    });
-}));
 // get all users, or search them by name enables
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name } = req.query;
-        const state = true;
+        const { name, status } = req.query;
         const user = yield prisma.user.findMany({
             where: {
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
-                AND: {
-                    enable: true
-                }
+                enable: status
             },
             include: { posts: {
                     where: {
-                        enable: state
+                        enable: status
                     },
                     include: {
                         Comment: {
                             where: {
-                                enable: state
+                                enable: status
                             }
                         }
                     }
