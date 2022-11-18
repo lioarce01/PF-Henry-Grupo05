@@ -55,7 +55,7 @@ const Navbar = () => {
 					)}
 				</div>
 				<div className="flex flex-row items-center">
-					<div className="mx-20">
+					<div className="mr-48">
 						{isAuth &&
 							location.pathname === "/home" &&
 							userDetail?.Shelter?.length > 0 && (
