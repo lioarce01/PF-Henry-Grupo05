@@ -5,7 +5,7 @@ export const manageSheltersSlice = createSlice({
     name: "manageShelters",
 
     initialState: {
-        sort: { order: "name", orderType: "asc", group: undefined, groupType: undefined },
+        sort: { order: "name", orderType: "asc", filter: {} },
         search: ""
     },
 

@@ -24,11 +24,13 @@ export const sheltersApi = createApi({
         }),
 
         sortShelters: builder.mutation({
-            query: ({ order, orderType, group, groupType }) => ({
+            query: ({ order, orderType, filter, name }) => {
+                console.log(order, orderType, filter, name)
+                return ({
                 url: "/shelters/filter-sort",
                 method: "post",
-                body: { order, orderType, group, groupType }
-            }),
+                body: { order, orderType, filter, name }
+            })},
             invalidatesTags: ["Shelters"]
         }),
 
