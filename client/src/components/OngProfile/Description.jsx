@@ -39,7 +39,7 @@ function Description({ details, id}) {
     />
     <div className="flex flex-row-reverse justify-between w-full">
       <div>
-        { userDetail.Shelter[0].id === id && <button
+        { details.author.id === userDetail?.id && <button
           className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
           onClick={() => setToggle(!toggle)}
         >

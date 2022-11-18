@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
+  useDisableShelterMutation,
+  useEnableShelterMutation,
   useLazyGetShelterByIdQuery,
   useUpdateShelterMutation,
 } from "../../redux/api/shelters";
@@ -9,6 +11,8 @@ import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { ongSchema } from "../OngForm/validationOngForm";
 import UploadImage from "./UploadImage";
+import { RiUserUnfollowLine } from "react-icons/ri";
+import { MdDomainDisabled, MdOutlineDomain } from "react-icons/md";
 
 const OngFormUpdate = ({
   name,
@@ -18,12 +22,13 @@ const OngFormUpdate = ({
   website,
   description,
   setIsOpenDonate,
+  shelter,
 }) => {
   const [getShelterById, { data: details }] = useLazyGetShelterByIdQuery();
   const [updateShelter] = useUpdateShelterMutation();
   const { id } = useParams();
   const [image, setImage] = useState(details?.profilePic);
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(true);
   const { userDetail } = useSelector((state) => state.localStorage.userState);
 
   useEffect(() => {
@@ -33,6 +38,9 @@ const OngFormUpdate = ({
   const onSubmit = () => {
     updateShelter({ updatedShelter: { ...values, profilePic: image }, id });
   };
+
+  const [enableShelter] = useEnableShelterMutation();
+  const [disableShelter] = useDisableShelterMutation();
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -57,6 +65,7 @@ const OngFormUpdate = ({
           <div>
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col text-[#462312] font-semibold text-lg">
+                <p>{shelter?.enable ? "Enabled" : "Disabled"}</p>
                 <input
                   className="my-2"
                   defaultValue={name}
@@ -133,20 +142,48 @@ const OngFormUpdate = ({
             </form>
           </div>
         </div>
-        {userDetail.Shelter[0].id === id && <button
-          className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-          onClick={() => setToggle(!toggle)}
-        >
-          Edit
-        </button>}
+        {shelter.author.id === userDetail?.id && (
+          <button
+            className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+            onClick={() => setToggle(!toggle)}
+          >
+            Edit
+          </button>
+        )}
       </div>
       <div className="flex items-center justify-between row">
         <button
-          className="bg-transparent mt-4 hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
+          className="bg-transparent  hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
           onClick={() => setIsOpenDonate(true)}
         >
           Donate
         </button>
+
+        {userDetail.role === "Admin" || shelter.author.id === userDetail.id ? (
+          <>
+            {shelter.enable ? (
+              <button
+                onClick={() => disableShelter({ shelterId: id })}
+                className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border"
+              >
+                Disable
+                <span className="pl-2">
+                  <MdDomainDisabled />
+                </span>
+              </button>
+            ) : (
+              <button
+                onClick={() => enableShelter({ shelterId: id })}
+                className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center"
+              >
+                Enable
+                <span className="pl-2">
+                  <MdOutlineDomain />
+                </span>
+              </button>
+            )}
+          </>
+        ) : null}
       </div>
     </div>
   );

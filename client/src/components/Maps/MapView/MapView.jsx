@@ -11,7 +11,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 
 
 
-const MapView =  ({name, lat, lon, id}) => {
+const MapView =  ({name, lat, lon, id, shelter}) => {
 
 const [position, setPosition] = useState([lat, lon]);
 const center = [40.78093334132345, -73.96678400687304]
@@ -102,7 +102,7 @@ function LocationMarker ({center, name}) {
                 />
                 <LocationMarker center={center} name={name} />
             </MapContainer>
-                {userDetail.Shelter[0].id === id && <button onClick={handleclick}>Set current</button>}
+                {shelter.author.id === userDetail?.id && <button onClick={handleclick}>Set current</button>}
         </div>
   )
 }

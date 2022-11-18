@@ -19,7 +19,7 @@ function Posts({ details, setIsOpen}) {
         details?.posts && details?.posts.length ? "w-full" : "w-[360px]"
       } min-h-[50rem] py-10 mb-4 mt-14`}
     >
-      {userDetail.Shelter[0].id === id && <button
+      {details.author.id === userDetail?.id && <button
         onClick={() => setIsOpen(true)}
         className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto flex"
       >
