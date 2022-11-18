@@ -231,7 +231,7 @@ router.post("/", jwtCheck, async (req, res) => {
 
 //on click follow button in shelter profile page, add shelter to user's following list and add user to shelter's followers list 
 
-router.post("/follow", async (req, res) => {
+router.put("/follow", async (req, res) => {
     try {
         const { userId, shelterId } = req.body;
 
@@ -263,7 +263,7 @@ router.post("/follow", async (req, res) => {
 })
 
 
-router.delete("/unfollow", async (req, res) => {
+router.put("/unfollow", async (req, res) => {
     try {
         const { userId, shelterId } = req.body;
 
