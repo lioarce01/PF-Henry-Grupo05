@@ -40,7 +40,7 @@ const PostForm = ({ closeModal }) => {
 
 	return (
 		<div className="">
-			<div className="sm:max-w-lg  max-w-full p-10 bg-[#fff5f4] rounded-xl z-10">
+			<div className="sm:max-w-lg  max-w-full p-10 bg-[#fcefed] rounded-xl z-10">
 				<div className="flex items-center justify-end">
 					<button onClick={closeModal}>
 						<AiOutlineClose className="flex w-6 h-6 " />
