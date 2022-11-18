@@ -46,6 +46,7 @@ function Posts({ details, setIsOpen}) {
                 createdAt={post.createdAt}
                 comments={post.Comment.length}
                 authorId={post.authorId}
+                shelter ={details?.name}
               />
             );
           })
