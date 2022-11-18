@@ -295,8 +295,8 @@ router.put("/unfollow", async (req, res) => {
 })
 
 
-// update a shelter
-router.put("/:id", jwtCheck, async (req, res) => {
+// update a shelter ALERTA saque jwtCheck
+router.put("/:id",  async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -309,7 +309,9 @@ router.put("/:id", jwtCheck, async (req, res) => {
             address: string,
             website: string,
             budget: number,
-            goal: number
+            goal: number,
+            lat: number,
+            lon: number
         }
 
         const bodyShelter: updateInterface = req.body;
@@ -325,7 +327,9 @@ router.put("/:id", jwtCheck, async (req, res) => {
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
+                goal: bodyShelter.goal,
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon
             },
         })
 

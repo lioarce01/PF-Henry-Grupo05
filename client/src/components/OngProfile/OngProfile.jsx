@@ -50,18 +50,20 @@ const OngDetail = () => {
 								shelterRefetch={shelterRefetch}
 							/>
 
-							<div className="flex flex-col items-center mr-16">
-								<Description id={id} details={details} />
-								<MapView
-									name={details?.name}
-									country={details?.country}
-									city={details?.city}
-									address={details?.address}
-								/>
-								<Posts setIsOpen={setIsOpen} details={details} />
-							</div>
-						</div>
-					</div>
+
+              <div className="flex flex-col items-center mr-16">
+                <Description id={id} details={details} />
+                <MapView
+                  name={details?.name}
+                  lat={details?.lat}
+				  lon={details?.lon}
+				  id={id}
+                />
+                <Posts setIsOpen={setIsOpen} details={details} />
+              </div>
+            </div>
+          </div>
+
 
 					<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
