@@ -15,7 +15,7 @@ const ContentInput = ({content, setContent}) => {
 				<textarea
 					value={content}
 					onChange={onChange}
-					className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700  bg-[#fff5f4] bg-clip-padding border border-solid border-gray-300 rounded transitionease-in-out m-0 focus:text-[#462312] focus:bg-[#ffedeb] focus:border-gray-600 focus:outline-none"
+					className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700  bg-[#fffaf9] bg-clip-padding border border-solid border-gray-300 rounded transitionease-in-out m-0 focus:text-[#462312] focus:bg-[#ffedeb] transition duration-300 focus:border-[#eecec8] focus:outline-none"
 					rows="3"></textarea>
 			</div>
 		)
