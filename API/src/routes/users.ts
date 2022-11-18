@@ -182,6 +182,24 @@ router.put('/enable',  async(req, res)=>{
     }
    
 })
+router.put('/admin',jwtCheck,  async(req, res)=>{
+    try {
+        const {userId, adminId, removeAdmin = false} = req.body;
+        const admin = await prisma.user.findUnique({where: { id: adminId},});
+        if(!admin) return res.status(404).send('your username is not found')
+        if( admin?.role === 'User') return res.status(400).send("you are not admin")
+        const newAdmin = await prisma.user.update({
+            where: { id: userId },
+            data: { role: removeAdmin ? "User" : "Admin" },
+        });
+        res.status(200).send({message: `User ${newAdmin.name} is now ${removeAdmin ? "User" : "Admin"}`, payload: newAdmin})
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    } 
+})
+
+
 // logical disabled to users(Admin)
 router.put('/disable',  async(req, res)=>{
     try {

@@ -47,6 +47,7 @@ const Posts = () => {
                 profilePic={post.author.profilePic}
                 postImage={post.image}
                 author={post.author.name}
+                authorRole={post.author.role}
                 content={post.content}
                 likes={post.likes}
                 createdAt={post.createdAt}
