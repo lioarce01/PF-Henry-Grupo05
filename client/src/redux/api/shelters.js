@@ -70,24 +70,24 @@ export const sheltersApi = createApi({
         }),
 
         addFollowers: builder.mutation({
-            query: ({  userId, shelterId }) => {
+            query: ({ userId, shelterId }) => {
                 console.log("user: ", userId);
                 console.log("addfollow: ", shelterId);
                 return ({
                 url: `/shelters/follow`,
-                method: "post",
+                method: "put",
                 body: { userId, shelterId },
             })},
             invalidatesTags: ["Shelters", "ShelterId"]
         }),
 
         deleteFollowers: builder.mutation({
-            query: ({  userId, shelterId }) => {
+            query: ({ userId, shelterId }) => {
                 console.log("user: ", userId);
                 console.log("deleteFollow: ", shelterId);
                 return ({
                 url: `/shelters/unfollow`,
-                method: "delete", 
+                method: "put", 
                 body: { userId, shelterId },
             })},
             invalidatesTags: ["Shelters", "ShelterId"]
