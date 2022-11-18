@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   useLazyGetShelterByIdQuery,
   useUpdateShelterMutation,
@@ -23,6 +24,7 @@ const OngFormUpdate = ({
   const { id } = useParams();
   const [image, setImage] = useState(details?.profilePic);
   const [toggle, setToggle] = useState(true)
+  const { userDetail } = useSelector((state) => state.localStorage.userState);
 
   useEffect(() => {
     getShelterById(id);
@@ -131,12 +133,12 @@ const OngFormUpdate = ({
             </form>
           </div>
         </div>
-        <button
+        {userDetail.Shelter[0].id === id && <button
           className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
           onClick={() => setToggle(!toggle)}
         >
           Edit
-        </button>
+        </button>}
       </div>
       <div className="flex items-center justify-between row">
         <button

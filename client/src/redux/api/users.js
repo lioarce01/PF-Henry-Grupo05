@@ -45,6 +45,19 @@ export const usersApi = createApi({
             invalidatesTags: ["UserId"]
         }),
 
+        convertAdmin: builder.mutation({
+            query: ({ accessToken, userId, adminId, removeAdmin = false}) => {
+                return {
+                    url: `/users/admin`,
+                    method: "put",
+                    body: {userId, adminId, removeAdmin},
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    }
+                }},
+            invalidatesTags: ["UserId", "Users"]
+        }),
+
         deleteUser: builder.mutation({
             query: ({ accessToken, userId }) => {
                 return {
@@ -92,4 +105,5 @@ export const {
     useSetFollowMutation,
     useDisableUserMutation,
     useEnableUserMutation,
+    useConvertAdminMutation
 } = usersApi;

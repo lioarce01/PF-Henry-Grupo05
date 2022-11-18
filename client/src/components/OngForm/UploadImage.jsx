@@ -10,7 +10,7 @@ const UploadImage = ({ image, setImage }) => {
 	const resetImage = () => setImage(false)
 
 	return (
-		<div className="grid grid-cols-1 space-y-2">
+		<div className="flex flex-col items-center justify-center w-full">
 			<label className="text-xl font-bold text-[#000000] tracking-wide">
 				Upload image
 			</label>
@@ -22,9 +22,9 @@ const UploadImage = ({ image, setImage }) => {
 					reset
 				</button>
 			)}
-			<div className="flex items-center justify-center w-full">
+			<div className="flex items-center justify-center border-2  max-w-[700px] h-auto bg-red-500">
 				{image ? (
-					<img alt="uplouted" src={image} />
+					<img alt="uplouted" src={image} className="object-cover" />
 				) : (
 					<label
 						draggable="true"

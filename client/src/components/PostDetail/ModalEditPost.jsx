@@ -29,7 +29,7 @@ const ModalEditPost = ({ authorId, setToogle, postId, closeModal }) => {
   }
   return (
     <div className="w-full relative z-50 inline-block text-right outline-none">
-      {authorId === userDetail.id && (
+      {authorId === userDetail.id || userDetail.role === "Admin"  ? (
         <Menu
           as="div"
           className="relative z-50 inline-block text-left outline-none"
@@ -92,7 +92,7 @@ const ModalEditPost = ({ authorId, setToogle, postId, closeModal }) => {
             </Menu.Items>
           </Transition>
         </Menu>
-      )}
+      ) : null}
     </div>
   );
 };

@@ -40,21 +40,45 @@ type Req = {
          console.error(error.message)
      }
 }); */
+router.get("/all", async (req, res) => {
+    const user = await prisma.user.findMany({
+        include:{
+            posts: true,
+            Shelter: true,
+            Comment:true,
+            following:true
+        }
+    })
+})
 
-// get all users, or search them by name
+// get all users, or search them by name enables
 router.get("/", async (req: Req, res) => {
     try {
         const { name } = req.query;
-
+        const state : boolean= true
         const user = await prisma.user.findMany({
             where: { 
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
+                AND:{
+                    enable: true
+                }
             },
 
-            include: { posts: true,
+            include: { posts: {
+                        where:{
+                            enable: state
+                        },
+                        include:{
+                            Comment:{
+                                where:{
+                                    enable: state
+                                }
+                            }
+                        }
+                },
                 following: true,
              }
         });
@@ -69,11 +93,24 @@ router.get("/", async (req: Req, res) => {
 // get an user by its id
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
-
+    const state : boolean = true;
     try {
         const user = await prisma.user.findUnique({ 
             where: { id: id },
-            include: { following: true, posts: true }
+            include: { following: true, 
+                posts: {
+                    where:{
+                        enable: state
+                    },
+                    include:{
+                        Comment:{
+                            where:{
+                                enable: state
+                            }
+                        }
+                    }
+                } 
+            }
         });
 
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
@@ -145,6 +182,24 @@ router.put('/enable',  async(req, res)=>{
     }
    
 })
+router.put('/admin',jwtCheck,  async(req, res)=>{
+    try {
+        const {userId, adminId, removeAdmin = false} = req.body;
+        const admin = await prisma.user.findUnique({where: { id: adminId},});
+        if(!admin) return res.status(404).send('your username is not found')
+        if( admin?.role === 'User') return res.status(400).send("you are not admin")
+        const newAdmin = await prisma.user.update({
+            where: { id: userId },
+            data: { role: removeAdmin ? "User" : "Admin" },
+        });
+        res.status(200).send({message: `User ${newAdmin.name} is now ${removeAdmin ? "User" : "Admin"}`, payload: newAdmin})
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    } 
+})
+
+
 // logical disabled to users(Admin)
 router.put('/disable',  async(req, res)=>{
     try {

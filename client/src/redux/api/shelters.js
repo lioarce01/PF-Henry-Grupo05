@@ -49,13 +49,13 @@ export const sheltersApi = createApi({
         }),
 
         updateShelter: builder.mutation({
-            query: ({ accessToken, updatedShelter, id }) => ({
+            query: ({ updatedShelter, id }) => ({
                 url: `/shelters/${id}`,
                 method: "put",
                 body: updatedShelter,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
+                // headers: {
+                //     Authorization: `Bearer ${accessToken}`,
+                // }
             }),
             invalidatesTags: ["ShelterId"]
         }),
@@ -72,24 +72,24 @@ export const sheltersApi = createApi({
         }),
 
         addFollowers: builder.mutation({
-            query: ({  userId, shelterId }) => {
+            query: ({ userId, shelterId }) => {
                 console.log("user: ", userId);
                 console.log("addfollow: ", shelterId);
                 return ({
                 url: `/shelters/follow`,
-                method: "post",
+                method: "put",
                 body: { userId, shelterId },
             })},
             invalidatesTags: ["Shelters", "ShelterId"]
         }),
 
         deleteFollowers: builder.mutation({
-            query: ({  userId, shelterId }) => {
+            query: ({ userId, shelterId }) => {
                 console.log("user: ", userId);
                 console.log("deleteFollow: ", shelterId);
                 return ({
                 url: `/shelters/unfollow`,
-                method: "delete", 
+                method: "put", 
                 body: { userId, shelterId },
             })},
             invalidatesTags: ["Shelters", "ShelterId"]

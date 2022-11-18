@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { setUserAction } from "./redux/slices/manageUsers/actions";
 import { useDispatch } from "react-redux";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const { user, isAuthenticated } = useAuth0()
@@ -50,7 +51,10 @@ function App() {
         <Route path="/mp" element={<MercadoPago />} />
         <Route path= "/:id/profile" element={<OngDetail/>}/>
         <Route exact path='/users/:userId' element={<UserProfile/>}/>
-        <Route exact path='/admin' element={<AdminDashboard/>}/>
+        <Route exact path='/admin' element={
+        <ProtectedRoute>
+          <AdminDashboard isAuth={isAuthenticated}/>
+        </ProtectedRoute>}/>
       </Routes>
     </div>
   );
