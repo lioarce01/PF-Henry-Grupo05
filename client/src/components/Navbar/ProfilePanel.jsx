@@ -64,9 +64,9 @@ const ProfilePanel = () => {
 										</Link>
 									)}
 								</Menu.Item>
-								<Menu.Item>
-									{({ active }) =>
-										userDetail?.role === "Admin" && (
+								{userDetail?.role === "Admin" && (
+									<Menu.Item as={AdminButton}>
+										{({ active }) => (
 											<Link
 												to={`/admin`}
 												className={classNames(
@@ -77,9 +77,9 @@ const ProfilePanel = () => {
 												)}>
 												Admin Dashboard
 											</Link>
-										)
-									}
-								</Menu.Item>
+										)}
+									</Menu.Item>
+								)}
 								<Menu.Item>
 									{({ active }) => (
 										<Link
