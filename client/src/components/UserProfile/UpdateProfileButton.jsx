@@ -2,11 +2,11 @@ import React from 'react'
 import { useSelector } from "react-redux"
 import { BsGearWideConnected } from 'react-icons/bs';
 
-function UpdateProfileButton({userId, setIsOpen}) {
+function UpdateProfileButton({userId, setEditMode, editMode}) {
 
     const {userDetail, isAuth} = useSelector(state => state.localStorage.userState);
     const manageClick = () => {
-        setIsOpen(true)
+        editMode ? setEditMode(false) : setEditMode(true);
     }
 
     if (isAuth && userDetail.id === userId) {
