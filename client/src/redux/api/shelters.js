@@ -9,7 +9,7 @@ export const sheltersApi = createApi({
 
     endpoints: (builder) => ({
         getShelters: builder.query({
-            query: (shelterName) => `/shelters?name=${shelterName}`,
+            query: ({ name = null, enabled = null }) => `/shelters?name=${name}&?status=${enabled}`,
             providesTags: ["Shelters"]
         }),
 
@@ -24,10 +24,10 @@ export const sheltersApi = createApi({
         }),
 
         sortShelters: builder.mutation({
-            query: ({ order, orderType, group, groupType }) => ({
+            query: ({ order, orderType, filter, name }) => ({
                 url: "/shelters/filter-sort",
                 method: "post",
-                body: { order, orderType, group, groupType }
+                body: { order, orderType, filter, name }
             }),
             invalidatesTags: ["Shelters"]
         }),
@@ -47,13 +47,13 @@ export const sheltersApi = createApi({
         }),
 
         updateShelter: builder.mutation({
-            query: ({ accessToken, updatedShelter, id }) => ({
+            query: ({ updatedShelter, id }) => ({
                 url: `/shelters/${id}`,
                 method: "put",
                 body: updatedShelter,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                }
+                // headers: {
+                //     Authorization: `Bearer ${accessToken}`,
+                // }
             }),
             invalidatesTags: ["ShelterId"]
         }),
@@ -70,28 +70,45 @@ export const sheltersApi = createApi({
         }),
 
         addFollowers: builder.mutation({
-            query: ({  userId, shelterId }) => {
+            query: ({ userId, shelterId }) => {
                 console.log("user: ", userId);
                 console.log("addfollow: ", shelterId);
                 return ({
                 url: `/shelters/follow`,
-                method: "post",
+                method: "put",
                 body: { userId, shelterId },
             })},
             invalidatesTags: ["Shelters", "ShelterId"]
         }),
 
         deleteFollowers: builder.mutation({
-            query: ({  userId, shelterId }) => {
+            query: ({ userId, shelterId }) => {
                 console.log("user: ", userId);
                 console.log("deleteFollow: ", shelterId);
                 return ({
                 url: `/shelters/unfollow`,
-                method: "delete", 
+                method: "put", 
                 body: { userId, shelterId },
             })},
             invalidatesTags: ["Shelters", "ShelterId"]
-        })
+        }),
+        disableShelter: builder.mutation({
+            query: ({ shelterId }) => ({
+                url: `/shelters/disable`,
+                method: "put",
+                body: { shelterId },
+            }),
+            invalidatesTags: ["Shelters", "ShelterId"]
+        }),
+
+        enableShelter: builder.mutation({
+            query: ({ shelterId }) => ({
+                url: `/shelters/enable`,
+                method: "put",
+                body: { shelterId },
+            }),
+            invalidatesTags: ["Shelters", "ShelterId"]
+        }),
     })
 })
 
@@ -106,5 +123,7 @@ export const {
     useUpdateShelterMutation,
     useDeleteShelterMutation,
     useAddFollowersMutation,
-    useDeleteFollowersMutation
+    useDeleteFollowersMutation,
+    useDisableShelterMutation,
+    useEnableShelterMutation,
 } = sheltersApi;

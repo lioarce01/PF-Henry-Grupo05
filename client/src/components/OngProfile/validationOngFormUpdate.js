@@ -5,7 +5,6 @@ export const ongSchema = yup.object().shape({
     name: yup.string().required('   Required Name'),
     description: yup.string().required('    Required Description'),
     website: yup.string().matches(re,'  Please enter a valid URL'),
-    animals: yup.string().required('Required Animals'),
     address: yup.string().required('    Required Address'),
     city: yup.string().required('   Required City'),
     country: yup.string().required('    Required Country'),

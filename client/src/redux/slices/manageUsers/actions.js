@@ -1,12 +1,5 @@
 import { setUser, logOutUser, addShelter, addLike, removeLike } from "./index";
 
-// export const sortSheltersAction = (order, orderType, group, groupType) => (dispatch) => {
-//   dispatch(sortShelters({ order, orderType, group, groupType }));
-// };
-
-// export const searchSheltersAction = (search) => (dispatch) => {
-//   dispatch(searchShelters(search));
-// };
 export const logOutUserAction = () => (dispatch) => {
   dispatch(logOutUser());
 }
@@ -19,10 +12,8 @@ export const addShelterAction= (shelter)=> (dispatch) =>{
   dispatch(addShelter(shelter));
 }
 export const addLikeAction= (postId)=> (dispatch) =>{
-  console.log(postId)
   dispatch(addLike(postId));
 }
 export const removeLikeAction= (postId)=> (dispatch) =>{
-  console.log(postId)
   dispatch(removeLike(postId));
 }

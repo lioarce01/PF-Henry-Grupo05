@@ -9,7 +9,7 @@ export const usersApi = createApi({
 
     endpoints: (builder) => ({
         getUsers: builder.query({
-            query: (user) => `/users?name=${user}`,
+            query: ({user, enable = null}) => `/users?name=${user}&?status=${enable}`,
             providesTags: ["Users"]
         }),
 
@@ -45,6 +45,19 @@ export const usersApi = createApi({
             invalidatesTags: ["UserId"]
         }),
 
+        convertAdmin: builder.mutation({
+            query: ({ accessToken, userId, adminId, removeAdmin = false}) => {
+                return {
+                    url: `/users/admin`,
+                    method: "put",
+                    body: {userId, adminId, removeAdmin},
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    }
+                }},
+            invalidatesTags: ["UserId", "Users"]
+        }),
+
         deleteUser: builder.mutation({
             query: ({ accessToken, userId }) => {
                 return {
@@ -55,6 +68,28 @@ export const usersApi = createApi({
                     }
                 }},
             invalidatesTags: ["UserId"]
+        }),
+
+        disableUser: builder.mutation({
+            query: ({ accessToken, userId }) => {
+                return {
+                    url: `/users/disable`,
+                    method: "put",
+                    body: { userId },
+                }
+            },
+            invalidatesTags: ["UserId", "Users"]
+        }),
+
+        enableUser: builder.mutation({
+            query: ({ accessToken, userId }) => {
+                return {
+                    url: `/users/enable`,
+                    method: "put",
+                    body: { userId },
+                }
+            },
+            invalidatesTags: ["UserId", "Users"]
         }),
     })
 })
@@ -67,5 +102,8 @@ export const {
     useCreateUserMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
-    useSetFollowMutation
+    useSetFollowMutation,
+    useDisableUserMutation,
+    useEnableUserMutation,
+    useConvertAdminMutation
 } = usersApi;

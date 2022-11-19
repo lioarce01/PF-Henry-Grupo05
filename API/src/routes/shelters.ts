@@ -6,28 +6,30 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 type ReqGet = { 
-    query: { 
-        name: string,
-        cant: number 
-    } 
+    query: { name: string, cant: number, status: boolean } 
 };
 
-// get all shelters or get some by name
+// get all shelters or get some by name enables
 router.get('/', async(req: ReqGet, res) => {
-    try {
-        const { name } = req.query;
+    const { status, name } = req.query
 
+    try {
         const shelters = await prisma.shelter.findMany({
-            orderBy: { "name": "asc" },
             where: { 
+                enable: status, 
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
             },
+            orderBy: { "name": "asc" },
             include: { 
                 followers: true, 
-                posts: true
+                posts: {
+                    where: {
+                        enable: status
+                    }
+                }
             }
         })
 
@@ -44,9 +46,13 @@ router.get('/', async(req: ReqGet, res) => {
 router.get('/topFive', async(req: ReqGet, res)=>{
     // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
     const cant = Math.floor(req.query.cant)
-
+    const state = true;
+    
     try {
         const shelters = await prisma.shelter.findMany({
+            where:{
+                enable: state
+            },
             take: cant ? cant : 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
@@ -61,26 +67,43 @@ router.get('/topFive', async(req: ReqGet, res)=>{
 });
 
 
-// order (or filter, in the future) by what is in this Type
+// interface used to define objects which contain
+// the type of filter the user wants to use
+interface allFilters {
+    animals: string,
+    country: string,
+    city: string
+}
+
+// type definition of body parameters
 type ReqSampling = { 
     body: { 
-        group: 'country' | 'city' | 'animals'
-        groupType: string
+        filter: allFilters 
         order: 'name' | 'budget' | 'followers',
         orderType: 'asc' | 'desc',
+        name: string
     } 
 };
 
 router.post('/filter-sort', async(req : ReqSampling, res) => {
     // here we are able to expand this further, adding
-    // more ordering criteria and even filters.
-    const { order, orderType, group, groupType } = req.body;
+    // more ordering criteria, filters and name search.
+    const { order, orderType, filter, name } = req.body;
+    const state : boolean = true;
 
     try {
-        if (order || group) { 
+        if (order || filter) { 
             
             const shelters = await prisma.shelter.findMany({
-                where: { [group]: groupType },
+                where: {
+                    animals: filter?.animals,
+                    country: filter?.country,
+                    city:    filter?.city,
+                    name: {
+                        contains: name || '',
+                        mode: 'insensitive'
+                    },
+                },
                 include: { followers: true },
                 orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
             })
@@ -102,15 +125,23 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
+        const state: boolean = true;
         const shelter = await prisma.shelter.findUnique({ 
             where: { id: id},
             include: { 
                 followers: true, 
                 author: true, 
                 posts: {
+                    where:{
+                        enable: state
+                    },
                     include: {
                         author: true,
-                        Comment: true
+                        Comment: {
+                            where:{
+                                enable: state
+                            }
+                        }
                     }
                 } 
             } 
@@ -122,6 +153,37 @@ router.get("/:id", async (req, res) => {
         console.log(error);
     }
 });
+
+// logical enabled to shelters(Admin)
+router.put("/enable", async (req, res) => {    
+    try {
+        const id = req.body.shelterId;
+        await prisma.shelter.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Shelter ${id} enabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+})
+
+// logical disabled to shelters(Admin)
+router.put("/disable", async (req, res) => {    
+    try {
+        const id = req.body.shelterId;
+        await prisma.shelter.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Shelter ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+})
+
 
 // create a shelter
 router.post("/", jwtCheck, async (req, res) => {
@@ -172,7 +234,7 @@ router.post("/", jwtCheck, async (req, res) => {
 
 //on click follow button in shelter profile page, add shelter to user's following list and add user to shelter's followers list 
 
-router.post("/follow", async (req, res) => {
+router.put("/follow", async (req, res) => {
     try {
         const { userId, shelterId } = req.body;
 
@@ -202,37 +264,9 @@ router.post("/follow", async (req, res) => {
         console.log(error);
     }
 })
-// logical enabled to shelters(Admin)
-router.put("/enable", async (req, res) => {    
-    try {
-        const id = req.body.shelterId;
-        await prisma.shelter.update({
-            where: { id: id },
-            data: { enable: true },
-        });
-        res.status(200).send(`Shelter ${id} enabled successfully`)
-    } catch (error) {
-        res.status(400).send("ERROR: There was an unexpected error.")
-        console.log(error)
-    }
-})
-// logical disabled to shelters(Admin)
-router.put("/disable", async (req, res) => {    
-    try {
-        const id = req.body.shelterId;
-        await prisma.shelter.update({
-            where: { id: id },
-            data: { enable: false },
-        });
-        res.status(200).send(`Shelter ${id} disabled successfully`)
-    } catch (error) {
-        res.status(400).send("ERROR: There was an unexpected error.")
-        console.log(error)
-    }
-})
 
 
-router.delete("/unfollow", async (req, res) => {
+router.put("/unfollow", async (req, res) => {
     try {
         const { userId, shelterId } = req.body;
 
@@ -264,8 +298,8 @@ router.delete("/unfollow", async (req, res) => {
 })
 
 
-// update a shelter
-router.put("/:id", jwtCheck, async (req, res) => {
+// update a shelter ALERTA saque jwtCheck
+router.put("/:id",  async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -278,7 +312,9 @@ router.put("/:id", jwtCheck, async (req, res) => {
             address: string,
             website: string,
             budget: number,
-            goal: number
+            goal: number,
+            lat: number,
+            lon: number
         }
 
         const bodyShelter: updateInterface = req.body;
@@ -294,7 +330,9 @@ router.put("/:id", jwtCheck, async (req, res) => {
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
+                goal: bodyShelter.goal,
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon
             },
         })
 

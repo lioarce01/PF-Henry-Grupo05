@@ -10,21 +10,21 @@ const UploadImage = ({ image, setImage }) => {
 	const resetImage = () => setImage(false)
 
 	return (
-		<div className="grid grid-cols-1 space-y-2">
-			<label className="text-xl font-bold text-[#000000] tracking-wide">
+		<div className="flex flex-col items-center justify-center w-full">
+			<label className="text-xl font-bold text-[#000000] tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500">
 				Upload image
 			</label>
 			{image && (
 				<button
 					type="button"
 					onClick={resetImage}
-					className="text-blue-400 w-fit px-2  mx-auto border border-[#FAF2E7] rounded-xl hover:border-blue-100">
+					className="text-black w-fit px-2  mx-auto border border-[#e6b1ae] rounded-xl hover:border-black">
 					reset
 				</button>
 			)}
-			<div className="flex items-center justify-center w-full">
+			<div className="flex items-center justify-center border-2  max-w-[700px] h-auto bg-[#e6b1ae]">
 				{image ? (
-					<img alt="uplouted" src={image} />
+					<img alt="uplouted" src={image} className="object-cover" />
 				) : (
 					<label
 						draggable="true"
@@ -37,8 +37,8 @@ const UploadImage = ({ image, setImage }) => {
 									alt="freepik"
 								/>
 							</div>
-							<div className="text-gray-500 pointer-none ">
-								<p className="text-[#462312] font-bold">select a file</p> from
+							<div className="text-black pointer-none ">
+								<p className="text-[#080706] font-bold">select a file</p> from
 								your computer
 							</div>
 						</div>

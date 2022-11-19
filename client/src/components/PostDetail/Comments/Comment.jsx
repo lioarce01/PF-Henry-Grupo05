@@ -53,10 +53,12 @@ const Comment = ({ content, author, id }) => {
                       {author.name}
                     </Link>
                   </h2>
-                  <small className="text-sm text-gray-700">{author.role}</small>
+                  <small className={`w-fit px-2 py-0.5 text-sm text-white font-semibold rounded-md bg-gray-400 ${author.role === "Admin" && "bg-yellow-500"} `}>
+                {author.role}
+              </small>
                 </div>
                 <div className="">
-                  {author.id === userDetail.id && (
+                  {author.id === userDetail.id || userDetail.role === "Admin" ? (
                     <Menu as="div" className="relative z-50 outline-none">
                       <div className="flex items-center justify-center">
                         <Menu.Button className="inline-flex justify-center w-fit text-sm font-medium text-gray-700">
@@ -121,7 +123,7 @@ const Comment = ({ content, author, id }) => {
                         </Menu.Items>
                       </Transition>
                     </Menu>
-                  )}
+                  ) : null}
                 </div>
               </div>
               <input onChange={handleChange} disabled={toggle}  className={`text-sm w-full text-left text-gray-700 bg-white ${!toggle && "border border-gray-300"}`} type="text" value={commentContent}/>

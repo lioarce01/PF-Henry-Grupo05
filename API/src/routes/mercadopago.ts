@@ -37,7 +37,7 @@ router.post("/", jwtCheck, async (req,res) => {
     }
 
     mercadopago.preferences.create(preference).then((response) => {
-        res.status(200).send(response.body.init_point)
+        res.status(200).send({message: response.body.init_point})
     })
 })
 

@@ -5,8 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import Spinner from '../Spinner/Spinner'
 import Swal from "sweetalert2"
+import { useLazyVerifyPaymentQuery } from '../../redux/api/mercadopago'
 
 const MercadoPago = () => {
+
+    const [verify] = useLazyVerifyPaymentQuery()
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -15,11 +18,13 @@ const MercadoPago = () => {
         const query = new URLSearchParams(window.location.search);
         let payment_id = query.get("payment_id")
         setTimeout(() => {
-            axios.get(`/mp/feedback?payment_id=${payment_id}`).then((res) => {
-                res.status === 200 ? Swal.fire(res.data, undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
-            }).catch(() => Swal.fire({icon: 'error', title: "Failed payment"}))
-            navigate("/home")
-        }, 4500)
+          verify({payment_id}).unwrap().then((res) => {
+            res.originalStatus === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
+          }).catch((res) => {
+            res.originalStatus === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
+          })
+          navigate("/home")
+        }, 2500)
     }, [])
 
   return (
