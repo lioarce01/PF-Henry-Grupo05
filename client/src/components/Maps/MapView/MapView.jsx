@@ -81,7 +81,7 @@ function LocationMarker ({center, name}) {
 					center={position}
 					zoom={14}
 					scrollWheelZoom={false}
-					className="w-full h-full">
+					className="w-full h-full relative z-0">
 					<TileLayer
 						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -107,7 +107,7 @@ function LocationMarker ({center, name}) {
 					center={center}
 					zoom={14}
 					scrollWheelZoom={false}
-					className="w-full h-full">
+					className="w-full h-full relative z-0">
 					<TileLayer
 						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
