@@ -25,40 +25,40 @@ function Description({ details, id}) {
         });
 
   return (
-    <div className="w-full border-4 border-[#462312] rounded-lg p-4">
-    <textarea
-      className="w-full resize-none h-60 text-[#462312] font-semibold text-lg"
-      type="text"
-      name="description"
-      onChange={inputHandler}
-      defaultValue={details?.description}
-      disabled={toggle}
-      value={input.description}
-      rows="1"
-      cols="1"
-    />
-    <div className="flex flex-row-reverse justify-between w-full">
-      <div>
-        { details.author.id === userDetail?.id && <button
-          className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-          onClick={() => setToggle(!toggle)}
-        >
-          Edit
-        </button>}
-      </div>
-      <div>
-        {!toggle && (
-          <button
-            className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-            onClick={saveHandler}
-          >
-            Save
-          </button>
-        )}
-      </div>
-    </div>
-  </div>
-  )
+		<div className="w-[600px] mb-4 p-4 mt-4 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl">
+			<textarea
+				className="w-full text-lg font-semibold text-black bg-white resize-none h-60"
+				type="text"
+				name="description"
+				onChange={inputHandler}
+				defaultValue={details?.description}
+				disabled={toggle}
+				value={input.description}
+				rows="1"
+				cols="1"
+			/>
+			<div className="flex flex-row-reverse justify-between w-full">
+				<div>
+					{details.author.id === userDetail?.id && (
+						<button
+							className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+							onClick={() => setToggle(!toggle)}>
+							Edit
+						</button>
+					)}
+				</div>
+				<div>
+					{!toggle && (
+						<button
+							className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+							onClick={saveHandler}>
+							Save
+						</button>
+					)}
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default Description

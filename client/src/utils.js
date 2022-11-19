@@ -20,7 +20,7 @@ export const getTimeAgo = (date) => {
     return `${Math.floor(diffInMinutes)}m`;
   } else if (seconds > 1) {
     return `${Math.floor(seconds)}s`;
-  }
+  } 
   return "Now";
 };
 
@@ -39,4 +39,3 @@ export const uploadImage = async (preset, file) => {
   }
   
 };
-

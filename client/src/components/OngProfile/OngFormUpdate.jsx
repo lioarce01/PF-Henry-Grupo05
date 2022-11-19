@@ -56,137 +56,131 @@ const OngFormUpdate = ({
   });
 
   return (
-    <div className="fixed left-10 flex flex-col items-center ml-5 border w-fit h-fit p-2 border-4 border-[#462312] rounded-lg ">
-      <div className="border w-80 h-fit border-red-50">
-        <div className="w-contain">
-          <div>
-            <UploadImage image={image} setImage={setImage} toggle={toggle} />
-          </div>
-          <div>
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col text-[#462312] font-semibold text-lg">
-                <p>{shelter?.enable ? "Enabled" : "Disabled"}</p>
-                <input
-                  className="my-2"
-                  defaultValue={name}
-                  type="text"
-                  name="name"
-                  onChange={handleChange}
-                  value={values.name}
-                  disabled={toggle}
-                />
-                {errors.name && <p className="text-red-500"> {errors.name}</p>}
+		<div className="flex mt-20 bg-white flex-col shadow-[rgba(255,213,201)] shadow-xl items-center p-2 rounded-2xl">
+			<div className="p-2 w-80 h-fit">
+				<div className="w-contain">
+					<div>
+						<UploadImage image={image} setImage={setImage} toggle={toggle} />
+					</div>
+					<div>
+						<form onSubmit={handleSubmit}>
+							<div className="flex flex-col text-lg font-semibold text-black">
+								<input
+									className="my-2 bg-white"
+									defaultValue={name}
+									type="text"
+									name="name"
+									onChange={handleChange}
+									value={values.name}
+									disabled={toggle}
+								/>
+								{errors.name && <p className="text-red-500"> {errors.name}</p>}
 
-                <input
-                  className="my-2"
-                  defaultValue={country}
-                  type="text"
-                  name="country"
-                  onChange={handleChange}
-                  value={values.country}
-                  disabled={toggle}
-                />
-                {errors.country && (
-                  <p className="text-red-500"> {errors.country}</p>
-                )}
+								<input
+									className="my-2 bg-white"
+									defaultValue={country}
+									type="text"
+									name="country"
+									onChange={handleChange}
+									value={values.country}
+									disabled={toggle}
+								/>
+								{errors.country && (
+									<p className="text-red-500"> {errors.country}</p>
+								)}
 
-                <input
-                  className="my-2"
-                  defaultValue={city}
-                  type="text"
-                  name="city"
-                  onChange={handleChange}
-                  value={values.city}
-                  disabled={toggle}
-                />
-                {errors.city && <p className="text-red-500"> {errors.city}</p>}
+								<input
+									className="my-2 bg-white"
+									defaultValue={city}
+									type="text"
+									name="city"
+									onChange={handleChange}
+									value={values.city}
+									disabled={toggle}
+								/>
+								{errors.city && <p className="text-red-500"> {errors.city}</p>}
 
-                <input
-                  className="my-2"
-                  defaultValue={address}
-                  type="text"
-                  name="address"
-                  onChange={handleChange}
-                  value={values.address}
-                  disabled={toggle}
-                />
-                {errors.address && (
-                  <p className="text-red-500"> {errors.address}</p>
-                )}
+								<input
+									className="my-2 bg-white"
+									defaultValue={address}
+									type="text"
+									name="address"
+									onChange={handleChange}
+									value={values.address}
+									disabled={toggle}
+								/>
+								{errors.address && (
+									<p className="text-red-500"> {errors.address}</p>
+								)}
 
-                <input
-                  className="my-2"
-                  defaultValue={website}
-                  type="text"
-                  name="website"
-                  onChange={handleChange}
-                  value={values.website}
-                  disabled={toggle}
-                />
-                {errors.website && (
-                  <p className="text-red-500"> {errors.website}</p>
-                )}
-                <div className="flex w-full justify-end">
-                  <div>
-                    {!toggle && Object.entries(errors).length === 0 && (
-                      <button
-                        type="submit"
-                        className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-                      >
-                        Save
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        {shelter.author.id === userDetail?.id && (
-          <button
-            className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
-            onClick={() => setToggle(!toggle)}
-          >
-            Edit
-          </button>
-        )}
-      </div>
-      <div className="flex items-center justify-between row">
-        <button
-          className="bg-transparent  hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
-          onClick={() => setIsOpenDonate(true)}
-        >
-          Donate
-        </button>
+								<input
+									className="my-2 bg-white"
+									defaultValue={website}
+									type="text"
+									name="website"
+									onChange={handleChange}
+									value={values.website}
+									disabled={toggle}
+								/>
+								{errors.website && (
+									<p className="text-red-500"> {errors.website}</p>
+								)}
+								<div className="flex justify-end w-full">
+									<div>
+										{!toggle && Object.entries(errors).length === 0 && (
+											<button
+												type="submit"
+												className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto">
+												Save
+											</button>
+										)}
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				{shelter.author.id === userDetail?.id && (
+					<button
+						className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+						onClick={() => setToggle(!toggle)}>
+						Edit
+					</button>
+				)}
+			</div>
+			<div className="flex items-center justify-between row">
+				<button
+					className="bg-transparent  hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
+					onClick={() => setIsOpenDonate(true)}>
+					Donate
+				</button>
 
-        {userDetail.role === "Admin" || shelter.author.id === userDetail.id ? (
-          <>
-            {shelter.enable ? (
-              <button
-                onClick={() => disableShelter({ shelterId: id })}
-                className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border"
-              >
-                Disable
-                <span className="pl-2">
-                  <MdDomainDisabled />
-                </span>
-              </button>
-            ) : (
-              <button
-                onClick={() => enableShelter({ shelterId: id })}
-                className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center"
-              >
-                Enable
-                <span className="pl-2">
-                  <MdOutlineDomain />
-                </span>
-              </button>
-            )}
-          </>
-        ) : null}
-      </div>
-    </div>
-  );
+				{userDetail.role === "Admin" || shelter.author.id === userDetail.id ? (
+					<>
+						{shelter.enable ? (
+							<button
+								onClick={() => disableShelter({ shelterId: id })}
+								className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border">
+								Disable
+								<span className="pl-2">
+									<MdDomainDisabled />
+								</span>
+							</button>
+						) : (
+							<button
+								onClick={() => enableShelter({ shelterId: id })}
+								className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center">
+								Enable
+								<span className="pl-2">
+									<MdOutlineDomain />
+								</span>
+							</button>
+						)}
+					</>
+				) : null}
+			</div>
+		</div>
+	)
 };
 
 export default OngFormUpdate;

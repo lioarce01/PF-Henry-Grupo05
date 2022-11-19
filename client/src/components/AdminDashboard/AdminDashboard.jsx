@@ -22,24 +22,23 @@ const AdminDashboard = () => {
   const [user, setUser] = useState("");
   const [shelter, setShelter] = useState({name: "", enable: true});
   const { data: users, userLoading } = useGetUsersQuery({user, enable: true});
-  const { data: shelters, shelterLoading } = useGetSheltersQuery(shelter);
-  const [disableShelter] = useDisableShelterMutation();
-  const [enableShelter] = useEnableShelterMutation();
-  const [disableUser] = useDisableUserMutation();
-  const [enableUser] = useEnableUserMutation();
-  const [convertAdmin, { data }] = useConvertAdminMutation();
-  const { userDetail } = useSelector(selectUser);
+  const { data: shelters, shelterLoading } = useGetSheltersQuery(shelter)
+	const [disableShelter] = useDisableShelterMutation()
+	const [enableShelter] = useEnableShelterMutation()
+	const [disableUser] = useDisableUserMutation()
+	const [enableUser] = useEnableUserMutation()
+	const [convertAdmin, { data }] = useConvertAdminMutation()
+	const { userDetail } = useSelector(selectUser)
 
+	const handleUserInput = (e) => {
+		e.preventDefault()
+		setUser(e.target.value)
+	}
 
-  const handleUserInput = (e) => {
-    e.preventDefault();
-    setUser(e.target.value);
-  };
-
-  const handleShelterInput = (e) => {
-    e.preventDefault();
-    setShelter(e.target.value);
-  };
+	const handleShelterInput = (e) => {
+		e.preventDefault()
+		setShelter(e.target.value)
+	}
 
   const disableUserHandler = (id) => {
     disableUser({ userId: id });
