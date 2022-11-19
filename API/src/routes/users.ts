@@ -134,12 +134,12 @@ router.post("/", async (req: Req, res) => {
     }
 });
 
-// logical enabled to users(Admin)
+// logical enabled to users (Admin)
 router.put('/enable',  async(req, res)=>{
     try {
         const id = req.body.userId;
         await prisma.user.update({
-            where: { id: id },
+            where: { id },
             data: { enable: true },
         });
         res.status(200).send(`User ${id} enabled successfully`)
@@ -149,17 +149,23 @@ router.put('/enable',  async(req, res)=>{
     }
    
 })
-router.put('/admin',jwtCheck,  async(req, res)=>{
+
+router.put('/admin', jwtCheck, async(req, res)=>{
     try {
-        const {userId, adminId, removeAdmin = false} = req.body;
-        const admin = await prisma.user.findUnique({where: { id: adminId},});
-        if(!admin) return res.status(404).send('your username is not found')
-        if( admin?.role === 'User') return res.status(400).send("you are not admin")
+        const { userId, adminId, removeAdmin = false } = req.body;
+        const admin = await prisma.user.findUnique({
+            where: { id: adminId }
+        });
+
+        if(! admin) res.status(404).send('Username is not found.')
+        if(admin?.role === 'User') res.status(400).send("Require admin permissions.")
+
         const newAdmin = await prisma.user.update({
             where: { id: userId },
             data: { role: removeAdmin ? "User" : "Admin" },
         });
-        res.status(200).send({message: `User ${newAdmin.name} is now ${removeAdmin ? "User" : "Admin"}`, payload: newAdmin})
+
+        res.status(200).send({ message: `User ${newAdmin.name} is now ${removeAdmin ? "User" : "Admin"}`, payload: newAdmin })
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.")
         console.log(error)
@@ -167,14 +173,16 @@ router.put('/admin',jwtCheck,  async(req, res)=>{
 })
 
 
-// logical disabled to users(Admin)
-router.put('/disable',  async(req, res)=>{
+// logical disabled to users (Admin)
+router.put('/disable', async(req, res) => {
     try {
         const id = req.body.userId;
+
         await prisma.user.update({
-            where: { id: id },
+            where: { id },
             data: { enable: false },
         });
+
         res.status(200).send(`User ${id} disabled successfully`)
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.")
@@ -182,6 +190,7 @@ router.put('/disable',  async(req, res)=>{
     }
    
 })
+
 // update an user
 router.put("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
@@ -204,17 +213,14 @@ router.put("/:id", jwtCheck, async (req, res) => {
     }
 });
 
-
 // delete an user
 router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const deletedUser = await prisma.user.delete({
-            where: { id },
-        });
+        const userDelete = await prisma.user.delete({ where: { id } })
 
-        deletedUser ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.");
+        userDelete ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.")
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
