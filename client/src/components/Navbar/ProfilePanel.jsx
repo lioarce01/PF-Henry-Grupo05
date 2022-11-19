@@ -1,6 +1,7 @@
 import React from "react"
 import LogoutButton from "./LogoutButton"
 import LoginButton from "./LoginButton"
+import AdminButton from "./AdminButton"
 import { Fragment } from "react"
 import { Menu, Transition } from "@headlessui/react"
 import { AiOutlineDown } from "react-icons/ai"
@@ -64,6 +65,22 @@ const ProfilePanel = () => {
 									)}
 								</Menu.Item>
 								<Menu.Item>
+									{({ active }) =>
+										userDetail?.role === "Admin" && (
+											<Link
+												to={`/admin`}
+												className={classNames(
+													active
+														? "bg-slate-100 text-gray-900"
+														: "text-gray-700",
+													"block px-4 py-2 text-sm"
+												)}>
+												Admin Dashboard
+											</Link>
+										)
+									}
+								</Menu.Item>
+								<Menu.Item>
 									{({ active }) => (
 										<Link
 											to={`/createOng`}
@@ -85,7 +102,7 @@ const ProfilePanel = () => {
 					</Transition>
 				</Menu>
 			) : (
-				<div className="mt-[35px] mr-[-20px]">
+				<div>
 					<LoginButton />
 				</div>
 			)}
