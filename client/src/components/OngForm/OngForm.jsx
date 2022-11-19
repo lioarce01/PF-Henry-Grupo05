@@ -14,7 +14,6 @@ import Swal from "sweetalert2"
 const OngForm = () => {
 	const [createShelter, { data1, isLoading, error }] = useAddShelterMutation();
 	const user = useSelector(state=> state.localStorage.userState)
-	console.log(user)
 	const [image, setImage] = useState("")
 	const navigate = useNavigate()
 	const { getAccessTokenSilently, loginWithPopup } = useAuth0()
@@ -45,7 +44,7 @@ const OngForm = () => {
 			dispatch(addShelterAction(newShelterCreated));
 			Swal.fire({icon:'success', title: 'Shelter Created'})
 			navigate("/home")
-		}
+		} 
 	}
 
 	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
