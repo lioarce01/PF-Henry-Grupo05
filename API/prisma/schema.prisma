@@ -38,7 +38,7 @@ model Shelter {
   enable        Boolean  @default(true) @map("enable")
   address       String?  @map("address")
   website       String?  @map("website")
-  author        User     @relation(fields: [authorId], references: [id])
+  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId      String   @db.ObjectId 
   budget        Int?     @default(0) @map("budget")
   goal          Int?     @map("goal")
@@ -49,7 +49,7 @@ model Shelter {
 
 model Post {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  author    User?     @relation(fields: [authorId], references: [id])
+  author    User?     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String?   @db.ObjectId
   content   String    @map("content")
   image     String?   @map("image")
@@ -66,7 +66,7 @@ model Comment {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   content  String  @map("content")
   enable   Boolean   @default(true) @map("enable")
-  author   User    @relation(fields: [authorId], references: [id])
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String  @db.ObjectId
   post     Post?   @relation(fields: [postId], references: [id])
   postId   String?

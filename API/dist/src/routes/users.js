@@ -198,12 +198,8 @@ router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, 
 router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const userDelete = prisma.user.delete({ where: { id } });
-        const postDelete = prisma.post.deleteMany({ where: { authorId: id } });
-        const shelterDelete = prisma.shelter.deleteMany({ where: { authorId: id } });
-        const commentDelete = prisma.comment.deleteMany({ where: { authorId: id } });
-        prisma.$transaction([commentDelete, postDelete, shelterDelete, userDelete]);
-        res.status(200).send("User deleted successfully.");
+        const userDelete = yield prisma.user.delete({ where: { id } });
+        userDelete ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.");
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
