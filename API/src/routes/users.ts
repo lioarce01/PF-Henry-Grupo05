@@ -218,14 +218,9 @@ router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const userDelete = prisma.user.delete({ where: { id } })
-        const postDelete = prisma.post.deleteMany({ where: { authorId: id } })
-        const shelterDelete = prisma.shelter.deleteMany({ where: { authorId: id } })
-        const commentDelete = prisma.comment.deleteMany({ where: { authorId: id } })
+        const userDelete = await prisma.user.delete({ where: { id } })
 
-        prisma.$transaction([commentDelete, postDelete, shelterDelete, userDelete])
-
-        res.status(200).send("User deleted successfully.")
+        userDelete ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.")
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
