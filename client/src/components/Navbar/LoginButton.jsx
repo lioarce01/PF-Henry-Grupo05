@@ -5,8 +5,10 @@ const LoginButton = () => {
 	const { loginWithPopup } = useAuth0()
 	
 	return (
-		<div>
-			<button onClick={loginWithPopup} className="text-[#201008] border border-[#201008] w-[75px] h-[30px] rounded-[20px] font-bold hover:bg-[#201008] hover:text-white">Log In</button>
+		<div className="items-center px-4 py-2 mr-4 text-white bg-[#d6635f] rounded-2xl hover:bg-[#e76b67] transition duration-300">
+			<button onClick={loginWithPopup} className="px-2 font-bold">
+				Login
+			</button>
 		</div>
 	)
 }
