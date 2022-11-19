@@ -72,7 +72,7 @@ const Ongs = () => {
 						</div>
 					)}
 
-					<div className="pb-[130px]">
+					<div className="pb-[40px]">
 						<div className="mt-[40px] px-[20px]">
 							<h2 className="flex flex-col items-start font-mono tracking-tight font-bold text-[#201008]">
 								SUGGESTIONS

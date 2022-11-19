@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast'
 
 const Home = () => {
 	return (
-		<div className="w-full h-full bg-[#fff5f4] min-h-screen overflow-y-hidden">
+		<div className="w-full  bg-[#fff5f4] min-h-screen overflow-y-hidden">
 			<Toaster />
 			<Navbar />
 			<div className="flex flex-row justify-between pt-14">
