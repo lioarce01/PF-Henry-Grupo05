@@ -10,7 +10,7 @@ const prisma = new PrismaClient()
 
 const router = express.Router();
 
-router.post("/", async (req,res) => {
+router.post("/", jwtCheck, async (req,res) => {
 
     let {shelter, donation, id, email} = req.body
 
@@ -37,7 +37,7 @@ router.post("/", async (req,res) => {
     }
 
     mercadopago.preferences.create(preference).then((response) => {
-        res.status(200).send(response.body.init_point)
+        res.status(200).send({message: response.body.init_point})
     })
 })
 

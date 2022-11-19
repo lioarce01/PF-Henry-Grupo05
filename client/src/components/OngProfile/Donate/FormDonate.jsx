@@ -1,11 +1,16 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai';
+import { useCheckoutMutation } from '../../../redux/api/mercadopago';
 import Spinner from '../../Spinner/Spinner';
+import { useAuth0 } from "@auth0/auth0-react"
 
 const FormDonate = ({ closeModal, name, id }) => {
 
-    const [input, setInput] = useState({donation: 0, shelter: name, id})
+    const [checkout, {data, isSuccess}] = useCheckoutMutation()
+    const {getAccessTokenSilently, user} = useAuth0()
+
+    const [input, setInput] = useState({donation: 0, shelter: name, id, email: user.email})
     const [image, setImage] = useState(false);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
@@ -34,9 +39,13 @@ const FormDonate = ({ closeModal, name, id }) => {
         if (input.donation < 50) return setErrorAmount(true)
         if (input.donation >= 50) setErrorAmount(false)
         setLoading(true)
-        let {data} = await axios.post("/mp", input)
-        window.location.assign(data)
+        let accessToken = await getAccessTokenSilently()
+        checkout({...input, accessToken})
     }
+
+    useEffect(() => {
+      if (isSuccess) window.location.assign(data.message)
+    }, [data])
 
   return (
     <div className="">

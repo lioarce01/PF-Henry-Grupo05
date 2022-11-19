@@ -4,15 +4,15 @@ import nodemailer from "nodemailer"
 export const sendMailCreate = (name: string, email: string) => {
     let res: Response
     let transporter = nodemailer.createTransport({
-        service: "hotmail",
+        service: "gmail",
         auth: {
-            user: "pawsfounding@hotmail.com",
+            user: "pawsfounding0@gmail.com",
             pass: process.env.NODEMAILER
         }
     })
 
     let mailOptions = {
-        from: "pawsfounding@hotmail.com",
+        from: "pawsfounding0@gmail.com",
         to: email,
         subject: "Paws Founding | Welcome",
         html: `<!DOCTYPE html>
@@ -283,15 +283,15 @@ export const sendMailCreate = (name: string, email: string) => {
 export const sendMailDonate = (email: string, shelter: string) => {
     let res: Response
     let transporter = nodemailer.createTransport({
-        service: "hotmail",
+        service: "gmail",
         auth: {
-            user: "pawsfounding@hotmail.com",
+            user: "pawsfounding0@gmail.com",
             pass: process.env.NODEMAILER
         }
     })
 
     let mailOptions = {
-        from: "pawsfounding@hotmail.com",
+        from: "pawsfounding0@gmail.com",
         to: email,
         subject: "Paws Founding | Donation",
         html: `<!DOCTYPE html>
