@@ -24,7 +24,7 @@ const Navbar = () => {
 	const closeModal = () => setIsOpen(false)
 
 	return (
-		<div className={`${location.pathname === "/home" ? "z-10 flex items-center justify-between w-full p-4 px-10 bg-none h-14 absolute" : "z-10 flex items-center justify-between w-full p-4 px-10 bg-none h-14 relative"}`}>
+		<div className={`${location.pathname === "/home" ? "fixed z-50 flex flex-row items-center w-full h-20 px-4 bg-none backdrop-blur-sm" : "relative z-50 flex flex-row items-center w-full h-20 px-4 bg-none backdrop-blur-sm"}`}>
 			<div className="flex flex-row justify-between w-full">
 				<div className="flex flex-row items-center">
 					<div className="flex flex-row items-center justify-center">
