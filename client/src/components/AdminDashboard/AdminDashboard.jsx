@@ -20,9 +20,9 @@ import toast, { Toaster } from "react-hot-toast";
 const AdminDashboard = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [user, setUser] = useState("");
-  const [shelter, setShelter] = useState({name: "", enable: true});
+  const [shelter, setShelter] = useState("");
   const { data: users, userLoading } = useGetUsersQuery({user, enable: true});
-  const { data: shelters, shelterLoading } = useGetSheltersQuery(shelter)
+  const { data: shelters, shelterLoading } = useGetSheltersQuery({name: shelter})
 	const [disableShelter] = useDisableShelterMutation()
 	const [enableShelter] = useEnableShelterMutation()
 	const [disableUser] = useDisableUserMutation()
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
               className="px-2 py-2 mr-2 rounded-md outline-none"
               placeholder="search a shelter"
               onChange={handleShelterInput}
-              value={shelter.name}
+              value={shelter}
             />
             <button className="px-2 py-1 transition duration-300 border-2 border-red-700 rounded-md hover:bg-red-700 hover:text-white">
               Search
