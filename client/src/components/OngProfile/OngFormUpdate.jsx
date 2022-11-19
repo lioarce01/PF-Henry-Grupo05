@@ -9,7 +9,7 @@ import {
 } from "../../redux/api/shelters";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { ongSchema } from "../OngForm/validationOngForm";
+import { ongSchema } from "./validationOngFormUpdate.js";
 import UploadImage from "./UploadImage";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { MdDomainDisabled, MdOutlineDomain } from "react-icons/md";
@@ -54,13 +54,21 @@ const OngFormUpdate = ({
     validationSchema: ongSchema,
     onSubmit,
   });
+  console.log(errors);
 
   return (
 		<div className="flex mt-20 bg-white flex-col shadow-[rgba(255,213,201)] shadow-xl items-center p-2 rounded-2xl">
 			<div className="p-2 w-80 h-fit">
 				<div className="w-contain">
 					<div>
-						<UploadImage image={image} setImage={setImage} toggle={toggle} />
+						{
+							!toggle ? <UploadImage image={image} setImage={setImage} toggle={toggle} /> : <img
+							className=""
+							src={details?.profilePic}
+							alt="avatar"
+						/>
+						}
+						
 					</div>
 					<div>
 						<form onSubmit={handleSubmit}>
