@@ -2,7 +2,6 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { jwtCheck } from '../jwtCheck'
 import { sendMailCreate } from "../middleware/nodemailer";
-import { cascadeDelete } from "prisma-cascade-delete";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -191,6 +190,7 @@ router.put('/disable', async(req, res) => {
     }
    
 })
+
 // update an user
 router.put("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
@@ -213,13 +213,17 @@ router.put("/:id", jwtCheck, async (req, res) => {
     }
 });
 
-
 // delete an user
 router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {
-        await cascadeDelete(prisma, "User", { id });
+        const userDelete = prisma.user.delete({ where: { id } })
+        const postDelete = prisma.post.deleteMany({ where: { authorId: id } })
+        const shelterDelete = prisma.shelter.deleteMany({ where: { authorId: id } })
+        const commentDelete = prisma.comment.deleteMany({ where: { authorId: id } })
+
+        prisma.$transaction([commentDelete, postDelete, shelterDelete, userDelete])
 
         res.status(200).send("User deleted successfully.")
     } catch (error) {

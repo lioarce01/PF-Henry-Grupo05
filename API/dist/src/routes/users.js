@@ -16,7 +16,6 @@ const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const jwtCheck_1 = require("../jwtCheck");
 const nodemailer_1 = require("../middleware/nodemailer");
-const prisma_cascade_delete_1 = require("prisma-cascade-delete");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 // get all users, or search them by name enables
@@ -199,7 +198,11 @@ router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, 
 router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        yield (0, prisma_cascade_delete_1.cascadeDelete)(prisma, "User", { id });
+        const userDelete = prisma.user.delete({ where: { id } });
+        const postDelete = prisma.post.deleteMany({ where: { authorId: id } });
+        const shelterDelete = prisma.shelter.deleteMany({ where: { authorId: id } });
+        const commentDelete = prisma.comment.deleteMany({ where: { authorId: id } });
+        prisma.$transaction([commentDelete, postDelete, shelterDelete, userDelete]);
         res.status(200).send("User deleted successfully.");
     }
     catch (error) {

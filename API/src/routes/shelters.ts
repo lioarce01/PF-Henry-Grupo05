@@ -89,7 +89,6 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
     // here we are able to expand this further, adding
     // more ordering criteria, filters and name search.
     const { order, orderType, filter, name } = req.body;
-    const state : boolean = true;
 
     try {
         if (order || filter) { 

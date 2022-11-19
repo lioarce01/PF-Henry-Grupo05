@@ -39,7 +39,7 @@ model Shelter {
   address       String?  @map("address")
   website       String?  @map("website")
   author        User     @relation(fields: [authorId], references: [id])
-  authorId      String   @db.ObjectId
+  authorId      String   @db.ObjectId 
   budget        Int?     @default(0) @map("budget")
   goal          Int?     @map("goal")
   userFollowers String[] @default([]) @db.ObjectId
