@@ -28,29 +28,26 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 	}
 	return (
 		<>
-			<div>
-				<h1 className="text-xl">Shelter stats</h1>
+			<div className="my-4">
+				<h1 className="text-xl font-bold">Shelter stats</h1>
 			</div>
-			<div className="border-2 border-black rounded-md w-[360px] my-2 p-2">
+			<div className="shadow-[rgb(255,213,201)] shadow-xl bg-white rounded-2xl w-[340px] py-2 px-4">
 				<div className="flex flex-col justify-between">
-					<div className="flex flex-col">
-						<p>
+					<div className="flex flex-col font-semibold">
+						<p className="pt-2">
 							Followers: <span>{details?.followers?.length}</span>
 						</p>
-						<p>
+						<p className="pt-2">
 							Posts: <span>{details?.posts?.length}</span>
 						</p>
-						<p>
-							Donations: <span>{details?.donations?.length}</span>
-						</p>
-						<p>
+						<p className="pt-2">
 							Budget: <span>{details?.budget}</span>
 						</p>
-						<p>
+						<p className="pt-2">
 							Goal: <span>{details?.goal}</span>
 						</p>
 					</div>
-					<div>
+					<div className="flex justify-center w-full">
 						{userDetails?.following?.find(
 							(shelter) => shelter.id === shelterId
 						) ? (

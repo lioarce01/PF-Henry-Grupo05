@@ -30,59 +30,72 @@ const OngDetail = () => {
   },[isOpen])
 
   return (
-    <div>
-      {!isLoading ? (
-        <div className="w-full min-h-screen h-fit bg-[#FAF2E7]">
-          <NavBar />
-          <div className="flex flex-row justify-end w-full h-full pt-20 ">
-            {details?.description?.length > 0 && (
-              <OngFormUpdate
-                name={details?.name}
-                country={details?.country}
-                city={details?.city}
-                address={details?.address}
-                website={details?.website}
-                description={details?.description}
-                setIsOpenDonate={setIsOpenDonate}
-				shelter={details}
-              />
-            )}
-            <div>
-              <ShelterStats
-                shelterId={id}
-                details={details}
-                userDetail={userDetail}
-                shelterRefetch={shelterRefetch}
-              />
+		<div className="w-full bg-[#fff5f4]">
+			<NavBar />
+			{isLoading ? (
+				<Spinner />
+			) : (
+				<div className="flex flex-col items-center w-full lg:flex-row">
+					<div className="flex flex-col items-center w-full mt-20">
+						{details?.description?.length > 0 && (
+							<OngFormUpdate
+								name={details?.name}
+								country={details?.country}
+								city={details?.city}
+								address={details?.address}
+								website={details?.website}
+								description={details?.description}
+								setIsOpenDonate={setIsOpenDonate}
+								shelter={details}
+							/>
+						)}
+						<ShelterStats
+							shelterId={id}
+							details={details}
+							userDetail={userDetail}
+							shelterRefetch={shelterRefetch}
+						/>
+					</div>
+					<div className="flex flex-col items-center w-full mt-16">
+						<div className="flex flex-col mb-4">
+							<Description id={id} details={details} />
+							<MapView
+								name={details?.name}
+								lat={details?.lat}
+								lon={details?.lon}
+								id={id}
+								shelter={details}
+							/>
+							<div className="overflow-y-scroll h-[50rem] mt-10">
+								<Posts setIsOpen={setIsOpen} details={details} />
+							</div>
+						</div>
+					</div>
+					<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
-              <div className="flex flex-col items-center mr-16">
-                <Description id={id} details={details} />
-                <MapView
-                  name={details?.name}
-                  lat={details?.lat}
-                  lon={details?.lon}
-                  id={id}
-				  shelter={details}
-                />
-                <Posts setIsOpen={setIsOpen} details={details} />
-              </div>
-            </div>
-          </div>
+					<ModalDonate
+						isOpen={isOpenDonate}
+						closeModal={closeModalDonate}
+						name={details.name}
+						id={id}
+					/>
+				</div>
+			)}
+		</div>
+		// 			<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
-          <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
-
-          <ModalDonate
-            isOpen={isOpenDonate}
-            closeModal={closeModalDonate}
-            name={details.name}
-            id={id}
-          />
-        </div>
-      ) : (
-        <Spinner />
-      )}
-    </div>
-  );
+		// 			<ModalDonate
+		// 				isOpen={isOpenDonate}
+		// 				closeModal={closeModalDonate}
+		// 				name={details.name}
+		// 				id={id}
+		// 			/>
+		// 		</div>
+		// 	) : (
+		// 		<Spinner />
+		// 	)}
+		// </div>
+	)
 };
 
 export default OngDetail;

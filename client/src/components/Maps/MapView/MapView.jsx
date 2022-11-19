@@ -74,42 +74,56 @@ function LocationMarker ({center, name}) {
   }
 
 
-  if(lat !== null && lon !== null){
-    return (
-        <div className='h-80 w-full border-4 border-[#462312] rounded-lg p-1'>
-            <MapContainer center={position} zoom={14} scrollWheelZoom={false} className='w-full h-full'>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={position}>
-                    <Popup>
-                        {name}
-                    </Popup>
-                </Marker>
-            </MapContainer>
-            <div>
-                {shelter.author.id === userDetail?.id && <button onClick={handleClick}>Change Location</button>}
-                {(shelter.author.id === userDetail?.id && cpos.length > 0) && <button onClick={handleSave}>Save</button>}
-            </div>
-        </div>
-      )
-  }
-  else return(
-    <div className='h-80 w-full border-4 border-[#462312] rounded-lg p-1'>
-            <MapContainer center={center} zoom={14} scrollWheelZoom={false} className='w-full h-full'>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <LocationMarker center={center} name={name} />
-            </MapContainer>
-            <div>
-                {shelter.author.id === userDetail?.id && <button onClick={handleClick}>Change Location</button>}
-                {(shelter.author.id === userDetail?.id && cpos.length > 0) && <button onClick={handleSave}>Save</button>}
-            </div>
-        </div>
-  )
+  if (lat !== null && lon !== null) {
+		return (
+			<div className="w-full p-1 h-80 rounded-2xl">
+				<MapContainer
+					center={position}
+					zoom={14}
+					scrollWheelZoom={false}
+					className="w-full h-full">
+					<TileLayer
+						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					<Marker position={position}>
+						<Popup>{name}</Popup>
+					</Marker>
+				</MapContainer>
+				<div>
+					{shelter.author.id === userDetail?.id && (
+						<button onClick={handleClick}>Change Location</button>
+					)}
+					{shelter.author.id === userDetail?.id && cpos.length > 0 && (
+						<button onClick={handleSave}>Save</button>
+					)}
+				</div>
+			</div>
+		)
+	} else
+		return (
+			<div className="h-80 w-full shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1">
+				<MapContainer
+					center={center}
+					zoom={14}
+					scrollWheelZoom={false}
+					className="w-full h-full">
+					<TileLayer
+						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					<LocationMarker center={center} name={name} />
+				</MapContainer>
+				<div>
+					{shelter.author.id === userDetail?.id && (
+						<button onClick={handleClick}>Change Location</button>
+					)}
+					{shelter.author.id === userDetail?.id && cpos.length > 0 && (
+						<button onClick={handleSave}>Save</button>
+					)}
+				</div>
+			</div>
+		)
 }
 
 export default MapView
