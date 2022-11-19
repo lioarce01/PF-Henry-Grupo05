@@ -14,6 +14,7 @@ import { useUpdateUserMutation } from "../../redux/api/users";
 import { useAuth0 } from "@auth0/auth0-react";
 import { userSchema } from './validationUserForm';
 import { useFormik } from 'formik';
+import toast, { Toaster } from "react-hot-toast";
 
 const UserProfile = () => {
 	const { userId } = useParams();
@@ -36,13 +37,13 @@ const UserProfile = () => {
 	const updateUserImage = async (e) => {
 		const { image } = await uploadImage("preset_posts", e.target.files[0])
 		let accessToken = await getAccessTokenSilently();
-		updateUser({ accessToken, userId, updatedUser: {profilePic: image}})
+		await updateUser({ accessToken, userId, updatedUser: {profilePic: image}}).then(res => toast.success("Profile picture updated successfully")).catch(() => toast.error('There has been an error'));
 	}
 
 	const onSubmit = async (e) => {
 		e.preventDefault()
 		const accessToken = await getAccessTokenSilently()
-		await updateUser({accessToken, userId: userDetail.id, updatedUser: values}).then(res => alert('User Created')).catch(() => alert('error'));
+		await updateUser({accessToken, userId: userDetail.id, updatedUser: values}).then(res => toast.success("Name updated successfully")).catch(() => toast.error('There has been an error'));
 		setEditMode(false);
 	}
 	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
@@ -60,6 +61,7 @@ const UserProfile = () => {
 
 	return (
 		<div className="bg-[#fff5f4]">
+			<Toaster />
 			<Navbar />
 			<div className="mt-8 grid grid-cols-3 grid-rows-1 w-5/6 h-5/6 mx-auto">
 				<div class="mt-16 bg-[#f3a199cc] max-w-md rounded-[3em] mx-auto shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)] overflow-hidden min-w-[23vw]">
@@ -78,27 +80,34 @@ const UserProfile = () => {
 					<div class="container">
 						<div class="flex flex-col h-full justify-between">
 							{ editMode ?
-								<form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1 text-center">
+								<form onSubmit={(e) => onSubmit(e)} className="flex flex-col gap-1 text-center">
 									<div className="w-fit mx-auto">
 										<label className="text-md font-bold">Name: </label>
 										<input type="text"
 											value={values.name}
 											name='name'
-											placeholder='Add name...'
+											placeholder='Name Lastname'
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className="bg-transparent placeholder-white font-medium opacity-50"
+											className="bg-[#f3807649] placeholder-white font-medium opacity-70 focus:outline-none focus:opacity-95 focus:border-none rounded-md pl-2"
 										/>
 										{errors.name && <p className='text-red-500'>{errors.name}</p>}
 									</div>
-									<div className="">
+									{/* <div className=""> //Esto es para actualizar el email
 										<label className="text-md font-bold">Email: </label>
 										<input type="email" value={values.email} name='email' placeholder='Add your email..' onChange={handleChange} onBlur={handleBlur} className="bg-transparent" />
 										{errors.email && <p className='text-red-500'>{errors.email}</p>}
-          							</div>
+          							</div> */}
+									<h6 class="mb-3 font-normal text-gray-700 drop-shadow-md text-center">
+										{details?.email}
+									</h6>
 									<div className="flex flex-row gap-4 justify-center mt-2">
-										{errors ? <button class="bg-[#eb8076cc] text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">Save</button> : <button type="submit">Save</button>}
-										<button onClick={manageCancelButton}>Cancel</button>
+										<button type="submit" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 duration-300">Save</button>
+										<button onClick={manageCancelButton} class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+											<span class="relative px-5 py-2.5 transition-all ease-in duration-7 bg-[#f55644] rounded-md group-hover:bg-opacity-0">
+												Cancel
+											</span>
+										</button>
 									</div>
 								</form>
 								:
