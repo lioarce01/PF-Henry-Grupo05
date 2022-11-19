@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { userSchema } from './validationUserForm';
+import { userSchema } from '../UserProfile/validationUserForm';
 import { useFormik } from 'formik';
 import Navbar from '../Navbar/Navbar';
 import { useUpdateUserMutation } from "../../redux/api/users";
