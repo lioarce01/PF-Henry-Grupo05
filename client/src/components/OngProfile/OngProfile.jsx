@@ -35,8 +35,8 @@ const OngDetail = () => {
 			{isLoading ? (
 				<Spinner />
 			) : (
-				<div className="flex flex-col items-center w-full lg:flex-row">
-					<div className="flex flex-col items-center w-full mt-20">
+				<div className="flex flex-col w-full lg:flex-row">
+					<div className="flex flex-col items-center w-full">
 						{details?.description?.length > 0 && (
 							<OngFormUpdate
 								name={details?.name}
@@ -56,8 +56,8 @@ const OngDetail = () => {
 							shelterRefetch={shelterRefetch}
 						/>
 					</div>
-					<div className="flex flex-col items-center w-full mt-16">
-						<div className="flex flex-col mb-4">
+					<div className="flex flex-col w-full mt-16">
+						<div className="flex flex-col items-center mb-4">
 							<Description id={id} details={details} />
 							<MapView
 								name={details?.name}

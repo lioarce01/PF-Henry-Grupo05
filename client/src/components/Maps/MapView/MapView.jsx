@@ -76,7 +76,7 @@ function LocationMarker ({center, name}) {
 
   if (lat !== null && lon !== null) {
 		return (
-			<div className="w-full p-1 h-80 rounded-2xl">
+			<div className="p-1 h-80 rounded-2xl w-[600px]">
 				<MapContainer
 					center={position}
 					zoom={14}

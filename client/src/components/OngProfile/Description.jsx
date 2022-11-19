@@ -25,9 +25,9 @@ function Description({ details, id}) {
         });
 
   return (
-		<div className="w-full mb-4 p-4 mt-4 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl">
+		<div className="w-[600px] mb-4 p-4 mt-4 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl">
 			<textarea
-				className="text-lg font-semibold bg-white text-black resize-none w-[310px] h-60 lg:w-[600px] lg:h-60"
+				className="w-full text-lg font-semibold text-black bg-white resize-none h-60"
 				type="text"
 				name="description"
 				onChange={inputHandler}

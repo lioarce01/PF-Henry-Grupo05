@@ -56,7 +56,7 @@ const OngFormUpdate = ({
   });
 
   return (
-		<div className="flex bg-white flex-col shadow-[rgba(255,213,201)] shadow-xl items-center w-fit h-fit p-2 rounded-2xl">
+		<div className="flex mt-20 bg-white flex-col shadow-[rgba(255,213,201)] shadow-xl items-center p-2 rounded-2xl">
 			<div className="p-2 w-80 h-fit">
 				<div className="w-contain">
 					<div>
