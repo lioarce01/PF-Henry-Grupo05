@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const jwtCheck_1 = require("../jwtCheck");
 const nodemailer_1 = require("../middleware/nodemailer");
+const prisma_cascade_delete_1 = require("prisma-cascade-delete");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 // get all users, or search them by name enables
@@ -123,12 +124,12 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 }));
-// logical enabled to users(Admin)
+// logical enabled to users (Admin)
 router.put('/enable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.body.userId;
         yield prisma.user.update({
-            where: { id: id },
+            where: { id },
             data: { enable: true },
         });
         res.status(200).send(`User ${id} enabled successfully`);
@@ -141,11 +142,13 @@ router.put('/enable', (req, res) => __awaiter(void 0, void 0, void 0, function* 
 router.put('/admin', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, adminId, removeAdmin = false } = req.body;
-        const admin = yield prisma.user.findUnique({ where: { id: adminId }, });
+        const admin = yield prisma.user.findUnique({
+            where: { id: adminId }
+        });
         if (!admin)
-            return res.status(404).send('your username is not found');
+            res.status(404).send('Username is not found.');
         if ((admin === null || admin === void 0 ? void 0 : admin.role) === 'User')
-            return res.status(400).send("you are not admin");
+            res.status(400).send("Require admin permissions.");
         const newAdmin = yield prisma.user.update({
             where: { id: userId },
             data: { role: removeAdmin ? "User" : "Admin" },
@@ -157,12 +160,12 @@ router.put('/admin', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0
         console.log(error);
     }
 }));
-// logical disabled to users(Admin)
+// logical disabled to users (Admin)
 router.put('/disable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.body.userId;
         yield prisma.user.update({
-            where: { id: id },
+            where: { id },
             data: { enable: false },
         });
         res.status(200).send(`User ${id} disabled successfully`);
@@ -196,10 +199,8 @@ router.put("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, 
 router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const deletedUser = yield prisma.user.delete({
-            where: { id },
-        });
-        deletedUser ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.");
+        yield (0, prisma_cascade_delete_1.cascadeDelete)(prisma, "User", { id });
+        res.status(200).send("User deleted successfully.");
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
