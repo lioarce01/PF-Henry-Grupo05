@@ -77,7 +77,6 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
     // here we are able to expand this further, adding
     // more ordering criteria, filters and name search.
     const { order, orderType, filter, name } = req.body;
-    const state = true;
     try {
         if (order || filter) {
             const shelters = yield prisma.shelter.findMany({
