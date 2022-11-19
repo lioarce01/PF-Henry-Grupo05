@@ -22,7 +22,7 @@ const UserProfile = () => {
 	const { userDetail, isAuth } = useSelector((state) => state.localStorage.userState)
 	const [isOpen, setIsOpen] = useState(false);
 	const [editMode, setEditMode] = useState(false);
-	const [updateUser, {}] = useUpdateUserMutation();
+	const [updateUser] = useUpdateUserMutation();
 	const { getAccessTokenSilently } = useAuth0();
 
 	useEffect(() => {
@@ -124,14 +124,25 @@ const UserProfile = () => {
 								</div>
 							}
 							<div className="flex flex-row justify-center gap-6 content-end mt-4">
-								<button className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center rounded-md hover:bg-[#f7dfdc88] duration-300" onClick={manageSheltersFollowedButton}>
-									<span>
-										{details?.shelterFollow?.length}
-									</span>
-									<span className="ml-2 font-normal">
-										following
-									</span>
-								</button>
+								{ details?.followers?.length > 0 ?
+									<button className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center rounded-md hover:bg-[#f7dfdc88] duration-300" onClick={manageSheltersFollowedButton}>
+										<span>
+											{details?.shelterFollow?.length}
+										</span>
+										<span className="ml-2 font-normal">
+											following
+										</span>
+									</button>
+									:
+									<div className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center rounded-md">
+										<span>
+											{details?.shelterFollow?.length}
+										</span>
+										<span className="ml-2 font-normal">
+											following
+										</span>
+									</div>
+								}
 								<span className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center">
 									<span>
 										Role:
@@ -167,7 +178,7 @@ const UserProfile = () => {
 							</div>
 							:
 							(
-								<div>
+								<div className="text-center text-[5rem] text-bold">
 									<h6>User has no Posts</h6>
 								</div>
 							)
