@@ -14,7 +14,6 @@ import Swal from "sweetalert2"
 const OngForm = () => {
 	const [createShelter, { data1, isLoading, error }] = useAddShelterMutation()
 	const user = useSelector(state=> state.localStorage.userState)
-	console.log(user)
 	const [image, setImage] = useState("")
 	const navigate = useNavigate()
 	const { getAccessTokenSilently, loginWithPopup } = useAuth0()
@@ -40,7 +39,6 @@ const OngForm = () => {
 			navigate("/home")
 		} else if(user.userDetail.Shelter.length) {
 			Swal.fire({icon:'error', title: 'You already own a shelter'})
-
 			navigate("/home")
 		}
 	}
