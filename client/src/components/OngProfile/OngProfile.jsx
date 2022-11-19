@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDisableShelterMutation, useEnableShelterMutation, useGetShelterByIdQuery } from "../../redux/api/shelters";
 import OngFormUpdate from "./OngFormUpdate";
 import NavBar from "../Navbar/Navbar";
@@ -11,22 +11,32 @@ import { useSelector } from "react-redux";
 import Posts from "./Posts";
 import ShelterStats from "./ShelterStats";
 import Description from "./Description";
+import Swal from "sweetalert2";
 
 const OngDetail = () => {
   const { id } = useParams();
   let [isOpenDonate, setIsOpenDonate] = useState(false);
+  const navigate = useNavigate();
   const {
     data: details,
     isLoading,
     refetch: shelterRefetch,
+	error
   } = useGetShelterByIdQuery(id);
+  if (error){
+	Swal.fire({icon:'error',
+			   title: 'Invalid Shelter ID',
+  				})
+				navigate('/home')
+  } 
   const { userDetail } = useSelector((state) => state.localStorage.userState);
   const [isOpen, setIsOpen] = useState(false);
   const closeModalDonate = () => setIsOpenDonate(false);
   const closeModal = () => setIsOpen(false);
+  console.log('error', error)
  
   useEffect(()=>{
-      shelterRefetch()  
+      shelterRefetch() 
   },[isOpen])
 
   return (
