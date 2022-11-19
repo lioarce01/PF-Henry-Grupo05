@@ -22,7 +22,7 @@ const UploadImage = ({ image, setImage }) => {
 					reset
 				</button>
 			)}
-			<div className="flex items-center justify-center border-2  max-w-[700px] h-auto bg-red-500">
+			<div className="flex items-center justify-center border-2  max-w-[700px] h-auto bg-[#e6b1ae]">
 				{image ? (
 					<img alt="uplouted" src={image} className="object-cover" />
 				) : (

@@ -12,14 +12,21 @@ import {addShelterAction} from '../../redux/slices/manageUsers/actions';
 import Swal from "sweetalert2"
 
 const OngForm = () => {
-	const [createShelter, { data1, isLoading, error }] = useAddShelterMutation()
+	const [createShelter, { data1, isLoading, error }] = useAddShelterMutation();
 	const user = useSelector(state=> state.localStorage.userState)
 	console.log(user)
 	const [image, setImage] = useState("")
 	const navigate = useNavigate()
 	const { getAccessTokenSilently, loginWithPopup } = useAuth0()
 	const dispatch= useDispatch();
-	
+	if(user.userDetail.Shelter.length) {
+		Swal.fire({icon:'error', title: 'You already own a shelter',
+		preConfirm: ()=>{
+			navigate(`/${user.userDetail.Shelter[0].id}/profile`)
+			}
+		})
+		
+	}
 	const onSubmit = async () => {
 		if(!user.isAuth){
 			Swal.fire({icon:'error', title: 'You need to be logged in to create a shelter'})
@@ -37,10 +44,6 @@ const OngForm = () => {
 			const newShelterCreated = await createShelter({accessToken, newShelter}).unwrap()
 			dispatch(addShelterAction(newShelterCreated));
 			Swal.fire({icon:'success', title: 'Shelter Created'})
-			navigate("/home")
-		} else if(user.userDetail.Shelter.length) {
-			Swal.fire({icon:'error', title: 'You already own a shelter'})
-
 			navigate("/home")
 		}
 	}
@@ -249,6 +252,8 @@ const OngForm = () => {
 
 								<div>
 									<UploadImage image={image} setImage={setImage} />
+									{!image.length && 
+										<p className="text-red-500 font-bold">Required Image</p>}
 								</div>
 							</div>
 						</div>
