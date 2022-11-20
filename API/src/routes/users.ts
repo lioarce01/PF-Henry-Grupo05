@@ -35,16 +35,12 @@ router.get("/", async (req: Req, res) => {
             },
 
             include: { 
-<<<<<<< HEAD
                 Shelter: {
                     where : {
                         enable: status
                     }
                 },
                 
-=======
-                Shelter: true,
->>>>>>> 19196af... lot of backend routes fixes
                 posts: {
                         where: {
                             enable: status
@@ -82,13 +78,20 @@ router.get("/:id", async (req, res) => {
         const user = await prisma.user.findUnique({ 
             where: { id },
             include: { 
-                Shelter: true,
-                following: true, 
+                Shelter: {
+                    where: {
+                        enable: state
+                    }
+                },
+                following: {
+                    where: {
+                        enable: state
+                    }
+                }, 
                 posts: {
                     where: {
                         enable: state
                     },
-<<<<<<< HEAD
                     include: {
                         Comment:{
                             where: {
@@ -96,8 +99,6 @@ router.get("/:id", async (req, res) => {
                             }
                         }
                     }
-=======
->>>>>>> 19196af... lot of backend routes fixes
                 } 
             }
         });
