@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Card = ({ name, image, id, desc, index }) => {
   return (
     <Link to={`/${id}/profile`}>
-      <div className="w-[300px] h-[320px] mt-10 overflow-hidden bg-[#CA7C62] border border-[#b4a6a0] shadow-[0_0_20px_rgba(0,0,0,0.25)]">
+      <div className="w-[300px] h-[320px] mt-10 overflow-hidden bg-[#F87171] border border-[#b4a6a0] shadow-[0_0_20px_rgba(0,0,0,0.25)]">
 
         <img
           className="w-[300px] h-[150px] object-cover mx-auto rounded"

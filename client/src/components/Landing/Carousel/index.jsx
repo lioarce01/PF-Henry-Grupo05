@@ -26,7 +26,7 @@ const Carousel = () => {
 
   return (
     <div className="w-[80%] h-fit mx-auto rounded ">
-      <h2 className="mb-10 font-bold text-[#3D190C] md:text-7xl lg:text-5xl text-center">
+      <h2 className="mb-10 font-bold text-[#000] md:text-7xl lg:text-5xl text-center">
         Trending
       </h2>
       <Swiper
