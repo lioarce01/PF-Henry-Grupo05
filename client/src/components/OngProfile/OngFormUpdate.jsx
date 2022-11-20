@@ -134,23 +134,21 @@ const OngFormUpdate = ({
 									<p className="text-red-500"> {errors.website}</p>
 								)}
 								<div className="flex justify-end w-full">
-									<div>
+								</div>
+							</div>
 										{!toggle && Object.entries(errors).length === 0 && (
 											<button
 												type="submit"
-												className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto">
+												className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300">
 												Save
 											</button>
 										)}
-									</div>
-								</div>
-							</div>
 						</form>
 					</div>
 				</div>
 				{shelter.author.id === userDetail?.id && (
 					<button
-						className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+					className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 						onClick={() => setToggle(!toggle)}>
 						Edit
 					</button>
@@ -158,7 +156,7 @@ const OngFormUpdate = ({
 			</div>
 			<div className="flex items-center justify-between row">
 				<button
-					className="bg-transparent  hover:bg-[#462312] text-[#462312] font-semibold mx-2 hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded transition duration-300"
+					className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 					onClick={() => setIsOpenDonate(true)}>
 					Donate
 				</button>
@@ -168,7 +166,7 @@ const OngFormUpdate = ({
 						{shelter.enable ? (
 							<button
 								onClick={() => disableShelter({ shelterId: id })}
-								className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border">
+								className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-2 px-4 hover:border-transparent rounded-lg flex flex-row items-center justify-center border">
 								Disable
 								<span className="pl-2">
 									<MdDomainDisabled />
@@ -177,7 +175,7 @@ const OngFormUpdate = ({
 						) : (
 							<button
 								onClick={() => enableShelter({ shelterId: id })}
-								className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center">
+								className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-2 px-4 border hover:border-transparent rounded-lg flex flex-row items-center justify-center">
 								Enable
 								<span className="pl-2">
 									<MdOutlineDomain />

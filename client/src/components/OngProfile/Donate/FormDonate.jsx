@@ -10,7 +10,7 @@ const FormDonate = ({ closeModal, name, id }) => {
     const [checkout, {data, isSuccess}] = useCheckoutMutation()
     const {getAccessTokenSilently, user} = useAuth0()
 
-    const [input, setInput] = useState({donation: 0, shelter: name, id, email: user.email})
+    const [input, setInput] = useState({donation: 0, shelter: name, id, email: user?.email})
     const [image, setImage] = useState(false);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
@@ -56,20 +56,25 @@ const FormDonate = ({ closeModal, name, id }) => {
           </button>
         </div>
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-[#462312]">Donate</h2>
+          <h2 className="text-3xl font-bold text-[#462312] ">Thanks a Lot!</h2>
         </div>
         <div className="grid grid-cols-1 mt-8 space-y-3" onChange={handleChange}>
               <label className="text-md font-bold text-[#462312] tracking-wide">
-              select an amount
+              Select an amount:
               </label>
         </div>
         <div className='flex flex-row  items-center justify-between pb-3 pt-2'>
-            <button value={100} onClick={(e) => handleChange(e)} className={input.donation === 100 ? "border rounded-md border-amber-900 box-border" : null}>$100 (ARS)</button>
-            <button value={500} onClick={(e) => handleChange(e)} className={input.donation === 500 ? "border rounded-md border-amber-900 box-border" : null}>$500 (ARS)</button>
-            <button value={1000} onClick={(e) => handleChange(e)} className={input.donation === 1000 ? "border rounded-md border-amber-900 box-border" : null}>$1000 (ARS)</button>
+            <button value={100} onClick={(e) => handleChange(e)} className={input.donation === 100 ? "border-2 bg-[#ca7c62] rounded-md border-amber-900 box-border p-1 text-gray-100" : "hover:bg-[#ca7c62] transition ease-in duration-200 hover:border-2 hover:text-gray-100 rounded-md border-amber-[#ca7c62] box-border p-1"}>$100 (ARS)</button>
+            <button value={500} onClick={(e) => handleChange(e)} className={input.donation === 500 ? "border-2 bg-[#ca7c62] rounded-md border-amber-900 box-border p-1 text-gray-100" : "hover:bg-[#ca7c62] transition ease-in duration-200 hover:border-2 hover:text-gray-100 rounded-md border-amber-[#ca7c62] box-border p-1"}>$500 (ARS)</button>
+            <button value={1000} onClick={(e) => handleChange(e)} className={input.donation === 1000 ? "border-2 bg-[#ca7c62] rounded-md border-amber-900 box-border p-1 text-gray-100" : "hover:bg-[#ca7c62] transition ease-in duration-200 hover:border-2 hover:text-gray-100 rounded-md border-amber-[#ca7c62] box-border p-1"}>$1000 (ARS)</button>
         </div>
-        <div>
-        <label htmlFor="">Amount: <input type="number" className='bg-gray-300 rounded-lg w-[82.2%]' placeholder='$ARS' min={50} onChange={handleChangeInput} value={valueAmount}/></label>
+        <div className='flex flex-row w-auto justify-between'>
+          <div className=''>
+            <label htmlFor="" className='font-bold text-[#462312]'>Another amount:</label>
+          </div>
+          <div className=''>
+            <input type="number" className='bg-[#ca7c62] rounded-lg w-[82.2%] text-gray-100 w-full indent-2' placeholder='$ARS 50' min={50} onChange={handleChangeInput} value={valueAmount}/>
+          </div>
         </div>
 
         <div>

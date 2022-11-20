@@ -40,7 +40,7 @@ function Description({ details, id}) {
 				<div>
 					{details.author.id === userDetail?.id && (
 						<button
-							className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+							className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 							onClick={() => setToggle(!toggle)}>
 							Edit
 						</button>
@@ -49,7 +49,7 @@ function Description({ details, id}) {
 				<div>
 					{!toggle && (
 						<button
-							className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto"
+						className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 							onClick={saveHandler}>
 							Save
 						</button>
