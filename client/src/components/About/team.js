@@ -3,7 +3,7 @@ const team = [
       name: "Ismael Saragusti",
       phrase: "Front-End Master",
       image:
-        "https://avatars.githubusercontent.com/u/85196587?v=4",
+        "https://i.ibb.co/BGLsk3T/isma-profile.png",
       linkedin: "https://www.linkedin.com/in/ismael-saragusti-664260213/",
       github: "https://github.com/Ismox1440",
     },
@@ -55,14 +55,7 @@ const team = [
       linkedin: "https://www.linkedin.com/in/samirantoniojose/",
       github: "https://github.com/mihue14",
     },
-    {
-      name: "Francisco Cia",
-      phrase: "International Relations",
-      image:
-        "https://media-exp1.licdn.com/dms/image/C4D03AQGu45_zn9r2xw/profile-displayphoto-shrink_200_200/0/1658025999977?e=1674086400&v=beta&t=Dy4AJ-LZBCzJXbBEK-d3AmQnGLyC6t0zHvQIwWBryXo",
-      linkedin: "https://www.linkedin.com/in/francisco-cia-1b386b1a2",
-      github: "https://github.com/FranciscoCia",
-    },
+    
   ];
 
   export default team

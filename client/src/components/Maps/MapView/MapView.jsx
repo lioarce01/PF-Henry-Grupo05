@@ -76,7 +76,7 @@ function LocationMarker ({center, name}) {
 
   if (lat !== null && lon !== null) {
 		return (
-			<div className="p-1 h-80 rounded-2xl w-[600px]">
+			<div className="p-1 h-80 rounded-2xl w-[600px] mb-5">
 				<MapContainer
 					center={position}
 					zoom={14}
@@ -90,19 +90,21 @@ function LocationMarker ({center, name}) {
 						<Popup>{name}</Popup>
 					</Marker>
 				</MapContainer>
-				<div>
+				<div className='flex flex-row-reverse justify-between'>
 					{shelter.author.id === userDetail?.id && (
-						<button onClick={handleClick}>Change Location</button>
+						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						onClick={handleClick}>Change Location</button>
 					)}
 					{shelter.author.id === userDetail?.id && cpos.length > 0 && (
-						<button onClick={handleSave}>Save</button>
+						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						onClick={handleSave}>Save</button>
 					)}
 				</div>
 			</div>
 		)
 	} else
 		return (
-			<div className="h-80 w-full shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1">
+			<div className="h-80 w-full shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5">
 				<MapContainer
 					center={center}
 					zoom={14}
@@ -114,12 +116,14 @@ function LocationMarker ({center, name}) {
 					/>
 					<LocationMarker center={center} name={name} />
 				</MapContainer>
-				<div>
+				<div className='flex flex-row-reverse justify-between'>
 					{shelter.author.id === userDetail?.id && (
-						<button onClick={handleClick}>Change Location</button>
+						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						onClick={handleClick}>Change Location</button>
 					)}
 					{shelter.author.id === userDetail?.id && cpos.length > 0 && (
-						<button onClick={handleSave}>Save</button>
+						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						onClick={handleSave}>Save</button>
 					)}
 				</div>
 			</div>
