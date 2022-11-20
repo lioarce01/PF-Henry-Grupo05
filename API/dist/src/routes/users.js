@@ -31,7 +31,11 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 enable: status
             },
             include: {
-                Shelter: true,
+                Shelter: {
+                    where: {
+                        enable: status
+                    }
+                },
                 posts: {
                     where: {
                         enable: status
@@ -44,7 +48,11 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         }
                     }
                 },
-                following: true,
+                following: {
+                    where: {
+                        enable: status
+                    }
+                },
             }
         });
         user.length ? res.status(200).send(user) : res.status(404).send('ERROR: Could not find any users.');
@@ -68,6 +76,13 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     where: {
                         enable: state
                     },
+                    include: {
+                        Comment: {
+                            where: {
+                                enable: true
+                            }
+                        }
+                    }
                 }
             }
         });

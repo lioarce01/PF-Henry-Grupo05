@@ -35,7 +35,12 @@ router.get("/", async (req: Req, res) => {
             },
 
             include: { 
-                Shelter: true,
+                Shelter: {
+                    where : {
+                        enable: status
+                    }
+                },
+                
                 posts: {
                         where: {
                             enable: status
@@ -49,7 +54,12 @@ router.get("/", async (req: Req, res) => {
                             }
                         }
                 },
-                following: true,
+
+                following: {
+                    where: {
+                        enable: status
+                    }
+                },
              }
         });
 
