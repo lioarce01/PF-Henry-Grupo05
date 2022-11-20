@@ -31,7 +31,11 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 enable: status
             },
             include: {
-                Shelter: true,
+                Shelter: {
+                    where: {
+                        enable: status
+                    }
+                },
                 posts: {
                     where: {
                         enable: status
@@ -44,7 +48,11 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         }
                     }
                 },
-                following: true,
+                following: {
+                    where: {
+                        enable: status
+                    }
+                },
             }
         });
         user.length ? res.status(200).send(user) : res.status(404).send('ERROR: Could not find any users.');
@@ -62,12 +70,27 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const user = yield prisma.user.findUnique({
             where: { id },
             include: {
-                Shelter: true,
-                following: true,
+                Shelter: {
+                    where: {
+                        enable: state
+                    }
+                },
+                following: {
+                    where: {
+                        enable: state
+                    }
+                },
                 posts: {
                     where: {
                         enable: state
                     },
+                    include: {
+                        Comment: {
+                            where: {
+                                enable: true
+                            }
+                        }
+                    }
                 }
             }
         });

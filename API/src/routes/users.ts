@@ -35,7 +35,12 @@ router.get("/", async (req: Req, res) => {
             },
 
             include: { 
-                Shelter: true,
+                Shelter: {
+                    where : {
+                        enable: status
+                    }
+                },
+                
                 posts: {
                         where: {
                             enable: status
@@ -49,7 +54,12 @@ router.get("/", async (req: Req, res) => {
                             }
                         }
                 },
-                following: true,
+
+                following: {
+                    where: {
+                        enable: status
+                    }
+                },
              }
         });
 
@@ -68,8 +78,16 @@ router.get("/:id", async (req, res) => {
         const user = await prisma.user.findUnique({ 
             where: { id },
             include: { 
-                Shelter: true,
-                following: true, 
+                Shelter: {
+                    where: {
+                        enable: state
+                    }
+                },
+                following: {
+                    where: {
+                        enable: state
+                    }
+                }, 
                 posts: {
                     where: {
                         enable: state
