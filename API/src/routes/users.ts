@@ -35,12 +35,16 @@ router.get("/", async (req: Req, res) => {
             },
 
             include: { 
+<<<<<<< HEAD
                 Shelter: {
                     where : {
                         enable: status
                     }
                 },
                 
+=======
+                Shelter: true,
+>>>>>>> 19196af... lot of backend routes fixes
                 posts: {
                         where: {
                             enable: status
@@ -84,6 +88,7 @@ router.get("/:id", async (req, res) => {
                     where: {
                         enable: state
                     },
+<<<<<<< HEAD
                     include: {
                         Comment:{
                             where: {
@@ -91,6 +96,8 @@ router.get("/:id", async (req, res) => {
                             }
                         }
                     }
+=======
+>>>>>>> 19196af... lot of backend routes fixes
                 } 
             }
         });
