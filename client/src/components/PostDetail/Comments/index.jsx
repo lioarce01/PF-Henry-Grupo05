@@ -5,24 +5,27 @@ import Comment from './Comment';
 
 const Comments = ({ postId, details, isFetching }) => {
   return (
-    <div>
-      
-      <AddComment postId={postId} />
-      {isFetching && <div className="w-full"><PuffLoader className="mx-auto" color="#462312" loading size={60} /></div>}
-      {details.Comment &&
-        details.Comment.map((comment) => {
-          return (
-            <Comment
-              key={comment.id}
-              postId={postId}
-              author={comment.author}
-              content={comment.content}
-              id={comment.id}
-            />
-          );
-        })}
-    </div>
-  )
+		<div>
+			<AddComment postId={postId} />
+			{isFetching && (
+				<div className="w-full">
+					<PuffLoader className="mx-auto" color="#462312" loading size={50} />
+				</div>
+			)}
+			{details.Comment &&
+				details.Comment.map((comment) => {
+					return (
+						<Comment
+							key={comment.id}
+							postId={postId}
+							author={comment.author}
+							content={comment.content}
+							id={comment.id}
+						/>
+					)
+				})}
+		</div>
+	)
 }
 
 
