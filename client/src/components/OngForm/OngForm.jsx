@@ -19,9 +19,9 @@ const OngForm = () => {
 	const user = useSelector(state => state.localStorage.userState)
 	const { getAccessTokenSilently, loginWithPopup } = useAuth0();
 	const [image, setImage] = useState("")
-	
+	console.log(user)
 	useEffect(()=>{
-		if (user.userDetail.Shelter.length) {
+		if(Object.entries(user.userDetail).length && user.userDetail.Shelter.length) {
 			Swal.fire({
 				icon: 'error', title: 'You already own a shelter',
 				preConfirm: () => {
@@ -30,8 +30,16 @@ const OngForm = () => {
 			})
 		}
 	},[])
+	useEffect(()=>{
+		if(!user.isAuth) {
+			Swal.fire({ icon: 'error', title: 'You need to be logged in to create a shelter' })
+			setTimeout(async () => {
+				navigate("/home")
+				await loginWithPopup()
+			}, 3500)
+		}
+	},[])
 
-	console.log(user)
 	const onSubmit = async () => {
 		if (!user.isAuth) {
 			Swal.fire({ icon: 'error', title: 'You need to be logged in to create a shelter' })
