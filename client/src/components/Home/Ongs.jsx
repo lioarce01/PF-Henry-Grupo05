@@ -1,12 +1,12 @@
 import { useGetSheltersQuery, useTopFiveSheltersQuery } from "../../redux/api/shelters"
 import { AiOutlineArrowRight } from "react-icons/ai"
-import ModalShelters from './ModalShelters' 
+import ModalShelters from './ModalShelters'
 import Spinner from "../Spinner/Spinner"
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Ongs = () => {
-	const { data: shelters } = useGetSheltersQuery(({name: "", enabled: true}));
+	const { data: shelters } = useGetSheltersQuery(({ name: "", enabled: true }));
 	const { data: topShelters, topIsSuccess } = useTopFiveSheltersQuery("3");
 
 	const [open, setOpen] = useState(false)
@@ -14,9 +14,9 @@ const Ongs = () => {
 	const displayShelters = () => setOpen(true)
 
 	return (
-		<div className="absolute h-screen mt-5 lg:right-0">
-			<div className="h-screen rounded-[30px] flex w-[360px] bg-[#f5d9d4] mt-[20px] overflow-auto flex-col scrollbar-none">
-				<div className="mt-[30px] px-[20px]">
+		<div className="rounded-[30px] flex w-[360px] bg-[#f5d9d4] mt-[20px] h-screen flex-col overflow-y-scroll scrollbar-none">
+			<div className="mt-[30px] scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+				<div className="px-[20px]">
 					<h2 className="flex flex-col items-start font-mono tracking-tight font-bold text-[#201008]">
 						POPULAR SHELTERS
 					</h2>
@@ -72,7 +72,7 @@ const Ongs = () => {
 						</div>
 					)}
 
-					<div className="pb-[40px]">
+					<div className="pb-[100px]">
 						<div className="mt-[40px] px-[20px]">
 							<h2 className="flex flex-col items-start font-mono tracking-tight font-bold text-[#201008]">
 								SUGGESTIONS
@@ -117,8 +117,8 @@ const Ongs = () => {
 				</div>
 			</div>
 
-			{open && <ModalShelters setOpen={setOpen} />}
-		</div>
+			{ open && <ModalShelters setOpen={setOpen} /> }
+		</div>	
 	)
 }
 

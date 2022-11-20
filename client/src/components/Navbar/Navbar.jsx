@@ -24,10 +24,10 @@ const Navbar = () => {
 	const closeModal = () => setIsOpen(false)
 
 	return (
-		<div className={`${location.pathname === "/home" ? "fixed z-50 flex flex-row items-center w-full h-20 px-4 bg-none backdrop-blur-sm" : "relative z-50 flex flex-row items-center w-full h-20 px-4 bg-none backdrop-blur-sm"}`}>
+		<div className={`${location.pathname === "/home" ? "absolute z-50 flex flex-row items-center w-full h-20 px-4 bg-none" : "relative z-50 flex flex-row items-center w-full h-20 px-4 bg-none"}`}>
 			<div className="flex flex-row justify-between w-full">
 				<div className="flex flex-row items-center">
-					<div className="flex flex-row items-center justify-center">
+					<div className="flex flex-row items-center justify-center ml-[10px]">
 						<Link to="/">
 							<span className="font-bold lg:text-[1.8rem] text-[#201008]">
 								Paws
@@ -37,6 +37,7 @@ const Navbar = () => {
 							</span>
 						</Link>
 					</div>
+
 					<div
 						className={`${location.pathname === "/home" &&
 							"pb-[5px] border-b-[3px] border-[#d45f37]"
@@ -45,17 +46,11 @@ const Navbar = () => {
 							<GrHomeRounded className="text-[#201008] w-[25px] h-[25px] flex flex-row" />
 						</Link>
 					</div>
-					{location.pathname === "/home" && (
-						<div className="flex flex-row items-center justify-center ml-4 lg:ml-[40px]">
-							<h1 className="font-bold text-[1.5rem] text-[#201008] md:ml-[100px]">
-								Homepage
-							</h1>
-						</div>
-					)}
 				</div>
+
 				<div className="flex flex-row items-center">
 					{isAuth && location.pathname === "/home" && (
-					<div className="mr-[220px] flex flex-row">
+					<div className="mr-[130px] flex flex-row">
 						<div className="flex mr-[20px] mt-[2px]">
 							<PostFilters />
 						</div>
@@ -63,29 +58,31 @@ const Navbar = () => {
 						{userDetail?.Shelter?.length > 0 &&(
 						<button
 							onClick={() => setIsOpen(true)}
-							className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#d45f37] border border-transparent rounded-[30px] shadow-sm hover:bg-[#e0643a] transition duration-300">
+							className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#D45F37] border border-transparent rounded-[30px] shadow-sm hover:bg-[#e0643a] transition duration-300">
 							Create Post
 						</button>)}
 					</div>)}
 					
-					<div className="mx-20">
+					<div className="mr-[250px]">
 						{toggle ? (
 							<button
-								className="hover:bg-[#d6635f] p-[5px] rounded-full transition duration-300"
+								className="hover:bg-[#D45F37] p-[5px] rounded-full transition duration-300"
 								onClick={handleToggle}>
 								<BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white" />
 							</button>
 						) : (
 							<button
-								className="hover:bg-[#d6635f] p-[5px] rounded-full transition duration-300"
+								className="hover:bg-[#D45F37] p-[5px] rounded-full transition duration-300"
 								onClick={handleToggle}>
 								<HiMoon className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white" />
 							</button>
 						)}
 					</div>
+					
 					<ProfilePanel />
 				</div>
 			</div>
+
 			<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
 		</div>
 	)

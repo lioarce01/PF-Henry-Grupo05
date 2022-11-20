@@ -93,7 +93,9 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
             const shelters = await prisma.shelter.findMany({
                 where: {
                     enable: true,
-                    animals: filter?.animals,
+                    listAnimals: {
+                        has: filter?.animals
+                    },
                     country: filter?.country,
                     city:    filter?.city,
                     name: {
@@ -199,7 +201,7 @@ router.post("/", jwtCheck, async (req, res) => {
             description: string,
             profilePic: string,
             address: string,
-            animals: string,
+            listAnimals: Array<string>,
             city: string,
             lat: number,
             lon: number,
@@ -217,7 +219,7 @@ router.post("/", jwtCheck, async (req, res) => {
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
-                animals:    bodyShelter.animals,
+                listAnimals: bodyShelter.listAnimals,
                 city: bodyShelter.city,
                 lat: bodyShelter.lat,
                 lon: bodyShelter.lon,
@@ -303,7 +305,7 @@ router.put("/unfollow", async (req, res) => {
 
 
 // update a shelter ALERTA saque jwtCheck
-router.put("/:id",  async (req, res) => {
+router.put("/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -313,6 +315,7 @@ router.put("/:id",  async (req, res) => {
             profilePic: string,
             city: string,
             country: string,
+            listAnimals: Array<string>,
             address: string,
             website: string,
             budget: number,
@@ -332,6 +335,7 @@ router.put("/:id",  async (req, res) => {
                 city: bodyShelter.city,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
+                listAnimals: bodyShelter.listAnimals,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
                 goal: bodyShelter.goal,

@@ -13,7 +13,7 @@ const PostFilters = () => {
 
   return (
     <div>
-      <select className="bg-[#F8D44B] px-[10px] py-[5px] rounded-[20px] font-[500]" onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
+      <select className="bg-[#F87171] text-white px-[10px] py-[5px] rounded-[20px] font-[500]" onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
         <option value="DEFAULT" disabled>
           Sort
         </option>
