@@ -35,12 +35,16 @@ router.get("/", async (req: Req, res) => {
             },
 
             include: { 
+<<<<<<< HEAD
                 Shelter: {
                     where : {
                         enable: status
                     }
                 },
                 
+=======
+                Shelter: true,
+>>>>>>> 19196affea854a91c8526cebb332db867ba2ce4b
                 posts: {
                         where: {
                             enable: status
