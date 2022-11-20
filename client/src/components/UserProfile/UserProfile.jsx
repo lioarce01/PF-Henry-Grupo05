@@ -28,10 +28,7 @@ const UserProfile = () => {
 	useEffect(() => {
 		getUserById(userId);
 	}, [getUserById, userId]);
-	console.log('details:');
-	console.log(details);
-	console.log('userDetail');
-	console.log(userDetail);
+	console.log(details, isOpen);
 
 	const manageSheltersFollowedButton = () => {
 		setIsOpen(true)

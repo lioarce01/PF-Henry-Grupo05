@@ -11,7 +11,7 @@ import {persistStore} from 'redux-persist'
 import { Auth0Provider } from '@auth0/auth0-react';
 
 
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = process.env.REACT_APP_API || 'http://localhost:3002';
 
 const persistor = persistStore(store)
 
