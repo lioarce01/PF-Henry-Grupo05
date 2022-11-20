@@ -30,7 +30,9 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 },
                 enable: status
             },
-            include: { posts: {
+            include: {
+                Shelter: true,
+                posts: {
                     where: {
                         enable: status
                     },
@@ -58,19 +60,14 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const state = true;
     try {
         const user = yield prisma.user.findUnique({
-            where: { id: id },
-            include: { following: true,
+            where: { id },
+            include: {
+                Shelter: true,
+                following: true,
                 posts: {
                     where: {
                         enable: state
                     },
-                    include: {
-                        Comment: {
-                            where: {
-                                enable: state
-                            }
-                        }
-                    }
                 }
             }
         });
