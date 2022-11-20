@@ -168,7 +168,7 @@ router.put("/enable", async (req, res) => {
             where: { id: id },
             data: { enable: true },
         });
-        res.status(200).send(`Shelter ${id} enabled successfully`)
+        res.status(200).send({message: `Shelter ${id} enabled successfully`})
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.")
         console.log(error)
@@ -183,7 +183,7 @@ router.put("/disable", async (req, res) => {
             where: { id: id },
             data: { enable: false },
         });
-        res.status(200).send(`Shelter ${id} disabled successfully`)
+        res.status(200).send({message: `Shelter ${id} disabled successfully`})
     } catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.")
         console.log(error)

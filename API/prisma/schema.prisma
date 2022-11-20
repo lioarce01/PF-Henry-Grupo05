@@ -68,7 +68,7 @@ model Comment {
   enable   Boolean   @default(true) @map("enable")
   author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String  @db.ObjectId
-  post     Post?   @relation(fields: [postId], references: [id])
+  post     Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId   String?
 }
 

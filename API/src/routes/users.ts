@@ -78,11 +78,7 @@ router.get("/:id", async (req, res) => {
         const user = await prisma.user.findUnique({ 
             where: { id },
             include: { 
-                Shelter: {
-                    where: {
-                        enable: state
-                    }
-                },
+                Shelter: true, 
                 following: {
                     where: {
                         enable: state

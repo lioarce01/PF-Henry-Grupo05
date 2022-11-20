@@ -24,7 +24,7 @@ const Navbar = () => {
 	const closeModal = () => setIsOpen(false)
 
 	return (
-		<div className={`${location.pathname === "/home" ? "absolute z-50 flex flex-row items-center w-full h-20 px-4 bg-none" : "relative z-50 flex flex-row items-center w-full h-20 px-4 bg-none"}`}>
+		<div className={`${location.pathname === "/home" ? "absolute z-49 flex flex-row items-center w-full h-20 px-4 bg-none" : "relative z-49 flex flex-row items-center w-full h-20 px-4 bg-none"}`}>
 			<div className="flex flex-row justify-between w-full">
 				<div className="flex flex-row items-center">
 					<div className="flex flex-row items-center justify-center ml-[10px]">
@@ -54,13 +54,13 @@ const Navbar = () => {
 						<div className="flex mr-[20px] mt-[2px]">
 							<PostFilters />
 						</div>
-
-						{userDetail?.Shelter?.length > 0 &&(
+						{console.log(userDetail)}
+						{userDetail?.Shelter?.length > 0 && userDetail?.Shelter[0].enable === true ? (
 						<button
 							onClick={() => setIsOpen(true)}
 							className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#D45F37] border border-transparent rounded-[30px] shadow-sm hover:bg-[#e0643a] transition duration-300">
 							Create Post
-						</button>)}
+						</button>) : null}
 					</div>)}
 					
 					<div className="mr-[250px]">

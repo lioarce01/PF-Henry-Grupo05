@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useDisableShelterMutation,
   useEnableShelterMutation,
@@ -13,6 +13,8 @@ import { ongSchema } from "./validationOngFormUpdate.js";
 import UploadImage from "./UploadImage";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { MdDomainDisabled, MdOutlineDomain } from "react-icons/md";
+import { useLazyGetUserByIdQuery } from "../../redux/api/users";
+import { setUserAction } from "../../redux/slices/manageUsers/actions";
 
 const OngFormUpdate = ({
   name,
@@ -30,6 +32,9 @@ const OngFormUpdate = ({
   const [image, setImage] = useState(details?.profilePic);
   const [toggle, setToggle] = useState(true);
   const { userDetail } = useSelector((state) => state.localStorage.userState);
+  const [getUser] = useLazyGetUserByIdQuery()
+  const dispatch = useDispatch()
+  
 
   useEffect(() => {
     getShelterById(id);
@@ -41,6 +46,18 @@ const OngFormUpdate = ({
 
   const [enableShelter] = useEnableShelterMutation();
   const [disableShelter] = useDisableShelterMutation();
+
+  const enable = async (id) => {
+	await enableShelter(id).unwrap()
+	let newUser = await getUser(userDetail.id).unwrap()
+	dispatch(setUserAction(newUser, true))
+  }
+
+  const disable = async(id) => {
+	await disableShelter(id).unwrap()
+	let newUser = await getUser(userDetail.id).unwrap()
+	dispatch(setUserAction(newUser, true))
+  }
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: {

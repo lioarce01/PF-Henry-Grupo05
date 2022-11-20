@@ -83,12 +83,13 @@ const ProfilePanel = () => {
 								<Menu.Item>
 									{({ active }) => (
 										<Link
-											to={`/createOng`}
+
+											to={userDetail?.Shelter?.length > 0 ? `/${userDetail.Shelter[0].id}/profile` : "/createOng"}
 											className={classNames(
 												active ? "bg-slate-100 text-gray-900" : "text-gray-700",
 												"block px-4 py-2 text-sm"
 											)}>
-											Create Shelter
+											{userDetail?.Shelter?.length > 0 ? "Shelter settings" : "Create Shelter"}
 										</Link>
 									)}
 								</Menu.Item>
