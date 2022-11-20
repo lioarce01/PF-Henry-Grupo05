@@ -29,34 +29,27 @@ const AddComment = ({ postId }) => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit} className="flex justify-center">
-        <div className="mb-3 w-[100%] md:w-[80%] xl:w-[60%]">
-          <h4
-            htmlFor="exampleFormControlTextarea1"
-            className="inline-block mb-2 text-gray-700"
-          >
-            Add comment
-          </h4>
-          <textarea
-            onChange={handleChange}
-            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-[#FAF2E7] bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700  focus:border-gray-600 focus:outline-none"
-            rows="3"
-          ></textarea>
-          <div className="flex items-end justify-end">
-            <button className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300">
-              Add comment
-            </button>
-          </div>
-        </div>
-      </form>
-      {isLoading && (
-        <div className="w-full">
-          <PuffLoader className="mx-auto" color="#462312" loading size={60} />
-        </div>
-      )}
-    </>
-  );
+		<>
+			<form onSubmit={onSubmit} className="flex justify-center">
+				<div className="mb-3 w-[100%] md:w-[80%] xl:w-[90%]">
+					<textarea
+						onChange={handleChange}
+						className="form-control block border border-gray-300 w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded-xl transition ease-in-out outline-none"
+						rows="3"></textarea>
+					<div className="flex items-end justify-end">
+						<button className="px-4 py-2 mt-2 font-bold text-white transition duration-300 bg-red-400 rounded-xl hover:bg-red-500">
+							Comment
+						</button>
+					</div>
+				</div>
+			</form>
+			{isLoading && (
+				<div className="w-full">
+					<PuffLoader className="mx-auto" color="#462312" loading size={60} />
+				</div>
+			)}
+		</>
+	)
 };
 
 export default AddComment;

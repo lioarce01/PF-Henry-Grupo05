@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     loadUser()
-  }, [isAuthenticated])
+  }, [isAuthenticated, user])
 
   return (
     <div className="App">

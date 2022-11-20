@@ -79,7 +79,7 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
             const shelters = yield prisma.shelter.findMany({
                 where: {
                     enable: true,
-                    listAnimals: {
+                    listAnimals: !(filter === null || filter === void 0 ? void 0 : filter.animals) ? undefined : {
                         has: filter === null || filter === void 0 ? void 0 : filter.animals
                     },
                     country: filter === null || filter === void 0 ? void 0 : filter.country,
@@ -153,7 +153,7 @@ router.put("/enable", (req, res) => __awaiter(void 0, void 0, void 0, function* 
             where: { id: id },
             data: { enable: true },
         });
-        res.status(200).send(`Shelter ${id} enabled successfully`);
+        res.status(200).send({ message: `Shelter ${id} enabled successfully` });
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
@@ -168,7 +168,7 @@ router.put("/disable", (req, res) => __awaiter(void 0, void 0, void 0, function*
             where: { id: id },
             data: { enable: false },
         });
-        res.status(200).send(`Shelter ${id} disabled successfully`);
+        res.status(200).send({ message: `Shelter ${id} disabled successfully` });
     }
     catch (error) {
         res.status(400).send("ERROR: There was an unexpected error.");
