@@ -23,8 +23,8 @@ const ProfilePanel = () => {
 				<Menu as="div" className="w-[60px] outline-none">
 					<div>
 						<Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-800">
-							<h2 className="absolute right-[70px] mt-[10px]">
-								{userDetail.nickname}
+							<h2 className="absolute right-[70px] mt-[10px] mr-[20px]">
+								{userDetail.name}
 							</h2>
 							<div className="w-[40px]">
 								<img

@@ -79,7 +79,9 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
             const shelters = yield prisma.shelter.findMany({
                 where: {
                     enable: true,
-                    animals: filter === null || filter === void 0 ? void 0 : filter.animals,
+                    listAnimals: {
+                        has: filter === null || filter === void 0 ? void 0 : filter.animals
+                    },
                     country: filter === null || filter === void 0 ? void 0 : filter.country,
                     city: filter === null || filter === void 0 ? void 0 : filter.city,
                     name: {
@@ -183,7 +185,7 @@ router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
-                animals: bodyShelter.animals,
+                listAnimals: bodyShelter.listAnimals,
                 city: bodyShelter.city,
                 lat: bodyShelter.lat,
                 lon: bodyShelter.lon,
@@ -270,6 +272,7 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 city: bodyShelter.city,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
+                listAnimals: bodyShelter.listAnimals,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
                 goal: bodyShelter.goal,
