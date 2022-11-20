@@ -94,19 +94,18 @@ const CardPost = ({
 									)}
 								</h2>
 							</Link>
-
+							
 							<div className="flex flex-row">
 								<Link to={`/${shelterId}/profile`}>
 									<p className="px-2 py-1 mb-2 flex text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:shadow-md hover:shadow-red-400">
 										{shelter}
 									</p>
 								</Link>
-
 								<small className="ml-[10px] px-2 py-1 h-[28px] flex text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
 									{getTimeAgo(createdAt)}
 								</small>
 							</div>
-						</div>	
+						</div>
 					</div>
 
 					<div className="flex flex-col w-full py-[20px] px-[70px] font-normal text-justify text-gray-900 text-md">
