@@ -2,9 +2,11 @@ import SubsCard from "./SubsCard"
 import { TbReportMoney } from "react-icons/tb"
 import { AiFillStar } from "react-icons/ai"
 import { useSelector } from "react-redux"
+import { useGetUserByIdQuery } from "../../redux/api/users"
 
 const SubscriptorsBar = () => {
 	const { isAuth, userDetail } = useSelector((state) => state.localStorage.userState)
+	const {data: user, isLoading, error} = useGetUserByIdQuery(userDetail.id)
 
 	return (
 		<div className="mt-[40px] flex h-[900px] w-[350px] bg-white rounded-tr-[30px] shadow-[16px_0px_44px_15px_rgba(255,213,201,0.85)] overflow-y-hidden">
@@ -23,7 +25,7 @@ const SubscriptorsBar = () => {
 						</div>
 						<div className="mt-[35px] block mx-auto w-[280px]">
 							{isAuth ?
-								(userDetail?.following?.map((shelter) => (
+								(user?.following?.map((shelter) => (
 									<SubsCard
 										key={shelter.id}
 										id={shelter.id}
@@ -48,7 +50,7 @@ const SubscriptorsBar = () => {
 
 						<div className="mt-[20px] block mx-auto pb-[40px]">
 							{isAuth ?
-								(userDetail?.following?.map((shelter) => (
+								(user?.following?.map((shelter) => (
 									<SubsCard
 										key={shelter.id}
 										id={shelter.id}
