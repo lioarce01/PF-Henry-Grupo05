@@ -74,6 +74,13 @@ router.get("/:id", async (req, res) => {
                     where: {
                         enable: state
                     },
+                    include: {
+                        Comment:{
+                            where: {
+                                enable: true
+                            }
+                        }
+                    }
                 } 
             }
         });

@@ -28,7 +28,10 @@ const UserProfile = () => {
 	useEffect(() => {
 		getUserById(userId);
 	}, [getUserById, userId]);
-	console.log(details, isOpen);
+	console.log('details:');
+	console.log(details);
+	console.log('userDetail');
+	console.log(userDetail);
 
 	const manageSheltersFollowedButton = () => {
 		setIsOpen(true)
@@ -160,6 +163,8 @@ const UserProfile = () => {
 						details?.posts?.length > 0 ?
 							<div class="ml-4 overflow-auto max-h-[39rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
 								{details?.posts?.map((post) => {
+									console.log('post');
+									console.log(post);
 									return (
 										<UserProfileCardPost
 											key={post.id}
@@ -167,9 +172,13 @@ const UserProfile = () => {
 											profilePic={details.profilePic}
 											postImage={post.image}
 											author={details.name}
+											shelter={details.Shelter[0].name}
+											shelterId={details.Shelter[0].id}
+											authorRole={details.role}
 											content={post.content}
 											likes={post.likes}
 											createdAt={post.createdAt}
+											comments={post.Comment.length}
 											authorId={post.authorId}
 										/>
 									);
