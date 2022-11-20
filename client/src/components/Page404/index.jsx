@@ -1,15 +1,23 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 const Page404 = () => {
   return (
-    <section className="flex items-center h-full p-16 dark:bg-gray-900 dark:text-gray-100">
+    <>
+   
+    <section className="flex items-center justify-center h-screen p-16 ">
+      
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
         <div className="max-w-md text-center">
-        
-          <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600 text-neutral-600">
-            <span className="sr-only text-neutral-600">Error</span>404
-          </h2>
-          
+          <div className="flex flex-col items-center justify-center">
+            <img className="w-[15rem]"
+              src="https://i.pinimg.com/originals/00/65/ee/0065ee133294c73fe29dbab81dc6acc9.png"
+              alt=""
+            />
+            <h2 className="mb-8 font-extrabold text-9xl  text-[#000]">
+              <span className="sr-only text-neutral-600">Error</span>404
+            </h2>
+          </div>
           <p className="text-2xl font-semibold md:text-3xl text-neutral-600">
             Sorry, we couldn't find this page.
           </p>
@@ -18,12 +26,13 @@ const Page404 = () => {
           </p>
 
           <Link to="/home">
-            <button className="">back to homepage</button>
+            <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">back to homepage</button>
           </Link>
+          
         </div>
-        
       </div>
     </section>
+    </>
   );
 };
 
