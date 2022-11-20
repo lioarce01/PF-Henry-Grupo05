@@ -45,7 +45,7 @@ function ModalUpdateUser({isOpen, setIsOpen, userId}) {
                 leaveTo="opacity-0 scale-95"
             >
                 <Dialog.Panel className=" max-w-fit transform overflow-hidden rounded-2xl text-left align-middle  transition-all flex flex-row">
-                    <div className='w-[60vw] h-[70vh] bg-[#fff5f4] my-auto p-10 overflow-y-scroll z-10 flex flex-row flex-wrap justify-center scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md'>
+                    <div className='w-auto max-w-[60vw] h-auto bg-[#fff5f4] my-auto p-10 overflow-y-scroll z-10 flex flex-row flex-wrap justify-center scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md'>
                         <h3 className='text-black font-bold text-[3em] z-20 w-full h-fit mb-0 text-center drop-shadow-md'>Following</h3>
                         { details?.following.length > 0 ?
                             details.following.map((shelter) => {

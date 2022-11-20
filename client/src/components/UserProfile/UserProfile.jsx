@@ -49,7 +49,6 @@ const UserProfile = () => {
 	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
 		initialValues: {
 			name: '',
-			email: '',
 		},
 		validationSchema: userSchema,
 		onSubmit,
@@ -124,7 +123,7 @@ const UserProfile = () => {
 								</div>
 							}
 							<div className="flex flex-row justify-center gap-6 content-end mt-4">
-								{ details?.followers?.length > 0 ?
+								{ details?.shelterFollow?.length > 0 ?
 									<button className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center rounded-md hover:bg-[#f7dfdc88] duration-300" onClick={manageSheltersFollowedButton}>
 										<span>
 											{details?.shelterFollow?.length}
