@@ -12,12 +12,13 @@ const About = () => {
       <Navbar/>
       <div className="w-full bg-[#e6daca] h-[1px]"/>
       <h1 className="mt-8 text-center text-5xl font-bold text-[#462312] mb-12">About Us</h1>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-5 lg:gap-xl-9 gap-y-16 px-8 mx-auto justify-items-center">
+      <div className="flex flex-row flex-wrap m-10 gap-x-32 gap-y-16 justify-items-center justify-center">
         {team.map((person, index) => <TeamCard key={index} github={person.github} linkedin={person.linkedin} image={person.image} name={person.name} phrase={person.phrase} />)}
       </div>
       <Footer/>
     </>
   );
 };
-
+// className="flex flex-row flex-wrap m-10 gap-x-32 gap-y-16 justify-items-center justify-around"
+//className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-5 lg:gap-xl-9 gap-y-16 px-8 mx-auto justify-items-center"
 export default About;
