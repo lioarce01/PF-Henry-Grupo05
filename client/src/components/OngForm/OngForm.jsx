@@ -1,5 +1,5 @@
 import Swal from "sweetalert2"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import location from './location'
 import { useFormik } from "formik"
 import Navbar from "../Navbar/Navbar"
@@ -14,23 +14,26 @@ import { addShelterAction } from '../../redux/slices/manageUsers/actions';
 const OngForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate()
-
+	const [listAnimals, setListAnimals] = useState([])
 	const [createShelter, { data1, isLoading, error }] = useAddShelterMutation();
 	const user = useSelector(state => state.localStorage.userState)
-	const { getAccessTokenSilently, loginWithPopup } = useAuth0()
+	const { getAccessTokenSilently, loginWithPopup } = useAuth0();
 	const [image, setImage] = useState("")
+	
+	useEffect(()=>{
+		if (user.userDetail.Shelter.length) {
+			Swal.fire({
+				icon: 'error', title: 'You already own a shelter',
+				preConfirm: () => {
+					navigate(`/${user.userDetail.Shelter[0].id}/profile`)
+				}
+			})
+		}
+	},[])
 
-	if (user.userDetail.Shelter.length) {
-		Swal.fire({
-			icon: 'error', title: 'You already own a shelter',
-			preConfirm: () => {
-				navigate(`/${user.userDetail.Shelter[0].id}/profile`)
-			}
-		})
-	}
-
+	console.log(user)
 	const onSubmit = async () => {
-		if (! user.isAuth) {
+		if (!user.isAuth) {
 			Swal.fire({ icon: 'error', title: 'You need to be logged in to create a shelter' })
 			setTimeout(async () => {
 				navigate("/home")
@@ -38,18 +41,18 @@ const OngForm = () => {
 			}, 4500)
 
 		}
-
-		if (user.isAuth && ! user.userDetail.Shelter.length) {
+		if (user.isAuth && !user.userDetail.Shelter.length) {
 			const data = await location({ address: values.address, city: values.city, country: values.country });
 			const { lat, lon } = data;
-
 			const accessToken = await getAccessTokenSilently()
-			const newShelter = { ...values, authorId: user.userDetail.id, profilePic: image, lat, lon };
+			const newShelter = { ...values, authorId: user.userDetail.id, profilePic: image, lat, lon, listAnimals };
 			const newShelterCreated = await createShelter({ accessToken, newShelter }).unwrap()
-
 			dispatch(addShelterAction(newShelterCreated));
-			Swal.fire({ icon: 'success', title: 'Shelter Created' })
-			navigate("/home")
+			await Swal.fire({ icon: 'success', title: 'Shelter Created',
+				preConfirm: () => {
+					navigate("/home")
+				} 
+			})
 		}
 	}
 
@@ -58,7 +61,6 @@ const OngForm = () => {
 			name: "",
 			description: "",
 			city: "",
-			listAnimals: [],
 			country: "",
 			goal: 1,
 			address: "",
@@ -67,8 +69,18 @@ const OngForm = () => {
 
 		validationSchema: ongSchema,
 		onSubmit,
-	})
-
+	});
+    console.log({ ...values, authorId: user.userDetail.id, profilePic: image, listAnimals });
+	const handleSelect =(e)=>{
+		e.preventDefault();
+		if(listAnimals.includes(e.target.value)) return;
+		setListAnimals([...listAnimals, e.target.value])
+	}
+	const handlerDelete = (e) =>{
+            setListAnimals(
+                listAnimals.filter(a => a !== e.target.value)
+			);
+	}
 	return (
 		<div className="w-full min-h-screen h-fit bg-[#fff5f4]">
 			<div>
@@ -96,7 +108,7 @@ const OngForm = () => {
 										placeholder="Add name..."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg[#f8cdcd] border border-gray-300 text-black text-sm rounded-lg focus:bg[#f8cdcd] focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd] dark:border-gray-600  dark:text-black dark:focus:bg[#f8cdcd] dark:focus:border-blue-500"
+										className="bg[#f8cdcd] w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:bg[#f8cdcd] focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd] dark:border-gray-600  dark:text-black dark:focus:bg[#f8cdcd] dark:focus:border-blue-500"
 									/>
 									{errors.name && (
 										<p className="text-red-500 font-bold"> {errors.name}</p>
@@ -115,7 +127,7 @@ const OngForm = () => {
 										placeholder="Add country.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
 									/>
 									{errors.country && (
 										<p className="text-red-500 font-bold">{errors.country}</p>
@@ -123,7 +135,7 @@ const OngForm = () => {
 								</div>
 							</div>
 							<div className="w-full mb-6">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
+								<label className="block mb-2  text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
 									City
 								</label>
 								<div className="flex items-center">
@@ -134,7 +146,7 @@ const OngForm = () => {
 										placeholder="Add city.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
 									/>
 									{errors.city && <p className="text-red-500 font-bold">{errors.city}</p>}
 								</div>
@@ -151,7 +163,7 @@ const OngForm = () => {
 										placeholder="Add address.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
 									/>
 									{errors.address && (
 										<p className="text-red-500 font-bold">{errors.address}</p>
@@ -170,7 +182,7 @@ const OngForm = () => {
 										placeholder="Add website.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
 									/>
 									{errors.website && (
 										<p className="text-red-500 font-bold">{errors.website}</p>
@@ -190,49 +202,68 @@ const OngForm = () => {
 										placeholder="Add goal.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
 									/>
 									{errors.goal && <p className="text-red-500 font-bold">{errors.goal}</p>}
 								</div>
 							</div>
 							<div className="w-full mb-6">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black">
-									Animals:{" "}
+								<label className="block mb-2 text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
+									Animals you help:{" "}
 								</label>
 								<div className="flex items-center">
 
-									<form
+								<select
 										name="animals"
-										onChange={handleChange}
-										onBlur={handleBlur}
-										className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
-										<label>Select the types of animals you want to help:</label><br/>
-
-										<input type="checkbox" id="Dogs" name="Dogs" value="Dogs"/>
-										<label for="Dogs">Dogs</label><br/>
-
-										<input type="checkbox" id="Cats" name="Cats" value="Cats"/>
-										<label for="Cats">Cats</label><br/>
-
-										<input type="checkbox" id="Domestic Animals" name="Domestic Animals" value="Domestic Animals"/>
-										<label for="Domestic Animals">Domestic Animals</label><br/>
-
-										<input type="checkbox" id="Wild Animals" name="Wild Animals" value="Wild Animals"/>
-										<label for="Wild Animals">Wild Animals</label><br/>
-
-										<input type="checkbox" id="Farm Animals" name="Farm Animals" value="Farm Animals"/>
-										<label for="Farm Animals">Farm Animals</label><br/>
-									</form>
-
-									{errors.listAnimals && <p className="text-red-500 font-bold">{errors.listAnimals}</p>}
+										onChange={(e) => {handleSelect(e)}}
+										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+										<option disabled selected>
+											Select the types of animals you help
+										</option>
+										<option value="Dogs" name="Dogs">
+											Dogs
+										</option>
+										<option value="Cats" name="Cats">
+											Cats
+										</option>
+										<option value="Domestic Animals" name="Domestic Animals">
+											Domestic Animals
+										</option>
+										<option value="Wild Animals" name="Wild Animals">
+											Wild Animals
+										</option>
+										<option value="Farm Animals" name="Farm Animals">
+											Farm Animals
+										</option>
+									</select>
+									{!listAnimals.length && <p className="text-red-500 font-bold">Required Animals</p>}
 								</div>
+								<div className="w-full mb-6 mt-6">
+									{
+										!listAnimals.length ? '' : (
+											<div >
+												<label className="block mb-2 text-xl font-bold text-black dark:text-black">Remove animals you help: </label>
+												<div className="w-3/4 flex items-center justify-around">
+													{	
+														listAnimals.map( a=>
+															<button value={a} name={a} onClick={(e) =>{handlerDelete(e)}}
+															className="pt-1 pb-1 pl-2 w-fit pr-2 mr-4 mt-2 text-base transition  border border-[#f8cdcd] bg-[#fff5f4] rounded-md hover:bg-[#f8cdcd] border border-[#fffefe] hover:text-black duration 300"
+																> X {a}</button>
+														)
+													}
+												</div>
+											</div>
+										)
+									}
+								</div>
+									
 							</div>
 						</div>
 
 						<div className="flex flex-col w-full h-full">
 							<div className="grid grid-cols-1 space-y-2">
 								<div>
-									<label className="text-xl  font-bold text-black tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500">
+									<label className="text-xl pb-6 font-bold text-black tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500">
 										Description
 									</label>
 									<textarea
@@ -248,7 +279,7 @@ const OngForm = () => {
 									)}
 								</div>
 
-								<div>
+								<div className="flex flex-col items-center p-14">
 									<UploadImage image={image} setImage={setImage} />
 									{!image.length &&
 										<p className="text-red-500 font-bold">Required Image</p>}
@@ -263,8 +294,8 @@ const OngForm = () => {
 						values.address !== "" &&
 						values.city !== "" &&
 						values.country !== "" &&
-						values.listAnimals.length &&
-						image.length ? (
+						image.length &&
+						listAnimals.length ? (
 						<div className="mt-0">
 							<button
 								type="submit"
