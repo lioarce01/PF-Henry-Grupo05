@@ -30,48 +30,49 @@ const CardPost = ({
 	shelterId,
 }) => {
 	const { likes: userLikes } = useSelector(selectUser)
-	const [likesActuals, setLikesActuals] = useState(likes)
+	const [likesActuals, setLikesActuals] = useState(likes);
 	const dispatch = useDispatch()
-
 	const myLike = () => {
 		if (userLikes?.length < 1) return false
 		if (userLikes?.includes(id)) return true
 		return false
 	}
-
-	const [like, setLike] = useState(myLike)
-	const [isOpen, setIsOpen] = useState(false)
-	const { isAuth } = useSelector((state) => state.localStorage.userState)
-	const closeModal = () => setIsOpen(false)
+	const [like, setLike] = useState(myLike);
+	const [isOpen, setIsOpen] = useState(false);
+	const { isAuth } = useSelector((state) => state.localStorage.userState);
+	const closeModal = () => setIsOpen(false);
 
 	const { getAccessTokenSilently } = useAuth0()
 
-	const [updateLikes, {}] = useUpdatePostLikesMutation()
+	const [updateLikes, { }] = useUpdatePostLikesMutation();
 
 	const toggleLike = async () => {
-		if (!isAuth) return toast.error("you are not logged in")
+		if (!isAuth) return toast.error("you are not logged in");
 
-		setLike(!like)
-		like ? setLikesActuals(likesActuals - 1) : setLikesActuals(likesActuals + 1)
+		setLike(!like);
+		like
+			? setLikesActuals(likesActuals - 1)
+			: setLikesActuals(likesActuals + 1);
 		const accessToken = await getAccessTokenSilently()
 		like
 			? updateLikes({ post: { id, likes: likesActuals - 1 }, accessToken })
 			: updateLikes({ post: { id, likes: likesActuals + 1 }, accessToken })
 
-		like ? dispatch(removeLikeAction(id)) : dispatch(addLikeAction(id))
-	}
+		like
+			? dispatch(removeLikeAction(id))
+			: dispatch(addLikeAction(id))
+	};
 
 	useEffect(() => {
-		setLike(like)
-	}, [like])
+		setLike(like);
+	}, [like]);
 
 	useEffect(() => {
-		setLikesActuals(likes)
-	}, [likes])
+		setLikesActuals(likes);
+	}, [likes]);
 
 	if (!image)
-		image =
-			"https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
+		image = "https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY";
 
 	return (
 		<div className="flex flex-col">
@@ -84,8 +85,8 @@ const CardPost = ({
 							alt="avatar"
 						/>
 
-						<div className="flex flex-col items-start">
-							<Link to={`/users/${authorId}`} className="">
+						<div className="flex flex-col items-start mt-[-5px]">
+							<Link to={`/users/${authorId}`}>
 								<h2 className="flex items-center justify-center mb-1 text-lg font-bold text-[#474747] border-b border-[#fffcf7] hover:border-black transition duration-300">
 									{author}{" "}
 									{authorRole === "Admin" && (
@@ -93,14 +94,17 @@ const CardPost = ({
 									)}
 								</h2>
 							</Link>
-							<Link to={`/${shelterId}/profile`}>
-								<p className="px-2 py-1 mb-2 text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:shadow-md hover:shadow-red-400">
-									{shelter}
-								</p>
-							</Link>
-							<small className="px-2 py-0.5 text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
-								{getTimeAgo(createdAt)}
-							</small>
+							
+							<div className="flex flex-row">
+								<Link to={`/${shelterId}/profile`}>
+									<p className="px-2 py-1 mb-2 flex text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:shadow-md hover:shadow-red-400">
+										{shelter}
+									</p>
+								</Link>
+								<small className="ml-[10px] px-2 py-1 h-[28px] flex text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
+									{getTimeAgo(createdAt)}
+								</small>
+							</div>
 						</div>
 					</div>
 
@@ -113,6 +117,7 @@ const CardPost = ({
 							anchorClass="show-more-less-clickable"
 							expanded={false}
 							truncatedEndingComponent={"... "}>
+
 							{content}
 						</ShowMoreText>
 					</div>
@@ -131,6 +136,7 @@ const CardPost = ({
 								<button
 									className="flex flex-row items-center border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300e"
 									onClick={toggleLike}>
+
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
 									<AiFillHeart className="w-5 h-5 text-red-600" />
 								</button>
@@ -138,6 +144,7 @@ const CardPost = ({
 								<button
 									className="flex flex-row items-center border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300"
 									onClick={toggleLike}>
+
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
 									<AiOutlineHeart className="w-5 h-5 text-red-600" />
 								</button>
@@ -148,6 +155,7 @@ const CardPost = ({
 							<button
 								onClick={() => setIsOpen(true)}
 								className="flex flex-row items-center pr-4 border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300">
+									
 								<p className="mr-[7px] mb-[1px] font-[800]">{comments}</p>
 								<MdComment className="w-5 h-5 text-[#6D91E9]" />
 							</button>
@@ -165,7 +173,7 @@ const CardPost = ({
 				likes={likesActuals}
 			/>
 		</div>
-	)
-}
+	);
+};
 
 export default CardPost;

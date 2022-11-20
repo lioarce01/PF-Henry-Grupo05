@@ -23,8 +23,8 @@ const SubscriptorsBar = () => {
 								</div>
 							</div>
 							<div className="mt-[35px] block mx-auto w-[280px]">
-								{isAuth &&
-									userDetail?.following?.map((shelter) => (
+								{isAuth ?
+									(userDetail?.following?.map((shelter) => (
 										<SubsCard
 											key={shelter.id}
 											id={shelter.id}
@@ -32,7 +32,7 @@ const SubscriptorsBar = () => {
 											goal={shelter.goal}
 											image={shelter.profilePic}
 										/>
-									))}
+									))) : <h1 className="text-center font-semibold text-[#201008]">Log in to sub to shelters.</h1>}
 							</div>
 						</div>
 						<div className="flex flex-col">
@@ -47,9 +47,9 @@ const SubscriptorsBar = () => {
 								</div>
 							</div>
 
-							<div className="mt-[20px] block mx-auto">
-								{isAuth &&
-									userDetail?.following?.map((shelter) => (
+							<div className="mt-[20px] block mx-auto pb-[100px]">
+								{isAuth ?
+									(userDetail?.following?.map((shelter) => (
 										<SubsCard
 											key={shelter.id}
 											id={shelter.id}
@@ -57,7 +57,7 @@ const SubscriptorsBar = () => {
 											goal={shelter.goal}
 											image={shelter.profilePic}
 										/>
-									))}
+									))) : <h1 className="text-center font-semibold text-[#201008]">Log in to follow shelters.</h1>}
 							</div>
 						</div>
 					</div>

@@ -48,9 +48,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __importDefault(require("./src/index"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-// const PORT = process.env.PORT || 3001
-const PORT = 3001;
-//const PORT = process.env.PORT || 3002
+const PORT = process.env.PORT || 3001;
 index_1.default.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });

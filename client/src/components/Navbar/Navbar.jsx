@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import { BsSun } from "react-icons/bs"
 import { HiMoon } from "react-icons/hi"
 import { GrHomeRounded } from "react-icons/gr"
-
+import PostFilters from "../Home/PostFilters"
 import { useSelector } from "react-redux"
 import ModalCreatePost from "../Home/ModalCreatePost"
 import ProfilePanel from "./ProfilePanel"
@@ -38,10 +38,9 @@ const Navbar = () => {
 						</Link>
 					</div>
 					<div
-						className={`${
-							location.pathname === "/home" &&
+						className={`${location.pathname === "/home" &&
 							"pb-[5px] border-b-[3px] border-[#d45f37]"
-						} flex flex-row items-center justify-center ml-4 lg:ml-[100px] md:ml-[120px]`}>
+							} flex flex-row items-center justify-center ml-4 lg:ml-[100px] md:ml-[120px]`}>
 						<Link to="/home">
 							<GrHomeRounded className="text-[#201008] w-[25px] h-[25px] flex flex-row" />
 						</Link>
@@ -55,17 +54,20 @@ const Navbar = () => {
 					)}
 				</div>
 				<div className="flex flex-row items-center">
-					<div className="mr-48">
-						{isAuth &&
-							location.pathname === "/home" &&
-							userDetail?.Shelter?.length > 0 && (
-								<button
-									onClick={() => setIsOpen(true)}
-									className="flex flex-row items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#d45f37] border border-transparent rounded-[30px] shadow-sm hover:bg-[#e0643a] transition duration-300">
-									Create Post
-								</button>
-							)}
-					</div>
+					{isAuth && location.pathname === "/home" && (
+					<div className="mr-[220px] flex flex-row">
+						<div className="flex mr-[20px] mt-[2px]">
+							<PostFilters />
+						</div>
+
+						{userDetail?.Shelter?.length > 0 &&(
+						<button
+							onClick={() => setIsOpen(true)}
+							className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#d45f37] border border-transparent rounded-[30px] shadow-sm hover:bg-[#e0643a] transition duration-300">
+							Create Post
+						</button>)}
+					</div>)}
+					
 					<div className="mx-20">
 						{toggle ? (
 							<button

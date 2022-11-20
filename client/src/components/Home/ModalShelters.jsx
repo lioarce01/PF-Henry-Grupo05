@@ -10,7 +10,8 @@ const ModalShelters = ({ setOpen }) => {
 
     const { data: allShelters } = useGetSheltersQuery({name: "", enabled: true})
     const [shelters, setShelters] = useState(allShelters)
-    
+    console.log(shelters[0])
+
     const closeModal = () => setOpen(false)
 
     return (
@@ -54,7 +55,7 @@ const ModalShelters = ({ setOpen }) => {
                                                 </div>
 
                                                 <div className="flex flex-row">
-                                                    <p className="flex mr-[2px] text-[#c46241]">{s.posts?.length}</p>
+                                                    <p className="flex mr-[4px] text-[#c46241]">{s.posts?.length}</p>
                                                     <FaComments className="text-[#c46241] flex mt-[5px]" />
                                                 </div>
                                             </div>

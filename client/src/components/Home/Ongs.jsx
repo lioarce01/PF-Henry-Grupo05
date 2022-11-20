@@ -30,9 +30,7 @@ const Ongs = () => {
 						<div className="mt-[40px]">
 							{topShelters?.map((shelter) => {
 								return (
-									<div
-										key={shelter.id}
-										className="ml-[30px] bg-white mt-[20px] rounded-[40px] pl-[20px] pt-[20px] pr-[20px] pb-[15px] mr-[30px] shadow-[0px_19px_23px_-6px_rgba(235,174,158,1)]">
+									<div key={shelter.id} className="ml-[30px] bg-white mt-[20px] rounded-[40px] pl-[20px] pt-[20px] pr-[20px] pb-[15px] mr-[30px] shadow-[0px_19px_23px_-6px_rgba(235,174,158,1)]">
 										<div className="flex flex-row">
 											<img
 												src={shelter.profilePic}
@@ -74,7 +72,7 @@ const Ongs = () => {
 						</div>
 					)}
 
-					<div className="pb-[130px]">
+					<div className="pb-[40px]">
 						<div className="mt-[40px] px-[20px]">
 							<h2 className="flex flex-col items-start font-mono tracking-tight font-bold text-[#201008]">
 								SUGGESTIONS
