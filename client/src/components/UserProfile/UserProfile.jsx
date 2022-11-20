@@ -28,7 +28,10 @@ const UserProfile = () => {
 	useEffect(() => {
 		getUserById(userId);
 	}, [getUserById, userId]);
-	console.log(details, isOpen);
+	console.log('details:');
+	console.log(details);
+	console.log('userDetail');
+	console.log(userDetail);
 
 	const manageSheltersFollowedButton = () => {
 		setIsOpen(true)
@@ -169,8 +172,8 @@ const UserProfile = () => {
 											profilePic={details.profilePic}
 											postImage={post.image}
 											author={details.name}
-											shelterName={userDetail.Shelter[0].name}
-											shelterId={userDetail.Shelter[0].id}
+											shelter={details.Shelter[0].name}
+											shelterId={details.Shelter[0].id}
 											authorRole={details.role}
 											content={post.content}
 											likes={post.likes}
