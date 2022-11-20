@@ -46,13 +46,10 @@ router.get('/', async(req: ReqGet, res) => {
 router.get('/topFive', async(req: ReqGet, res)=>{
     // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
     const cant = Math.floor(req.query.cant)
-    const state = true;
     
     try {
         const shelters = await prisma.shelter.findMany({
-            where:{
-                enable: state
-            },
+            where: { enable: true },
             take: cant ? cant : 6,
             include: { followers: true, posts: true },
             orderBy: { budget: 'desc' }
@@ -95,6 +92,7 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
             
             const shelters = await prisma.shelter.findMany({
                 where: {
+                    enable: true,
                     animals: filter?.animals,
                     country: filter?.country,
                     city:    filter?.city,
@@ -103,7 +101,14 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
                         mode: 'insensitive'
                     },
                 },
-                include: { followers: true },
+                include: { 
+                    followers: true, 
+                    posts: {
+                        where: {
+                            enable: true
+                        }
+                    } 
+                },
                 orderBy: order === "followers" ? {followers: {_count: orderType}} : { [order]: orderType }
             })
 
@@ -137,7 +142,7 @@ router.get("/:id", async (req, res) => {
                     include: {
                         author: true,
                         Comment: {
-                            where:{
+                            where: {
                                 enable: state
                             }
                         }
