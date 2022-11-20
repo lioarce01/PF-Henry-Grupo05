@@ -93,7 +93,7 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
             const shelters = await prisma.shelter.findMany({
                 where: {
                     enable: true,
-                    listAnimals: {
+                    listAnimals: ! filter?.animals ? undefined : {
                         has: filter?.animals
                     },
                     country: filter?.country,

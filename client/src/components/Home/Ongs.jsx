@@ -9,6 +9,11 @@ const Ongs = () => {
 	const { data: shelters } = useGetSheltersQuery(({ name: "", enabled: true }));
 	const { data: topShelters, topIsSuccess } = useTopFiveSheltersQuery("3");
 
+	// generates a random number between 5 and total shelters. then, that number is used
+	// to render some shelters, always different, so the user gets the feeling of genuine
+	// randomization and suggestion.
+	const cap = Math.floor(Math.random() * (shelters?.length-1 - 5 + 1) + 5)
+
 	const [open, setOpen] = useState(false)
 
 	const displayShelters = () => setOpen(true)
@@ -84,7 +89,7 @@ const Ongs = () => {
 							</h2>
 						</div>
 
-						{shelters?.slice(0, 5).map((s) => {
+						{shelters?.slice(cap-5, cap).map((s) => {
 							return (
 								<div key={s.id} className="flex mt-[20px] ml-[20px]">
 									<div className="flex flex-row">
