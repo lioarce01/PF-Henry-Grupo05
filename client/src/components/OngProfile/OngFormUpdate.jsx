@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   useDisableShelterMutation,
   useEnableShelterMutation,
@@ -13,6 +13,8 @@ import { ongSchema } from "./validationOngFormUpdate.js";
 import UploadImage from "./UploadImage";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { MdDomainDisabled, MdOutlineDomain } from "react-icons/md";
+import { useLazyGetUserByIdQuery } from "../../redux/api/users";
+import { setUserAction } from "../../redux/slices/manageUsers/actions";
 
 const OngFormUpdate = ({
   name,
@@ -30,6 +32,9 @@ const OngFormUpdate = ({
   const [image, setImage] = useState(details?.profilePic);
   const [toggle, setToggle] = useState(true);
   const { userDetail } = useSelector((state) => state.localStorage.userState);
+  const [getUser] = useLazyGetUserByIdQuery()
+  const dispatch = useDispatch()
+  
 
   useEffect(() => {
     getShelterById(id);
@@ -41,6 +46,18 @@ const OngFormUpdate = ({
 
   const [enableShelter] = useEnableShelterMutation();
   const [disableShelter] = useDisableShelterMutation();
+
+  const enable = async (id) => {
+	await enableShelter(id).unwrap()
+	let newUser = await getUser(userDetail.id).unwrap()
+	dispatch(setUserAction(newUser, true))
+  }
+
+  const disable = async(id) => {
+	await disableShelter(id).unwrap()
+	let newUser = await getUser(userDetail.id).unwrap()
+	dispatch(setUserAction(newUser, true))
+  }
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -167,7 +184,7 @@ const OngFormUpdate = ({
 					<>
 						{shelter.enable ? (
 							<button
-								onClick={() => disableShelter({ shelterId: id })}
+								onClick={() => disable({ shelterId: id })}
 								className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border">
 								Disable
 								<span className="pl-2">
@@ -176,7 +193,7 @@ const OngFormUpdate = ({
 							</button>
 						) : (
 							<button
-								onClick={() => enableShelter({ shelterId: id })}
+								onClick={() => enable({ shelterId: id })}
 								className="bg-transparent hover:bg-[#24c531] bg-[#22b92f] transition duration-300 text-white font-semibold hover:text-white py-1 px-4 border hover:border-transparent rounded flex flex-row items-center justify-center">
 								Enable
 								<span className="pl-2">
