@@ -49,13 +49,12 @@ const Navbar = () => {
 				</div>
 
 				<div className="flex flex-row items-center">
-					{isAuth && location.pathname === "/home" && (
+					{location.pathname === "/home" && (
 					<div className="mr-[130px] flex flex-row">
 						<div className="flex mr-[20px] mt-[2px]">
 							<PostFilters />
 						</div>
-						{console.log(userDetail)}
-						{userDetail?.Shelter?.length > 0 && userDetail?.Shelter[0].enable === true ? (
+						{isAuth && userDetail?.Shelter?.length > 0 && userDetail?.Shelter[0].enable === true ? (
 						<button
 							onClick={() => setIsOpen(true)}
 							className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#D45F37] border border-transparent rounded-[30px] shadow-sm hover:bg-[#e0643a] transition duration-300">

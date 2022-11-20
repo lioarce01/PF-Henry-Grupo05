@@ -24,6 +24,7 @@ const ONGFilters = ({ setShelters }) => {
 		if (listFilter.current?.value === 'animals') {
 			setDetails(['Dogs', 'Cats', 'Wild Animals', 'Farm Animals', 'Domestic Animals'])
 		} else setDetails(Array.from(new Set(shelters?.map(s => s[listFilter.current?.value]))))
+		listDetail.current.selectedIndex = 0
 	}
 
 	const handleSelect = async e => {
