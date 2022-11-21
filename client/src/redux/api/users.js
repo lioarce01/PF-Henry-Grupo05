@@ -18,10 +18,7 @@ export const usersApi = createApi({
             providesTags: ["UserId"]
         }),
         getUserByEmail: builder.query({
-            query: (email) => {   
-                console.log(email)
-                return`/users/email/${email}`},
-            providesTags: [""]
+            query: (email) => `/users/email/${email}`,
         }),
 
         getUserFollowing: builder.query({
