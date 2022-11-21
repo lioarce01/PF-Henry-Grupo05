@@ -76,7 +76,7 @@ function LocationMarker ({center, name}) {
 
   if (lat !== null && lon !== null) {
 		return (
-			<div className="p-1 h-80 rounded-2xl w-[600px] mb-5">
+			<div className="h-80 w-[600px] shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5">
 				<MapContainer
 					center={position}
 					zoom={14}
@@ -104,7 +104,7 @@ function LocationMarker ({center, name}) {
 		)
 	} else
 		return (
-			<div className="h-80 w-full shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5">
+			<div className="h-80 w-[600px] shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5">
 				<MapContainer
 					center={center}
 					zoom={14}
