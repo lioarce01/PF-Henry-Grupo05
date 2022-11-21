@@ -17,6 +17,12 @@ export const usersApi = createApi({
             query: (userId) => `/users/${userId}`,
             providesTags: ["UserId"]
         }),
+        getUserByEmail: builder.query({
+            query: (email) => {   
+                console.log(email)
+                return`/users/email/${email}`},
+            providesTags: [""]
+        }),
 
         getUserFollowing: builder.query({
             query: (userId) => `/users/${userId}/following`,
@@ -105,5 +111,7 @@ export const {
     useSetFollowMutation,
     useDisableUserMutation,
     useEnableUserMutation,
-    useConvertAdminMutation
+    useConvertAdminMutation,
+    useGetUserByEmailQuery,
+    useLazyGetUserByEmailQuery
 } = usersApi;
