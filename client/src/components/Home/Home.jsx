@@ -4,6 +4,7 @@ import Ongs from './Ongs'
 import Posts from './Posts'
 import SubscriptorsBar from './SubscriptorsBar'
 import { Toaster } from 'react-hot-toast'
+import HomeChatBot from "./HomeChatBot"
 
 const Home = () => {
 	return (
@@ -19,6 +20,9 @@ const Home = () => {
 				</div>
 				<div>
 					<Ongs />
+				</div>
+				<div className="absolute bottom-1 right-4">
+					<HomeChatBot />
 				</div>
 			</div>
 		</div>
