@@ -35,7 +35,7 @@ const team = [
       name: "Nicolas P. Llosas",
       phrase: "Team Leader",
       image:
-        "https://avatars.githubusercontent.com/u/82287679?v=4",
+        "https://i.ibb.co/HP5Sgjx/nico-profile.jpg",
       linkedin: "https://www.linkedin.com/in/nico-llosas-estudiante-ingenieria-informatica/",
       github: "https://github.com/nllosas",
     },
