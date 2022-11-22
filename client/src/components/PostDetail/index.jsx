@@ -9,7 +9,7 @@ const Post = ({ postId, closeModal, setLike, like, likes }) => {
   const [toogle, setToogle] = useState(true);
 
   const { data: details, isFetching } = useGetPostByIdQuery(postId);
-
+  
   if (!details || Object.keys(details).length === 0) return;
 
 	return (
@@ -45,6 +45,7 @@ const Post = ({ postId, closeModal, setLike, like, likes }) => {
 							</div>
 							<div>
 								<Comments
+									postAuthorId={details.authorId}
 									isFetching={isFetching}
 									postId={postId}
 									details={details}
