@@ -86,9 +86,9 @@ const Comment = ({ content, author, id, postAuthorId }) => {
 																	onClick={() => setToggle(!toggle)}
 																	className={classNames(
 																		active
-																			? "bg-slate-200 text-gray-900"
+																			? `bg-slate-200 text-gray-900 `
 																			: "text-gray-700",
-																		"block w-full px-4 py-2 text-left text-sm"
+																		`block w-full px-4 py-2 text-left text-sm ${author.id !== userDetail.id && userDetail.role !== "Admin" ? "hidden" : ""}`
 																	)}>
 																	<div className="flex flex-row items-start justify-start">
 																		<span>
