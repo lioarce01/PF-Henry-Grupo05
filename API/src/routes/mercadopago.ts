@@ -57,7 +57,7 @@ router.get('/feedback', async function (req, res) {
 
         sendMailDonate(data.additional_info.items[0].description, shelter?.name!)
 
-        res.status(200).send("Approved payment")
+        res.status(200).json({status:200,data: data.additional_info.items[0].id})
     } else {
         res.status(403).send("Failed payment")
     }
