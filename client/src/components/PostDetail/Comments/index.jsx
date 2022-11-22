@@ -3,7 +3,8 @@ import { PuffLoader } from 'react-spinners';
 import AddComment from './AddComment';
 import Comment from './Comment';
 
-const Comments = ({ postId, details, isFetching }) => {
+const Comments = ({ postId, details, isFetching, postAuthorId }) => {
+	
   return (
 		<div>
 			<AddComment postId={postId} />
@@ -16,6 +17,7 @@ const Comments = ({ postId, details, isFetching }) => {
 				details.Comment.map((comment) => {
 					return (
 						<Comment
+						postAuthorId={postAuthorId}
 							key={comment.id}
 							postId={postId}
 							author={comment.author}
