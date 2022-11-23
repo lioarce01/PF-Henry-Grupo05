@@ -4,6 +4,7 @@ import Comments from "./Comments";
 import AuthorData from "./AuthorData";
 import PostData from "./PostData";
 import { useGetPostByIdQuery } from "../../redux/api/posts";
+import VideoPlayer from "../VideoPlayer";
 
 const Post = ({ postId, closeModal, setLike, like, likes }) => {
   const [toogle, setToogle] = useState(true);
@@ -15,7 +16,8 @@ const Post = ({ postId, closeModal, setLike, like, likes }) => {
 	return (
 		<div>
 			<div className="flex flex-row bg-white rounded-xl shadow-md w-[65rem] max-h-[50rem]">
-				<div className="w-[60%] py-20">
+			<div className="w-[60%] py-20">
+					{details.video && <VideoPlayer public_id={details.video}/>}
 					{details.image && (
 						<img
 							src={details.image}

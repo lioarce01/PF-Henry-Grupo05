@@ -19,7 +19,6 @@ const OngForm = () => {
 	const user = useSelector(state => state.localStorage.userState)
 	const { getAccessTokenSilently, loginWithPopup } = useAuth0();
 	const [image, setImage] = useState("")
-	console.log(user)
 	useEffect(()=>{
 		if(Object.entries(user.userDetail).length && user.userDetail.Shelter.length) {
 			Swal.fire({
@@ -70,15 +69,12 @@ const OngForm = () => {
 			description: "",
 			city: "",
 			country: "",
-			goal: 1,
 			address: "",
 			website: "",
 		},
-
 		validationSchema: ongSchema,
 		onSubmit,
 	});
-    console.log({ ...values, authorId: user.userDetail.id, profilePic: image, listAnimals });
 	const handleSelect =(e)=>{
 		e.preventDefault();
 		if(listAnimals.includes(e.target.value)) return;
@@ -90,25 +86,28 @@ const OngForm = () => {
 			);
 	}
 	return (
-		<div className="w-full min-h-screen h-fit bg-[#fff5f4]">
+		<div className="w-full min-h-screen h-fit bg-white">
 			<div>
 				<Navbar />
 			</div>
 
-			<div className="flex flex-col items-center justify-center min-w-full pt-14 md:col-span-2 md:mt-0">
+			<div className="flex flex-col items-center justify-center min-w-full pt-0 cursor-pointer">
 				<form
 					onSubmit={handleSubmit}
-					className="flex flex-col items-center justify-center h-auto min-w-full pt-14 md:col-span-2 md:mt-0">
-					<h1 className="text-4xl font-bold leading-6 text-black">
-						Create your Shelter
-					</h1>
-					<div className="flex flex-row w-full h-full p-14">
-						<div className="flex flex-col w-full h-full">
-							<div className="w-full mb-6 ">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
+					className="flex flex-col items-center justify-center h-auto min-w-full pt-14">
+						<div className="animate-tracking-animation">
+							<h1 className="text-6xl w-fit h-fit font-bold leading-6 text-black">
+								Create your Shelter
+							</h1>
+						</div>
+					
+					<div className=" w-full h-full p-14 2xl:flex flex-row">
+						<div className="flex flex-col w-full h-full items-center">
+							<div className="w-full flex flex-col p-2 mb-4 lg:px-14 xl:px-32 2xl:p-0">
+								<label className="block mb-2 text-xl font-bold text-black  after:content-['*'] after:ml-0.5 after:text-red-500 ">
 									Name
 								</label>
-								<div className="flex items-center w-full justify-arround">
+								<div className="flex flex-col items-start w-full justify-arround justify-items-start">
 									<input
 										type="text"
 										value={values.name}
@@ -116,18 +115,20 @@ const OngForm = () => {
 										placeholder="Add name..."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg[#f8cdcd] w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:bg[#f8cdcd] focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd] dark:border-gray-600  dark:text-black dark:focus:bg[#f8cdcd] dark:focus:border-blue-500"
-									/>
-									{errors.name && (
-										<p className="text-red-500 font-bold"> {errors.name}</p>
-									)}
+										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
+									/>									
+									<div className="w-full flex flex-start">
+										{errors.name && (
+											<p className="text-red-500 font-bold animate-errors-animation"> {errors.name}</p>
+										)}
+									</div>
 								</div>
 							</div>
-							<div className="w-full mb-6">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
+							<div className="w-full flex flex-col p-2 mb-4 lg:px-14 xl:px-32 2xl:p-0">
+								<label className="block mb-2 text-xl font-bold text-black  after:content-['*'] after:ml-0.5 after:text-red-500 ">
 									Country
 								</label>
-								<div className="flex items-center">
+								<div className="flex flex-col items-start w-full justify-arround justify-items-start">
 									<input
 										type="text"
 										value={values.country}
@@ -135,18 +136,20 @@ const OngForm = () => {
 										placeholder="Add country.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
 									/>
-									{errors.country && (
-										<p className="text-red-500 font-bold">{errors.country}</p>
-									)}
+									<div className="w-full flex flex-start ">
+										{errors.country && (
+											<p className="text-red-500 font-bold animate-errors-animation">{errors.country}</p>
+										)}
+									</div>
 								</div>
 							</div>
-							<div className="w-full mb-6">
-								<label className="block mb-2  text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
+							<div className="w-full flex flex-col p-2 mb-4 lg:px-14 xl:px-32 2xl:p-0">
+								<label className="block mb-2  text-xl font-bold text-black after:content-['*'] after:ml-0.5 after:text-red-500">
 									City
 								</label>
-								<div className="flex items-center">
+								<div className="flex flex-col items-start w-full justify-arround justify-items-start">
 									<input
 										type="text"
 										value={values.city}
@@ -154,16 +157,18 @@ const OngForm = () => {
 										placeholder="Add city.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
 									/>
-									{errors.city && <p className="text-red-500 font-bold">{errors.city}</p>}
+									<div className="w-full flex flex-start">
+										{errors.city && <p className="text-red-500 font-bold animate-errors-animation">{errors.city}</p>}
+									</div>
 								</div>
 							</div>
-							<div className="w-full mb-6">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
+							<div className="w-full flex flex-col p-2 mb-4 lg:px-14 xl:px-32 2xl:p-0 ">
+								<label className="block mb-2 text-xl font-bold text-black after:content-['*'] after:ml-0.5 after:text-red-500">
 									Address
 								</label>
-								<div className="flex items-center">
+								<div className="flex flex-col items-start w-full justify-arround justify-items-start ">
 									<input
 										type="text"
 										value={values.address}
@@ -171,18 +176,21 @@ const OngForm = () => {
 										placeholder="Add address.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
 									/>
-									{errors.address && (
-										<p className="text-red-500 font-bold">{errors.address}</p>
-									)}
+									<div className="w-full flex flex-start">
+										{errors.address && (
+											<p className="text-red-500 font-bold animate-errors-animation">{errors.address}</p>
+										)}
+									</div>
+									
 								</div>
 							</div>
-							<div className="w-full mb-6">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black">
+							<div className="w-full flex flex-col p-2 mb-4 lg:px-14 xl:px-32 2xl:p-0">
+								<label className="block mb-2 text-xl font-bold text-black ">
 									Website:{" "}
 								</label>
-								<div className="flex items-center">
+								<div className="flex flex-col items-start w-full justify-arround justify-items-start">
 									<input
 										type="text"
 										value={values.website}
@@ -190,42 +198,26 @@ const OngForm = () => {
 										placeholder="Add website.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
 									/>
-									{errors.website && (
-										<p className="text-red-500 font-bold">{errors.website}</p>
-									)}
+									<div className="w-full flex flex-start">
+										{errors.website && (
+											<p className="text-red-500 font-bold animation-pulse animate-errors-animation">{errors.website}</p>
+										)}
+									</div>
 								</div>
 							</div>
-							<div className="w-full mb-6">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
-									Goal
-								</label>
-								<div className="flex items-center">
-									<input
-										type="number"
-										value={values.goal}
-										name="goal"
-										min="1"
-										placeholder="Add goal.."
-										onChange={handleChange}
-										onBlur={handleBlur}
-										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#f8cdcd]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-									/>
-									{errors.goal && <p className="text-red-500 font-bold">{errors.goal}</p>}
-								</div>
-							</div>
-							<div className="w-full mb-6">
-								<label className="block mb-2 text-xl font-bold text-black dark:text-black after:content-['*'] after:ml-0.5 after:text-red-500">
+							<div className="w-full flex flex-col p-2 mb-4 lg:px-14 xl:px-32 2xl:p-0">
+								<label className="block mb-2 text-xl font-bold text-black after:content-['*'] after:ml-0.5 after:text-red-500">
 									Animals you help:{" "}
 								</label>
-								<div className="flex items-center">
+								<div className="flex flex-col items-start w-full justify-start justify-items-start">
 
 								<select
 										name="animals"
 										onChange={(e) => {handleSelect(e)}}
-										className="bg-gray-50 w-3/4 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg[#EEEEE6]  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
-										<option disabled selected>
+										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4">
+										<option value="disabled" name="disabled" disabled selected>
 											Select the types of animals you help
 										</option>
 										<option value="Dogs" name="Dogs">
@@ -244,19 +236,21 @@ const OngForm = () => {
 											Farm Animals
 										</option>
 									</select>
-									{!listAnimals.length && <p className="text-red-500 font-bold">Required Animals</p>}
+									<div className="w-full flex flex-start">
+										{!listAnimals.length && <p className="text-red-500 font-bold animate-errors-animation">Required Animals</p>}
+									</div>
 								</div>
 								<div className="w-full mb-6 mt-6">
 									{
 										!listAnimals.length ? '' : (
-											<div >
-												<label className="block mb-2 text-xl font-bold text-black dark:text-black">Remove animals you help: </label>
-												<div className="w-3/4 flex items-center justify-around">
+											<div className="w-full 2xl:w-3/4">
+												<label className="block mb-2 text-xl font-bold text-black">Remove animals you help: </label>
+												<div className="w-full flex items-center justify-evenly">
 													{	
 														listAnimals.map( a=>
 															<button value={a} name={a} onClick={(e) =>{handlerDelete(e)}}
-															className="pt-1 pb-1 pl-2 w-fit pr-2 mr-4 mt-2 text-base transition  border border-[#f8cdcd] bg-[#fff5f4] rounded-md hover:bg-[#f8cdcd] border border-[#fffefe] hover:text-black duration 300"
-																> X {a}</button>
+															className="pt-1 pb-1 pl-2 w-fit pr-2 mr-4 mt-2 text-base font-bold transition  border border-[#f06311] bg-[#fde0c6] rounded-md hover:bg-[#f34646] hover:text-white hover:animate-delete-animation"
+																> {a}</button>
 														)
 													}
 												</div>
@@ -268,10 +262,10 @@ const OngForm = () => {
 							</div>
 						</div>
 
-						<div className="flex flex-col w-full h-full">
-							<div className="grid grid-cols-1 space-y-2">
+						<div className="w-full flex flex-col mb-4 lg:px-14 xl:px-32 2xl:p-0">
+							
 								<div>
-									<label className="text-xl pb-6 font-bold text-black tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500">
+									<label className="text-xl mb-6 pb-6 font-bold text-black tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500">
 										Description
 									</label>
 									<textarea
@@ -280,19 +274,23 @@ const OngForm = () => {
 										value={values.description}
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700  bg-[#fff5f4] bg-clip-padding border border-solid border-gray-300 rounded transitionease-in-out m-0 focus:text-[#080808] focus:bg-[#fbe4e2] focus:border-gray-600 focus:outline-none"
+										className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-[#fde0c6] bg-clip-padding border border-solid border-[#f06311] rounded transitionease-in-out m-0 focus:text-[#080808] focus:border-gray-600 focus:outline-none focus:shadow-lg focus:shadow-orange-300"
 										rows="3"></textarea>
-									{errors.description && (
-										<p className="text-red-500 font-bold">{errors.description}</p>
-									)}
+										<div >
+											{errors.description && (
+												<p className="text-red-500 font-bold animate-errors-animation">{errors.description}</p>
+											)}
+										</div>
 								</div>
 
 								<div className="flex flex-col items-center p-14">
 									<UploadImage image={image} setImage={setImage} />
-									{!image.length &&
-										<p className="text-red-500 font-bold">Required Image</p>}
+									<div>
+										{!image.length &&
+											<p className="text-red-500 font-bold animate-errors-animation">Required Image</p>}
+									</div>
 								</div>
-							</div>
+							
 						</div>
 					</div>
 
@@ -307,17 +305,16 @@ const OngForm = () => {
 						<div className="mt-0">
 							<button
 								type="submit"
-								className="pt-1 pb-1 pl-2 w-32 pr-2 mr-4 mt-0 text-xl transition bg-[#fff5f4] rounded-md hover:bg-[#f8cdcd] border border-[#fffefe] hover:text-black duration 300">
-								Submit
+								className="pt-1 pb-1 pl-2 w-32 pr-2 mr-4 mt-0 text-xl font-bold transition bg-[#fde0c6] rounded-md hover:bg-[#f69d61] border border-[#f06311] animate-create-animation">
+								Create
 							</button>
 						</div>
 					) : (
-						<div>
+						<div className="animate-pulse hover:animate-none">
 							<button
 								type="submit"
-								className="pt-1 pb-1 pl-2 pr-2 mr-4 transition border border-white bg-[#fff5f4] hidden rounded-md hover:bg-orange-100 hover:text-black duration 300"
-								disabled>
-								Submit
+								className="pt-1 pb-1 pl-2 w-64 pr-2 mr-4 mt-0 text-white text-xl font-bold rounded-md bg-[#eb1414] border border-[#ed6868] ">
+								Fields incompletes
 							</button>
 						</div>
 					)}

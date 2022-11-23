@@ -134,7 +134,8 @@ router.post('/', jwtCheck, async(req, res) =>{
             authorId: string,
             shelterId: string,  
             content: string,
-            image: string
+            image: string,
+            video: string
         }
         const bodyPost: postInterface = req.body;
 
@@ -143,7 +144,8 @@ router.post('/', jwtCheck, async(req, res) =>{
                 shelterId: bodyPost.shelterId,
                 authorId: bodyPost.authorId,
                 content: bodyPost.content,
-                image: bodyPost.image
+                image: bodyPost.image,
+                video: bodyPost.video
             }
         })
 
