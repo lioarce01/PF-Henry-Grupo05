@@ -10,6 +10,7 @@ import {persistReducer} from 'redux-persist'
 import { combineReducers } from '@reduxjs/toolkit';
 import { mapApi } from '../api/map';
 import { mercadoPagoApi } from '../api/mercadopago';
+import { goalsApi } from '../api/goals';
 
 const persistConfig = {
     key: 'root',
@@ -26,9 +27,10 @@ const rootReducer = combineReducers({
 const localStorage = persistReducer(persistConfig, rootReducer)
 
 export default configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware, sheltersApi.middleware, usersApi.middleware, mapApi.middleware, mercadoPagoApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}).concat(postApi.middleware, sheltersApi.middleware, usersApi.middleware, mapApi.middleware, mercadoPagoApi.middleware, goalsApi.middleware),
     reducer: {
         localStorage,
+        [goalsApi.reducerPath]: goalsApi.reducer,
         [mapApi.reducerPath]: mapApi.reducer,
         [postApi.reducerPath]: postApi.reducer,
         [sheltersApi.reducerPath]: sheltersApi.reducer,
