@@ -26,13 +26,13 @@ function UserSheltersFollowedCard({ profilePic, name, city, id, isFollowing }) {
 	}
 
     return (
-        <div key={id} className="w-10/12 ml-[30px] bg-white mt-[30px] rounded-[40px] pl-[20px] pt-[20px] pr-[20px] pb-[15px] mr-[30px] shadow-[0px_19px_23px_-6px_rgba(235,174,158,1)]">
+        <div key={id} className="lg:w-10/12 md:w-3/4 ml-[30px] bg-white mt-[30px] rounded-[40px] pl-[20px] pt-[20px] pr-[20px] pb-[15px] mr-[30px] shadow-[0px_19px_23px_-6px_rgba(235,174,158,1)]">
             <div className="flex flex-row justify-between">
                 <div className="flex flex-row">
                     <img src={profilePic} className="object-cover w-[60px] h-[60px] rounded-[25px]" alt="profilePic"/>
 
                     <div className="flex flex-col w-max my-auto">
-                        <h1 className="font-[700] text-[#201008] ml-[15px] w-max">{name}</h1>
+                        <h1 className="font-[700] text-[#201008] ml-[15px] lg:w-max">{name}</h1>
                         <p className="ml-[15px] mt-[-5px] text-[#c46241]">{city}</p>
                     </div>
                 </div>

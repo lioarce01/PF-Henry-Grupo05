@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'xsm': '320px'
+        'xxsm': '280px',
+        'xsm': '320px',
       },
       keyframes: {
         bounceX: {

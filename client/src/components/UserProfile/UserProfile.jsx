@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import { useEffect, useState } from "react";
-import { useLazyGetUserByIdQuery } from "../../redux/api/users";
+import { useGetUserByIdQuery, useLazyGetUserByIdQuery } from "../../redux/api/users";
 import UserProfileCardPost from "./UserProfileCardPost";
 import UpdateProfileButton from "./UpdateProfileButton";
 import Footer from "../Landing/Footer/Footer";
@@ -20,6 +20,7 @@ const UserProfile = () => {
 	const { userId } = useParams();
 	const [getUserById, { data: details }] = useLazyGetUserByIdQuery();
 	const { userDetail, isAuth } = useSelector((state) => state.localStorage.userState)
+	const { refetch: userRefetch } = useGetUserByIdQuery(userDetail.id)
 	const [isOpen, setIsOpen] = useState(false);
 	const [editMode, setEditMode] = useState(false);
 	const [updateUser] = useUpdateUserMutation();
@@ -27,10 +28,12 @@ const UserProfile = () => {
 
 	useEffect(() => {
 		getUserById(userId);
+		userRefetch()
 	}, [getUserById, userId]);
 
 	const manageSheltersFollowedButton = () => {
 		setIsOpen(true)
+		userRefetch()
 	}
 
 	const updateUserImage = async (e) => {
@@ -58,13 +61,13 @@ const UserProfile = () => {
 	}
 
 	return (
-		<div className="bg-[#fff5f4]">
+		<div className="bg-[#fff5f4] xsm:w-[100vw] xsm:mx-auto xsm:px-4 sm:w-auto">
 			<Toaster />
 			<Navbar />
-			<div className="mt-8 grid grid-cols-3 grid-rows-1 w-5/6 h-5/6 mx-auto">
+			<div className="mt-8 sm:w-5/6 sm:h-5/6 xsm:w-[90%] mx-auto lg:grid lg:grid-cols-3 lg:grid-rows-1 sm:flex sm:flex-col">
 				<div className="mt-16 bg-[#f3a199cc] max-w-md rounded-[3em] mx-auto shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)] overflow-hidden min-w-[23vw]">
 					<div className="group/item z-0">
-						<img className="rounded-t-[3em] max-h-[45vh] min-w-[23vw] object-cover bg-[#f5d0cccb] z-1 mb-4" src={details?.profilePic} alt="profilePic" />
+						<img className="rounded-t-[3em] xl:max-h-[45vh] lg:min-w-[23vw] sm:min-w-[100%] xsm:min-w-[100%] object-right object-cover bg-[#f5d0cccb] z-1 mb-4 lg:h-[35vh]" src={details?.profilePic} alt="profilePic" />
 						{
 							isAuth && userDetail.id === userId &&
 								<div className="group/edit invisible opacity-0 cursor-pointer group-hover/item:visible z-20 group-hover/item:opacity-100 duration-500 translate-y-[-5.5rem] translate-x-[23rem] bg-[#ffffff60] backdrop-blur-sm w-[4rem] h-[4rem] rounded-full absolute align-middle">
@@ -75,7 +78,7 @@ const UserProfile = () => {
 								</div>
 						}
 					</div>
-					<div className="container">
+					<div className="container xsm:mx-auto">
 						<div className="flex flex-col h-full justify-between">
 							{ editMode ?
 								<form onSubmit={(e) => onSubmit(e)} className="flex flex-col gap-1 text-center">
@@ -153,7 +156,7 @@ const UserProfile = () => {
 						</div>
 					</div>
 				</div>
-				<div className="col-span-2">
+				<div className="lg:col-span-2 sm:mt-8 xsm:mt-8">
 					<h5 className="mt-2 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black drop-shadow-md text-center">Posts</h5>
 					{
 						details?.posts?.length > 0 ?

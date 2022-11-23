@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Dialog, Transition} from "@headlessui/react";
 import { Fragment } from "react"
 import UserSheltersFollowedCard from './UserSheltersFollowedCard';
-import { useLazyGetUserByIdQuery } from '../../redux/api/users';
+import { useGetUserByIdQuery, useLazyGetUserByIdQuery } from '../../redux/api/users';
 import Spinner from '../Spinner/Spinner';
 import { useSelector } from 'react-redux';
 
@@ -10,18 +10,21 @@ function ModalUpdateUser({isOpen, setIsOpen, userId}) {
 
     const closeModal = () => {
         setIsOpen(false);
-        window.location.reload()
+        userRefetch()
     }
 
+    const { userDetail, isAuth } = useSelector((state) => state.localStorage.userState)
     const [getUserById, { data: details }] = useLazyGetUserByIdQuery();
+    const { data: userDetails, refetch: userRefetch } = useGetUserByIdQuery(
+		userDetail?.id
+	)
     
     useEffect(() => {
 		getUserById(userId);
 	}, [getUserById, userId]);
 
-    const { userDetail, isAuth } = useSelector((state) => state.localStorage.userState)
 
-    let logedInUserFollowingShelters = isAuth ? userDetail?.following?.map((shelter) => shelter.id) : [];
+    let logedInUserFollowingShelters = isAuth ? userDetails?.following?.map((shelter) => shelter.id) : [];
 
     // console.log(`Shelters que sigue ${userDetail.name}:`,logedInUserFollowingShelters);
     // console.log(`Shelters que sigue ${details?.name}:`, details?.following?.map(shelter => {return {"name": shelter.name, "id": shelter.id}}));
@@ -53,11 +56,11 @@ function ModalUpdateUser({isOpen, setIsOpen, userId}) {
                 leaveTo="opacity-0 scale-95"
             >
                 <Dialog.Panel className=" max-w-fit transform overflow-hidden rounded-2xl text-left align-middle  transition-all flex flex-row">
-                    <div className='w-auto max-w-[55vw] h-auto max-h-[70vh] bg-[#fff5f4] my-auto p-10 overflow-y-scroll z-10 flex flex-row flex-wrap justify-center scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md'>
+                    <div className='xl:w-auto xl:max-w-[55vw] xl:h-auto xl:max-h-[70vh] sm:w-[85vw] sm:h-auto bg-[#fff5f4] my-auto p-10 overflow-y-scroll z-10 flex flex-row flex-wrap justify-center scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md'>
                         <h3 className='text-black font-bold text-[3em] z-20 w-full h-fit mb-0 text-center drop-shadow-md'>Following</h3>
                         { details?.following.length > 0 ?
                             details.following.map((shelter) => {
-
+                                console.log(userDetail?.following);
                                 let isFollowing = logedInUserFollowingShelters.includes(shelter.id)
 
                                 return (
