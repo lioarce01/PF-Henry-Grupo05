@@ -3,35 +3,38 @@ import { PuffLoader } from "react-spinners";
 import { uploadImage } from "../../../utils";
 
 
-const UploadImage = ({ image, setImage }) => {
+const UploadImage = ({ url, setUrl }) => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = async (e) => {
     setLoading(true);
-    const { image } = await uploadImage("preset_posts", e.target.files[0]);
-    setImage(image);
+    const { response, image } = await uploadImage("preset_posts", e.target.files[0]);
+    if(response?.resource_type === "video") {
+      setUrl(["video", response.public_id])
+    }
+    else if(response?.resource_type === "image") setUrl(["image", image]);
     setLoading(false);
   };
 
-  const resetImage = () => setImage(false);
+  const resetUrl = () => setUrl([false, false]);
 
   return (
     <div className="grid grid-cols-1 space-y-2">
       <label className="text-sm font-bold text-[#462312] tracking-wide">
         Upload image
       </label>
-      {image && (
+      {url[0] && (
         <button
           type="button"
-          onClick={resetImage}
+          onClick={resetUrl}
           className="text-blue-400 w-fit px-2  mx-auto border border-[#FAF2E7] rounded-xl hover:border-blue-100"
         >
           reset
         </button>
       )}
       <div className="flex items-center justify-center w-full">
-        {image ? (
-          <img alt="uplouted" src={image} />
+        {url[0] ? (
+          (url[0] === "image" && <img alt="uplouted" src={url[1]} />)
         ) : loading ? (
           <PuffLoader color="#462312" loading size={240} />
         ) : (
@@ -58,7 +61,6 @@ const UploadImage = ({ image, setImage }) => {
             </div>
             <input
               onChange={handleChange}
-              accept="image/*"
               multiple
               draggable
               type="file"
