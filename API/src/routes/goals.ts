@@ -6,8 +6,8 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.post("/", async (req, res) => {
-    const {title, content, goal, id}: {title: string, content: string, goal: number, id:string} = req.body
-
+    let {title, content, goal, id}: {title: string, content: string, goal: number, id:string} = req.body
+    goal = Number(goal)
     try {
         let g = await prisma.goal.create({data: {
             shelterId: id,
@@ -15,10 +15,12 @@ router.post("/", async (req, res) => {
             content,
             goal
         }})
+        console.log(g)
         res.status(200).send({message: "Goal created successfully.", payload: g})
 
     } catch (error) {
         res.status(400).send({error})
+        console.log(error)
     }
 })
 

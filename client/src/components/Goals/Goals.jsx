@@ -1,10 +1,12 @@
 import React from 'react'
 import CardGoals from "./CardGoals"
+import BtnCreate from './BtnCreate'
 
 const Goals = ({goals, setIsOpenDonate, shelterId, shelterName}) => {
 
   return (
     <div>
+      <BtnCreate shelterId={shelterId}/>
         {
             goals?.map((g) => {
                 return (
