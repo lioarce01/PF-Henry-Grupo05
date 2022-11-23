@@ -62,9 +62,9 @@ const UserProfile = () => {
 			<Toaster />
 			<Navbar />
 			<div className="mt-8 grid grid-cols-3 grid-rows-1 w-5/6 h-5/6 mx-auto">
-				<div class="mt-16 bg-[#f3a199cc] max-w-md rounded-[3em] mx-auto shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)] overflow-hidden min-w-[23vw]">
+				<div className="mt-16 bg-[#f3a199cc] max-w-md rounded-[3em] mx-auto shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)] overflow-hidden min-w-[23vw]">
 					<div className="group/item z-0">
-						<img class="rounded-t-[3em] max-h-[45vh] min-w-[23vw] object-cover bg-[#f5d0cccb] z-1 mb-4" src={details?.profilePic} alt="profilePic" />
+						<img className="rounded-t-[3em] max-h-[45vh] min-w-[23vw] object-cover bg-[#f5d0cccb] z-1 mb-4" src={details?.profilePic} alt="profilePic" />
 						{
 							isAuth && userDetail.id === userId &&
 								<div className="group/edit invisible opacity-0 cursor-pointer group-hover/item:visible z-20 group-hover/item:opacity-100 duration-500 translate-y-[-5.5rem] translate-x-[23rem] bg-[#ffffff60] backdrop-blur-sm w-[4rem] h-[4rem] rounded-full absolute align-middle">
@@ -75,8 +75,8 @@ const UserProfile = () => {
 								</div>
 						}
 					</div>
-					<div class="container">
-						<div class="flex flex-col h-full justify-between">
+					<div className="container">
+						<div className="flex flex-col h-full justify-between">
 							{ editMode ?
 								<form onSubmit={(e) => onSubmit(e)} className="flex flex-col gap-1 text-center">
 									<div className="w-fit mx-auto">
@@ -100,9 +100,9 @@ const UserProfile = () => {
 										{details?.email}
 									</h6>
 									<div className="flex flex-row gap-4 justify-center mt-2">
-										<button type="submit" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 duration-300">Save</button>
-										<button onClick={manageCancelButton} class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-											<span class="relative px-5 py-2.5 transition-all ease-in duration-7 bg-[#f55644] rounded-md group-hover:bg-opacity-0">
+										<button type="submit" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 duration-300">Save</button>
+										<button onClick={manageCancelButton} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+											<span className="relative px-5 py-2.5 transition-all ease-in duration-7 bg-[#f55644] rounded-md group-hover:bg-opacity-0">
 												Cancel
 											</span>
 										</button>
@@ -111,12 +111,12 @@ const UserProfile = () => {
 								:
 								<div className="dark:text-black shadow-white">
 									<div className="flex flex-row justify-center">
-										<h5 class="mb-2 text-2xl font-bold tracking-tight drop-shadow-md text-center shadow-white">
+										<h5 className="mb-2 text-2xl font-bold tracking-tight drop-shadow-md text-center shadow-white">
 											{details?.name} 
 										</h5>
 										<UpdateProfileButton userId={userId} setEditMode={setEditMode} editMode={editMode}/>
 									</div>
-									<h6 class="mb-3 font-normal text-gray-700 drop-shadow-md text-center">
+									<h6 className="mb-3 font-normal text-gray-700 drop-shadow-md text-center">
 										{details?.email}
 									</h6>
 								</div>
@@ -134,7 +134,7 @@ const UserProfile = () => {
 									:
 									<div className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center rounded-md">
 										<span>
-											{details?.shelterFollow?.length}
+											0
 										</span>
 										<span className="ml-2 font-normal">
 											following
@@ -154,13 +154,11 @@ const UserProfile = () => {
 					</div>
 				</div>
 				<div className="col-span-2">
-					<h5 class="mt-2 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black drop-shadow-md text-center">Posts</h5>
+					<h5 className="mt-2 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black drop-shadow-md text-center">Posts</h5>
 					{
 						details?.posts?.length > 0 ?
-							<div class="ml-4 overflow-auto max-h-[39rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+							<div className="ml-4 overflow-auto max-h-[39rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
 								{details?.posts?.map((post) => {
-									console.log('post');
-									console.log(post);
 									return (
 										<UserProfileCardPost
 											key={post.id}
@@ -168,8 +166,8 @@ const UserProfile = () => {
 											profilePic={details.profilePic}
 											postImage={post.image}
 											author={details.name}
-											shelter={details.Shelter[0].name}
-											shelterId={details.Shelter[0].id}
+											shelter={details.Shelter[0]?.name}
+											shelterId={details.Shelter[0]?.id}
 											authorRole={details.role}
 											content={post.content}
 											likes={post.likes}

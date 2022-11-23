@@ -4,11 +4,13 @@ import { Fragment } from "react"
 import UserSheltersFollowedCard from './UserSheltersFollowedCard';
 import { useLazyGetUserByIdQuery } from '../../redux/api/users';
 import Spinner from '../Spinner/Spinner';
+import { useSelector } from 'react-redux';
 
 function ModalUpdateUser({isOpen, setIsOpen, userId}) {
 
     const closeModal = () => {
         setIsOpen(false);
+        window.location.reload()
     }
 
     const [getUserById, { data: details }] = useLazyGetUserByIdQuery();
@@ -16,7 +18,13 @@ function ModalUpdateUser({isOpen, setIsOpen, userId}) {
     useEffect(() => {
 		getUserById(userId);
 	}, [getUserById, userId]);
-	console.log(details?.following);
+
+    const { userDetail, isAuth } = useSelector((state) => state.localStorage.userState)
+
+    let logedInUserFollowingShelters = isAuth ? userDetail?.following?.map((shelter) => shelter.id) : [];
+
+    // console.log(`Shelters que sigue ${userDetail.name}:`,logedInUserFollowingShelters);
+    // console.log(`Shelters que sigue ${details?.name}:`, details?.following?.map(shelter => {return {"name": shelter.name, "id": shelter.id}}));
 
     return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -49,13 +57,16 @@ function ModalUpdateUser({isOpen, setIsOpen, userId}) {
                         <h3 className='text-black font-bold text-[3em] z-20 w-full h-fit mb-0 text-center drop-shadow-md'>Following</h3>
                         { details?.following.length > 0 ?
                             details.following.map((shelter) => {
+
+                                let isFollowing = logedInUserFollowingShelters.includes(shelter.id)
+
                                 return (
                                     <UserSheltersFollowedCard
                                         profilePic={shelter.profilePic}
                                         name={shelter.name}
                                         city={shelter.city}
-                                        description={shelter.description}
                                         id={shelter.id}
+                                        isFollowing={isFollowing}
                                     />
                                 )
                             })
