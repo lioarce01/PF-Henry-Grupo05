@@ -53,6 +53,7 @@ model Post {
   authorId  String?   @db.ObjectId
   content   String    @map("content")
   image     String?   @map("image")
+  video     String?   @map("video")
   enable    Boolean   @default(true) @map("enable")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
