@@ -18,6 +18,7 @@ import Description from "./Description";
 import Swal from "sweetalert2";
 import { useLazyGetUserByIdQuery } from "../../redux/api/users";
 import { setUserAction } from "../../redux/slices/manageUsers/actions";
+import Goals from "../Goals/Goals";
 
 const OngDetail = () => {
   const { id } = useParams();
@@ -118,14 +119,15 @@ const OngDetail = () => {
           </div>
           <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
-          <ModalDonate
+          {/* <ModalDonate
             isOpen={isOpenDonate}
             closeModal={closeModalDonate}
             name={details.name}
             id={id}
-          />
+          /> */}
         </div>
       )}
+      <Goals goals={details?.goals} setIsOpenDonate={setIsOpenDonate} shelterName={details?.name} shelterId={details?.id}/>
     </div>
     // 			<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 

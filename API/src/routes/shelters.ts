@@ -135,6 +135,11 @@ router.get("/:id", async (req, res) => {
         const shelter = await prisma.shelter.findUnique({ 
             where: { id: id},
             include: { 
+                goals: {
+                    where: {
+                        enable: state
+                    }
+                },
                 followers: true, 
                 author: true, 
                 posts: {
@@ -208,7 +213,6 @@ router.post("/", jwtCheck, async (req, res) => {
             country: string,
             website: string,
             budget: number,
-            goal: number
         }
 
         const bodyShelter: shelterInterface = req.body;
@@ -227,7 +231,6 @@ router.post("/", jwtCheck, async (req, res) => {
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
             }
         })
 
@@ -319,7 +322,6 @@ router.put("/:id", async (req, res) => {
             address: string,
             website: string,
             budget: number,
-            goal: number,
             lat: number,
             lon: number
         }
@@ -338,7 +340,6 @@ router.put("/:id", async (req, res) => {
                 listAnimals: bodyShelter.listAnimals,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal,
                 lat: bodyShelter.lat,
                 lon: bodyShelter.lon
             },
