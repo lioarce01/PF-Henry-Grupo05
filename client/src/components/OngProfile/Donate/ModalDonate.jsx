@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import Formulario from "./FormDonate"
 import React from 'react'
 
-const ModalDonate = ({ isOpen, closeModal, name, id }) => {
+const ModalDonate = ({ isOpen, closeModal, name, shelterId, goalId }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -31,7 +31,7 @@ const ModalDonate = ({ isOpen, closeModal, name, id }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                <Formulario closeModal={closeModal} name={name} id={id}/>
+                <Formulario closeModal={closeModal} name={name} shelterId={shelterId} goalId={goalId}/>
               </Dialog.Panel>
             </Transition.Child>
           </div>

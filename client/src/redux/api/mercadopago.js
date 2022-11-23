@@ -9,10 +9,10 @@ export const mercadoPagoApi = createApi({
 
   endpoints: (builder) => ({
     checkout: builder.mutation({
-        query: ({accessToken, shelter, donation, id, email}) => ({
+        query: ({accessToken, shelter, donation, shelterId, goalId, email}) => ({
             url: "/mp",
             method: "post",
-            body: {shelter, donation, id, email},
+            body: {shelter, donation, shelterId, goalId, email},
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
