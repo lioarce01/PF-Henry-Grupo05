@@ -30,7 +30,7 @@ export const uploadImage = async (preset, file) => {
      data.append("file", file);
     data.append("upload_preset", preset);
      const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/dxxqabghy/image/upload`,
+      `https://api.cloudinary.com/v1_1/dxxqabghy/upload`,
     data
     );
   return { response: response.data, image: response.data.secure_url };
