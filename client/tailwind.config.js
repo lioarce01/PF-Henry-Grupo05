@@ -110,5 +110,3 @@ module.exports = {
   },
   plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
 }
-message.txt
-4 KB
