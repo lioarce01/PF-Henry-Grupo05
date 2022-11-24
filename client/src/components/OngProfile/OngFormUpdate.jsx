@@ -75,7 +75,7 @@ const OngFormUpdate = ({
 
   return (
 		<div className="flex mt-10 lg:mt-4 flex-col items-center w-9/12 lg:mt-0 lg:w-full">
-			<div className="p-2 h-fit min-w-full lg:p-0 lg:min-w-0 lg:w-full lg:max-w-full">
+			<div className="h-fit w-full mb-2 lg:p-0 lg:min-w-0 lg:w-full lg:max-w-full">
 				
 					<div className="bg-white shadow-[rgba(255,213,201)] shadow-xl p-2 rounded-2xl lg:flex lg:items-center lg:flex-col
 					lg:w-full lg:p-0 lg:border-2 lg:border-blue lg:w-full lg:max-w-full lg:min-w-[250px]">
@@ -91,7 +91,7 @@ const OngFormUpdate = ({
 						}
 						<div className="min-w-full">
 						<form onSubmit={handleSubmit}>
-							<div className="text-2xl lg:text-lg font-bold text-black"> 
+							<div className="text-lg text-center sm:text-2xl lg:text-lg font-bold text-black"> 
 							{!toggle && <input
 									className="my-2 bg-white min-w-full"
 									defaultValue={name}
@@ -111,7 +111,7 @@ const OngFormUpdate = ({
 					</div>
 					<div className="bg-white shadow-[rgba(255,213,201)] shadow-xl p-2 rounded-2xl mt-2 lg:w-full lg:flex lg:flex-col">
 						<form onSubmit={handleSubmit}>
-							<div className="flex flex-col text-base font-semibold text-black lg:w-full">
+							<div className="flex flex-col text-xs sm:text-base font-semibold text-black lg:w-full">
 								<div className="flex flex-row items-baseline">
 								<label className="text-[#d45f37]">Country: </label>
 								{!toggle && <input
@@ -179,9 +179,9 @@ const OngFormUpdate = ({
 								/>}
 								{toggle && 
 									<Link to={{pathname: `http://${values.website}`}} target='_blank'
-									className='lg:w-9/12 '>
+									className='w-9/12 '>
 									<p
-									className="my-2 bg-white w-full pl-4 cursor-pointer lg:my-1 lg:truncate"
+									className="my-2 bg-white w-full pl-4 cursor-pointer lg:my-1 truncate"
 									>{values.website}</p>
 									</Link>}
 								{errors.website && (
@@ -192,20 +192,20 @@ const OngFormUpdate = ({
 										{!toggle && Object.entries(errors).length === 0 && (
 											<button
 												type="submit"
-												className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300">
+												className="text-xs sm:text-lg my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300">
 												Save
 											</button>
 										)}
 										{shelter.author.id === userDetail?.id && (
 											<button
-												className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+												className="text-xs sm:text-lg my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 												onClick={() => setToggle(!toggle)}>
 												Edit
 											</button>
 										)}
 						</form>
 						{userDetail.role === "Admin" || shelter.author.id === userDetail.id ? (
-					<div className="flex flex-row w-full justify-end">
+					<div className="flex flex-row w-full justify-end text-xs sm:text-sm">
 					<>
 						{shelter.enable ? (
 							<button
@@ -237,14 +237,14 @@ const OngFormUpdate = ({
 				
 			</div>
 			{(shelter.author.id !== userDetail?.id)&&<div className="flex items-center justify-between row relative min-w-full w-80 ">
-				<div className="fixed left-8 bottom-4 z-[61] lg:left-4 lg:bottom-2">
+				<div className="fixed inset-x-0 bottom-0  sm:bottom-0 z-[61] lg:left-4 lg:bottom-2">
 				<button
 					className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-4 px-8  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 					onClick={() => setIsOpenDonate(true)}>
 					Support Us!!
 				</button>
 				</div>
-				<div className="fixed left-8 bottom-4 z-[60] lg:left-4 lg:bottom-2">
+				<div className="fixed  inset-x-0 bottom-0 sm:bottom-0  z-[60] lg:left-4 lg:bottom-2">
 				<button
 					className="my-2 mx-auto animate-custom-ping hover:animate-none w-full bg-[#ca7c62] text-gray-100 hover:text-white py-4 px-8  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 					>
