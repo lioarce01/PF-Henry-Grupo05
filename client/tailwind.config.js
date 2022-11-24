@@ -19,12 +19,6 @@ module.exports = {
           '60%': { transform: 'rotate(0.0deg)' },
           '100%': { transform: 'rotate(0.0deg)' },
         },
-<<<<<<< HEAD
-      
-      animation: {
-        
-      },
-=======
         tracking: {
           '0%':{
             'letter-spacing': '-0.5em',
@@ -87,7 +81,6 @@ module.exports = {
         'delete-animation': 'delete 1s ',
         'create-animation': 'create 1s linear infinite',
         'bounceX': 'bounceX 1s ease-in-out infinite'
->>>>>>> develop
       },
     },
     screens:{

@@ -19,6 +19,40 @@ const nodemailer_1 = require("../middleware/nodemailer");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 // get all users, or search them by name enables
+router.get("/email/:email", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email } = req.params;
+        const user = yield prisma.user.findUnique({
+            where: {
+                email
+            },
+            include: {
+                Shelter: true,
+                following: {
+                    where: {
+                        enable: true
+                    }
+                },
+                posts: {
+                    where: {
+                        enable: true
+                    },
+                    include: {
+                        Comment: {
+                            where: {
+                                enable: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        user ? res.status(200).send({ message: "the user was found", payload: user }) : res.status(404).send({ error: "user was not found" });
+    }
+    catch (error) {
+        res.status(404).send({ error: error.message });
+    }
+}));
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, status } = req.query;
