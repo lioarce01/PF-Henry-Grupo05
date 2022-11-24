@@ -69,12 +69,24 @@ module.exports = {
                    ' transform': 'translate(0)',
           },
         },
+        textFocus: {
+          '0%': {
+            '-webkit-filter':' blur(12px)',
+                    filter: 'blur(12px)',
+          },
+          '100%': {
+            '-webkit-filter': 'blur(0px)',
+                    filter: 'blur(0px)',
+            opacity: 1,
+          }
+        }
       },
       animation: {
         'errors-animation': 'errors 0.4s linear 1',
         'tracking-animation': 'tracking 3s ease-out 1',
-        'delete-animation': 'delete 1s ',
-        'create-animation': 'create 1s linear infinite'
+        'delete-animation': 'delete 2s ',
+        'create-animation': 'create 1s linear infinite',
+        'textFocus-animation': 'textFocus 3s ease-out 1'
       },
     },
     screens:{

@@ -5,9 +5,8 @@ import { useSelector } from "react-redux"
 import { useGetUserByIdQuery } from "../../redux/api/users"
 
 const SubscriptorsBar = () => {
-	const { isAuth, userDetail } = useSelector((state) => state.localStorage.userState)
-	const {data: user, isLoading, error} = useGetUserByIdQuery(userDetail.id)
-
+	const { isAuth, userDetail, following } = useSelector((state) => state.localStorage.userState)
+	const {data: user, isLoading, error, refetch} = useGetUserByIdQuery(userDetail.id) 
 	return (
 		<div className="mt-[40px] flex h-[900px] w-[350px] bg-white rounded-tr-[30px] shadow-[16px_0px_44px_15px_rgba(255,213,201,0.85)] overflow-y-hidden">
 			<div className="w-[350px] h-[900px] pr-[20px] mt-[20px] mr-[10px] flex flex-col overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">

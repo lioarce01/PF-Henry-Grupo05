@@ -81,12 +81,13 @@ const OngForm = () => {
 		setListAnimals([...listAnimals, e.target.value])
 	}
 	const handlerDelete = (e) =>{
-            setListAnimals(
-                listAnimals.filter(a => a !== e.target.value)
-			);
+		setListAnimals(
+            listAnimals.filter(a => a !== e.target.value)
+		)
 	}
+           
 	return (
-		<div className="w-full min-h-screen h-fit bg-white">
+		<div className="w-full min-h-screen h-fit bg-white ">
 			<div>
 				<Navbar />
 			</div>
