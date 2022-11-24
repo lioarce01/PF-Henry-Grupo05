@@ -38,15 +38,14 @@ function error2(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-useEffect(()=>{
-  //navigator.geolocation.getCurrentPosition(success, error2, options);
-},[toogle, updateShelter])
 
-
-const handleClick = ()=>{
+const handleClick = (event)=>{
+  event.stopPropagation()
   navigator.geolocation.getCurrentPosition(success, error2, options);
-  console.log('current location', cpos)
   setToogle(true)
+}
+const handleClick2 = ()=>{
+	setToogle(false)
 }
 const handleSave = ()=>{
   updateShelter({updatedShelter:{lat: cpos[0], lon: cpos[1]}, id})
@@ -76,7 +75,10 @@ function LocationMarker ({center, name}) {
 
   if (lat !== null && lon !== null) {
 		return (
-			<div className="h-80 w-[600px] shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5">
+			<div className={(shelter.author.id === userDetail?.id)?
+				"h-48 sm:h-80 lg:h-64 w-9/12 lg:w-full shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5":
+				 "h-48 sm:h-80 w-9/12 lg:w-full lg:h-80 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5"}
+			onClick={handleClick2}>
 				<MapContainer
 					center={position}
 					zoom={14}
@@ -90,21 +92,23 @@ function LocationMarker ({center, name}) {
 						<Popup>{name}</Popup>
 					</Marker>
 				</MapContainer>
-				<div className='flex flex-row-reverse justify-between'>
-					{shelter.author.id === userDetail?.id && (
-						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
-						onClick={handleClick}>Change Location</button>
+				<div className='flex flex-col w-full items-center'>
+					{(shelter.author.id === userDetail?.id && !toogle) && (
+						<button className="my-2 w-full bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-lg tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						onClick={handleClick}>Set Current Position</button>
 					)}
-					{shelter.author.id === userDetail?.id && cpos.length > 0 && (
-						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
-						onClick={handleSave}>Save</button>
+					{(shelter.author.id === userDetail?.id && cpos.length > 0 && toogle)&& (
+						<button className="my-2 w-full bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-lg tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						onClick={handleSave}>Save as Current</button>
 					)}
 				</div>
 			</div>
 		)
 	} else
 		return (
-			<div className="h-80 w-[600px] shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5">
+			<div className={(shelter.author.id === userDetail?.id)?
+			"h-48 sm:h-80 w-9/12 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5":
+			"h-48 sm:h-80 w-9/12 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5"}>
 				<MapContainer
 					center={center}
 					zoom={14}
@@ -117,13 +121,13 @@ function LocationMarker ({center, name}) {
 					<LocationMarker center={center} name={name} />
 				</MapContainer>
 				<div className='flex flex-row-reverse justify-between'>
-					{shelter.author.id === userDetail?.id && (
+					{(shelter.author.id === userDetail?.id && !toogle) && (
 						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
-						onClick={handleClick}>Change Location</button>
+						onClick={handleClick}>Set Current Position</button>
 					)}
-					{shelter.author.id === userDetail?.id && cpos.length > 0 && (
+					{(shelter.author.id === userDetail?.id && cpos.length > 0 && toogle) && (
 						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
-						onClick={handleSave}>Save</button>
+						onClick={handleSave}>Save as Current</button>
 					)}
 				</div>
 			</div>

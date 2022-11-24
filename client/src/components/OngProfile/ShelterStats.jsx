@@ -9,7 +9,6 @@ import { useGetUserByIdQuery } from "../../redux/api/users"
 function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 	const [unfollow] = useDeleteFollowersMutation()
 	const [follow] = useAddFollowersMutation()
-	console.log("userdetail: ", userDetail)
 
 	const { data: userDetails, refetch: userRefetch } = useGetUserByIdQuery(
 		userDetail?.id
@@ -27,27 +26,28 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 		userRefetch()
 	}
 	return (
-		<>
-			<div className="my-4">
-				<h1 className="text-xl font-bold">Shelter stats</h1>
-			</div>
-			<div className="shadow-[rgb(255,213,201)] shadow-xl bg-white rounded-2xl w-[340px] py-2 px-4">
+			<div className="w-full flex flex-col items-center lg:my-4">
+			<div className="shadow-[rgb(255,213,201)] shadow-xl bg-white rounded-2xl py-2 px-2 w-9/12 lg:w-full">
 				<div className="flex flex-col justify-between">
-					<div className="flex flex-col font-semibold">
-						<p className="pt-2">
-							Followers: <span>{details?.followers?.length}</span>
-						</p>
-						<p className="pt-2">
-							Posts: <span>{details?.posts?.length}</span>
-						</p>
-						<p className="pt-2">
-							Budget: <span>{details?.budget}</span>
-						</p>
-						<p className="pt-2">
-							Goal: <span>{details?.goal}</span>
-						</p>
+					<div className="flex flex-col font-semibold text-xs sm:text-base">
+						<div className="flex flex-row items-center pt-2">
+						<label className=" text-[#d45f37]">Followers: </label>
+						<span className="text-black indent-4">{details?.followers?.length}</span>
+						</div>
+						<div className="flex flex-row items-center pt-2">
+						<label className=" text-[#d45f37]">Posts: </label>
+						<span className="text-black indent-4">{details?.posts?.length}</span>
+						</div>
+						<div className="flex flex-row items-center pt-2">
+						<label className=" text-[#d45f37]">Budget: </label>
+						<span className="text-black indent-4">{`$ARS ${details?.budget}`}</span>
+						</div>
+						{/* <div className="flex flex-row items-center pt-2">
+						<label className=" text-[#d45f37]">Goal: </label>
+						<span className="text-black indent-4">{`$ARS ${details?.goal}`}</span>
+						</div> */}
 					</div>
-					<div className="flex justify-center w-full">
+					{ !(userDetail.id === details.authorId) && <div className="flex justify-center text-xs sm:text-base w-full mt-2">
 						{userDetails?.following?.find(
 							(shelter) => shelter.id === shelterId
 						) ? (
@@ -69,10 +69,10 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 								</span>
 							</button>
 						)}
-					</div>
+					</div>}
 				</div>
 			</div>
-		</>
+			</div>
 	)
 }
 
