@@ -33,6 +33,7 @@ const Posts = () => {
 					posts.map((post) => {
 						return (
 							<CardPost
+							    postVideo={post.video}
 								key={post.id}
 								id={post.id}
 								profilePic={post.author.profilePic}

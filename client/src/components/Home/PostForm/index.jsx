@@ -12,7 +12,7 @@ const PostForm = () => {
 	const { getAccessTokenSilently } = useAuth0()
 	const { userDetail } = useSelector((state) => state.localStorage.userState)
 
-	const [addNewPost, {}] = useAddNewPostMutation()
+  const [addNewPost, {}] = useAddNewPostMutation();
 
 	const onSubmit = async (e) => {
 		e.preventDefault()
@@ -64,4 +64,4 @@ const PostForm = () => {
 	)
 }
 
-export default PostForm
+export default PostForm;

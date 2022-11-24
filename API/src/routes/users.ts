@@ -21,6 +21,42 @@ type Req = {
 };
 
 // get all users, or search them by name enables
+
+router.get("/email/:email", async (req, res) => {
+    try {
+        const {email} = req.params
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            },
+            include: { 
+                Shelter: true, 
+                following: {
+                    where: {
+                        enable: true
+                    }
+                }, 
+                posts: {
+                    where: {
+                        enable: true
+                    },
+                    include: {
+                        Comment:{
+                            where: {
+                                enable: true
+                            }
+                        }
+                    }
+                } 
+            }
+        })
+
+        user ? res.status(200).send({message: "the user was found", payload: user}) : res.status(404).send({error: "user was not found"})
+    } catch (error: any) {
+        res.status(404).send({error: error.message})
+    }
+})
+
 router.get("/", async (req: Req, res) => {
     try {
         const { name, status } = req.query;

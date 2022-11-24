@@ -10,7 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const Comment = ({ content, author, id }) => {
+const Comment = ({ content, author, id, postAuthorId }) => {
   const [trigger, {}] = useDeleteCommentMutation();
   const [update] = useUpdateCommentMutation()
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -61,7 +61,7 @@ const Comment = ({ content, author, id }) => {
 								</div>
 								<div className="">
 									{author.id === userDetail.id ||
-									userDetail.role === "Admin" ? (
+									userDetail.role === "Admin" || postAuthorId === userDetail.id ? (
 										<Menu as="div" className="relative z-50 outline-none">
 											<div className="flex items-center justify-center">
 												<Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-700 w-fit">
@@ -86,9 +86,9 @@ const Comment = ({ content, author, id }) => {
 																	onClick={() => setToggle(!toggle)}
 																	className={classNames(
 																		active
-																			? "bg-slate-200 text-gray-900"
+																			? `bg-slate-200 text-gray-900 `
 																			: "text-gray-700",
-																		"block w-full px-4 py-2 text-left text-sm"
+																		`block w-full px-4 py-2 text-left text-sm ${author.id !== userDetail.id && userDetail.role !== "Admin" ? "hidden" : ""}`
 																	)}>
 																	<div className="flex flex-row items-start justify-start">
 																		<span>

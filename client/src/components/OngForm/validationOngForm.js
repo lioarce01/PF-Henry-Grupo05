@@ -9,6 +9,5 @@ export const ongSchema = yup.object().shape({
     listAnimals: yup.array().min(1, ' Required Animals'),
     address: yup.string().required('    Required Address'),
     city: yup.string().required('   Required City'),
-    country: yup.string().required('    Required Country'),
-    goal: yup.number('  Goal must be a number').positive('   Goal must be a positive number').integer('  Goal must be a integer'),
+    country: yup.string().required('    Required Country')
 })

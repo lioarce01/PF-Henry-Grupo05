@@ -75,8 +75,8 @@ const UserProfileCardPost = ({
 
 	return (
 		<div className="flex flex-col">
-			<div className="w-[900px] my-4 md:min-w-[500px] bg-white rounded-[30px] shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)]">
-				<div className="flex flex-col mx-auto border m-[30px] rounded-[30px] px-[20px] py-[20px] w-[800px]">
+			<div className="2xl:w-[800px] xl:w-[600px] xsm:w-[350px] my-4 mx-auto md:min-w-[500px] bg-white rounded-[30px] shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)]">
+				<div className="flex flex-col mx-auto m-[30px] rounded-[30px] px-[20px] 2xl:w-[800px] xl:w-[600px]">
 					<div className="flex flex-row">
 						<img
 							className="object-cover mr-4 rounded-[20px] shadow w-14 h-14"
@@ -93,18 +93,20 @@ const UserProfileCardPost = ({
 									)}
 								</h2>
 							</Link>
-							<Link to={`/${shelterId}/profile`}>
-								<p className="px-2 py-1 mb-2 text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:shadow-md hover:shadow-red-400">
-									{shelter}
-								</p>
-							</Link>
-							<small className="px-2 py-0.5 text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
-								{getTimeAgo(createdAt)}
-							</small>
+							<div className="flex flex-row gap-2">
+								<Link to={`/${shelterId}/profile`}>
+									<p className="px-2 py-1 text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:shadow-md hover:shadow-red-400">
+										{shelter}
+									</p>
+								</Link>
+								<small className="px-2 py-1 text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
+									{getTimeAgo(createdAt)}
+								</small>
+							</div>
 						</div>
 					</div>
 
-					<div className="flex flex-col w-full py-[20px] px-[70px] font-normal text-justify text-gray-900 text-md">
+					<div className="flex flex-col 2xl:w-full xl:w-[500px] py-[20px] 2xl:px-[70px] xsm:px-0 xsm:w-[80%] xl:px-2 mx-auto font-normal text-justify text-gray-900 text-md">
 						<ShowMoreText
 							lines={3}
 							more="Show more"
@@ -117,11 +119,11 @@ const UserProfileCardPost = ({
 						</ShowMoreText>
 					</div>
 
-					<div>
+					<div className="rounded-[20px]">
 						<img
 							src={postImage}
 							alt="post"
-							className="pb-object-cover w-[400px] mt-[20px] mb-[30px] flex mx-auto rounded-[20px]"
+							className="object-center object-contain w-[400px] mt-[20px] mb-[30px] flex mx-auto rounded-[20px] lg:max-h-[300px]"
 						/>
 					</div>
 

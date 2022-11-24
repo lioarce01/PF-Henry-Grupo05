@@ -1,4 +1,5 @@
 import { CreatePreferencePayload} from 'mercadopago/models/preferences/create-payload.model';
+import { CreatePreApprovalPayload } from "mercadopago/models/preapproval/create-payload.model"
 import express from 'express';
 import mercadopago from "mercadopago"
 import axios from "axios"
@@ -57,10 +58,52 @@ router.get('/feedback', async function (req, res) {
 
         sendMailDonate(data.additional_info.items[0].description, shelter?.name!)
 
-        res.status(200).send("Approved payment")
+        res.status(200).json({status:200,data: data.additional_info.items[0].id})
     } else {
         res.status(403).send("Failed payment")
     }
 });
+
+router.post('/plan', async (req, res) => {
+    let {shelter, donation, id, email} = req.body
+
+    mercadopago.configure({access_token: process.env.ACCESS_TOKEN!})
+
+    let preference: CreatePreApprovalPayload = {
+        reason: `Subscripción mensual para ${shelter}`,
+        external_reference: id,
+        auto_recurring: {
+            frequency: 1,
+            frequency_type: 'months',
+            transaction_amount: donation,
+            currency_id: "ARS",
+        },
+        back_url: "http://192.168.1.2:3000/",
+        payer_email: email
+    }
+
+    mercadopago.preapproval.create(preference).then((response) => {
+        res.status(200).send({message: response.body.init_point})
+    })
+})
+
+router.get("/feedback/plan", async (req, res) => {
+    let payment_id = req.query.payment_id
+    let {data} = await axios.get(`https://api.mercadopago.com/preapproval/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
+
+    let paymentID = await prisma.payment.findMany({where: {paymentId: data.id.toString()}})
+
+    if (data.status === "authorized" && !paymentID.length) {
+        let id: string = data.external_reference
+        let shelter = await prisma.shelter.findFirst({where: {id}})
+        await prisma.payment.create({data: {paymentId: data.id.toString()}})
+        await prisma.shelter.update({where: {id}, data: {
+            budget: shelter?.budget! + Number(data.auto_recurring.transaction_amount)
+        }})
+        res.status(200).send("Approved payment")
+    } else {
+        res.status(403).send("Failed payment")
+    }
+})
 
 export default router
