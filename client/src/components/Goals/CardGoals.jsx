@@ -18,7 +18,7 @@ const CardGoals = ({
 
 	return (
 		<div>
-			<div className="flex flex-col gap-2 p-3 my-2 bg-white shadow-lg rounded-xl shadow-rose-400 w-fit">
+			<div className="flex flex-col w-full gap-2 p-3 my-2 bg-white shadow-lg rounded-xl shadow-rose-400">
 				<h1 className="text-lg font-bold">{title}</h1>
 				<p className="text-gray-700">{content}</p>
 				<div className="flex flex-col items-center">
