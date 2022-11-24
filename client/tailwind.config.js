@@ -69,12 +69,17 @@ module.exports = {
                    ' transform': 'translate(0)',
           },
         },
+        bounceX: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(5px)' },
+        }
       },
       animation: {
         'errors-animation': 'errors 0.4s linear 1',
         'tracking-animation': 'tracking 3s ease-out 1',
         'delete-animation': 'delete 1s ',
-        'create-animation': 'create 1s linear infinite'
+        'create-animation': 'create 1s linear infinite',
+        'bounceX': 'bounceX 1s ease-in-out infinite'
       },
     },
     screens:{
