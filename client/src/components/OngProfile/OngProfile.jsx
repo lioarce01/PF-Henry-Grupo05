@@ -75,13 +75,15 @@ const OngDetail = () => {
   }, [details]);
 
   return (
-    <div className="w-full bg-[#fff5f4]">
-      <NavBar />
+    <div className="w-full h-screen bg-[#fff5f4]">
+      {/* <NavBar /> */}
       {isLoading ? (
-        <Spinner />
+        <div className={ isLoading ? 'w-screen h-screen flex flex-col place-content-center' : 'fixed top-0'}>
+          <Spinner />
+        </div>
       ) : (
-        <div className="flex flex-col w-full lg:flex-row">
-          <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col w-full lg:flex-row lg:justify-between lg:px-4">
+          <div className="flex flex-col items-center w-full  lg:order-1 lg:mt-4 lg:w-[25%] lg:min-w-[250px] lg:ml-1 ">
             {details?.description?.length > 0 && (
               <OngFormUpdate
                 name={details?.name}
@@ -101,8 +103,8 @@ const OngDetail = () => {
               shelterRefetch={shelterRefetch}
             />
           </div>
-          <div className="flex flex-col w-full mt-16">
-            <div className="flex flex-col items-center mb-4">
+          <div className="flex flex-col w-full mt-4 lg:order-3 lg:w-[30%] lg:min-w-[300px] lg:mt-4 ">
+            <div className="flex flex-col items-center mb-4 lg:mb-0">
               <Description id={id} details={details} />
               <MapView
                 name={details?.name}
@@ -111,10 +113,10 @@ const OngDetail = () => {
                 id={id}
                 shelter={details}
               />
-              <div className="overflow-y-scroll h-[50rem] mt-10">
-                <Posts setIsOpen={setIsOpen} details={details} />
-              </div>
             </div>
+          </div>
+          <div className="flex flex-col items-center w-full mt-8 lg:relative lg:left-2 lg:order-2 lg:w-[40%] lg:min-w-[400px] lg:mt-4">
+                <Posts setIsOpen={setIsOpen} details={details} />
           </div>
           <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
