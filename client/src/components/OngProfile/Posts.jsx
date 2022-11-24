@@ -19,7 +19,7 @@ function Posts({ details, setIsOpen}) {
 		<div
 			className={`${
 				details?.posts && details?.posts.length ? "w-9/12 lg:w-full" : "w-9/12 lg:w-full"
-			} mt-8 lg:mt-2 lg:justify-center lg:flex lg:flex-col`}>
+			} lg:mt-2 lg:justify-center lg:flex lg:flex-col`}>
 			{details.author.id === userDetail?.id && (
 				<button
 					onClick={() => setIsOpen(true)}
@@ -31,11 +31,11 @@ function Posts({ details, setIsOpen}) {
 			)}
 
 			{details?.posts && details?.posts.length ? (
-				<div className="flex items-center justify-end">
+				<div className="flex items-center justify-end text-xs sm:text-lg">
 					<PostFilters />
 				</div>
 			) : null}
-			<div className={details?.posts.length ?"overflow-y-scroll h-[50rem] lg:h-[350px] w-full":"w-full lg:h-[350px] lg:flex lg:flex-col lg:content-center"}>
+			<div className={details?.posts.length ?"overflow-y-scroll h-[450px] lg:h-[350px] w-full":"w-full lg:h-[350px] lg:flex lg:flex-col lg:content-center"}>
 				{details?.posts.length ? (
 					details?.posts.map((post) => {
 						return (
@@ -55,8 +55,8 @@ function Posts({ details, setIsOpen}) {
 						)
 					})
 				) : (
-					<div className="mt-[40px] mb-[80px] justify-center text-left lg:text-center flex flex-row p-2 lg:h-full">
-						<h2 className="text-black font-semibold text-2xl indent-4">
+					<div className="mt-[40px] mb-[80px] justify-center text-center flex flex-row p-2 lg:h-full">
+						<h2 className="text-black font-semibold text-lg sm:text-xl lg:text-2xl indent-4">
 						<strong className="text-[#d45f37]">Start</strong> sharing your activities! <strong className="text-[#d45f37]">Create</strong> a <strong className="text-[#d45f37]">New Post</strong> to encourage People <strong className="text-[#d45f37]">Support</strong> your cause!</h2>
 					</div>
 				)}

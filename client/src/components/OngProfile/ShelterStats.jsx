@@ -29,7 +29,7 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 			<div className="w-full flex flex-col items-center lg:my-4">
 			<div className="shadow-[rgb(255,213,201)] shadow-xl bg-white rounded-2xl py-2 px-2 w-9/12 lg:w-full">
 				<div className="flex flex-col justify-between">
-					<div className="flex flex-col font-semibold">
+					<div className="flex flex-col font-semibold text-xs sm:text-base">
 						<div className="flex flex-row items-center pt-2">
 						<label className=" text-[#d45f37]">Followers: </label>
 						<span className="text-black indent-4">{details?.followers?.length}</span>
@@ -47,7 +47,7 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 						<span className="text-black indent-4">{`$ARS ${details?.goal}`}</span>
 						</div> */}
 					</div>
-					{ !(userDetail.id === details.authorId) && <div className="flex justify-center w-full lg:mt-2">
+					{ !(userDetail.id === details.authorId) && <div className="flex justify-center text-xs sm:text-base w-full mt-2">
 						{userDetails?.following?.find(
 							(shelter) => shelter.id === shelterId
 						) ? (

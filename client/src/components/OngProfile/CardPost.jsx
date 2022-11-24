@@ -75,20 +75,20 @@ const CardPost = ({
 		image = "https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY";
 
 	return (
-		<div className="flex flex-col items-center mt-4 lg:w-full lg:min-h-[450px] lg:max-h-fit lg:mt-0">
-			<div className="w-[400px] my-4 lg:w-[350px] lg:h-full
+		<div className="flex flex-col items-center mt-2 sm:mt-4 lg:w-full lg:min-h-[450px] lg:max-h-fit lg:mt-0">
+			<div className="sm:w-[400px] w-[270px] my-4 lg:w-[350px] lg:h-full
 			bg-white rounded-[30px] shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)]">
 				<div className="flex flex-col mx-auto  m-[30px] lg:m-0 rounded-[30px] px-[20px] py-[20px] w-full">
-					<div className="flex flex-row">
+					<div className="flex flex-row lg:items-center">
 						<img
-							className="object-cover mr-4 rounded-[20px] shadow w-14 h-14 lg:w-16 lg:h-16"
+							className="object-cover mr-4 rounded-[20px] shadow w-11 h-11 sm:w-14 sm:h-14 "
 							src={profilePic}
 							alt="avatar"
 						/>
 
-						<div className="flex flex-col items-start mt-[-5px]">
+						<div className="flex flex-col items-start mt-[-5px] lg:mt-0">
 							<Link to={`/users/${authorId}`}>
-								<h2 className="flex items-center justify-center mb-1 text-xl lg:mb-0 font-bold text-[#474747] border-b border-[#fffcf7] hover:scale-[1.05] transition duration-300">
+								<h2 className="flex items-center justify-center mb-0 sm:mb-1 text-sm sm:text-xl lg:mb-0 font-bold text-[#474747] border-b border-[#fffcf7] hover:scale-[1.05] transition duration-300">
 									{author}{" "}
 									{authorRole === "Admin" && (
 										<MdAdminPanelSettings className="ml-2 text-yellow-500" />
@@ -98,11 +98,11 @@ const CardPost = ({
 							
 							<div className="flex flex-row">
 								<Link to={`/${shelterId}/profile`}>
-									<p className="px-2 py-1 mb-2 lg:mb-0 flex text-sm lg:text-xs font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:scale-[1.05]">
+									<p className="px-2 py-1 mb-2 lg:mb-0 flex text-xs sm:text-sm lg:text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:scale-[1.05]">
 										{shelter}
 									</p>
 								</Link>
-								<small className="ml-[10px] px-2 py-1 h-[28px] flex text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
+								<small className="ml-[10px] px-2 py-1 h-[24px] sm:h-[28px] flex text-xs sm:text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
 									{getTimeAgo(createdAt)}
 								</small>
 							</div>
@@ -127,7 +127,7 @@ const CardPost = ({
 						<img
 							src={postImage}
 							alt="post"
-							className="object-cover h-[300px] lg:mb-0 lg:h-[200px] w-full mt-[20px] mb-[30px] flex mx-auto rounded-[20px]"
+							className="object-cover  h-[200px] sm:h-[300px] lg:mb-0 lg:h-[200px] w-full mt-[20px] mb-[30px] flex mx-auto rounded-[20px]"
 						/>
 					</div>
 

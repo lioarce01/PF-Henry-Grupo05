@@ -26,7 +26,7 @@ function Description({ details, id}) {
   return (
 		<div className="w-9/12 mb-4 p-4 mt-4 lg:w-full lg:p-2 lg:mt-0 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl">
 			<textarea
-				className="w-full text-lg font-semibold text-black bg-white resize-none h-60"
+				className="w-full text-xs sm:text-lg font-semibold text-black bg-white resize-none h-52 sm:h-60"
 				type="text"
 				name="description"
 				onChange={inputHandler}
@@ -36,11 +36,11 @@ function Description({ details, id}) {
 				rows="1"
 				cols="1"
 			/>
-			<div className="flex flex-row-reverse justify-between w-full">
+			<div className="flex flex-row-reverse text-xs sm:text-lg justify-between w-full">
 				<div>
 					{details.author.id === userDetail?.id && (
 						<button
-							className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+							className="my-0 sm:my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 							onClick={() => setToggle(!toggle)}>
 							Edit
 						</button>
@@ -49,7 +49,7 @@ function Description({ details, id}) {
 				<div>
 					{!toggle && (
 						<button
-						className="my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						className="my-0 sm:my-2 mx-auto w-full bg-[#ca7c62] text-gray-100 hover:text-white py-2 px-4  rounded-lg tracking-wide font-bold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
 							onClick={saveHandler}>
 							Save
 						</button>

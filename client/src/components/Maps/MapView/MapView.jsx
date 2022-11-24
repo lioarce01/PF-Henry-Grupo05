@@ -75,7 +75,9 @@ function LocationMarker ({center, name}) {
 
   if (lat !== null && lon !== null) {
 		return (
-			<div className={(shelter.author.id === userDetail?.id)?"h-80 lg:h-64 w-9/12 lg:w-full shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5": "h-80 w-9/12 lg:w-full lg:h-80 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5"}
+			<div className={(shelter.author.id === userDetail?.id)?
+				"h-48 sm:h-80 lg:h-64 w-9/12 lg:w-full shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5":
+				 "h-48 sm:h-80 w-9/12 lg:w-full lg:h-80 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5"}
 			onClick={handleClick2}>
 				<MapContainer
 					center={position}
@@ -104,7 +106,9 @@ function LocationMarker ({center, name}) {
 		)
 	} else
 		return (
-			<div className={(shelter.author.id === userDetail?.id)?"h-80 w-9/12 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5": "h-80 w-9/12 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5"}>
+			<div className={(shelter.author.id === userDetail?.id)?
+			"h-48 sm:h-80 w-9/12 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5":
+			"h-48 sm:h-80 w-9/12 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5"}>
 				<MapContainer
 					center={center}
 					zoom={14}

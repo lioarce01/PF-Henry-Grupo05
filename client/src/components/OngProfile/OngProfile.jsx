@@ -76,7 +76,7 @@ const OngDetail = () => {
 
   return (
     <div className="w-full h-screen bg-[#fff5f4]">
-      <NavBar />
+      {/* <NavBar /> */}
       {isLoading ? (
         <div className={ isLoading ? 'w-screen h-screen flex flex-col place-content-center' : 'fixed top-0'}>
           <Spinner />
