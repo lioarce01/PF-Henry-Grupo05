@@ -86,7 +86,7 @@ module.exports = {
         'delete-animation': 'delete 1s ',
         'create-animation': 'create 1s linear infinite',
         'bounceX': 'bounceX 1s ease-in-out infinite',
-        'custom-ping': 'customPing 4s cubic-bezier(0, 0, 0.2, 1) infinite'
+        'custom-ping': 'customPing 4s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
     },
     screens:{
