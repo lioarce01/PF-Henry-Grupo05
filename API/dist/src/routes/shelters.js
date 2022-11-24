@@ -31,6 +31,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             },
             orderBy: { "name": "asc" },
             include: {
+                author: true,
                 followers: true,
                 posts: {
                     where: {
@@ -57,7 +58,7 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
         const shelters = yield prisma.shelter.findMany({
             where: { enable: true },
             take: cant ? cant : 6,
-            include: { followers: true, posts: true },
+            include: { followers: true, posts: true, author: true },
             orderBy: { budget: 'desc' }
         });
         if (shelters)

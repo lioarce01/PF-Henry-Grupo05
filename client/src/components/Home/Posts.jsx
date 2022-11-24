@@ -2,10 +2,8 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import CardPost from "./CardPost"
 import Spinner from "../Spinner/Spinner"
-import PostFilters from "./PostFilters"
 import { useGetPostsQuery } from "../../redux/api/posts"
 import { useAuth0 } from "@auth0/auth0-react"
-import { PuffLoader } from "react-spinners"
 
 const Posts = () => {
 	const { sort } = useSelector((state) => state.localStorage.postState)
@@ -19,16 +17,13 @@ const Posts = () => {
 		refetch,
 	} = useGetPostsQuery(sort)
 
-	//consolog of shelter name of the post
-	// console.log("name: ", posts[0].shelter.name)
-
 	useEffect(() => {
 		refetch()
 	}, [])
 
 	return (
-		<div className="w-auto h-screen mt-[20px] px-6 mb-4 bg-none overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
-			<div className="flex flex-col justify-center w-full min-w-full">
+		<div className="xl:w-8/12 lg:w-full lg:mr-[50px] h-[800px] px-6 bg-none overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+			<div className="flex flex-col justify-center w-full">
 				{isLoading ? (
 					<div className="mt-[140px]">
 						<Spinner />

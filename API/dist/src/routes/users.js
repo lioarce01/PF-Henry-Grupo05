@@ -103,7 +103,13 @@ router.get("/:id/following", (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const user = yield prisma.user.findUnique({
             where: { id },
-            include: { following: true }
+            include: {
+                following: {
+                    include: {
+                        author: true
+                    }
+                }
+            }
         });
         user ? res.status(200).send(user.following) : res.status(404).send("ERROR: User not found.");
     }

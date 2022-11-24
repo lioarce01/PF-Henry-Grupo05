@@ -5,13 +5,13 @@ import { AiFillHeart } from "react-icons/ai";
 import { getTimeAgo } from "../../utils";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useEffect } from "react";
-import ModalPostDetail from "./ModalPostDetail";
+import ModalPostDetail from "./Modals/ModalPostDetail";
 import ShowMoreText from "react-show-more-text";
 import { useUpdatePostLikesMutation } from "../../redux/api/posts";
 import { useDispatch, useSelector } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useAuth0 } from "@auth0/auth0-react";
-import { removeLike, selectUser } from "../../redux/slices/manageUsers";
+import { selectUser } from "../../redux/slices/manageUsers";
 import { addLikeAction, removeLikeAction } from "../../redux/slices/manageUsers/actions";
 
 const CardPost = ({
@@ -76,8 +76,8 @@ const CardPost = ({
 
 	return (
 		<div className="flex flex-col">
-			<div className="w-[900px] my-4 md:min-w-[500px] bg-white rounded-[30px] shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)]">
-				<div className="flex flex-col mx-auto border m-[30px] rounded-[30px] px-[20px] py-[20px] w-[800px]">
+			<div className="w-full my-4 bg-white rounded-[30px] px-[25px]">
+				<div className="flex flex-col mx-auto border m-[30px] rounded-[20px] px-[20px] py-[20px] ">
 					<div className="flex flex-row">
 						<img
 							className="object-cover mr-4 rounded-[20px] shadow w-14 h-14"
@@ -138,7 +138,7 @@ const CardPost = ({
 									onClick={toggleLike}>
 
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
-									<AiFillHeart className="w-5 h-5 text-red-600" />
+									<AiFillHeart className="w-5 h-5 text-[#FF7272]" />
 								</button>
 							) : (
 								<button
@@ -146,7 +146,7 @@ const CardPost = ({
 									onClick={toggleLike}>
 
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
-									<AiOutlineHeart className="w-5 h-5 text-red-600" />
+									<AiOutlineHeart className="w-5 h-5 text-[#FF7272]" />
 								</button>
 							)}
 						</div>
