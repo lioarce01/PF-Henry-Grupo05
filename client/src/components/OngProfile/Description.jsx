@@ -24,7 +24,7 @@ function Description({ details, id}) {
         });
 
   return (
-		<div className="w-[600px] mb-4 p-4 mt-4 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl">
+		<div className="w-9/12 mb-4 p-4 mt-4 lg:w-full lg:p-2 lg:mt-0 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl">
 			<textarea
 				className="w-full text-lg font-semibold text-black bg-white resize-none h-60"
 				type="text"
