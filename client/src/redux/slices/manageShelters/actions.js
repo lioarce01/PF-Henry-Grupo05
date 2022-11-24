@@ -1,9 +1,5 @@
-import { sortShelters, searchShelters } from "./index";
+import { carouselShelters } from './index'
 
-export const sortSheltersAction = (order, orderType, filter) => (dispatch) => {
-  dispatch(sortShelters({ order, orderType, filter }));
-};
-
-export const searchSheltersAction = (search) => (dispatch) => {
-  dispatch(searchShelters(search));
+export const carouselSheltersAction = (render) => (dispatch) => {
+  dispatch(carouselShelters(render));
 };

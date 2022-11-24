@@ -5,7 +5,7 @@ import { HiMoon } from "react-icons/hi"
 import { GrHomeRounded } from "react-icons/gr"
 import PostFilters from "../Home/PostFilters"
 import { useSelector } from "react-redux"
-import ModalCreatePost from "../Home/ModalCreatePost"
+import ModalCreatePost from "../Home/Modals/ModalCreatePost"
 import ProfilePanel from "./ProfilePanel"
 
 function classNames(...classes) {
@@ -20,7 +20,7 @@ const Navbar = () => {
 		(state) => state.localStorage.userState
 	)
 
-	const handleToggle = () => setToggle(!toggle)
+	const handleToggle = () => setToggle(! toggle)
 	const closeModal = () => setIsOpen(false)
 
 	return (
