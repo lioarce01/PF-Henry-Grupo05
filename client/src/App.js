@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import OngDetail from "./components/OngProfile/OngProfile";
-import Home from "./components/Home/Home";
+import Home from "./components/Home/Main/Home";
 import Landing from "./components/Landing";
 import Page404 from "./components/Page404";
 import OngForm from "./components/OngForm/OngForm";

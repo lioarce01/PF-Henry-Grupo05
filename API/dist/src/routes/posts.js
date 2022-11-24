@@ -133,7 +133,8 @@ router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
                 shelterId: bodyPost.shelterId,
                 authorId: bodyPost.authorId,
                 content: bodyPost.content,
-                image: bodyPost.image
+                image: bodyPost.image,
+                video: bodyPost.video
             }
         });
         res.status(200).send('Post created successfully.');

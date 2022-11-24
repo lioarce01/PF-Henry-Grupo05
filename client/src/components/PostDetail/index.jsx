@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ModalEditPost from "./ModalEditPost";
 import Comments from "./Comments";
 import AuthorData from "./AuthorData";
 import PostData from "./PostData";

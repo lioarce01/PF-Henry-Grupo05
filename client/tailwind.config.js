@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'xsm': '320px',
+        'xsm': '320px'
       },
       keyframes: {
         customPing:{
@@ -15,7 +15,7 @@ module.exports = {
           '100%':{ transform : 'scale(1.5)',
                   opacity: '0'},
         },
-        errors: {
+        wave: {
           '0%': { transform: 'rotate(0.0deg)' },
           '10%': { transform: 'rotate(14deg)' },
           '20%': { transform: 'rotate(-8deg)' },
@@ -25,6 +25,7 @@ module.exports = {
           '60%': { transform: 'rotate(0.0deg)' },
           '100%': { transform: 'rotate(0.0deg)' },
         },
+        
         tracking: {
           '0%':{
             'letter-spacing': '-0.5em',
@@ -81,7 +82,8 @@ module.exports = {
         }
       },
       animation: {
-        'errors-animation': 'errors 0.4s linear 1',
+        'waving-hand': 'wave 2s linear infinite',
+        'errors-animation': 'wave 0.4s linear 1',
         'tracking-animation': 'tracking 3s ease-out 1',
         'delete-animation': 'delete 1s ',
         'create-animation': 'create 1s linear infinite',
