@@ -79,6 +79,11 @@ module.exports = {
                     filter: 'blur(0px)',
             opacity: 1,
           }
+
+        bounceX: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(5px)' },
+
         }
       },
       animation: {
@@ -87,6 +92,9 @@ module.exports = {
         'delete-animation': 'delete 2s ',
         'create-animation': 'create 1s linear infinite',
         'textFocus-animation': 'textFocus 3s ease-out 1'
+        'delete-animation': 'delete 1s ',
+        'create-animation': 'create 1s linear infinite',
+        'bounceX': 'bounceX 1s ease-in-out infinite'
       },
     },
     screens:{
