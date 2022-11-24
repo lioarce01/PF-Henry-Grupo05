@@ -5,7 +5,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { getTimeAgo } from "../../utils";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useEffect } from "react";
-import ModalPostDetail from "../Home/ModalPostDetail";
+import ModalPostDetail from "../Home/Modals/ModalPostDetail"
 import ShowMoreText from "react-show-more-text";
 import { useUpdatePostLikesMutation } from "../../redux/api/posts";
 import { useDispatch, useSelector } from "react-redux";
