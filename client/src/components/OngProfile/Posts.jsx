@@ -8,7 +8,7 @@ function Posts({ details, setIsOpen}) {
   const {id} = useParams();
   const { userDetail } = useSelector((state) => state.localStorage.userState);
   const [render, setRender] = useState(true)
-  
+
   useEffect(()=>{
     setRender(!render)
   },[userDetail])
@@ -40,6 +40,7 @@ function Posts({ details, setIsOpen}) {
 					details?.posts.map((post) => {
 						return (
 							<CardPost
+								postVideo={post.video}
 								key={post.id}
 								id={post.id}
 								profilePic={post.author.profilePic}
