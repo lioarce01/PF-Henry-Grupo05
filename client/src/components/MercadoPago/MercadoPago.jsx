@@ -15,12 +15,13 @@ const MercadoPago = () => {
         let payment_id = query.get("payment_id")
         setTimeout(() => {
           verify({payment_id}).unwrap().then((res) => {
-            res.originalStatus === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
+            res.status === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
+            navigate(`/${res.data}/profile`)
           }).catch((res) => {
-            res.originalStatus === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
+            res.status === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
+            navigate("/home")
           })
-          navigate("/home")
-        }, 2500)
+        }, 3500)
     }, [])
 
   return (

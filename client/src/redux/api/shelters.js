@@ -71,8 +71,6 @@ export const sheltersApi = createApi({
 
         addFollowers: builder.mutation({
             query: ({ userId, shelterId }) => {
-                console.log("user: ", userId);
-                console.log("addfollow: ", shelterId);
                 return ({
                 url: `/shelters/follow`,
                 method: "put",
