@@ -9,7 +9,7 @@ import "swiper/css/free-mode";
 
 // import required modules
 import { FreeMode, Autoplay } from "swiper";
-import Card from './Card'
+import CarouselCard from '../../Home/Main/HomeCarousel/CarouselCard'
 import { useTopFiveSheltersQuery } from "../../../redux/api/shelters"
 import Spinner from "../../Spinner/Spinner";
 
@@ -21,14 +21,12 @@ const Carousel = () => {
     refetch()
   }, [])
 
-  if (isLoading) return (<div className=""><Spinner/></div>)
-  if (! topShelters) return
+  if (isLoading) return (<div className=""><Spinner /></div>)
+  if (!topShelters) return
 
   return (
-    <div className="w-[80%] h-fit mx-auto rounded ">
-      <h2 className="mb-10 font-bold text-[#000] md:text-7xl lg:text-5xl text-center">
-        Trending
-      </h2>
+    <div className="w-[80%] h-fit mx-auto rounded">
+      <h2 className="mb-20 font-bold text-[#201008] md:text-7xl lg:text-5xl text-center">Trending</h2>
       <Swiper
         loop={true}
         slidesPerView={1}
@@ -60,7 +58,10 @@ const Carousel = () => {
         className="mySwiper h-[400px] px-2">
 
 
-        {topShelters.length > 0 && topShelters.map((ong, index) => <SwiperSlide key={index} ><Card id={ong.id} image={ong.profilePic} name={ong.name} desc={ong.description} index={index+1}/></SwiperSlide>)}
+        {topShelters.length > 0 && topShelters.map((s, index) => <SwiperSlide key={index} >
+          <CarouselCard id={s?.id} image={s?.profilePic} name={s?.name} goal={s?.goal} authorId={s?.authorId}
+            budget={s?.budget} listAnimals={s?.listAnimals} profilePic={s?.author?.profilePic} />
+        </SwiperSlide>)}
 
       </Swiper>
     </div>

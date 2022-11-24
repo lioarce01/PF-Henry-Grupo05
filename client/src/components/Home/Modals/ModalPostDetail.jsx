@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import Post from "../PostDetail";
+import Post from "../../PostDetail";
 
 const ModalPostDetail = ({ isOpen, closeModal, id, setLike, like, likes }) => {
   return (

@@ -6,7 +6,7 @@ import { postApi } from '../api/posts';
 import { usersApi } from '../api/users';
 import { sheltersApi } from '../api/shelters';
 import storage from 'redux-persist/lib/storage'
-import {persistReducer} from 'redux-persist'
+import { persistReducer } from 'redux-persist'
 import { combineReducers } from '@reduxjs/toolkit';
 import { mapApi } from '../api/map';
 import { mercadoPagoApi } from '../api/mercadopago';
@@ -21,7 +21,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
     postState: managePostsSlice,
     userState: manageUsersSlice
-    
 })
 
 const localStorage = persistReducer(persistConfig, rootReducer)

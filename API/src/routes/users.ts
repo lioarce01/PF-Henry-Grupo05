@@ -149,7 +149,13 @@ router.get("/:id/following", async (req, res) => {
     try {
         const user = await prisma.user.findUnique({
             where: { id },
-            include: { following: true }
+            include: { 
+                following: {
+                    include: {
+                        author: true
+                    }
+                } 
+            }
         });
 
         user ? res.status(200).send(user.following) : res.status(404).send("ERROR: User not found.");

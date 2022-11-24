@@ -7,7 +7,7 @@ import {
 } from "../../redux/api/shelters";
 import OngFormUpdate from "./OngFormUpdate";
 import NavBar from "../Navbar/Navbar";
-import CreatePostModal from "../Home/ModalCreatePost";
+import CreatePostModal from "../Home/Modals/ModalCreatePost";
 import Spinner from "../Spinner/Spinner";
 import ModalDonate from "./Donate/ModalDonate";
 import MapView from "../Maps/MapView/MapView";

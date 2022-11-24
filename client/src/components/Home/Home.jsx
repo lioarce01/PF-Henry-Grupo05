@@ -1,9 +1,9 @@
-import React from 'react'
-import Navbar from '../Navbar/Navbar'
-import Ongs from './Ongs'
-import Posts from './Posts'
-import SubscriptorsBar from './SubscriptorsBar'
-import { Toaster } from 'react-hot-toast'
+import React from "react"
+import Navbar from "../Navbar/Navbar"
+import Ongs from "./Ongs"
+import Posts from "./Posts"
+import SubscriptorsBar from "./SubscriptorsBar"
+import { Toaster } from "react-hot-toast"
 import HomeChatBot from "./HomeChatBot"
 
 const Home = () => {

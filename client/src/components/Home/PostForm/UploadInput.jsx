@@ -20,7 +20,7 @@ const UploadImage = ({ url, setUrl }) => {
 
   return (
     <div className="grid grid-cols-1 space-y-2">
-      <label className="text-sm font-bold text-[#462312] tracking-wide">
+      <label className="text-sm font-bold text-[#979b9c] tracking-wide">
         Upload image
       </label>
       {url[0] && (
@@ -40,9 +40,9 @@ const UploadImage = ({ url, setUrl }) => {
         ) : (
           <label
             draggable="true"
-            className="flex flex-col rounded-lg border-[#E1D7D3] border-4  border-dashed w-full h-60 p-10 group text-center cursor-pointer"
+            className="flex flex-col rounded-lg border-[#d7dadb] border-4 border-dashed w-full h-60 p-10 group text-center cursor-pointer"
           >
-            <div className="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
+            <div className="h-full w-full text-center flex flex-col items-center justify-center">
               <div className="flex flex-auto max-h-48 w-2/5 mx-auto ">
                 <img
                   className="has-mask h-36 object-center"
@@ -50,9 +50,9 @@ const UploadImage = ({ url, setUrl }) => {
                   alt="freepik"
                 />
               </div>
-              <p className="pointer-none text-gray-500 ">
+              <p className="pointer-none text-[#b2b3b4]">
                       <p
-                        className="text-[#462312] font-bold"
+                        className="text-[#979b9c] font-bold"
                       >
                         select a file
                       </p>{" "}
