@@ -1,12 +1,12 @@
-import { Transition, Dialog } from '@headlessui/react'
+import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import Formulario from "./FormDonate"
-import React from 'react'
+import FormCreate from "./FormCreate";
 
-const ModalDonate = ({ isOpen, closeModal, name, shelterId, goalId }) => {
+
+const modalCreate = ({ isOpen, closeModal, shelterId }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as="div" className="relative z-50" onClose={closeModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -31,14 +31,14 @@ const ModalDonate = ({ isOpen, closeModal, name, shelterId, goalId }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                <Formulario closeModal={closeModal} name={name} shelterId={shelterId} goalId={goalId}/>
+                <FormCreate shelterId={shelterId} closeModal={closeModal}/>
               </Dialog.Panel>
             </Transition.Child>
           </div>
         </div>
       </Dialog>
     </Transition>
-  )
-}
+  );
+};
 
-export default ModalDonate
+export default modalCreate;

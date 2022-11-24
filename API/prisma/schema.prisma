@@ -39,12 +39,23 @@ model Shelter {
   address       String?  @map("address")
   website       String?  @map("website")
   author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId      String   @db.ObjectId 
+  authorId      String   @db.ObjectId
   budget        Int?     @default(0) @map("budget")
-  goal          Int?     @map("goal")
   userFollowers String[] @default([]) @db.ObjectId
   followers     User[]   @relation("Followers", fields: [userFollowers], references: [id])
   posts         Post[]
+  goals         Goal[]
+}
+
+model Goal {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String  @map("content")
+  budget    Int     @default(0)
+  goal      Int
+  enable    Boolean @default(true) @map("enable")
+  shelter   Shelter @relation(fields: [shelterId], references: [id])
+  shelterId String  @db.ObjectId
 }
 
 model Post {
@@ -66,7 +77,7 @@ model Post {
 model Comment {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   content  String  @map("content")
-  enable   Boolean   @default(true) @map("enable")
+  enable   Boolean @default(true) @map("enable")
   author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String  @db.ObjectId
   post     Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
