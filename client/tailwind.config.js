@@ -9,6 +9,12 @@ module.exports = {
         'xsm': '320px'
       },
       keyframes: {
+        customPing:{
+          '75%':{ transform : 'scale(1.5)',
+                  opacity: '0'},
+          '100%':{ transform : 'scale(1.5)',
+                  opacity: '0'},
+        },
         wave: {
           '0%': { transform: 'rotate(0.0deg)' },
           '10%': { transform: 'rotate(14deg)' },
@@ -19,6 +25,7 @@ module.exports = {
           '60%': { transform: 'rotate(0.0deg)' },
           '100%': { transform: 'rotate(0.0deg)' },
         },
+        
         tracking: {
           '0%':{
             'letter-spacing': '-0.5em',
@@ -80,7 +87,8 @@ module.exports = {
         'tracking-animation': 'tracking 3s ease-out 1',
         'delete-animation': 'delete 1s ',
         'create-animation': 'create 1s linear infinite',
-        'bounceX': 'bounceX 1s ease-in-out infinite'
+        'bounceX': 'bounceX 1s ease-in-out infinite',
+        'custom-ping': 'customPing 4s cubic-bezier(0, 0, 0.2, 1) infinite'
       },
     },
     screens:{
