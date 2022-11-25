@@ -78,7 +78,7 @@ router.post('/plan', async (req, res) => {
             transaction_amount: donation,
             currency_id: "ARS",
         },
-        back_url: "http://192.168.1.2:3000/",
+        back_url: "http://localhost:3000/",
         payer_email: email
     }
 
@@ -100,7 +100,7 @@ router.get("/feedback/plan", async (req, res) => {
         await prisma.shelter.update({where: {id}, data: {
             budget: shelter?.budget! + Number(data.auto_recurring.transaction_amount)
         }})
-        res.status(200).send("Approved payment")
+        res.status(200).json({status:200,data: id})
     } else {
         res.status(403).send("Failed payment")
     }

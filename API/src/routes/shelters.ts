@@ -228,7 +228,6 @@ router.post("/", jwtCheck, async (req, res) => {
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
             }
         })
 
@@ -339,7 +338,6 @@ router.put("/:id", async (req, res) => {
                 listAnimals: bodyShelter.listAnimals,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal,
                 lat: bodyShelter.lat,
                 lon: bodyShelter.lon
             },
