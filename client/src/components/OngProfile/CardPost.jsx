@@ -1,21 +1,18 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import { MdAdminPanelSettings, MdComment } from "react-icons/md"
-import { AiFillHeart } from "react-icons/ai"
-import { getTimeAgo } from "../../utils"
-import { AiOutlineHeart } from "react-icons/ai"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { MdAdminPanelSettings, MdComment } from "react-icons/md";
+import { AiFillHeart } from "react-icons/ai";
+import { getTimeAgo } from "../../utils";
+import { AiOutlineHeart } from "react-icons/ai";
 import { useEffect } from "react"
 import ModalPostDetail from "../Home/Modals/ModalPostDetail"
-import ShowMoreText from "react-show-more-text"
-import { useUpdatePostLikesMutation } from "../../redux/api/posts"
-import { useDispatch, useSelector } from "react-redux"
-import toast, { Toaster } from "react-hot-toast"
-import { useAuth0 } from "@auth0/auth0-react"
-import { removeLike, selectUser } from "../../redux/slices/manageUsers"
-import {
-	addLikeAction,
-	removeLikeAction,
-} from "../../redux/slices/manageUsers/actions"
+import ShowMoreText from "react-show-more-text";
+import { useUpdatePostLikesMutation } from "../../redux/api/posts";
+import { useDispatch, useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import { useAuth0 } from "@auth0/auth0-react";
+import { removeLike, selectUser } from "../../redux/slices/manageUsers";
+import { addLikeAction, removeLikeAction } from "../../redux/slices/manageUsers/actions";
 
 const CardPost = ({
 	image,
