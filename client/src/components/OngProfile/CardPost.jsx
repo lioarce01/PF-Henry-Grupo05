@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { MdAdminPanelSettings, MdComment } from "react-icons/md";
-import { AiFillHeart } from "react-icons/ai";
-import { getTimeAgo } from "../../utils";
-import { AiOutlineHeart } from "react-icons/ai";
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import { MdAdminPanelSettings, MdComment } from "react-icons/md"
+import { AiFillHeart } from "react-icons/ai"
+import { getTimeAgo } from "../../utils"
+import { AiOutlineHeart } from "react-icons/ai"
 import { useEffect } from "react"
 import ModalPostDetail from "../Home/Modals/ModalPostDetail"
-import ShowMoreText from "react-show-more-text";
-import { useUpdatePostLikesMutation } from "../../redux/api/posts";
-import { useDispatch, useSelector } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
-import { useAuth0 } from "@auth0/auth0-react";
-import { removeLike, selectUser } from "../../redux/slices/manageUsers";
-import { addLikeAction, removeLikeAction } from "../../redux/slices/manageUsers/actions";
+import ShowMoreText from "react-show-more-text"
+import { useUpdatePostLikesMutation } from "../../redux/api/posts"
+import { useDispatch, useSelector } from "react-redux"
+import toast, { Toaster } from "react-hot-toast"
+import { useAuth0 } from "@auth0/auth0-react"
+import { removeLike, selectUser } from "../../redux/slices/manageUsers"
+import {
+	addLikeAction,
+	removeLikeAction,
+} from "../../redux/slices/manageUsers/actions"
 
 const CardPost = ({
 	image,
@@ -30,54 +33,53 @@ const CardPost = ({
 	shelterId,
 }) => {
 	const { likes: userLikes } = useSelector(selectUser)
-	const [likesActuals, setLikesActuals] = useState(likes);
+	const [likesActuals, setLikesActuals] = useState(likes)
 	const dispatch = useDispatch()
 	const myLike = () => {
 		if (userLikes?.length < 1) return false
 		if (userLikes?.includes(id)) return true
 		return false
 	}
-	const [like, setLike] = useState(myLike);
-	const [isOpen, setIsOpen] = useState(false);
-	const { isAuth } = useSelector((state) => state.localStorage.userState);
-	const closeModal = () => setIsOpen(false);
+	const [like, setLike] = useState(myLike)
+	const [isOpen, setIsOpen] = useState(false)
+	const { isAuth } = useSelector((state) => state.localStorage.userState)
+	const closeModal = () => setIsOpen(false)
 
 	const { getAccessTokenSilently } = useAuth0()
 
-	const [updateLikes, { }] = useUpdatePostLikesMutation();
+	const [updateLikes, {}] = useUpdatePostLikesMutation()
 
 	const toggleLike = async () => {
-		if (!isAuth) return toast.error("you are not logged in");
+		if (!isAuth) return toast.error("you are not logged in")
 
-		setLike(!like);
-		like
-			? setLikesActuals(likesActuals - 1)
-			: setLikesActuals(likesActuals + 1);
+		setLike(!like)
+		like ? setLikesActuals(likesActuals - 1) : setLikesActuals(likesActuals + 1)
 		const accessToken = await getAccessTokenSilently()
 		like
 			? updateLikes({ post: { id, likes: likesActuals - 1 }, accessToken })
 			: updateLikes({ post: { id, likes: likesActuals + 1 }, accessToken })
 
-		like
-			? dispatch(removeLikeAction(id))
-			: dispatch(addLikeAction(id))
-	};
+		like ? dispatch(removeLikeAction(id)) : dispatch(addLikeAction(id))
+	}
 
 	useEffect(() => {
-		setLike(like);
-	}, [like]);
+		setLike(like)
+	}, [like])
 
 	useEffect(() => {
-		setLikesActuals(likes);
-	}, [likes]);
+		setLikesActuals(likes)
+	}, [likes])
 
 	if (!image)
-		image = "https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY";
+		image =
+			"https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
 
 	return (
 		<div className="flex flex-col items-center mt-2 sm:mt-4 lg:w-full lg:min-h-[450px] lg:max-h-fit lg:mt-0">
-			<div className="sm:w-[400px] w-[270px] my-4 lg:w-[350px] lg:h-full
-			bg-white rounded-[30px] shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)]">
+			<div
+				className="sm:w-[400px] w-[270px] my-4 lg:w-[350px] lg:h-full
+			bg-white rounded-[30px] shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)]"
+			>
 				<div className="flex flex-col mx-auto  m-[30px] lg:m-0 rounded-[30px] px-[20px] py-[20px] w-full">
 					<div className="flex flex-row lg:items-center">
 						<img
@@ -95,7 +97,7 @@ const CardPost = ({
 									)}
 								</h2>
 							</Link>
-							
+
 							<div className="flex flex-row">
 								<Link to={`/${shelterId}/profile`}>
 									<p className="px-2 py-1 mb-2 lg:mb-0 flex text-xs sm:text-sm lg:text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:scale-[1.05]">
@@ -117,8 +119,8 @@ const CardPost = ({
 							className="content-css"
 							anchorClass="show-more-less-clickable"
 							expanded={false}
-							truncatedEndingComponent={"... "}>
-
+							truncatedEndingComponent={"... "}
+						>
 							{content}
 						</ShowMoreText>
 					</div>
@@ -136,16 +138,16 @@ const CardPost = ({
 							{like ? (
 								<button
 									className="flex flex-row items-center border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300e"
-									onClick={toggleLike}>
-
+									onClick={toggleLike}
+								>
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
 									<AiFillHeart className="w-5 h-5 text-red-600" />
 								</button>
 							) : (
 								<button
 									className="flex flex-row items-center border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300"
-									onClick={toggleLike}>
-
+									onClick={toggleLike}
+								>
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
 									<AiOutlineHeart className="w-5 h-5 text-red-600" />
 								</button>
@@ -155,8 +157,8 @@ const CardPost = ({
 						<div className="flex mr-2 text-sm text-gray-700">
 							<button
 								onClick={() => setIsOpen(true)}
-								className="flex flex-row items-center pr-4 border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300">
-									
+								className="flex flex-row items-center pr-4 border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300"
+							>
 								<p className="mr-[7px] mb-[1px] font-[800]">{comments}</p>
 								<MdComment className="w-5 h-5 text-[#6D91E9]" />
 							</button>
@@ -174,7 +176,7 @@ const CardPost = ({
 				likes={likesActuals}
 			/>
 		</div>
-	);
-};
+	)
+}
 
-export default CardPost;
+export default CardPost
