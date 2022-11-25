@@ -30,7 +30,9 @@ const Introduction = () => {
                 <Link to="/home">
                   <button className="bg-[#F87171] text-white h-[60px] w-[200px] rounded-lg font-[500] hover:bg-[#a14c4c] duration-500 active:bg-[#4d2c22]">Donate today</button>
                 </Link>
+                <Link to="/learnMore">
                 <button className="bg-none h-[60px] w-[200px] drop-shadow-md ml-5 rounded-xl border-2 border-[#F87171] text-[#F87171] font-[700] hover:bg-[#a14c4c] hover:border-[#a14c4c] hover:text-white duration-500 active:bg-[#7c4737]">Learn more</button>
+                </Link>
               </div>
             </div>
           </div>
