@@ -7,14 +7,14 @@ import { Toaster } from 'react-hot-toast'
 
 const Home = () => {
 	return (
-		<div className="h-screen bg-[#EFF0F3] min-h-screen">
+		<div className="h-screen bg-[#EFF0F3] dark:bg-[#27242C] min-h-screen">
 			<Toaster />
 			<div className="flex sm:flex-row xsm:flex-col justify-between">
 				<div className='sm:inline'>
 					<HomeSideBar />
 				</div>
 				<div className='flex flex-col grow h-screen min-w-0 md:pb-[40px] overflow-x-hidden overflow-y-scroll scrollbar-thin 
-				scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md'>
+				scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#e06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md'>
 					<div className="sm:ml-[15px] md:ml-[30px] lg:ml-[50px] xl:ml-[100px]">
 						<HomeNav />
 					</div>

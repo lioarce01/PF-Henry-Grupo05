@@ -16,7 +16,7 @@ import LoadUser from "./components/LoadUser";
 function App() {
   LoadUser()
   return (
-    <div className="App">
+    <div className="App dark">
       
       <Routes>
         <Route path="*" element={<Page404 />} />

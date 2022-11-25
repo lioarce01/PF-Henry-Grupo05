@@ -122,6 +122,11 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const shelter = yield prisma.shelter.findUnique({
             where: { id: id },
             include: {
+                goals: {
+                    where: {
+                        enable: state
+                    }
+                },
                 followers: true,
                 author: true,
                 posts: {
@@ -194,7 +199,6 @@ router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, vo
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
             }
         });
         res.status(200).send(shelterCreated);
@@ -276,7 +280,6 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 listAnimals: bodyShelter.listAnimals,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal,
                 lat: bodyShelter.lat,
                 lon: bodyShelter.lon
             },

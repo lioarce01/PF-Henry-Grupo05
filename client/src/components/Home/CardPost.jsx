@@ -78,18 +78,18 @@ const CardPost = ({
 
 	return (
 		<div className="flex flex-col">
-			<div className="w-full my-4 bg-white rounded-[30px] px-[25px]">
-				<div className="flex flex-col mx-auto border m-[30px] rounded-[20px] px-[20px] py-[20px] ">
+			<div className="w-full my-4 bg-white dark:bg-[#1b1a1f] rounded-[30px] px-[25px]">
+				<div className="flex flex-col mx-auto border dark:border-[#38353d] m-[30px] rounded-[20px] px-[20px] py-[20px] ">
 					<div className="flex flex-row">
 						<img
-							className="object-cover mr-4 rounded-[20px] shadow w-14 h-14"
+							className="object-cover mr-4 rounded-[20px] shadow w-14 h-14 dark:outline dark:outline-offset-2 dark:outline-2 dark:outline-[#38353d]"
 							src={profilePic}
 							alt="avatar"
 						/>
 
 						<div className="flex flex-col items-start mt-[-5px]">
 							<Link to={`/users/${authorId}`}>
-								<h2 className="flex items-center justify-center mb-1 text-lg font-bold text-[#474747] border-b border-[#fffcf7] hover:border-black transition duration-300">
+								<h2 className="flex items-center justify-center mb-1 text-lg font-bold text-[#474747] dark:text-[#dcdedf] border-b border-[#fffcf7] dark:border-[#1b1a1f] hover:border-black dark:hover:border-[#dcdedf] transition duration-300">
 									{author}{" "}
 									{authorRole === "Admin" && (
 										<MdAdminPanelSettings className="ml-2 text-yellow-500" />
@@ -99,11 +99,11 @@ const CardPost = ({
 							
 							<div className="flex flex-row">
 								<Link to={`/${shelterId}/profile`}>
-									<p className="px-2 py-1 mb-2 flex text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:shadow-md hover:shadow-red-400">
+									<p className="px-2 py-1 mb-2 flex text-sm font-semibold text-white transition duration-300 bg-red-400 dark:bg-[#e06161] rounded-lg hover:shadow-md hover:shadow-red-400">
 										{shelter}
 									</p>
 								</Link>
-								<small className="ml-[10px] px-2 py-1 h-[28px] flex text-sm text-white font-semibold rounded-md bg-[#6D91E9]">
+								<small className="ml-[10px] px-2 py-1 h-[28px] flex text-sm text-white font-semibold rounded-md bg-[#6D91E9] dark:bg-[#7f8af3]">
 									{getTimeAgo(createdAt)}
 								</small>
 							</div>
@@ -133,11 +133,11 @@ const CardPost = ({
 						/>}
 					</div>
 
-					<div className="flex items-center justify-end pt-2 mt-2 border-t border-gray-400">
+					<div className="flex items-center justify-end pt-2 mt-2 border-t border-gray-400 dark:border-[#38353d]">
 						<div className="flex mr-4 text-sm text-gray-700">
 							{like ? (
 								<button
-									className="flex flex-row items-center border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300e"
+									className="flex flex-row items-center border border-[#fffcf7] dark:border-[#38353d] hover:border dark:text-[#f0eeee] dark:hover:text-[#38353d] hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300e"
 									onClick={toggleLike}>
 
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
@@ -145,7 +145,7 @@ const CardPost = ({
 								</button>
 							) : (
 								<button
-									className="flex flex-row items-center border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300"
+									className="flex flex-row items-center border border-[#fffcf7] dark:border-[#38353d] dark:text-[#f0eeee] dark:hover:text-[#38353d] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300"
 									onClick={toggleLike}>
 
 									<p className="mr-[7px] mb-[1px] font-[800]">{likesActuals}</p>
@@ -157,7 +157,7 @@ const CardPost = ({
 						<div className="flex mr-2 text-sm text-gray-700">
 							<button
 								onClick={() => setIsOpen(true)}
-								className="flex flex-row items-center pr-4 border border-[#fffcf7] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300">
+								className="flex flex-row items-center pr-4 border border-[#fffcf7] dark:border-[#38353d] dark:text-[#f0eeee] dark:hover:text-[#38353d] hover:border hover:border-[#FAF2E7] py-1 px-3 rounded-md hover:bg-[#FAF2E7] transition duration-300">
 									
 								<p className="mr-[7px] mb-[1px] font-[800]">{comments}</p>
 								<MdComment className="w-5 h-5 text-[#6D91E9]" />

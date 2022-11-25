@@ -10,7 +10,7 @@ const UploadImage = ({ url, setUrl }) => {
     setLoading(true);
     const { response, image } = await uploadImage("preset_posts", e.target.files[0]);
     if(response?.resource_type === "video") {
-      setUrl(["video", response.public_id])
+      setUrl(["video", response?.public_id])
     }
     else if(response?.resource_type === "image") setUrl(["image", image]);
     setLoading(false);
