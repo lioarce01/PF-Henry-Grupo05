@@ -5,15 +5,16 @@ import {useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom'
 
 function Posts({ details, setIsOpen}) {
-  const {id} = useParams();
-  const { userDetail } = useSelector((state) => state.localStorage.userState);
-  const [render, setRender] = useState(true)
+	const {id} = useParams();
+	const { userDetail } = useSelector((state) => state.localStorage.userState);
+	const [render, setRender] = useState(true)
 
-  useEffect(()=>{
-    setRender(!render)
-  },[userDetail])
+	useEffect(()=>{
+	setRender(!render)
+	},[userDetail])
 
-  console.log("details: ", details)
+	console.log("details: ", details)
+
 
 	return (
 		<div

@@ -7,7 +7,7 @@ import {
 } from "../../redux/api/shelters";
 import OngFormUpdate from "./OngFormUpdate";
 import NavBar from "../Navbar/Navbar";
-import CreatePostModal from "../Home/Modals/ModalCreatePost";
+import ModalCreatePost from "../Home/Modals/ModalCreatePost";
 import Spinner from "../Spinner/Spinner";
 import ModalDonate from "./Donate/ModalDonate";
 import MapView from "../Maps/MapView/MapView";
@@ -131,14 +131,14 @@ const OngDetail = () => {
 						/>
 						<Posts setIsOpen={setIsOpen} details={details} />
 					</div>
-					<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
+					<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
 
-					{/* <ModalDonate
-            isOpen={isOpenDonate}
-            closeModal={closeModalDonate}
-            name={details.name}
-            id={id}
-          /> */}
+					<ModalDonate
+						isOpen={isOpenDonate}
+						closeModal={closeModalDonate}
+						name={details.name}
+						id={id}
+          			/>
 				</div>
 			)}
 		</div>

@@ -201,15 +201,16 @@ const OngFormUpdate = ({
 									/>
 								)}
 								{toggle && (
-									<Link
-										to={{ pathname: `http://${values.website}` }}
-										target="_blank"
-										className="w-9/12 "
-									>
-										<p className="w-full pl-4 my-2 truncate bg-white cursor-pointer lg:my-1">
-											{values.website}
-										</p>
-									</Link>
+									<a target="_blank" rel="noreferrer" className="w-full pl-4 my-2 truncate bg-white cursor-pointer lg:my-1" href={values.website}>{values.website}</a>
+									// <Link
+									// 	to={{ pathname: `${values.website}` }}
+									// 	target="_blank"
+									// 	className="w-9/12 "
+									// >
+									// 	<p className="w-full pl-4 my-2 truncate bg-white cursor-pointer lg:my-1">
+									// 		{values.website}
+									// 	</p>
+									// </Link>
 								)}
 								{errors.website && (
 									<p className="text-red-500"> {errors.website}</p>

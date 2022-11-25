@@ -46,7 +46,7 @@ const PostForm = () => {
 				</div>
 				<form onSubmit={onSubmit} className="mt-5 space-y-3">
 					<ContentInput content={content} setContent={setContent} />
-					<UploadImage image={image} setImage={setImage} />
+					<UploadImage url={image} setUrl={setImage} />
 					<p className="text-sm text-[#b2b3b4]">
 						<span>File type: types of images</span>
 					</p>
