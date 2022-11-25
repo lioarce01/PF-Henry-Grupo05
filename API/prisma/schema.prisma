@@ -24,6 +24,18 @@ model User {
   following     Shelter[] @relation("Followers", fields: [shelterFollow], references: [id])
 }
 
+model Ticket {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  status    String?  @default("for review")
+  shelter   Shelter  @relation(fields: [shelterId], references: [id])
+  shelterId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comments  Comment[]
+}
+
 model Shelter {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   name          String   @unique
@@ -45,6 +57,7 @@ model Shelter {
   followers     User[]   @relation("Followers", fields: [userFollowers], references: [id])
   posts         Post[]
   goals         Goal[]
+  tickets       Ticket[]
 }
 
 model Goal {
@@ -82,6 +95,8 @@ model Comment {
   authorId String  @db.ObjectId
   post     Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId   String?
+  ticket   Ticket? @relation(fields: [ticketId], references: [id])
+  ticketId String? 
 }
 
 model Payment {
