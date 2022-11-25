@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { AiFillDelete, AiFillEdit, AiOutlineEllipsis } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu } from "@headlessui/react";
 import { useDeleteCommentMutation, useUpdateCommentMutation } from "../../../redux/api/posts";
 import { useSelector } from "react-redux";
@@ -17,6 +17,7 @@ const Comment = ({ content, author, id, postAuthorId }) => {
   const { userDetail } = useSelector((state) => state.localStorage.userState);
   const [commentContent, setCommentContent] = useState(content)
   const [toggle, setToggle] = useState(true)
+  const location = useLocation()
 
   const handleChange = (e) => {
     setCommentContent(e.target.value)
@@ -59,10 +60,10 @@ const Comment = ({ content, author, id, postAuthorId }) => {
 										{author.role}
 									</small>
 								</div>
-								<div className="">
+								{location.pathname === "/tickets" || location.pathname === "/admin" ? null : <div className="">
 									{author.id === userDetail.id ||
 									userDetail.role === "Admin" || postAuthorId === userDetail.id ? (
-										<Menu as="div" className="relative z-50 outline-none">
+										 <Menu as="div" className="relative z-50 outline-none">
 											<div className="flex items-center justify-center">
 												<Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-700 w-fit">
 													<AiOutlineEllipsis className="w-8 h-8 p-1 px-2 text-xl font-bold text-black transition duration-300 rounded-full hover:bg-gray-200" />
@@ -88,7 +89,7 @@ const Comment = ({ content, author, id, postAuthorId }) => {
 																		active
 																			? `bg-slate-200 text-gray-900 `
 																			: "text-gray-700",
-																		`block w-full px-4 py-2 text-left text-sm ${author.id !== userDetail.id && userDetail.role !== "Admin" ? "hidden" : ""}`
+																		`block w-full px-4 py-2 text-left text-sm ${author.id !== userDetail.id && userDetail.role !== "Admin" ? "hidden" : ""} ${location.pathname === "/tickets" && "hidden"}`
 																	)}>
 																	<div className="flex flex-row items-start justify-start">
 																		<span>
@@ -124,7 +125,7 @@ const Comment = ({ content, author, id, postAuthorId }) => {
 											</Transition>
 										</Menu>
 									) : null}
-								</div>
+								</div> }
 							</div>
 							<input
 								onChange={handleChange}
