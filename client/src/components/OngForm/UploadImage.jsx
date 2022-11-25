@@ -33,11 +33,11 @@ const UploadImage = ({ image, setImage }) => {
         {image ? (
           <img alt="uplouted" src={image} />
         ) : loading ? (
-          <PuffLoader color="#ed6825" loading size={240} />
+          <PuffLoader color="#ff7272" loading size={240} />
         ) : (
           <label
             draggable="true"
-            className="flex flex-col rounded-lg  border-4 border-dashed border-[#f06311] w-full h-60 p-10 group text-center cursor-pointer"
+            className="flex flex-col rounded-lg  border-4 border-dashed border-[#ff7272] w-full h-60 p-10 group text-center cursor-pointer"
           >
             <div className="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
               <div className="flex flex-auto max-h-48 w-2/5 mx-auto ">

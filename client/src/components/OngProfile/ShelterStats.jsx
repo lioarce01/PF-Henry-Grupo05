@@ -1,12 +1,17 @@
 import React from "react"
+import { useEffect } from "react";
 import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri"
+import { useDispatch, useSelector } from "react-redux";
 import {
 	useAddFollowersMutation,
 	useDeleteFollowersMutation,
 } from "../../redux/api/shelters"
 import { useGetUserByIdQuery } from "../../redux/api/users"
+import { addFollowingAction, removeFollowingAction } from '../../redux/slices/manageUsers/actions';
 
 function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
+	const dispatch= useDispatch();
+	const user = useSelector(state => state.localStorage.userState)
 	const [unfollow] = useDeleteFollowersMutation()
 	const [follow] = useAddFollowersMutation()
 
@@ -15,16 +20,33 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 	)
 
 	const deleteFollow = async () => {
-		await unfollow({ shelterId, userId: userDetail.id })
-		shelterRefetch()
-		userRefetch()
+		if(user.isAuth){
+			await unfollow({ shelterId, userId: userDetail.id })
+			shelterRefetch()
+			userRefetch()
+		}else{
+			dispatch(removeFollowingAction(shelterId))
+			shelterRefetch()
+			userRefetch()
+		}
 	}
 
 	const addFollow = async () => {
-		await follow({ shelterId, userId: userDetail.id })
-		shelterRefetch()
-		userRefetch()
+		if(user.isAuth){
+			await follow({ shelterId, userId: userDetail.id })
+			shelterRefetch()
+			userRefetch()
+		}else{
+			dispatch(addFollowingAction(details))
+			shelterRefetch()
+			userRefetch()
+		}
 	}
+
+	useEffect(()=>{
+		userRefetch()
+	},[user])
+
 	return (
 			<div className="w-full flex flex-col items-center lg:my-4">
 			<div className="shadow-[rgb(255,213,201)] shadow-xl bg-white rounded-2xl py-2 px-2 w-9/12 lg:w-full">
@@ -48,9 +70,11 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 						</div> */}
 					</div>
 					{ !(userDetail.id === details.authorId) && <div className="flex justify-center text-xs sm:text-base w-full mt-2">
-						{userDetails?.following?.find(
+						{(userDetails?.following?.find(
 							(shelter) => shelter.id === shelterId
-						) ? (
+						) || user.following?.find(
+							(shelter) => shelter.id === shelterId
+						)) ? (
 							<button
 								className="bg-transparent hover:bg-[#d32727] bg-[#b90707] text-white transition duration-300 font-semibold hover:text-white py-1 px-4 hover:border-transparent rounded flex flex-row items-center justify-center border"
 								onClick={deleteFollow}>
