@@ -95,10 +95,11 @@ const OngForm = () => {
 				<form
 					onSubmit={handleSubmit}
 					className="flex flex-col items-center justify-center h-auto min-w-full pt-14">
-						<div className="animate-tracking-animation">
-							<h1 className="text-6xl w-fit h-fit font-bold leading-6 text-black">
-								Create your Shelter
+						<div className="animate-tracking-animation ">
+							<h1 className="text-4xl w-fit h-fit font-bold leading-6 text-black hover:animate-pulse md:text-6xl">
+								Create yo<span className="text-[#ff7272]">ur Shelter</span>
 							</h1>
+							
 						</div>
 					
 					<div className=" w-full h-full p-14 2xl:flex flex-row">
@@ -115,7 +116,7 @@ const OngForm = () => {
 										placeholder="Add name..."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
+										className="bg-[#f7baba] w-full border border-[#ff7272] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-pink-200 p-2.5 2xl:w-3/4"
 									/>									
 									<div className="w-full flex flex-start">
 										{errors.name && (
@@ -136,7 +137,7 @@ const OngForm = () => {
 										placeholder="Add country.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
+										className="bg-[#f7baba] w-full border border-[#ff7272] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-pink-200 p-2.5 2xl:w-3/4"
 									/>
 									<div className="w-full flex flex-start ">
 										{errors.country && (
@@ -157,7 +158,7 @@ const OngForm = () => {
 										placeholder="Add city.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
+										className="bg-[#f7baba] w-full border border-[#ff7272] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-pink-200 p-2.5 2xl:w-3/4"
 									/>
 									<div className="w-full flex flex-start">
 										{errors.city && <p className="text-red-500 font-bold animate-errors-animation">{errors.city}</p>}
@@ -176,7 +177,7 @@ const OngForm = () => {
 										placeholder="Add address.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
+										className="bg-[#f7baba] w-full border border-[#ff7272] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-pink-200 p-2.5 2xl:w-3/4"
 									/>
 									<div className="w-full flex flex-start">
 										{errors.address && (
@@ -198,7 +199,7 @@ const OngForm = () => {
 										placeholder="Add website.."
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4"
+										className="bg-[#f7baba] w-full border border-[#ff7272] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-pink-200 p-2.5 2xl:w-3/4"
 									/>
 									<div className="w-full flex flex-start">
 										{errors.website && (
@@ -216,7 +217,7 @@ const OngForm = () => {
 								<select
 										name="animals"
 										onChange={(e) => {handleSelect(e)}}
-										className="bg-[#fde0c6] w-full border border-[#f06311] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-orange-300 p-2.5 2xl:w-3/4">
+										className="bg-[#f7baba] w-full border border-[#ff7272] text-black text-sm rounded-lg focus:shadow-lg focus:shadow-pink-200 p-2.5 2xl:w-3/4">
 										<option value="disabled" name="disabled" disabled selected>
 											Select the types of animals you help
 										</option>
@@ -249,7 +250,7 @@ const OngForm = () => {
 													{	
 														listAnimals.map( a=>
 															<button value={a} name={a} onClick={(e) =>{handlerDelete(e)}}
-															className="pt-1 pb-1 pl-2 w-fit pr-2 mr-4 mt-2 text-base font-bold transition  border border-[#f06311] bg-[#fde0c6] rounded-md hover:bg-[#f34646] hover:text-white hover:animate-delete-animation"
+															className="pt-1 pb-1 pl-2 w-fit pr-2 mr-4 mt-2 text-base font-bold transition  border border-[#ff7272] bg-[#f69c9c] rounded-md hover:bg-[#f34646] hover:text-white hover:animate-delete-animation"
 																> {a}</button>
 														)
 													}
@@ -274,7 +275,7 @@ const OngForm = () => {
 										value={values.description}
 										onChange={handleChange}
 										onBlur={handleBlur}
-										className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-[#fde0c6] bg-clip-padding border border-solid border-[#f06311] rounded transitionease-in-out m-0 focus:text-[#080808] focus:border-gray-600 focus:outline-none focus:shadow-lg focus:shadow-orange-300"
+										className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-[#f7baba] bg-clip-padding border border-solid border-[#ff7272] rounded transitionease-in-out m-0 focus:text-[#080808] focus:border-gray-600 focus:outline-none focus:shadow-lg focus:shadow-pink-200"
 										rows="3"></textarea>
 										<div >
 											{errors.description && (
@@ -305,7 +306,7 @@ const OngForm = () => {
 						<div className="mt-0">
 							<button
 								type="submit"
-								className="pt-1 pb-1 pl-2 w-32 pr-2 mr-4 mt-0 text-xl font-bold transition bg-[#fde0c6] rounded-md hover:bg-[#f69d61] border border-[#f06311] animate-create-animation">
+								className="pt-1 pb-1 pl-2 w-32 pr-2 mr-4 mt-0 text-xl font-bold transition bg-[#f7baba] rounded-md hover:bg-[#ff7272] border border-[#ff7272] animate-create-animation">
 								Create
 							</button>
 						</div>

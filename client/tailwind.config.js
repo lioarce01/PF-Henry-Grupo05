@@ -79,6 +79,17 @@ module.exports = {
         bounceX: {
           '0%, 100%': { transform: 'translateX(0)' },
           '50%': { transform: 'translateX(5px)' },
+        },
+        textFocus: {
+          '0%': {
+            '-webkit-filter':' blur(12px)',
+                    filter: 'blur(12px)',
+          },
+          '100%': {
+            '-webkit-filter': 'blur(0px)',
+                    filter: 'blur(0px)',
+            opacity: 1,
+          }
         }
       },
       animation: {
@@ -88,7 +99,8 @@ module.exports = {
         'delete-animation': 'delete 1s ',
         'create-animation': 'create 1s linear infinite',
         'bounceX': 'bounceX 1s ease-in-out infinite',
-        'custom-ping': 'customPing 4s cubic-bezier(0, 0, 0.2, 1) infinite'
+        'custom-ping': 'customPing 4s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'textFocus-animation': 'textFocus 3s ease-out 1'
       },
     },
     screens:{
