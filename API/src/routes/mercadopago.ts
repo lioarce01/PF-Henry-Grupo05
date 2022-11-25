@@ -11,9 +11,9 @@ const prisma = new PrismaClient()
 
 const router = express.Router();
 
-router.post("/", jwtCheck, async (req,res) => {
+router.post("/", async (req,res) => {
 
-    let {shelter, donation, id, email} = req.body
+    let {shelter, donation, shelterId, goalId, email} = req.body
 
     mercadopago.configure({access_token: process.env.ACCESS_TOKEN!})
 
@@ -21,7 +21,7 @@ router.post("/", jwtCheck, async (req,res) => {
         binary_mode: true,
         items: [
             {
-                id: id,
+                id: `${shelterId} ${goalId}`,
                 title: `Donación para ${shelter}`,
                 unit_price: donation,
                 quantity: 1,
@@ -49,16 +49,23 @@ router.get('/feedback', async function (req, res) {
     let paymentID = await prisma.payment.findMany({where: {paymentId: data.id.toString()}})
 
     if (data.status === "approved" && !paymentID.length) {
-        let id: string = data.additional_info.items[0].id
-        let shelter = await prisma.shelter.findUnique({where: {id}})
+        let id = data.additional_info.items[0].id
+        id = id.split(" ")
+        let goalId = id[1]
+        let shelterId = id[0]
+        let shelter = await prisma.shelter.findUnique({where: {id: shelterId}})
+        let goal = await prisma.goal.findUnique({where: {id: goalId}})
         await prisma.payment.create({data: {paymentId: data.id.toString()}})
-        await prisma.shelter.update({where: {id}, data: {
-            budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price)
+        await prisma.shelter.update({where: {id: shelterId}, data: {
+            budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price),
+        }}),
+        await prisma.goal.update({where: {id: goalId}, data: {
+            budget: goal?.budget! + Number(data.additional_info.items[0].unit_price)
         }})
 
         sendMailDonate(data.additional_info.items[0].description, shelter?.name!)
 
-        res.status(200).json({status:200,data: data.additional_info.items[0].id})
+        res.status(200).json({status:200,data: shelterId})
     } else {
         res.status(403).send("Failed payment")
     }

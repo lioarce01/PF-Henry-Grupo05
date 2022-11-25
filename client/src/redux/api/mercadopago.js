@@ -12,7 +12,7 @@ export const mercadoPagoApi = createApi({
         query: ({accessToken, shelter, donation, id, email}) => ({
             url: "/mp/plan",
             method: "post",
-            body: {shelter, donation, id, email},
+            body: {shelter, donation, shelterId, goalId, email},
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }

@@ -5,12 +5,12 @@ import { useCheckoutPlanMutation } from '../../../redux/api/mercadopago';
 import Spinner from '../../Spinner/Spinner';
 import { useAuth0 } from "@auth0/auth0-react"
 
-const FormDonate = ({ closeModal, name, id }) => {
+const FormDonate = ({ closeModal, name, shelterId, goalId }) => {
 
     const [checkout, {data, isSuccess}] = useCheckoutPlanMutation()
     const {getAccessTokenSilently, user} = useAuth0()
 
-    const [input, setInput] = useState({donation: 0, shelter: name, id, email: user?.email})
+    const [input, setInput] = useState({donation: 0, shelter: name, shelterId, goalId, email: user?.email})
     const [image, setImage] = useState(false);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
