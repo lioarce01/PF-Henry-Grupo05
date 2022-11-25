@@ -76,75 +76,86 @@ const OngDetail = () => {
   }, [details]);
 
   return (
-    <div className="w-full h-screen bg-[#fff5f4]">
-      {/* <NavBar /> */}
-      {isLoading ? (
-        <div className={ isLoading ? 'w-screen h-screen flex flex-col place-content-center' : 'fixed top-0'}>
-          <Spinner />
-        </div>
-      ) : (
-        <div className="flex flex-col w-full lg:flex-row lg:justify-between lg:px-4">
-          <div className="flex flex-col items-center w-full  lg:order-1 lg:mt-4 lg:w-[25%] lg:min-w-[250px] lg:ml-1 ">
-            {details?.description?.length > 0 && (
-              <OngFormUpdate
-                name={details?.name}
-                country={details?.country}
-                city={details?.city}
-                address={details?.address}
-                website={details?.website}
-                description={details?.description}
-                setIsOpenDonate={setIsOpenDonate}
-                shelter={details}
-              />
-            )}
-            <ShelterStats
-              shelterId={id}
-              details={details}
-              userDetail={userDetail}
-              shelterRefetch={shelterRefetch}
-            />
-          </div>
-          <div className="flex flex-col w-full mt-4 lg:order-3 lg:w-[30%] lg:min-w-[300px] lg:mt-4 ">
-            <div className="flex flex-col items-center mb-4 lg:mb-0">
-              <Description id={id} details={details} />
-              <MapView
-                name={details?.name}
-                lat={details?.lat}
-                lon={details?.lon}
-                id={id}
-                shelter={details}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col items-center w-full mt-8 lg:relative lg:left-2 lg:order-2 lg:w-[40%] lg:min-w-[400px] lg:mt-4">
-                <Posts setIsOpen={setIsOpen} details={details} />
-          </div>
-          <CreatePostModal isOpen={isOpen} closeModal={closeModal} />
+		<div className="w-full h-screen bg-[#fff5f4]">
+			{/* <NavBar /> */}
+			{isLoading ? (
+				<div
+					className={
+						isLoading
+							? "w-screen h-screen flex flex-col place-content-center"
+							: "fixed top-0"
+					}
+				>
+					<Spinner />
+				</div>
+			) : (
+				<div className="flex flex-col w-full lg:flex-row lg:justify-between lg:px-4">
+					<div className="flex flex-col items-center w-full  lg:order-1 lg:mt-4 lg:w-[25%] lg:min-w-[250px] lg:ml-1 ">
+						{details?.description?.length > 0 && (
+							<OngFormUpdate
+								name={details?.name}
+								country={details?.country}
+								city={details?.city}
+								address={details?.address}
+								website={details?.website}
+								description={details?.description}
+								setIsOpenDonate={setIsOpenDonate}
+								shelter={details}
+							/>
+						)}
+						<ShelterStats
+							shelterId={id}
+							details={details}
+							userDetail={userDetail}
+							shelterRefetch={shelterRefetch}
+						/>
+					</div>
+					<div className="flex flex-col w-full mt-4 lg:order-3 lg:w-[30%] lg:min-w-[300px] lg:mt-4 ">
+						<div className="flex flex-col items-center mb-4 lg:mb-0">
+							<Description id={id} details={details} />
+							<MapView
+								name={details?.name}
+								lat={details?.lat}
+								lon={details?.lon}
+								id={id}
+								shelter={details}
+							/>
+						</div>
+					</div>
+					<div className="flex flex-col items-center w-full mt-8 lg:relative lg:left-2 lg:order-2 lg:w-[40%] lg:min-w-[400px] lg:mt-4">
+						<Goals
+							goals={details?.goals}
+							setIsOpenDonate={setIsOpenDonate}
+							shelterName={details?.name}
+							shelterId={details?.id}
+						/>
+						<Posts setIsOpen={setIsOpen} details={details} />
+					</div>
+					<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
-          {/* <ModalDonate
+					{/* <ModalDonate
             isOpen={isOpenDonate}
             closeModal={closeModalDonate}
             name={details.name}
             id={id}
           /> */}
-        </div>
-      )}
-      <Goals goals={details?.goals} setIsOpenDonate={setIsOpenDonate} shelterName={details?.name} shelterId={details?.id}/>
-    </div>
-    // 			<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
+				</div>
+			)}
+		</div>
+		// 			<CreatePostModal isOpen={isOpen} closeModal={closeModal} />
 
-    // 			<ModalDonate
-    // 				isOpen={isOpenDonate}
-    // 				closeModal={closeModalDonate}
-    // 				name={details.name}
-    // 				id={id}
-    // 			/>
-    // 		</div>
-    // 	) : (
-    // 		<Spinner />
-    // 	)}
-    // </div>
-  );
+		// 			<ModalDonate
+		// 				isOpen={isOpenDonate}
+		// 				closeModal={closeModalDonate}
+		// 				name={details.name}
+		// 				id={id}
+		// 			/>
+		// 		</div>
+		// 	) : (
+		// 		<Spinner />
+		// 	)}
+		// </div>
+	)
 };
 
 export default OngDetail;

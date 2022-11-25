@@ -5,7 +5,7 @@ import BtnCreate from './BtnCreate'
 const Goals = ({goals, setIsOpenDonate, shelterId, shelterName}) => {
 
   return (
-		<div className="flex flex-col items-center p-3 w-fit">
+		<div className="flex flex-col items-center w-full p-3">
 			<BtnCreate shelterId={shelterId} />
 			{goals?.map((g) => {
 				return (
