@@ -6,8 +6,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-<<<<<<< HEAD
-        'xsm': '320px',
+        'xsm': '320px'
       },
       keyframes: {
         customPing:{
@@ -16,13 +15,7 @@ module.exports = {
           '100%':{ transform : 'scale(1.5)',
                   opacity: '0'},
         },
-        errors: {
-=======
-        'xsm': '320px'
-      },
-      keyframes: {
         wave: {
->>>>>>> 97036fa (feat(client/src/components/home): full upgrade and responsiveness of homepage)
           '0%': { transform: 'rotate(0.0deg)' },
           '10%': { transform: 'rotate(14deg)' },
           '20%': { transform: 'rotate(-8deg)' },
@@ -32,7 +25,7 @@ module.exports = {
           '60%': { transform: 'rotate(0.0deg)' },
           '100%': { transform: 'rotate(0.0deg)' },
         },
-<<<<<<< HEAD
+        
         tracking: {
           '0%':{
             'letter-spacing': '-0.5em',
@@ -89,17 +82,13 @@ module.exports = {
         }
       },
       animation: {
-        'errors-animation': 'errors 0.4s linear 1',
+        'waving-hand': 'wave 2s linear infinite',
+        'errors-animation': 'wave 0.4s linear 1',
         'tracking-animation': 'tracking 3s ease-out 1',
         'delete-animation': 'delete 1s ',
         'create-animation': 'create 1s linear infinite',
         'bounceX': 'bounceX 1s ease-in-out infinite',
-        'custom-ping': 'customPing 4s cubic-bezier(0, 0, 0.2, 1) infinite',
-=======
-      },
-      animation: {
-        'waving-hand': 'wave 2s linear infinite',
->>>>>>> 97036fa (feat(client/src/components/home): full upgrade and responsiveness of homepage)
+        'custom-ping': 'customPing 4s cubic-bezier(0, 0, 0.2, 1) infinite'
       },
     },
     screens:{
