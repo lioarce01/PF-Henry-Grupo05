@@ -67,7 +67,7 @@ const SubscriptorsBar = () => {
 						</button>
 					</div>
 
-					<div className={`mt-[45px] ${!expanded ? "ml-[40px]" : "sm:ml-[20px] md:ml-0"}`}>
+					<div className={`mt-[45px] ${!expanded ? "ml-[40px]" : "sm:ml-[20px] md:ml-[10px]"}`}>
 						<div className="flex">
 							<HomeProfilePanel expanded={expanded} />
 						</div>

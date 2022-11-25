@@ -47,7 +47,7 @@ const HomeCarousel = () => {
                         slidesPerView: 4
                     },
                     1024: {
-                        width: 1100,
+                        width: 1024,
                         slidesPerView: 3
                     },
                     768: {
@@ -55,14 +55,19 @@ const HomeCarousel = () => {
                         slidesPerView: 2
                     },
                     640: {
-                        width: 700,
+                        width: 640,
                         slidesPerView: 2,
+                        direction: "horizontal"
+                    },
+                    320: {
+                        width: 320,
+                        slidesPerView: 1,
                         direction: "horizontal"
                     }
                 }}>
 
                     {showShelters?.length > 0 && showShelters?.map((s, index) => 
-                    <SwiperSlide style={{marginLeft: '-60px'}} key={index} >
+                    <SwiperSlide  key={index} >
                         <CarouselCard id={s?.id} image={s?.profilePic} name={s?.name} goal={s?.goal} authorId={s?.authorId}
                                       budget={s?.budget} listAnimals={s?.listAnimals} profilePic={s?.author?.profilePic}/>
                     </SwiperSlide>)}
