@@ -50,24 +50,25 @@ const FormUpdateShelter = ({
   console.log(errors);
 
   return (
-		<div className="flex flex-col items-center  lg:w-[600px] mt-4 lg:mt-4 lg:mt-0 lg:w-full">
+		<div className="flex flex-col items-center  lg:w-[600px] my-4 lg:mt-4 lg:mt-0 lg:w-full">
 			<div className="w-full mb-2 lg:my-4 h-fit lg:p-0 lg:min-w-0 lg:w-full lg:max-w-full flex flex-row justify-center ">
-				<div className="bg-white shadow-[rgba(255,213,201)] shadow-xl p-2 rounded-2xl mt-2 lg:w-[85%] lg:flex lg:flex-col lg:items-center">
+				<div className="dark:bg-[#1B1A1F] bg-white dark:shadow-[#E06161] shadow-[#FF7272] shadow-xl p-2 rounded-2xl mt-2 lg:w-[85%] lg:flex lg:flex-col lg:items-center">
                     <div className="lg:w-[450px] lg:h-fit rounded-lg">
 						<UploadImage
 							image={image}
 							setImage={setImage}
 							toggle={toggle}
+							setToggle={setToggle}
 							className="object-cover"
 						/>
                     </div>
 					<form onSubmit={handleSubmit}>
-						<div className="flex flex-col text-xs font-semibold text-black sm:text-base lg:w-[450px]">
+						<div className="flex flex-col text-xs font-semibold dark:text-[#F0EEEE] text-black sm:text-base lg:w-[450px]">
                             <div className="flex flex-row items-baseline">
-                                <label className="text-[#d45f37]">Name:</label>
+                                <label className="dark:text-white text-[#FF7272]">Name:</label>
                                 <div className="flex flex-col w-full">
                                 <input
-										className="w-full my-2 bg-white indent-4"
+										className="w-full my-2 dark:bg-[#1B1A1F] bg-white indent-4"
 										defaultValue={details?.name}
 										type="text"
 										name="name"
@@ -78,10 +79,10 @@ const FormUpdateShelter = ({
                                 </div>
                             </div>
 							<div className="flex flex-row items-baseline">
-								<label className="text-[#d45f37]">Country: </label>
+								<label className="dark:text-white text-[#FF7272]">Country: </label>
                                 <div className="flex flex-col w-full">
 									<input
-										className="w-full my-2 bg-white indent-4 lg:my-1"
+										className="w-full my-2 dark:bg-[#1B1A1F] bg-white indent-4 lg:my-1"
 										defaultValue={details?.country}
 										type="text"
 										name="country"
@@ -94,10 +95,10 @@ const FormUpdateShelter = ({
                             </div>
 							</div>
 							<div className="flex flex-row items-baseline">
-								<label className="text-[#d45f37]">City: </label>
+								<label className="dark:text-white text-[#FF7272]">City: </label>
                                 <div className="flex flex-col w-full">
 									<input
-										className="w-full my-2 bg-white indent-4 lg:my-1"
+										className="w-full my-2 dark:bg-[#1B1A1F] bg-white indent-4 lg:my-1"
 										defaultValue={details?.city}
 										type="text"
 										name="city"
@@ -109,10 +110,10 @@ const FormUpdateShelter = ({
 							</div>
 
 							<div className="flex flex-row items-baseline">
-								<label className="text-[#d45f37]">Address: </label>
+								<label className="dark:text-white text-[#FF7272]">Address: </label>
                                 <div className="flex flex-col w-full">
 									<input
-										className="w-full my-2 bg-white indent-4 lg:my-1"
+										className="w-full my-2 dark:bg-[#1B1A1F] bg-white indent-4 lg:my-1"
 										defaultValue={details?.address}
 										type="text"
 										name="address"
@@ -126,10 +127,10 @@ const FormUpdateShelter = ({
 							</div>
 
                             <div className="flex flex-col justify-start text-left w-full">
-                                <label className="text-[#d45f37]">Descrption: </label>
+                                <label className="dark:text-white text-[#FF7272]">Description: </label>
                                 <div className="flex flex-col w-full">
                                 <textarea
-				                    className="w-full text-xs sm:text-lg font-semibold text-black bg-white resize-none h-28 indent-4"
+				                    className="w-full text-xs sm:text-lg font-semibold dark:text-[#F0EEEE] text-black dark:bg-[#1B1A1F] bg-white resize-none h-28 indent-4"
 				                    type="text"
 				                    name="description"
 				                    onChange={handleChange}
@@ -145,10 +146,10 @@ const FormUpdateShelter = ({
                             </div>
 
 							<div className="flex flex-row items-baseline w-full">
-								<label className="text-[#d45f37]">Website: </label>
+								<label className="dark:text-white text-[#FF7272]">Website: </label>
                                 <div className="flex flex-col w-full">
 									<input
-										className="w-full my-2 bg-white indent-4 lg:my-1"
+										className="w-full my-2 dark:bg-[#1B1A1F] bg-white indent-4 lg:my-1"
 										defaultValue={details?.website}
 										type="text"
 										name="website"
@@ -160,8 +161,10 @@ const FormUpdateShelter = ({
 								)}
                                 </div>
 							</div>
-                            {Object.entries(errors).length === 0 &&
-                                <button type="submit"> Save</button>}
+                                <button type="submit" disabled={!toggle}
+								className={(Object.entries(errors).length === 0 && toggle)?"dark:bg-[#E06161] bg-[#FF7272] hover:bg-[#e76464] transition-all hover:scale-[1.05] duration-300 text-white font-semibold text-xs sm:text-base py-1 px-4  rounded-full mx-auto"
+								:"bg-[#FF7272] text-white font-semibold text-xs sm:text-base py-1 px-4  rounded-full mx-auto opacity-50"}
+								> Save</button>
 						</div>
 					</form>
 				</div>
