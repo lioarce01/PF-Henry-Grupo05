@@ -16,7 +16,7 @@ const ModalEdit = ({ isOpen, closeModal, details,shelterRefetch}) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black dark:bg-opacity-75 bg-opacity-25" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -30,7 +30,7 @@ const ModalEdit = ({ isOpen, closeModal, details,shelterRefetch}) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className=" transform overflow-hidden rounded-2xl bg-white align-middle shadow-xl transition-all">
+              <Dialog.Panel className=" transform overflow-hidden rounded-2xl bg-transparent  align-middle  transition-all">
                 {/* aca se renderizan cosas */}
                 <FormUpdateShelter details={details} shelterRefetch={shelterRefetch}/>
               </Dialog.Panel>
