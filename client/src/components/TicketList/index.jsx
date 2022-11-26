@@ -2,7 +2,6 @@ import React from "react";
 import Ticket from "../Tiket";
 
 function TicketList({ tickets }) {
-  console.log(tickets)
   return (
     <div className="w-full max-w-screen-xl mx-auto px-6 ">
       <div className="flex justify-center p-4 px-3 py-10">

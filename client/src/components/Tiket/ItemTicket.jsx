@@ -10,8 +10,6 @@ function ItemTicket({ticket}) {
   const [input, setInput] = useState("");
   const [respondTicket] = useRespondTicketMutation()
   const {userDetail} = useSelector(selectUser)
-  console.log("ticket:", ticket)
-
 
   const handleChange = (e) => {
     setInput(e.target.value);

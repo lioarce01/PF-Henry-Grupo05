@@ -3,12 +3,12 @@ import { useLocation } from "react-router-dom";
 import Modal from "./Modal";
 
 function Ticket({ticket}) {
-  console.log(ticket)
+ 
   const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => setIsOpen(false);
 
   const location = useLocation()
-  console.log(location, "location")
+
   return (
     <>
       <div onClick={() => setIsOpen(true)} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
