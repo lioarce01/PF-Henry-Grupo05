@@ -6,7 +6,7 @@ import { Fragment } from "react"
 import { Menu, Transition } from "@headlessui/react"
 import { AiOutlineDown } from "react-icons/ai"
 import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 const ProfilePanel = ({ expanded }) => {
 	const { userDetail, isAuth } = useSelector(
@@ -15,6 +15,7 @@ const ProfilePanel = ({ expanded }) => {
 	function classNames(...classes) {
 		return classes.filter(Boolean).join(" ")
 	}
+	const location = useLocation()
 
 	const ref = React.createRef()
 	return (
@@ -88,7 +89,7 @@ const ProfilePanel = ({ expanded }) => {
 											</Link>
 										)}
 									</Menu.Item>
-								)}
+								)}					
 								<Menu.Item>
 									{({ active }) => (
 										<Link
@@ -102,6 +103,20 @@ const ProfilePanel = ({ expanded }) => {
 										</Link>
 									)}
 								</Menu.Item>
+								{userDetail?.Shelter[0] && <Menu.Item>
+									{({ active }) => (
+										<Link
+
+											to={location.pathname === "/tickets" ? "/home" : "/tickets" }
+											className={classNames(
+												active ? "bg-slate-100 text-gray-900" : "text-gray-700",
+												"block px-4 py-2 text-sm"
+											)}>
+											{location.pathname === "/tickets" ? "Home" : "My Tickets"}
+										</Link>
+									)}
+								</Menu.Item>}
+								
 								<Menu.Item>
 									{({ active }) => (
 										<LogoutButton ref={ref}>Logout</LogoutButton>
