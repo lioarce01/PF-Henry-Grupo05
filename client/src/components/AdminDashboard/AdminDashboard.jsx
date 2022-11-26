@@ -16,6 +16,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/slices/manageUsers";
 import toast, { Toaster } from "react-hot-toast";
+import TicketList from "../TicketList";
+import { useGetTicketsQuery } from "../../redux/api/tickets";
 
 const AdminDashboard = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -23,6 +25,8 @@ const AdminDashboard = () => {
   const [shelter, setShelter] = useState("");
   const { data: users, userLoading } = useGetUsersQuery({user, enable: true});
   const { data: shelters, shelterLoading } = useGetSheltersQuery({name: shelter})
+  const {data: tickets, isLoading, error,} = useGetTicketsQuery()
+  
 	const [disableShelter] = useDisableShelterMutation()
 	const [enableShelter] = useEnableShelterMutation()
 	const [disableUser] = useDisableUserMutation()
@@ -212,6 +216,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+      <TicketList tickets={tickets} />
     </div>
   );
 };
