@@ -2,18 +2,24 @@ import React from "react"
 import { useEffect } from "react";
 import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"
 import {
 	useAddFollowersMutation,
 	useDeleteFollowersMutation,
 } from "../../redux/api/shelters"
 import { useGetUserByIdQuery } from "../../redux/api/users"
 import { addFollowingAction, removeFollowingAction } from '../../redux/slices/manageUsers/actions';
+import Swal from "sweetalert2";
+import { useAuth0 } from "@auth0/auth0-react"
+
 
 function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
+	const navigate = useNavigate();
 	const dispatch= useDispatch();
 	const user = useSelector(state => state.localStorage.userState)
 	const [unfollow] = useDeleteFollowersMutation()
 	const [follow] = useAddFollowersMutation()
+	const { loginWithPopup } = useAuth0();
 
 	const { data: userDetails, refetch: userRefetch } = useGetUserByIdQuery(
 		userDetail?.id
@@ -37,15 +43,25 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 			shelterRefetch()
 			userRefetch()
 		}else{
-			dispatch(addFollowingAction(details))
-			shelterRefetch()
-			userRefetch()
+			if(user.following.length > 2){
+				Swal.fire({
+					icon: 'error', title: 'Create a user or log in to save your following',
+					preConfirm: async () => {
+						navigate(`/home`)
+						await loginWithPopup()
+					}
+				})
+			}else{
+				dispatch(addFollowingAction(details))
+				shelterRefetch()
+				userRefetch()
+			}
 		}
 	}
 
 	useEffect(()=>{
 		userRefetch()
-	},[user])
+	},[dispatch])
 
 	return (
 			<div className="w-full flex flex-col items-center lg:my-4">

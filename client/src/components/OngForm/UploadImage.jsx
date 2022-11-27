@@ -17,14 +17,14 @@ const UploadImage = ({ image, setImage }) => {
 
   return (
     <div className="grid grid-cols-1 flex items-center space-y-2">
-      <label className="text-xl flex items-center pb-6 font-bold text-black tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500">
+      <label className="text-xl flex items-center pb-6 font-bold text-black tracking-wide after:content-['*'] after:ml-0.5 after:text-red-500 dark:text-[#F0EEEE]">
         Upload image
       </label>
       {image && (
         <button
           type="button"
           onClick={resetImage}
-          className="text-blue-400 w-fit px-2  mx-auto border border-[#FAF2E7] rounded-xl hover:border-blue-100"
+          className="text-pink-400 w-fit px-2  mx-auto border border-[#ff7272] rounded-xl hover:border-blue-100"
         >
           reset
         </button>
@@ -42,14 +42,14 @@ const UploadImage = ({ image, setImage }) => {
             <div className="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
               <div className="flex flex-auto max-h-48 w-2/5 mx-auto ">
                 <img
-                  className="has-mask h-36 object-center"
+                  className="has-mask h-36 object-center dark:invert"
                   src="https://i.pinimg.com/originals/00/65/ee/0065ee133294c73fe29dbab81dc6acc9.png"
                   alt="freepik"
                 />
               </div>
-              <p className="pointer-none text-gray-500 ">
+              <p className="pointer-none text-gray-500 dark:text-[#ffffff]">
                       <p
-                        className="text-[#000000] font-bold"
+                        className="text-[#000000] font-bold dark:text-[#F0EEEE]"
                       >
                         select a file
                       </p>{" "}
