@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import managePostsSlice from '../slices/managePosts';
 import manageSheltersSlice from "../slices/manageShelters"; 
+import manageThemeSlice from '../slices/manageTheme';
 import manageUsersSlice from '../slices/manageUsers';
 import { postApi } from '../api/posts';
 import { usersApi } from '../api/users';
@@ -15,12 +16,13 @@ import { goalsApi } from '../api/goals';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ["postState", "userState"]
+    whitelist: ["postState", "userState", "manageTheme"]
 }
 
 const rootReducer = combineReducers({
     postState: managePostsSlice,
-    userState: manageUsersSlice
+    userState: manageUsersSlice,
+    manageTheme: manageThemeSlice,
 })
 
 const localStorage = persistReducer(persistConfig, rootReducer)

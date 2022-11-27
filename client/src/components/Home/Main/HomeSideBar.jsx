@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import HomeProfilePanel from "./HomeProfilePanel"
 import { carouselSheltersAction } from '../../../redux/slices/manageShelters/actions'
+import { switchTheme } from "../../../redux/slices/manageTheme"
 
 // react icons
 import { MdPets } from "react-icons/md"
@@ -31,8 +32,8 @@ const SubscriptorsBar = () => {
 	const toggleExpanded = () => setExpanded(!expanded)
 
 	// handles dark mode toggle in the website
-	const [darkMode, setDarkMode] = useState(false)
-	const toggleDarkMode = () => setDarkMode(!darkMode)
+	const { darkmode } = useSelector(state => state.localStorage.manageTheme)
+	const toggleDarkMode = () => dispatch(switchTheme())
 
 	// handles changes in the carousel render state
 	const handleRender = render => dispatch(carouselSheltersAction(render))
@@ -159,11 +160,11 @@ const SubscriptorsBar = () => {
 
 					<div className={`flex ${expanded && "ml-auto sm:mr-[0px] xsm:absolute xsm:top-[40px] xsm:right-[20px] sm:static"}`}>
 						<div className="flex flex-row bg-[#F2F1EF] hover:bg-[#e7e6e4] rounded-[30px] dark:bg-[#302c35]">
-							<button onClick={toggleDarkMode} className={`flex w-[40px] rounded-[30px] py-[5px] ${! darkMode ? "bg-none" : "bg-[#FF7272]"}`}>
-								<HiMoon className={`text-lg mx-auto ${!darkMode ? "text-[#8389A5] dark:text-[#c4bfbf]" : "text-white"}`} />
+							<button onClick={toggleDarkMode} className={`flex w-[40px] rounded-[30px] py-[5px] ${! darkmode ? "bg-none" : "bg-[#FF7272]"}`}>
+								<HiMoon className={`text-lg mx-auto ${!darkmode ? "text-[#8389A5] dark:text-[#c4bfbf]" : "text-white"}`} />
 							</button>
-							<button onClick={toggleDarkMode} className={`flex w-[40px] rounded-[30px] py-[5px] ${darkMode ? "bg-none" : "bg-[#FF7272]"}`}>
-								<BsSun className={`text-lg mx-auto ${darkMode ? "text-[#8389A5] dark:text-[#c4bfbf]" : "text-white"}`} />
+							<button onClick={toggleDarkMode} className={`flex w-[40px] rounded-[30px] py-[5px] ${darkmode ? "bg-none" : "bg-[#FF7272]"}`}>
+								<BsSun className={`text-lg mx-auto ${darkmode ? "text-[#8389A5] dark:text-[#c4bfbf]" : "text-white"}`} />
 							</button>
 						</div>
 					</div>
