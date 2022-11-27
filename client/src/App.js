@@ -12,13 +12,15 @@ import About from "./components/About/About";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoadUser from "./components/LoadUser";
+import { useSelector } from "react-redux";
 import LearnMore from "./components/LearnMore/LearnMore";
 import ProtectRoute from "./components/TicketsPage/ProtectRoute";
 
 function App() {
   LoadUser()
+  const { darkmode } = useSelector(state => state.localStorage.manageTheme)
   return (
-    <div className="App">
+    <div className={darkmode ? "App dark": "App light"}>
       
       <Routes>
         <Route path="*" element={<Page404 />} />

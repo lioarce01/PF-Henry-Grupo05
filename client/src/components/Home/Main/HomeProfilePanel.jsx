@@ -36,7 +36,7 @@ const ProfilePanel = ({ expanded }) => {
 								<div className='flex flex-row group'>
 									<div className="flex flex-col text-left justify-center ml-[15px]">
 										<div className='flex flex-row w-[150px]'>
-											<h2>Welcome {userDetail.name.split(' ')[0]}</h2>
+											<h2 className="dark:text-[#f0eeee]">Welcome {userDetail.name.split(' ')[0]}</h2>
 											<span className='ml-[5px] animate-waving-hand'>👋</span>
 										</div>
 										<p className="flex w-[150px] text-[0.8rem] text-[#ACB1B2] group-hover:underline">{userDetail.name}</p>
