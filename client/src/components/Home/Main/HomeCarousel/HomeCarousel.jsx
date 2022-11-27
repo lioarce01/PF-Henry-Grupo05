@@ -8,12 +8,12 @@ import { useSelector } from "react-redux";
 
 const HomeCarousel = () => {
     const { carousel } = useSelector(state => state.manageShelters)
-    const { userDetail } = useSelector(state => state.localStorage.userState)
+    const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
     const { data: shelters, isLoading, refetch } = useGetSheltersQuery({name: "", enabled: true})
     const { data: topShelters, refetchTop } = useTopFiveSheltersQuery(10)
 
     const [showShelters, setShowShelters] = useState(shelters)
-    
+    console.log(userDetail?.following)
     useEffect(() => {
         refetch()
     }, [])
@@ -29,6 +29,10 @@ const HomeCarousel = () => {
     }, [carousel])
 
     if (isLoading) return (<div className=""><Spinner /></div>)
+    if (! showShelters?.length) return (
+    <div className="w-full py-[40px]">
+        <h1 className="text-center font-bold text-[#FF7272]">{isAuth ? "You are not following any shelters." : "You are not logged in!"}</h1>
+    </div>)
 
     return (
         <div className="">

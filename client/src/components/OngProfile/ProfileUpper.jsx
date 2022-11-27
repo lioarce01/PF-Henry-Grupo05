@@ -2,7 +2,7 @@ import Goals from '../Goals/Goals'
 import { FaInfo } from 'react-icons/fa'
 import { RiUserFollowFill } from 'react-icons/ri'
 
-const ProfileUpper = ({ id, name, goals, setIsOpenDonate, loading }) => {
+const ProfileUpper = ({ id, name, goals, setIsOpenDonate, loading, shelterRefetch }) => {
     
     return (
         <div className='w-full'>
@@ -20,6 +20,7 @@ const ProfileUpper = ({ id, name, goals, setIsOpenDonate, loading }) => {
                         <div className='bg-[#c25050] group-hover:bg-[#bb4b4b] p-[10px] rounded-full'>
                             <FaInfo className='text-xl text-white'/>
                         </div>
+                        
                         <span className='text-lg ml-[10px] font-semibold text-white'>Details</span>
                     </button>
                 </div>
@@ -31,6 +32,7 @@ const ProfileUpper = ({ id, name, goals, setIsOpenDonate, loading }) => {
                     shelterId={id}
                     loading={loading}
                     shelterName={name}
+                    shelterRefetch={shelterRefetch}
 					setIsOpenDonate={setIsOpenDonate}
 				/>
             </div>

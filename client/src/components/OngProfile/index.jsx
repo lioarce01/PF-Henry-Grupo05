@@ -91,8 +91,9 @@ const OngDetail = () => {
 
             <div className="w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
                 <div className="mt-[35px] ml-[100px] mr-[60px]">
-                    <ProfileUpper id={details?.id} name={details?.name} goals={details?.goals} setIsOpenDonate={setIsOpenDonate} loading={isLoading} />
-                    <ProfileBottom setIsOpen={setIsOpen} details={details} shelterRefetch={shelterRefetch} />
+                    <ProfileUpper id={details?.id} name={details?.name} goals={details?.goals} setIsOpenDonate={setIsOpenDonate} 
+                    loading={isLoading} shelterRefetch={shelterRefetch} />
+                    <ProfileBottom setIsOpen={setIsOpen} details={details} />
                 </div>
             </div>
 

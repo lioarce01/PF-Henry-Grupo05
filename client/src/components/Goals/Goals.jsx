@@ -9,7 +9,7 @@ import Spinner from "../Spinner/Spinner"
 import { FreeMode, Autoplay } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 
-const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading }) => {
+const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading, shelterRefetch }) => {
 	const { userDetail } = useSelector(state => state.localStorage.userState)
 	const [isOpen, setIsOpen] = useState(false)
 	const closeModal = () => setIsOpen(false)
@@ -77,6 +77,8 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading }) => {
 										setIsOpenDonate={setIsOpenDonate}
 										shelterId={shelterId}
 										shlterName={shelterName}
+										enable={g.enable}
+										shelterRefetch={shelterRefetch}
 									/>
 								</SwiperSlide>)}
 
@@ -101,7 +103,7 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading }) => {
 						}
 				</div> : <Spinner />}
 
-			<Modal isOpen={isOpen} closeModal={closeModal} shelterId={shelterId} />
+			<Modal isOpen={isOpen} closeModal={closeModal} shelterId={shelterId} shelterRefetch={shelterRefetch} />
 		</div>
 	)
 }

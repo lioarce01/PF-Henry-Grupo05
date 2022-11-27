@@ -5,41 +5,71 @@ const API = process.env.REACT_APP_API || "http://localhost:3001";
 export const goalsApi = createApi({
   reducerPath: "goalsApi",
   baseQuery: fetchBaseQuery({ baseUrl: API }),
-  tagTypes: [],
+  tagTypes: ["Goals", "GoalId"],
 
   endpoints: (builder) => ({
 
-    createGoal: builder.mutation({
-        query: (newGoal ) => {
-          console.log(newGoal)
-          return({
-          url: "/goals",
-          method: "post",
-          body: newGoal,
-        })},
+    getGoals: builder.query({
+      query: () => ({
+        url: "/goals",
+        method: "GET",
       }),
+      providesTags: ["Goals"],
+    }),
+
+    createGoal: builder.mutation({
+      query: (newGoal) => ({
+          url: "/goals",
+          method: "POST",
+          body: newGoal,
+        }),
+      invalidatesTags: ["GoalId"],
+    }),
 
     updateGoal: builder.mutation({
         query: ({ goal }) => ({
           url: "/goals",
           method: "put",
-          body: goal,
+          body: { goal },
         }),
+        invalidatesTags: ["Goals", "GoalId"],
       }),
 
-    changeStatusGoal: builder.mutation({
-        query: (id) => ({
-          url: "/goals/status",
-          method: "put",
-          body: id,
+    enableGoal: builder.mutation({
+      query: ({ id }) => ({
+          url: "/goals/enable",
+          method: "PUT",
+          body: { id },
         }),
+        invalidatesTags: ["Goals", "GoalId"],
+    }),
+
+    disableGoal: builder.mutation({
+      query: ({ id }) => ({
+          url: "/goals/disable",
+          method: "PUT",
+          body: { id },
+        }),
+        invalidatesTags: ["Goals", "GoalId"],
+    }),
+
+    deleteGoal: builder.mutation({
+      query: ({ id }) => ({
+        url: "/goals/delete",
+        method: "DELETE",
+        body: { id },
       }),
+      invalidatesTags: ["Goals", "GoalId"],
+    })
 
   }),
 });
 
 export const {
+    useGetGoalsQuery,
     useUpdateGoalMutation,
-    useChangeStatusGoalMutation,
-    useCreateGoalMutation
+    useEnableGoalMutation,
+    useDisableGoalMutation,
+    useCreateGoalMutation,
+    useDeleteGoalMutation,
 } = goalsApi;

@@ -31,6 +31,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             },
             orderBy: { "name": "asc" },
             include: {
+                tickets: true,
                 author: true,
                 followers: true,
                 posts: {
@@ -58,7 +59,7 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
         const shelters = yield prisma.shelter.findMany({
             where: { enable: true },
             take: cant ? cant : 6,
-            include: { followers: true, posts: true, author: true },
+            include: { followers: true, posts: true, tickets: true },
             orderBy: { budget: 'desc' }
         });
         if (shelters)
@@ -91,6 +92,7 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
                     },
                 },
                 include: {
+                    tickets: true,
                     followers: true,
                     posts: {
                         where: {
@@ -122,11 +124,8 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const shelter = yield prisma.shelter.findUnique({
             where: { id: id },
             include: {
-                goals: {
-                    where: {
-                        enable: state
-                    }
-                },
+                goals: true,
+                tickets: true,
                 followers: true,
                 author: true,
                 posts: {
