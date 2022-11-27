@@ -26,12 +26,14 @@ const CardGoals = ({
 		setIsOpenDonate(false)
 	}
 
-	const handleEnable = () => {
-		enableGoal({ id })
+	const handleEnable = async () => {
+		await enableGoal({ id })
+		shelterRefetch()
 	}
 
-	const handleDisable = () => {
-		disableGoal({ id })
+	const handleDisable = async () => {
+		await disableGoal({ id })
+		shelterRefetch()
 	}
 
 	const handleDelete = async () => {
@@ -52,33 +54,43 @@ const CardGoals = ({
 				</div>
 			</div>
 			<div className="flex flex-row items-center justify-center w-full gap-2">
+				{enable === true ? (
+					<button
+						onClick={() => setIsOpenDonate(true)}
+						className="px-2 py-1 text-white transition duration-300 rounded-md outline-none bg-rose-400 hover:bg-rose-500"
+					>
+						Help us!
+					</button>
+				) : (
+					<button
+						onClick={() => setIsOpenDonate(true)}
+						className="flex flex-row items-center justify-center px-2 py-1 text-white line-through transition duration-300 rounded-md outline-none bg-rose-400 hover:bg-rose-500"
+						disabled
+					>
+						Help us!
+					</button>
+				)}
 				<button
-					onClick={() => setIsOpenDonate(true)}
-					className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
-				>
-					Help us!
-				</button>
-				<button
-					className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
+					className="px-2 py-1 text-white transition duration-300 rounded-md outline-none bg-rose-400 hover:bg-rose-500"
 					onClick={handleDelete}
 				>
 					Delete Goal
 				</button>
-				{/* {enable ? (
+				{enable ? (
 					<button
-						className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
+						className="px-2 py-1 text-white transition duration-300 rounded-md outline-none bg-rose-400 hover:bg-rose-500"
 						onClick={handleDisable}
 					>
 						Disable Goal
 					</button>
 				) : (
 					<button
-						className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
+						className="px-2 py-1 text-white transition duration-300 rounded-md outline-none bg-rose-400 hover:bg-rose-500"
 						onClick={handleEnable}
 					>
 						Enable Goal
 					</button>
-				)} */}
+				)}
 			</div>
 			<ModalDonate
 				isOpen={isOpenDonate}
