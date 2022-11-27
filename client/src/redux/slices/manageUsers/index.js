@@ -8,6 +8,7 @@ export const manageUsersSlice = createSlice({
         userDetail: {},
         isAuth: false,
         likes: [],
+        following: [],
     },
 
     reducers: {
@@ -28,6 +29,19 @@ export const manageUsersSlice = createSlice({
         removeLike: (state, action) =>{
             state.likes = [...state.likes].filter(postId => postId !== action.payload)
         },
+        addFollowing: (state, action) =>{
+            console.log(action.payload);
+            state.following = [...state.following, action.payload] 
+            console.log('followings', state.following);
+        },
+        removeFollowing: (state, action) =>{
+            console.log(action.payload);
+            state.following = [...state.following].filter(f => f.id !== action.payload) 
+            console.log('followings', state.following);
+        },
+        clearFollowing: (state, action) =>{
+            state.following = [];
+        }
 
     
     }
@@ -35,7 +49,7 @@ export const manageUsersSlice = createSlice({
 
 // action creators are generated for each case reducer function
 
-export const { setUser, logOutUser, addShelter, addLike, removeLike } = manageUsersSlice.actions;
+export const { setUser, logOutUser, addShelter, addLike, removeLike, addFollowing, clearFollowing, removeFollowing } = manageUsersSlice.actions;
 export const selectUser = state => state.localStorage.userState
 
 

@@ -13,6 +13,8 @@ import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoadUser from "./components/LoadUser";
 import { useSelector } from "react-redux";
+import LearnMore from "./components/LearnMore/LearnMore";
+import ProtectRoute from "./components/TicketsPage/ProtectRoute";
 
 function App() {
   LoadUser()
@@ -25,8 +27,10 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/createOng" element={<OngForm />} />
         <Route path="/updateUser" element={<UserForm />} />
+        <Route path="/learnMore" element={<LearnMore/>} />
         <Route path="/About" element={<About />} />
         <Route exact path="/home" element={<Home />} />
+        <Route exact path="/tickets" element={<ProtectRoute />} />
         <Route path="/:OngName/:post_id" element="" />
         <Route path="/mp" element={<MercadoPago />} />
         <Route path= "/:id/profile" element={<OngDetail/>}/>

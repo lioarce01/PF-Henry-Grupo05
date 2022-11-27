@@ -24,6 +24,7 @@ router.get('/', async(req: ReqGet, res) => {
             },
             orderBy: { "name": "asc" },
             include: { 
+                tickets: true,
                 author: true,
                 followers: true, 
                 posts: {
@@ -52,7 +53,7 @@ router.get('/topFive', async(req: ReqGet, res)=>{
         const shelters = await prisma.shelter.findMany({
             where: { enable: true },
             take: cant ? cant : 6,
-            include: { followers: true, posts: true, author: true },
+            include: { followers: true, posts: true, tickets: true },
             orderBy: { budget: 'desc' }
         })
 
@@ -105,6 +106,7 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
                     },
                 },
                 include: { 
+                    tickets: true,
                     followers: true, 
                     posts: {
                         where: {
@@ -136,11 +138,8 @@ router.get("/:id", async (req, res) => {
         const shelter = await prisma.shelter.findUnique({ 
             where: { id: id},
             include: { 
-                goals: {
-                    where: {
-                        enable: state
-                    }
-                },
+                goals: true,
+                tickets: true,
                 followers: true, 
                 author: true, 
                 posts: {

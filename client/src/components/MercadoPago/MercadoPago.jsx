@@ -2,11 +2,11 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Swal from "sweetalert2"
-import { useLazyVerifyPaymentQuery } from '../../redux/api/mercadopago'
+import { useLazyVerifyPaymentPlanQuery } from '../../redux/api/mercadopago'
 
 const MercadoPago = () => {
 
-    const [verify] = useLazyVerifyPaymentQuery()
+    const [verify] = useLazyVerifyPaymentPlanQuery()
 
     const navigate = useNavigate()
 

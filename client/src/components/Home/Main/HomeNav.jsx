@@ -5,6 +5,7 @@ import { useGetSheltersQuery } from "../../../redux/api/shelters"
 import { useSelector } from "react-redux"
 import ModalShelters from '../Modals/ModalShelters'
 import ModalCreatePost from "../Modals/ModalCreatePost"
+import CreateTicket from '../../CreateTicket'
 
 // animals array to map filters. used to optimize code
 const animals = [{ type: 'Dogs', emoji: '🐶', target: 'activeDogs' }, { type: 'Cats', emoji: '😺', target: 'activeCats' },
@@ -20,7 +21,7 @@ const rndIndex = Math.floor(Math.random() * (welcomePhrases.length))
 
 const HomeNav = () => {
     // is user verified? :p
-    const { isAuth } = useSelector(state => state.localStorage.userState)
+    const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
 
     // fetch all enabled shelters
     const { data: shelters, refetch } = useGetSheltersQuery({ name: "", enabled: true })
@@ -89,6 +90,7 @@ const HomeNav = () => {
                     </span>
                     <span className='font-semibold text-white ml-[5px] xsm:hidden md:contents'>Create Post</span>
                 </button>}
+                {isAuth && userDetail?.Shelter[0] ? <CreateTicket /> : null}
             </div>
 
             <h1 className='font-semibold ml-[20px] mt-[30px] text-[1.3rem] text-[#FF7272] hover:underline w-fit'>{welcomePhrases[rndIndex]}</h1>

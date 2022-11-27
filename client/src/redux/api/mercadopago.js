@@ -8,24 +8,24 @@ export const mercadoPagoApi = createApi({
   tagTypes: [],
 
   endpoints: (builder) => ({
-    checkout: builder.mutation({
-        query: ({accessToken, shelter, donation, shelterId, goalId, email}) => ({
-            url: "/mp",
+    checkoutPlan: builder.mutation({
+        query: ({accessToken, shelter, donation, id, email}) => ({
+            url: "/mp/plan",
             method: "post",
-            body: {shelter, donation, shelterId, goalId, email},
+            body: {shelter, donation, id, email},
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             }
         }),
     }),
 
-    verifyPayment: builder.query({
-      query: ({payment_id}) => `/mp/feedback?payment_id=${payment_id}`
+    verifyPaymentPlan: builder.query({
+      query: ({payment_id}) => `/feedback/plan?payment_id=${payment_id}`
     })
   }),
 });
 
 export const {
-   useCheckoutMutation,
-   useLazyVerifyPaymentQuery
+   useCheckoutPlanMutation,
+   useLazyVerifyPaymentPlanQuery
 } = mercadoPagoApi;
