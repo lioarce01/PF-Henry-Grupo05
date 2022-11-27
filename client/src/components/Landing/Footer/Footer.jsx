@@ -14,7 +14,7 @@ const Footer = () => {
 
 
                 <div className="mx-auto">
-                    <ul className="flex flex-row font-bold text-[#F87171]">
+                    <ul className="flex max-sm:flex-col font-bold text-[#F87171]">
                         <li className="mx-10 hover:underline hover:text-[1.2rem] duration-150"><a href="/home">Home</a></li>
                         <li className="mx-10 hover:underline hover:text-[1.2rem] duration-150"><a href="/about">About</a></li>
                         <li className="mx-10 hover:underline hover:text-[1.2rem] duration-150"><a href="#">Donate</a></li>
