@@ -128,6 +128,7 @@ const OngDetail = () => {
 							setIsOpenDonate={setIsOpenDonate}
 							shelterName={details?.name}
 							shelterId={details?.id}
+							shelterRefetch={shelterRefetch}
 						/>
 						<Posts setIsOpen={setIsOpen} details={details} />
 					</div>

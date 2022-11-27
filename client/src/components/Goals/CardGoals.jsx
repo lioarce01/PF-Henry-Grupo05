@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
-import ModalDonate from '../OngProfile/Donate/ModalDonate'
+import {
+	useEnableGoalMutation,
+	useDisableGoalMutation,
+	useDeleteGoalMutation,
+} from "../../redux/api/goals"
+import ModalDonate from "../OngProfile/Donate/ModalDonate"
 import "./CardGoals.css"
 
 const CardGoals = ({
@@ -10,10 +15,28 @@ const CardGoals = ({
 	shelterId,
 	id,
 	shelterName,
+	enable,
+	shelterRefetch,
 }) => {
 	const [isOpenDonate, setIsOpenDonate] = useState(false)
+	const [enableGoal] = useEnableGoalMutation()
+	const [disableGoal] = useDisableGoalMutation()
+	const [deleteGoal] = useDeleteGoalMutation()
 	const closeModalDonate = () => {
 		setIsOpenDonate(false)
+	}
+
+	const handleEnable = () => {
+		enableGoal({ id })
+	}
+
+	const handleDisable = () => {
+		disableGoal({ id })
+	}
+
+	const handleDelete = async () => {
+		await deleteGoal({ id })
+		shelterRefetch()
 	}
 
 	return (
@@ -28,13 +51,34 @@ const CardGoals = ({
 					<progress id="goal" max={goal} value={budget}></progress>
 				</div>
 			</div>
-			<div className="flex items-center justify-center w-full">
+			<div className="flex flex-row items-center justify-center w-full gap-2">
 				<button
 					onClick={() => setIsOpenDonate(true)}
 					className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
 				>
 					Help us!
 				</button>
+				<button
+					className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
+					onClick={handleDelete}
+				>
+					Delete Goal
+				</button>
+				{/* {enable ? (
+					<button
+						className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
+						onClick={handleDisable}
+					>
+						Disable Goal
+					</button>
+				) : (
+					<button
+						className="px-2 py-1 text-white transition duration-300 rounded-md bg-rose-400 hover:bg-rose-500"
+						onClick={handleEnable}
+					>
+						Enable Goal
+					</button>
+				)} */}
 			</div>
 			<ModalDonate
 				isOpen={isOpenDonate}
