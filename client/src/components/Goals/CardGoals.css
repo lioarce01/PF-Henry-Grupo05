@@ -6,13 +6,13 @@ progress[value] {
 
 progress[value]::-webkit-progress-bar {
   background-color: #eee;
-  border-radius: 2px;
+  border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 progress[value]::-webkit-progress-value {
-  background-color: #fd6391;
+  background-color: #FF7272;
 
-  border-radius: 2px;
+  border-radius: 20px;
   background-size: 35px 20px, 100% 100%, 100% 100%;
 }

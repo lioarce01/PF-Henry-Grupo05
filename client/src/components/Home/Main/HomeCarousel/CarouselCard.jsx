@@ -18,7 +18,7 @@ const CarouselCard = ({ id, image, name, goal, budget, listAnimals, profilePic, 
     return (
         <Link to={`/${id}/profile`}>
             <div className="bg-white h-[330px] w-[280px] group rounded-[25px] pt-[7px] hover:mt-[10px]
-             shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)] transition-all duration-300">
+            shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)] transition-all duration-300">
 
                 <div className="mx-auto w-[260px] h-[170px] bg-gradient-to-b from-[#FF7272] to-[#8f3e3e] rounded-[25px] group-hover:to-[#4d2121]">
                     <img src={image} className="w-full h-full rounded-[25px] object-cover opacity-40" />

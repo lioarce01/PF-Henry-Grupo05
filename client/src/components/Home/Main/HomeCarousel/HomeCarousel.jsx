@@ -67,7 +67,7 @@ const HomeCarousel = () => {
                 }}>
 
                     {showShelters?.length > 0 && showShelters?.map((s, index) => 
-                    <SwiperSlide  key={index} >
+                    <SwiperSlide key={index} >
                         <CarouselCard id={s?.id} image={s?.profilePic} name={s?.name} goal={s?.goal} authorId={s?.authorId}
                                       budget={s?.budget} listAnimals={s?.listAnimals} profilePic={s?.author?.profilePic}/>
                     </SwiperSlide>)}

@@ -1,30 +1,25 @@
-import React from "react"
-import { useEffect } from "react";
-import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri"
-import { useDispatch, useSelector } from "react-redux";
-import {
-	useAddFollowersMutation,
-	useDeleteFollowersMutation,
-} from "../../redux/api/shelters"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useGetUserByIdQuery } from "../../redux/api/users"
-import { addFollowingAction, removeFollowingAction } from '../../redux/slices/manageUsers/actions';
+import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri"
+import { useAddFollowersMutation, useDeleteFollowersMutation } from "../../redux/api/shelters"
+import { addFollowingAction, removeFollowingAction } from '../../redux/slices/manageUsers/actions'
 
-function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
-	const dispatch= useDispatch();
+function ShelterStats({ userDetail, details, shelterRefetch }) {
+	const shelterId = details?.id
+	const dispatch = useDispatch();
 	const user = useSelector(state => state.localStorage.userState)
 	const [unfollow] = useDeleteFollowersMutation()
 	const [follow] = useAddFollowersMutation()
 
-	const { data: userDetails, refetch: userRefetch } = useGetUserByIdQuery(
-		userDetail?.id
-	)
+	const { data: userDetails, refetch: userRefetch } = useGetUserByIdQuery(userDetail?.id)
 
 	const deleteFollow = async () => {
-		if(user.isAuth){
+		if (user.isAuth) {
 			await unfollow({ shelterId, userId: userDetail.id })
 			shelterRefetch()
 			userRefetch()
-		}else{
+		} else {
 			dispatch(removeFollowingAction(shelterId))
 			shelterRefetch()
 			userRefetch()
@@ -32,44 +27,44 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 	}
 
 	const addFollow = async () => {
-		if(user.isAuth){
+		if (user.isAuth) {
 			await follow({ shelterId, userId: userDetail.id })
 			shelterRefetch()
 			userRefetch()
-		}else{
+		} else {
 			dispatch(addFollowingAction(details))
 			shelterRefetch()
 			userRefetch()
 		}
 	}
 
-	useEffect(()=>{
+	useEffect(() => {
 		userRefetch()
-	},[user])
+	}, [user])
 
 	return (
-			<div className="w-full flex flex-col items-center lg:my-4">
+		<div className="w-full flex flex-col items-center lg:my-4">
 			<div className="shadow-[rgb(255,213,201)] shadow-xl bg-white rounded-2xl py-2 px-2 w-9/12 lg:w-full">
 				<div className="flex flex-col justify-between">
 					<div className="flex flex-col font-semibold text-xs sm:text-base">
 						<div className="flex flex-row items-center pt-2">
-						<label className=" text-[#d45f37]">Followers: </label>
-						<span className="text-black indent-4">{details?.followers?.length}</span>
+							<label className=" text-[#d45f37]">Followers: </label>
+							<span className="text-black indent-4">{details?.followers?.length}</span>
 						</div>
 						<div className="flex flex-row items-center pt-2">
-						<label className=" text-[#d45f37]">Posts: </label>
-						<span className="text-black indent-4">{details?.posts?.length}</span>
+							<label className=" text-[#d45f37]">Posts: </label>
+							<span className="text-black indent-4">{details?.posts?.length}</span>
 						</div>
 						<div className="flex flex-row items-center pt-2">
-						<label className=" text-[#d45f37]">Budget: </label>
-						<span className="text-black indent-4">{`$ARS ${details?.budget}`}</span>
+							<label className=" text-[#d45f37]">Budget: </label>
+							<span className="text-black indent-4">{`$ARS ${details?.budget}`}</span>
 						</div>
 						{/* <div className="flex flex-row items-center pt-2">
 						<label className=" text-[#d45f37]">Goal: </label>
 						<span className="text-black indent-4">{`$ARS ${details?.goal}`}</span>
 						</div> */}
 					</div>
-					{ !(userDetail.id === details.authorId) && <div className="flex justify-center text-xs sm:text-base w-full mt-2">
+					{!(userDetail.id === details?.authorId) && <div className="flex justify-center text-xs sm:text-base w-full mt-2">
 						{(userDetails?.following?.find(
 							(shelter) => shelter.id === shelterId
 						) || user.following?.find(
@@ -96,7 +91,7 @@ function ShelterStats({ shelterId, userDetail, details, shelterRefetch }) {
 					</div>}
 				</div>
 			</div>
-			</div>
+		</div>
 	)
 }
 
