@@ -15,6 +15,7 @@ import LoadUser from "./components/LoadUser";
 import { useSelector } from "react-redux";
 import LearnMore from "./components/LearnMore/LearnMore";
 import ProtectRoute from "./components/TicketsPage/ProtectRoute";
+import TermsAndConditions from "./components/TermsAndConditions/TermsAndConsditions";
 
 function App() {
   LoadUser()
@@ -28,6 +29,7 @@ function App() {
         <Route path="/createOng" element={<OngForm />} />
         <Route path="/updateUser" element={<UserForm />} />
         <Route path="/learnMore" element={<LearnMore/>} />
+        <Route path="/termsAndConditions" element={<TermsAndConditions/>} />
         <Route path="/About" element={<About />} />
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/tickets" element={<ProtectRoute />} />
