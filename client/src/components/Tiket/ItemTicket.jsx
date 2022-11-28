@@ -22,7 +22,7 @@ function ItemTicket({ticket}) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-[400px] mx-auto bg-white p-10 rounded">
+    <form onSubmit={handleSubmit} className="w-[400px] mx-auto bg-white p-10 rounded ">
       
       <div className="mb-6 ">
         <h2 className="bold text-lg font-bold">Shelter</h2>
@@ -40,7 +40,7 @@ function ItemTicket({ticket}) {
       </div>
 
       {ticket?.status === "for review" ? (userDetail?.role === "Admin" && <><div>
-            <input type="text" id="first_name" onChange={handleChange} className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value={input} placeholder="comment" required />
+            <input type="text" id="first_name" onChange={handleChange} className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 p " value={input} placeholder="comment" required />
         </div>
       <button
         type="submit"
