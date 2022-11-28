@@ -7,6 +7,7 @@ import ModalShelters from '../Modals/ModalShelters'
 import ModalCreatePost from "../Modals/ModalCreatePost"
 import CreateTicket from '../../CreateTicket'
 import { carouselSheltersAction, setAnimalsAction } from '../../../redux/slices/manageShelters/actions'
+import { selectShelters } from '../../../redux/slices/manageShelters'
 
 
 // animals array to map filters. used to optimize code
@@ -22,9 +23,12 @@ const rndIndex = Math.floor(Math.random() * (welcomePhrases.length))
 
 
 const HomeNav = () => {
+
     // is user verified?
+
     const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
     const dispatch = useDispatch()
+    const {carousel} = useSelector(selectShelters)
 
     // fetch all enabled shelters
     const { data: shelters, refetch } = useGetSheltersQuery({ name: "", enabled: true })
@@ -46,6 +50,18 @@ const HomeNav = () => {
         dispatch(setAnimalsAction(newArr))
         if(newArr.length > 0) dispatch(carouselSheltersAction("animals"))
     },[active])
+
+    useEffect(() => {
+        if(carousel !== "animals") {
+            setActive({
+                activeDogs: false,
+                activeFarm: false,
+                activeCats: false,
+                activeWild: false,
+                activeDomestic: false,
+              })
+        }
+      },[carousel])
 
     const handleActive = e => {
         const tag = e.target.localName === 'span' ? e.target.parentElement.name : e.target.name
