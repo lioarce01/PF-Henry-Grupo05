@@ -8,17 +8,20 @@ export const postApi = createApi({
   tagTypes: ["Posts", "PostId"],
 
   endpoints: (builder) => ({
+
     getPosts: builder.query({
-      query: ({ order, type }) => {
-        if (!order || !type) return "/posts";
-        return `/posts/sort?order=${order}&type=${type}`;
-      },
+      query: () => `/posts/`,
       providesTags: ["Posts"],
     }),
 
     getPostById: builder.query({
       query: (postId) => `/posts/${postId}`,
       providesTags: ["PostId"],
+    }),
+
+    sortPosts: builder.query({
+      query: ({ order, type, id }) => `/posts/sort?order=${order}&type=${type}&id=${id}`,
+      providesTags: ["Posts"],
     }),
 
     addNewPost: builder.mutation({
@@ -108,6 +111,7 @@ export const postApi = createApi({
 
 export const {
   useGetPostsQuery,
+  useSortPostsQuery,
   useAddNewPostMutation,
   useLazyGetPostsQuery,
   useDeletePostMutation,

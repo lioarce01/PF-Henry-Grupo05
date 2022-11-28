@@ -6,14 +6,16 @@ const PostFilters = () => {
 
   const handleSort = (e) => {
     e.preventDefault();
-    let order = e.target.value.split(",")[0];
-    let type = e.target.value.split(",")[1];
+
+    const order = e.target.value.split(",")[0];
+    const type = e.target.value.split(",")[1];
+
     dispatch(sortPostsAction(order, type));
   };
 
   return (
     <div>
-      <select className="bg-[#F87171] text-white px-[10px] py-[5px] rounded-[20px] font-[500]" onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
+      <select className="bg-[#F87171] dark:bg-[#E06161] text-white px-[10px] py-[5px] rounded-[20px] font-[500]" onChange={(e) => handleSort(e)} defaultValue={"DEFAULT"}>
         <option value="DEFAULT" disabled>
           Sort
         </option>

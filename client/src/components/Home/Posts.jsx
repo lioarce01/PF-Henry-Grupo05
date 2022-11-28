@@ -3,19 +3,10 @@ import { useSelector } from "react-redux"
 import CardPost from "./CardPost"
 import Spinner from "../Spinner/Spinner"
 import { useGetPostsQuery } from "../../redux/api/posts"
-import { useAuth0 } from "@auth0/auth0-react"
 
 const Posts = () => {
 	const { sort } = useSelector((state) => state.localStorage.postState)
-	const { isAuthenticated } = useAuth0()
-
-	const {
-		data: posts,
-		isLoading,
-		isSuccess,
-		isFetching,
-		refetch,
-	} = useGetPostsQuery(sort)
+	const { data: posts, isLoading, isSuccess, refetch } = useGetPostsQuery(sort)
 
 	useEffect(() => {
 		refetch()

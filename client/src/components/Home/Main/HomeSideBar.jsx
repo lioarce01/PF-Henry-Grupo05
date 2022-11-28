@@ -16,8 +16,9 @@ import { BsPeopleFill, BsSun } from "react-icons/bs"
 import { BsChevronBarLeft, BsChevronBarRight, BsChevronBarUp, BsChevronBarDown } from "react-icons/bs"
 
 const SubscriptorsBar = () => {
-	// these are for changing and getting carousel display state
 	const dispatch = useDispatch()
+
+	// these are for changing and getting carousel display state
 	const { carousel } = useSelector(state => state.manageShelters)
 	const [displaying, setDisplaying] = useState('All')
 
@@ -109,11 +110,13 @@ const SubscriptorsBar = () => {
 						<h2 className={`text-[0.9rem] text-[#ACB1B2] dark:text-[#8b9091] font-semibold ${!expanded && "text-center"}`}>Specifics</h2>
 						<ul className="mt-[5px]">
 							<li className="mt-[10px]">
-								<button className={`flex flex-row group ${!expanded && 'mx-auto'}`}>
-									<FaBook className={`text-[#bb7070] flex mt-[2px] group-hover:text-[#e76f6f] dark:text-[#f56666] dark:group-hover:text-[#fa5656]
-									transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />
-									{expanded && <p className="flex xsm:ml-[10px] sm:ml-[15px] text-[#979b9c] dark:text-[#afb3b4] sm:text-[1.1rem] xsm:text-[0.9rem] font-semibold group-hover:underline">Conditions</p>}
-								</button>
+								<Link to='/termsAndConditions'>
+									<button className={`flex flex-row group ${!expanded && 'mx-auto'}`}>
+										<FaBook className={`text-[#bb7070] flex mt-[2px] group-hover:text-[#e76f6f] dark:text-[#f56666] dark:group-hover:text-[#fa5656]
+										transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />
+										{expanded && <p className="flex xsm:ml-[10px] sm:ml-[15px] text-[#979b9c] dark:text-[#afb3b4] sm:text-[1.1rem] xsm:text-[0.9rem] font-semibold group-hover:underline">Conditions</p>}
+									</button>
+								</Link>
 							</li>
 
 							<li className="mt-[10px]">

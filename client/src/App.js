@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import OngDetail from "./components/OngProfile/OngProfile";
+import OngDetail from "./components/OngProfile/Main/index.jsx";
 import Home from "./components/Home/Main/Home";
 import Landing from "./components/Landing";
 import Page404 from "./components/Page404";
@@ -14,9 +14,11 @@ import LoadUser from "./components/LoadUser";
 import { useSelector } from "react-redux";
 import LearnMore from "./components/LearnMore/LearnMore";
 import ProtectRoute from "./components/TicketsPage/ProtectRoute";
+import TermsAndConditions from "./components/TermsAndConditions/TermsAndConsditions";
 
 function App() {
   LoadUser()
+  
   const { darkmode } = useSelector(state => state.localStorage.manageTheme)
   return (
     <div className={darkmode ? "App dark": "App light"}>
@@ -26,6 +28,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/createOng" element={<OngForm />} />
         <Route path="/learnMore" element={<LearnMore/>} />
+        <Route path="/termsAndConditions" element={<TermsAndConditions/>} />
         <Route path="/About" element={<About />} />
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/tickets" element={<ProtectRoute />} />
