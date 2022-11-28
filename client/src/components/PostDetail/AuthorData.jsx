@@ -13,7 +13,7 @@ const AuthorData = ({ details }) => {
 			<div className="flex flex-col justify-center">
 				<Link to={`/${details.shelterId}/profile`} className="object-cover">
 					<div className="flex flex-col items-start">
-						<h2 className="-mt-1 text-lg font-semibold text-gray-900">
+						<h2 className="-mt-1 text-lg font-semibold text-gray-900 dark:text-[#F0EEEE]">
 							{details.author.name}
 						</h2>
 					</div>

@@ -29,7 +29,7 @@ const ModalPostDetail = ({ isOpen, closeModal, id, setLike, like, likes }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className=" max-w-fit transform overflow-hidden rounded-2xl text-left align-middle  transition-all">
+              <Dialog.Panel className="max-w-fit transform overflow-hidden rounded-2xl text-left align-middle  transition-all">
                 <Post
                   likes={likes}
                   closeModal={closeModal}

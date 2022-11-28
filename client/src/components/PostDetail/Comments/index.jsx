@@ -18,14 +18,15 @@ const Comments = ({ postId, details, isFetching, postAuthorId }) => {
 					return (
 						<Comment
 						postAuthorId={postAuthorId}
-							key={comment.id}
-							postId={postId}
-							author={comment.author}
-							content={comment.content}
-							id={comment.id}
+						key={comment.id}
+						postId={postId}
+						author={comment.author}
+						content={comment.content}
+						id={comment.id}
 						/>
 					)
-				})}
+				})
+			}
 		</div>
 	)
 }
