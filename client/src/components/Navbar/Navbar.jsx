@@ -1,88 +1,52 @@
-import React, { useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { BsSun } from "react-icons/bs"
 import { HiMoon } from "react-icons/hi"
-import { GrHomeRounded } from "react-icons/gr"
-import PostFilters from "../OngProfile/PostFilters"
-import { useSelector } from "react-redux"
-import ModalCreatePost from "../Home/Modals/ModalCreatePost"
+import { FiHome } from "react-icons/fi"
+import { useDispatch, useSelector } from "react-redux"
 import ProfilePanel from "./ProfilePanel"
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(" ")
-}
+import { switchTheme } from "../../redux/slices/manageTheme"
 
 const Navbar = () => {
-	const location = useLocation()
-	const [isOpen, setIsOpen] = useState(false)
-	const [toggle, setToggle] = useState(false)
-	const { userDetail, isAuth } = useSelector(
-		(state) => state.localStorage.userState
-	)
-
-	const handleToggle = () => setToggle(! toggle)
-	const closeModal = () => setIsOpen(false)
+	const dispatch = useDispatch()
+	const { darkmode } = useSelector(state => state.localStorage.manageTheme)
+	const toggleDarkMode = () => dispatch(switchTheme())
 
 	return (
-		<div className={`${location.pathname === "/home" ? "absolute z-49 flex flex-row items-center w-full h-20 px-4 bg-none" : "relative z-49 flex flex-row items-center w-full h-20 px-4 bg-none"}`}>
+		<div className="relative z-49 flex flex-row items-center w-full h-20 px-4 bg-white rounded-b-lg dark:bg-[#1B1A1F] duration-300">
 			<div className="flex flex-row justify-between w-full">
 				<div className="flex flex-row items-center">
 					<div className="flex flex-row items-center justify-center ml-[10px]">
-						<Link to="/">
-							<span className="font-bold lg:text-[1.8rem] text-[#201008]">
-								Paws
-							</span>
-							<span className="font-bold lg:text-[1.8rem] text-[#d45f37]">
-								Founding
-							</span>
-						</Link>
+					<Link to="/">
+								<div className="flex group flex-row">
+									<span className={`text-[1.5rem] font-bold text-black dark:text-[#f0eeee]
+										group-hover:text-[#FF7272] transition-all duration-500 font-mono mt-[2px]`}>Paws</span>
+									<span className={`text-[1.5rem] font-bold text-[#FF7272] dark:group-hover:text-white
+										group-hover:text-[#201008] transition-all duration-500`}>Founding</span>
+								</div>
+							</Link>
 					</div>
 
 					<div
-						className={`${location.pathname === "/home" &&
-							"pb-[5px] border-b-[3px] border-[#d45f37]"
-							} flex flex-row items-center justify-center ml-4 lg:ml-[100px] md:ml-[120px]`}>
+						className="ml-4 lg:ml-[100px] md:ml-[120px] hover:bg-[#FF7272] p-[7px] rounded-full transition duration-300 dark:hover:bg-[#E06161]">
 						<Link to="/home">
-							<GrHomeRounded className="text-[#201008] w-[25px] h-[25px] flex flex-row" />
+							<FiHome className="text-[#201008] w-[25px] h-[25px] dark:text-white" />
 						</Link>
 					</div>
 				</div>
 
 				<div className="flex flex-row items-center">
-					{location.pathname === "/home" && (
-					<div className="mr-[130px] flex flex-row">
-						<div className="flex mr-[20px] mt-[2px]">
-							<PostFilters />
-						</div>
-						{isAuth && userDetail?.Shelter?.length > 0 && userDetail?.Shelter[0].enable === true ? (
-						<button
-							onClick={() => setIsOpen(true)}
-							className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#D45F37] border border-transparent rounded-[30px] shadow-sm hover:bg-[#e0643a] transition duration-300">
-							Create Post
-						</button>) : null}
-					</div>)}
 					
 					<div className="mr-[250px]">
-						{toggle ? (
-							<button
-								className="hover:bg-[#D45F37] p-[5px] rounded-full transition duration-300"
-								onClick={handleToggle}>
-								<BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white" />
-							</button>
-						) : (
-							<button
-								className="hover:bg-[#D45F37] p-[5px] rounded-full transition duration-300"
-								onClick={handleToggle}>
-								<HiMoon className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white" />
-							</button>
-						)}
+						<button
+							className="hover:bg-[#FF7272] p-[5px] rounded-full transition duration-300 dark:hover:bg-[#E06161]"
+							onClick={toggleDarkMode}>
+							{darkmode ? <BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white dark:text-[#F0EEEE]" /> : <HiMoon className="text-xl text-[#201008] w-[25px] h-[25px]" />}
+						</button>
 					</div>
 					
 					<ProfilePanel />
 				</div>
 			</div>
-
-			<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
 		</div>
 	)
 }

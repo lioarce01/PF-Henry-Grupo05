@@ -1,12 +1,11 @@
 import { BsSearch } from 'react-icons/bs'
 import { HiPencil } from 'react-icons/hi'
-import { useSelector } from "react-redux"
-import { useEffect, useState } from 'react'
-import CreateTicket from '../../CreateTicket'
+import { useGetSheltersQuery } from "../../../redux/api/shelters"
+import { useDispatch, useSelector } from "react-redux"
 import ModalShelters from '../Modals/ModalShelters'
 import ModalCreatePost from "../Modals/ModalCreatePost"
-import { useGetSheltersQuery } from "../../../redux/api/shelters"
-
+import CreateTicket from '../../CreateTicket'
+import { carouselSheltersAction, setAnimalsAction } from '../../../redux/slices/manageShelters/actions'
 
 // animals array to map filters. used to optimize code
 const animals = [{ type: 'Dogs', emoji: '🐶', target: 'activeDogs' }, { type: 'Cats', emoji: '😺', target: 'activeCats' },
@@ -23,9 +22,11 @@ const rndIndex = Math.floor(Math.random() * (welcomePhrases.length))
 const HomeNav = () => {
     // is user verified?
     const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
+    const dispatch = useDispatch()
 
     // fetch all enabled shelters
     const { data: shelters, refetch } = useGetSheltersQuery({ name: "", enabled: true })
+    
 
     // handles animal filter buttons
     const [active, setActive] = useState({
@@ -33,6 +34,16 @@ const HomeNav = () => {
         activeCats: false, activeWild: false,
         activeDomestic: false,
     })
+
+    useEffect(() => {
+            let newArr = []
+            for(let animal in active) {
+                if(active[animal] === true) newArr.push(animals.find(a => a.target === animal).type)
+            }
+
+        dispatch(setAnimalsAction(newArr))
+        if(newArr.length > 0) dispatch(carouselSheltersAction("animals"))
+    },[active])
 
     const handleActive = e => {
         const tag = e.target.localName === 'span' ? e.target.parentElement.name : e.target.name

@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import Spinner from "../../../Spinner/Spinner";
-import { useGetSheltersQuery, useTopFiveSheltersQuery } from "../../../../redux/api/shelters"
+import { useGetShelterByAnimalMutation, useGetSheltersQuery, useTopFiveSheltersQuery } from "../../../../redux/api/shelters"
 import { FreeMode, Autoplay } from "swiper";
 import CarouselCard from './CarouselCard'
 import { useSelector } from "react-redux";
 
 const HomeCarousel = () => {
-    const { carousel } = useSelector(state => state.manageShelters)
+    const { carousel, animals } = useSelector(state => state.manageShelters)
     const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
     const { data: shelters, isLoading, refetch } = useGetSheltersQuery({name: "", enabled: true})
     const { data: topShelters, refetchTop } = useTopFiveSheltersQuery(10)
-
+    const [getShelterByAnimal, {data: animalShelter}] = useGetShelterByAnimalMutation() 
     const [showShelters, setShowShelters] = useState(shelters)
-    console.log(userDetail?.following)
+    console.log(userDetail, animalShelter)
+    
     useEffect(() => {
         refetch()
+
     }, [])
 
     useEffect(() => {
@@ -25,8 +27,15 @@ const HomeCarousel = () => {
     useEffect(() => {
         if (carousel === 'following') setShowShelters(userDetail?.following)
         else if (carousel === 'trending')  setShowShelters(topShelters)
+        else if(carousel === "animals") {
+            if(animals.length > 0) {
+                getShelterByAnimal(animals).unwrap()
+                    .then(res => setShowShelters(res))
+            } else setShowShelters(shelters)
+        }
         else setShowShelters(shelters)
-    }, [carousel])
+        
+    }, [carousel, animals])
 
     if (isLoading) return (<div className=""><Spinner /></div>)
     if (! showShelters?.length) return (
@@ -37,7 +46,7 @@ const HomeCarousel = () => {
     return (
         <div className="">
             <Swiper
-                loop={true}
+          
                 slidesPerView={1}
                 spaceBetween={0}
                 freeMode={true}

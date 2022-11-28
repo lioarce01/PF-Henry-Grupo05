@@ -22,8 +22,8 @@ const ProfilePanel = () => {
 			{isAuth ? (
 				<Menu as="div" className="w-[60px] outline-none">
 					<div>
-						<Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-800">
-							<h2 className="absolute right-[70px] mt-[10px] mr-[20px]">
+						<Menu.Button className="inline-flex justify-center text-sm font-medium text-gray-800 dark:text-[#F0EEEE] duration-300">
+							<h2 className="absolute right-[70px] mt-[10px] mr-[20px] dark:text-[#F0EEEE] duration-300">
 								{userDetail.name}
 							</h2>
 							<div className="w-[40px]">
@@ -50,14 +50,14 @@ const ProfilePanel = () => {
 						leave="transition ease-in duration-75"
 						leaveFrom="transform opacity-100 scale-100"
 						leaveTo="transform opacity-0 scale-95">
-						<Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+						<Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-[#27242C] dark:text-[#F0EEEE]">
 							<div className="py-1">
 								<Menu.Item>
 									{({ active }) => (
 										<Link
 											to={`/users/${userDetail.id}`}
 											className={classNames(
-												active ? "bg-slate-100 text-gray-900" : "text-gray-700",
+												active ? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]" : "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
 												"block px-4 py-2 text-sm"
 											)}>
 											Account settings
@@ -70,9 +70,7 @@ const ProfilePanel = () => {
 											<Link
 												to={`/admin`}
 												className={classNames(
-													active
-														? "bg-slate-100 text-gray-900"
-														: "text-gray-700",
+													active ? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]" : "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
 													"block px-4 py-2 text-sm"
 												)}>
 												Admin Dashboard
@@ -86,7 +84,7 @@ const ProfilePanel = () => {
 
 											to={userDetail?.Shelter?.length > 0 ? `/${userDetail.Shelter[0].id}/profile` : "/createOng"}
 											className={classNames(
-												active ? "bg-slate-100 text-gray-900" : "text-gray-700",
+												active ? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]" : "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
 												"block px-4 py-2 text-sm"
 											)}>
 											{userDetail?.Shelter?.length > 0 ? "Shelter settings" : "Create Shelter"}

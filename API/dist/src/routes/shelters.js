@@ -82,7 +82,7 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
                 where: {
                     enable: true,
                     listAnimals: !(filter === null || filter === void 0 ? void 0 : filter.animals) ? undefined : {
-                        has: filter === null || filter === void 0 ? void 0 : filter.animals
+                        hasSome: filter === null || filter === void 0 ? void 0 : filter.animals,
                     },
                     country: filter === null || filter === void 0 ? void 0 : filter.country,
                     city: filter === null || filter === void 0 ? void 0 : filter.city,
@@ -92,6 +92,7 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
                     },
                 },
                 include: {
+                    author: true,
                     tickets: true,
                     followers: true,
                     posts: {
