@@ -1,50 +1,82 @@
-import React, { useEffect, useState } from "react"
-import { AiFillHeart } from "react-icons/ai"
-import { useDispatch } from "react-redux"
-import { updatePostAction, updatePostLikesAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions"
-
-const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
+import React, { useState } from "react";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
+import { useSelector } from "react-redux"
+import ShowMoreText from "react-show-more-text"
+import toast, { Toaster } from "react-hot-toast"
+import {
+	useUpdatePostLikesMutation,
+	useUpdatePostMutation,
+} from "../../redux/api/posts"
+import { useAuth0 } from "@auth0/auth0-react"
+import { MdComment } from "react-icons/md"
+const PostData = ({
+	toogle,
+	setToogle,
+	details,
+	postId,
+	like,
+	setLike,
+	likes,
+}) => {
 	const [input, setInput] = useState({ id: postId, content: details.content })
-	const dispatch = useDispatch()
-	const [likeDisplay, setLikeDisplay] = useState(details.likes)
+	const [likesActuals, setLikesActuals] = useState(likes)
+	const [updatePost, {}] = useUpdatePostMutation()
+	const [updateLikes, {}] = useUpdatePostLikesMutation()
+	const { getAccessTokenSilently } = useAuth0()
+	const { isAuth } = useSelector((state) => state.localStorage.userState)
 
 	const inputHandler = (e) => {
 		e.preventDefault()
 		setInput({ ...input, [e.target.name]: e.target.value })
 	}
 
-	const saveHandler = () => {
-		dispatch(updatePostAction(input))
-		closeModal()
+	//rows exactly equal to content length to avoid scroll bar
+	const rows = details.content.length / 35
+
+	console.log("postdata: ", details)
+
+	const toggleLike = () => {
+		if (!isAuth) return toast.error("you are not logged in")
+		setLike(!like)
+		like ? setLikesActuals(likesActuals - 1) : setLikesActuals(likesActuals + 1)
+		like
+			? updateLikes({ id: postId, likes: likes - 1 })
+			: updateLikes({ id: postId, likes: likes + 1 })
 	}
 
-	const fixDisplay = () => {
-		if (like) setLikeDisplay(likeDisplay-1)
-		else setLikeDisplay(likeDisplay+1)
+	const saveHandler = async () => {
+		const accessToken = await getAccessTokenSilently()
+		setToogle(true)
+		updatePost({ accessToken, post: input })
+		toast.success("post edited")
 	}
 
 	return (
-		<>
-			{details.image && (
-				<img
-					src={details.image}
-					alt="post"
-					className="object-cover w-full max-h-[40rem]"
-				/>
-			)}
+		<div className="pt-2">
+			<div className="flex flex-col dark:text-[#F0EEEE] h-auto">
+				<ShowMoreText
+					lines={3}
+					more="Show more"
+					less="Show less"
+					className="content-css"
+					anchorClass="show-more-less-clickable"
+					expanded={false}
+					truncatedEndingComponent={"... "}>
+					<textarea
+						className="w-full mb-1 border border-gray-300 resize-none bg-inherit disabled:border-none"
+						type="text"
+						name="content"
+						onChange={inputHandler}
+						defaultValue={details.content}
+						disabled={toogle}
+						value={input.description}
+						cols="10"
+						rows={rows}
+					/>
+				</ShowMoreText>
+			</div>
 
-			<textarea
-				className="w-full mb-1 text-xl font-semibold border border-gray-300 resize-none bg-inherit disabled:border-none "
-				type="text"
-				name="content"
-				onChange={inputHandler}
-				defaultValue={details.content}
-				disabled={toogle}
-				value={input.description}
-				cols="1"
-			/>
-
-			{! toogle && (
+			{!toogle && (
 				<div className="flex flex-row-reverse justify-between flex-start">
 					<button
 						className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
@@ -54,16 +86,26 @@ const PostData = ({ toogle, details, postId, closeModal, like, setLike }) => {
 				</div>
 			)}
 
-			<div className="flex flex-wrap justify-between">
-				<div className="flex items-center mr-2 space-x-2 text-sm text-gray-700">
-					<button onClick={fixDisplay}>
-						<AiFillHeart onClick={setLike} className={like && "text-red-600"} />
+			<div className="flex flex-row items-center justify-start w-full py-2 mt-4 border-t border-gray-200 dark:border-[#38353d]">
+				<div className="flex px-3 py-2 space-x-1 text-sm text-gray-500 transition duration-300 rounded-md cursor-pointer hover:bg-[#ff727260] dark:text-[#857d91] dark:hover:bg-[#afb3b486] dark:hover:text-[#F0EEEE]">
+					<span className={like ? `font-bold text-black dark:text-[#b5afc0]` :`font-bold text-gray-500 dark:text-[#857d91]`}>{likesActuals}</span>
+					<button onClick={toggleLike}>
+						{like ? (
+							<AiFillHeart className="w-5 h-5 text-red-500" />
+						) : (
+							<AiOutlineHeart className="w-5 h-5 text-red-500" />
+						)}
 					</button>
-					<span>{likeDisplay}</span>
+				</div>
+				<div className="flex px-3 py-2 mr-2 text-sm text-gray-500 transition duration-300 rounded-md dark:text-[#857d91]">
+					<p className="mr-[7px] mb-[1px] font-bold">
+						{details.Comment?.length}
+					</p>
+					<MdComment className="w-5 h-5 text-[#6D91E9]" />
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
 
-export default PostData
+export default PostData;

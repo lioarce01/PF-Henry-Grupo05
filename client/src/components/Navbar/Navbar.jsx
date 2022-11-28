@@ -1,104 +1,65 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import {BsSun} from 'react-icons/bs'
-import {HiMoon} from 'react-icons/hi'
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { AiOutlineDown } from 'react-icons/ai'
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import { Link } from "react-router-dom"
+import { BsSun } from "react-icons/bs"
+import { HiMoon } from "react-icons/hi"
+import { FiHome } from "react-icons/fi"
+import { useDispatch, useSelector } from "react-redux"
+import ProfilePanel from "./ProfilePanel"
+import { switchTheme } from "../../redux/slices/manageTheme"
 
 const Navbar = () => {
-  const [toggle, setToggle] = useState(false)
+	const dispatch = useDispatch()
+	const { darkmode } = useSelector(state => state.localStorage.manageTheme)
+	const toggleDarkMode = () => dispatch(switchTheme())
 
-  const handleToggle = () => {
-    setToggle(!toggle)
-  }
-  
-  return (
-    <div className='fixed z-10 flex items-center justify-between w-full p-4 px-10 text-gray-800 bg-[#FAF2E7]/[.05] shadow-lg backdrop-blur-sm h-14'>
-      <Link to='/'>
-      <div>
-        <img src="https://cdn-icons-png.flaticon.com/512/1152/1152755.png" alt="/" className='w-8 h-8' />
-      </div>
-      </Link>
-      <div className='flex items-center justify-center'>
-        {
-          toggle 
-          ? <button className='px-3 py-1.5 mr-6 border-2 border-[#fffcf7] rounded-md hover:bg-[#fffcf7] hover:text-black transition duration-300' onClick={handleToggle}><BsSun className='text-xl'/></button>
-          : <button className='px-3 py-1.5 mr-6 transition duration-300 border-2 rounded-md border-[#fffcf7] hover:bg-[#fffcf7] hover:text-black duration 300' onClick={handleToggle}><HiMoon className='text-xl'/></button>
-        }
-        <Link to="/home" className='pt-1 pb-1 pl-2 pr-2 mr-6 border-2 border-[#fffcf7] transition duration-300 rounded-md hover:bg-[#fffcf7] hover:text-black'>Home</Link>
-          <Menu as="div" className="relative z-50 inline-block text-left outline-none">
-        <div>
-          <Menu.Button className="inline-flex justify-center w-full px-4 py-1 text-sm font-medium text-gray-800 border-2 border-[#fffcf7] rounded-md shadow-sm outline-none hover:bg-[#fffcf7] transition duration-300 focus:outline-none">
-            <img src="https://i.pravatar.cc/150?img=4" alt="" className='w-8 h-8 rounded-full' />
-            <AiOutlineDown className="w-5 h-5 mt-2 ml-2 -mr-1" aria-hidden="true" />
-          </Menu.Button>
-        </div>
+	return (
+		<div className="relative z-49 flex flex-row items-center w-full h-20 px-4 bg-white rounded-b-lg dark:bg-[#1B1A1F] duration-300">
+			<div className="flex flex-row justify-between w-full">
+				<div className="flex flex-row items-center">
+					<div className="flex flex-row items-center justify-center ml-[10px]">
+						<Link to="/">
+							<div className="flex group flex-row">
+								<span
+									className={`text-[1.5rem] font-bold text-black dark:text-[#f0eeee]
+										group-hover:text-[#FF7272] transition-all duration-500 font-mono mt-[2px]`}
+								>
+									Paws
+								</span>
+								<span
+									className={`text-[1.5rem] font-bold text-[#FF7272] dark:group-hover:text-white
+										group-hover:text-[#201008] transition-all duration-500`}
+								>
+									Founding
+								</span>
+							</div>
+						</Link>
+					</div>
 
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    to={`/users/636c0a5c1e78d75d8edfae96`}
-                    className={classNames(
-                      active ? 'bg-slate-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm'
-                    )}
-                  >
-                    Account settings
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    to={`/createOng`}
-                    className={classNames(
-                      active ? 'bg-slate-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm'
-                    )}
-                  >
-                    Create Shelter 
-                  </Link>
-                )}
-              </Menu.Item>
-              <form method="POST" action="#">
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      to='/'
-                      type="submit"
-                      className={classNames(
-                        active ? 'bg-slate-200 text-gray-900' : 'text-gray-700',
-                        'block w-full px-4 py-2 text-left text-sm'
-                      )}
-                    >
-                      Sign out
-                    </Link>
-                  )}
-                </Menu.Item>
-              </form>
-            </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
-      </div>
-    </div>
-  )
+					<div className="ml-4 lg:ml-[100px] md:ml-[120px] hover:bg-[#FF7272] p-[7px] rounded-full transition duration-300 dark:hover:bg-[#E06161]">
+						<Link to="/home">
+							<FiHome className="text-[#201008] w-[25px] h-[25px] dark:text-white" />
+						</Link>
+					</div>
+				</div>
+
+				<div className="flex flex-row items-center">
+					<div className="lg:mr-[250px]">
+						<button
+							className="hover:bg-[#FF7272] p-[5px] rounded-full transition duration-300 dark:hover:bg-[#E06161]"
+							onClick={toggleDarkMode}
+						>
+							{darkmode ? (
+								<BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white dark:text-[#F0EEEE]" />
+							) : (
+								<HiMoon className="text-xl text-[#201008] w-[25px] h-[25px]" />
+							)}
+						</button>
+					</div>
+
+					<ProfilePanel />
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default Navbar

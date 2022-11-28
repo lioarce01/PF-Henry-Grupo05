@@ -20,7 +20,7 @@ export const getTimeAgo = (date) => {
     return `${Math.floor(diffInMinutes)}m`;
   } else if (seconds > 1) {
     return `${Math.floor(seconds)}s`;
-  }
+  } 
   return "Now";
 };
 
@@ -30,7 +30,7 @@ export const uploadImage = async (preset, file) => {
      data.append("file", file);
     data.append("upload_preset", preset);
      const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+      `https://api.cloudinary.com/v1_1/dxxqabghy/upload`,
     data
     );
   return { response: response.data, image: response.data.secure_url };
@@ -39,4 +39,3 @@ export const uploadImage = async (preset, file) => {
   }
   
 };
-

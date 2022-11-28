@@ -16,6 +16,7 @@ model User {
   name          String
   email         String    @unique
   role          Role      @default(User)
+  enable        Boolean   @default(true) @map("enable")
   posts         Post[]
   Comment       Comment[]
   Shelter       Shelter[]
@@ -23,32 +24,61 @@ model User {
   following     Shelter[] @relation("Followers", fields: [shelterFollow], references: [id])
 }
 
+model Ticket {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  status    String?  @default("for review")
+  shelter   Shelter  @relation(fields: [shelterId], references: [id])
+  shelterId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comments  Comment[]
+}
+
 model Shelter {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   name          String   @unique
   country       String   @map("country")
   city          String   @map("city")
-  animals       String?  @map("animals")
+  listAnimals   String[] @default([]) @map("listAnimals")
   // tiro una default img para los shelters. dsp en un futuro la cambiamos al logo de nuestra pag ~bau
   profilePic    String?  @default("https://64.media.tumblr.com/3ec5ecbbeb64030986df7251019ae4b8/b797bc944c5153a1-8e/s1280x1920/bb3c049643d41fa2ccf7442ebfc4d630a95489d6.jpg") @map("profilePic")
   description   String?  @map("description")
+  lat           Float?   @map("lat")
+  lon           Float?   @map("lon")
+  enable        Boolean  @default(true) @map("enable")
   address       String?  @map("address")
   website       String?  @map("website")
-  author        User     @relation(fields: [authorId], references: [id])
+  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId      String   @db.ObjectId
   budget        Int?     @default(0) @map("budget")
-  goal          Int?     @map("goal")
   userFollowers String[] @default([]) @db.ObjectId
   followers     User[]   @relation("Followers", fields: [userFollowers], references: [id])
   posts         Post[]
+  goals         Goal[]
+  tickets       Ticket[]
+}
+
+model Goal {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String  @map("content")
+  budget    Int     @default(0)
+  goal      Int
+  enable    Boolean @default(true) @map("enable")
+  shelter   Shelter @relation(fields: [shelterId], references: [id])
+  shelterId String  @db.ObjectId
 }
 
 model Post {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  author    User?     @relation(fields: [authorId], references: [id])
+  author    User?     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String?   @db.ObjectId
   content   String    @map("content")
   image     String?   @map("image")
+  video     String?   @map("video")
+  enable    Boolean   @default(true) @map("enable")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   likes     Int?      @default(0)
@@ -60,10 +90,13 @@ model Post {
 model Comment {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   content  String  @map("content")
-  author   User    @relation(fields: [authorId], references: [id])
+  enable   Boolean @default(true) @map("enable")
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String  @db.ObjectId
-  post     Post?   @relation(fields: [postId], references: [id])
+  post     Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId   String?
+  ticket   Ticket? @relation(fields: [ticketId], references: [id])
+  ticketId String? 
 }
 
 model Payment {

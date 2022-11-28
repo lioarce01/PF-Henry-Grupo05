@@ -8,6 +8,8 @@ import users from './users';
 import comments from './comments'
 import shelters from './shelters';
 import mercadopago from "./mercadopago"
+import goals from "./goals"
+import tickets from './tickets'
 
 const router = express.Router();
 
@@ -16,5 +18,7 @@ router.use('/posts', posts);
 router.use('/users', users);
 router.use('/comments', comments);
 router.use('/mp', mercadopago)
+router.use('/goals', goals)
+router.use('/tickets', tickets)
 
 export default router;

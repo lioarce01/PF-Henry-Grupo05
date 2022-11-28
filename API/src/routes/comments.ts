@@ -1,5 +1,6 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -27,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
     try {
         const getComment = await prisma.comment.findMany({
-            where: { id },
+            where: { id: id },
             include: {
                 author: true,
                 post: true
@@ -42,7 +43,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // create a comment
-router.post('/', async (req, res) => {
+router.post('/', jwtCheck, async (req, res) => {
     try {
         interface commentInterface {
             authorId: string,
@@ -66,9 +67,39 @@ router.post('/', async (req, res) => {
         console.log(error)
     }
 });
+// logical enabled to comments(Admin)
+router.put('/enable', async(req, res)=>{
+    try {
+        const id = req.body.commentId;
+        await prisma.comment.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Comment ${id} enabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
 
+// logical disabled to comments(Admin)
+router.put('/disable', async(req, res)=>{
+    try {
+        const id = req.body.commentId;
+        await prisma.comment.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Comment ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
 // delete comment
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', jwtCheck, async (req, res) => {
     const id = req.params.id;
 
     try {
@@ -84,7 +115,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // edit a comment
-router.put('/', async (req, res) => {
+router.put('/', jwtCheck, async (req, res) => {
     try {
 
         interface commentInterface {

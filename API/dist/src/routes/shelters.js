@@ -14,23 +14,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
-// get all shelters or get some by name
+// get all shelters or get some by name enables
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { status, name } = req.query;
     try {
-        const { name } = req.query;
         const shelters = yield prisma.shelter.findMany({
-            orderBy: { "name": "asc" },
             where: {
+                enable: status,
                 name: {
                     contains: name || '',
                     mode: 'insensitive'
                 },
             },
+            orderBy: { "name": "asc" },
             include: {
+                tickets: true,
+                author: true,
                 followers: true,
-                posts: true
+                posts: {
+                    where: {
+                        enable: status
+                    }
+                }
             }
         });
         if (shelters.length)
@@ -45,12 +53,13 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 // get top five shelters by budget
 router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // bauti: la ruta se llama topFive, pero ahora la hago
-    // topSix para que se vea mejor el Carousel de landing
+    // bauti: la ruta se llama topFive, pero ahora trae custom cantidad x query
+    const cant = Math.floor(req.query.cant);
     try {
         const shelters = yield prisma.shelter.findMany({
-            take: 6,
-            include: { followers: true, posts: true },
+            where: { enable: true },
+            take: cant ? cant : 6,
+            include: { followers: true, posts: true, tickets: true },
             orderBy: { budget: 'desc' }
         });
         if (shelters)
@@ -65,13 +74,33 @@ router.get('/topFive', (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // here we are able to expand this further, adding
-    // more ordering criteria and even filters.
-    const { order, orderType, group, groupType } = req.body;
+    // more ordering criteria, filters and name search.
+    const { order, orderType, filter, name } = req.body;
     try {
-        if (order || group) {
+        if (order || filter) {
             const shelters = yield prisma.shelter.findMany({
-                where: { [group]: groupType },
-                include: { followers: true },
+                where: {
+                    enable: true,
+                    listAnimals: !(filter === null || filter === void 0 ? void 0 : filter.animals) ? undefined : {
+                        hasSome: filter === null || filter === void 0 ? void 0 : filter.animals,
+                    },
+                    country: filter === null || filter === void 0 ? void 0 : filter.country,
+                    city: filter === null || filter === void 0 ? void 0 : filter.city,
+                    name: {
+                        contains: name || '',
+                        mode: 'insensitive'
+                    },
+                },
+                include: {
+                    author: true,
+                    tickets: true,
+                    followers: true,
+                    posts: {
+                        where: {
+                            enable: true
+                        }
+                    }
+                },
                 orderBy: order === "followers" ? { followers: { _count: orderType } } : { [order]: orderType }
             });
             if (shelters)
@@ -92,15 +121,25 @@ router.post('/filter-sort', (req, res) => __awaiter(void 0, void 0, void 0, func
 router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
+        const state = true;
         const shelter = yield prisma.shelter.findUnique({
-            where: { id },
+            where: { id: id },
             include: {
+                goals: true,
+                tickets: true,
                 followers: true,
                 author: true,
                 posts: {
+                    where: {
+                        enable: state
+                    },
                     include: {
                         author: true,
-                        Comment: true
+                        Comment: {
+                            where: {
+                                enable: state
+                            }
+                        }
                     }
                 }
             }
@@ -112,33 +151,119 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         console.log(error);
     }
 }));
+// logical enabled to shelters(Admin)
+router.put("/enable", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.shelterId;
+        yield prisma.shelter.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send({ message: `Shelter ${id} enabled successfully` });
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to shelters(Admin)
+router.put("/disable", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.shelterId;
+        yield prisma.shelter.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send({ message: `Shelter ${id} disabled successfully` });
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
 // create a shelter
-router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyShelter = req.body;
-        yield prisma.shelter.create({
+        const shelterCreated = yield prisma.shelter.create({
             data: {
                 name: bodyShelter.name,
                 authorId: bodyShelter.authorId,
                 description: bodyShelter.description,
                 profilePic: bodyShelter.profilePic,
-                animals: bodyShelter.animals,
+                listAnimals: bodyShelter.listAnimals,
                 city: bodyShelter.city,
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
             }
         });
-        res.status(200).send('Shelter created successfully.');
+        res.status(200).send(shelterCreated);
     }
     catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
 }));
-// update a shelter
+//on click follow button in shelter profile page, add shelter to user's following list and add user to shelter's followers list 
+router.put("/follow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, shelterId } = req.body;
+        yield prisma.user.update({
+            where: { id: userId },
+            data: {
+                following: {
+                    connect: { id: shelterId }
+                }
+            }
+        });
+        yield prisma.shelter.update({
+            where: { id: shelterId },
+            data: {
+                followers: {
+                    connect: { id: userId
+                    }
+                }
+            }
+        });
+        res.status(200).send('Shelter followed successfully.');
+    }
+    catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+}));
+router.put("/unfollow", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, shelterId } = req.body;
+        yield prisma.user.update({
+            where: { id: userId },
+            data: {
+                following: {
+                    disconnect: { id: shelterId }
+                }
+            }
+        });
+        yield prisma.shelter.update({
+            where: { id: shelterId },
+            data: {
+                followers: {
+                    disconnect: { id: userId
+                    }
+                }
+            }
+        });
+        res.status(200).send('Shelter unfollowed successfully.');
+    }
+    catch (error) {
+        res.status(400).send('ERROR: There was an unexpected error.');
+        console.log(error);
+    }
+}));
+// update a shelter ALERTA saque jwtCheck
 router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
@@ -152,9 +277,11 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 city: bodyShelter.city,
                 country: bodyShelter.country,
                 address: bodyShelter.address,
+                listAnimals: bodyShelter.listAnimals,
                 website: bodyShelter.website,
                 budget: bodyShelter.budget,
-                goal: bodyShelter.goal
+                lat: bodyShelter.lat,
+                lon: bodyShelter.lon
             },
         });
         res.status(200).json('Shelter updated successfully.');
@@ -165,7 +292,7 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // delete a shelter
-router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/:id", jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
         const deletedShelter = yield prisma.shelter.delete({

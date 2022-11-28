@@ -14,19 +14,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
+const jwtCheck_1 = require("../jwtCheck");
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
-//route to get all posts
+router.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield prisma.post.findMany({
+            include: {
+                author: true,
+                Comment: {
+                    include: { author: true }
+                },
+                shelter: true
+            }
+        });
+        res.status(200).json(posts);
+    }
+    catch (error) {
+        res.status(400).send('ERROR: posts not founds.');
+        console.log(error);
+    }
+}));
+// route to get all posts enables
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //traer por query params la cantidad de posts que queremos traer por pagina y la pagina que queremos traer (por defecto 10 posts por pagina y pagina 1)
+    // traer por query params la cantidad de posts que queremos traer por pagina y la pagina que queremos traer (por defecto 10 posts por pagina y pagina 1)
     const { perPage, page } = req.query;
-    //si no se envian los query params, se traen todos los posts    
+    const state = true;
+    // si no se envian los query params, se traen todos los posts    
     try {
         if (!perPage || !page) {
             const posts = yield prisma.post.findMany({
+                where: {
+                    enable: state
+                },
                 include: {
                     author: true,
                     Comment: {
+                        where: {
+                            enable: state
+                        },
                         include: { author: true }
                     },
                     shelter: true
@@ -39,11 +65,17 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else {
             const posts = yield prisma.post.findMany({
+                where: {
+                    enable: state
+                },
                 take: parseInt(perPage),
                 skip: (parseInt(page) - 1) * parseInt(perPage),
                 include: {
                     author: true,
                     Comment: {
+                        where: {
+                            enable: state
+                        },
                         include: { author: true }
                     },
                     shelter: true
@@ -60,13 +92,18 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 router.get('/sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { order, type } = req.query;
+    const { order, type, id } = req.query;
+    const state = true;
     try {
         if (order && type) {
             const posts = yield prisma.post.findMany({
+                where: id ? { enable: state, shelterId: id } : { enable: state },
                 include: {
                     author: true,
                     Comment: {
+                        where: {
+                            enable: state
+                        },
                         include: { author: true }
                     },
                     shelter: true
@@ -86,7 +123,7 @@ router.get('/sort', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 }));
 // route to create post
-router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         yield prisma.post.create({
@@ -94,7 +131,8 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 shelterId: bodyPost.shelterId,
                 authorId: bodyPost.authorId,
                 content: bodyPost.content,
-                image: bodyPost.image
+                image: bodyPost.image,
+                video: bodyPost.video
             }
         });
         res.status(200).send('Post created successfully.');
@@ -104,8 +142,38 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 }));
+// logical enabled to posts(Admin)
+router.put('/enable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.postId;
+        yield prisma.post.update({
+            where: { id: id },
+            data: { enable: true },
+        });
+        res.status(200).send(`Post ${id} enabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
+// logical disabled to posts(Admin)
+router.put('/disable', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.body.postId;
+        yield prisma.post.update({
+            where: { id: id },
+            data: { enable: false },
+        });
+        res.status(200).send(`Post ${id} disabled successfully`);
+    }
+    catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.");
+        console.log(error);
+    }
+}));
 // route to edit a post
-router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         yield prisma.post.update({
@@ -124,7 +192,7 @@ router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 }));
-router.put('/updateLikes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/updateLikes', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const bodyPost = req.body;
         const updatedPost = yield prisma.post.update({
@@ -145,6 +213,7 @@ router.put('/updateLikes', (req, res) => __awaiter(void 0, void 0, void 0, funct
 // route to get posts by id
 router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
+    const state = true;
     try {
         const post = yield prisma.post.findUnique({
             where: { id },
@@ -152,6 +221,9 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 shelter: true,
                 author: true,
                 Comment: {
+                    where: {
+                        enable: state
+                    },
                     include: { author: true }
                 },
             },
@@ -164,7 +236,7 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 // route to delete posts by id
-router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete('/:id', jwtCheck_1.jwtCheck, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     try {
         const deletedPost = yield prisma.post.delete({

@@ -1,11 +1,17 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import { jwtCheck } from '../jwtCheck'
+import { sendMailCreate } from "../middleware/nodemailer";
 
 const router = express.Router();
 const prisma = new PrismaClient();
 
 type Req = {
-    query: { name: string };
+    query: {
+        name: string,
+        email: string,
+        status: boolean
+    };
     body: {
         name: string
         email: string
@@ -14,37 +20,85 @@ type Req = {
     };
 };
 
-/* router.get('/:id/posts', async(req,res, next) => {
-     try {
-         const userWhitPosts = await prisma.user.findUnique({
-             where:{
-                 id: req.params.id,
-             },
-             include:{
-                 post: {
-                     where:{
-                         published: true,
-                     }
-                 }
-             },
-         }) ;
+// get all users, or search them by name enables
 
-         const posts = userWhitPosts?.post;
-         res.status(200).json(userWhitPosts);
-     } catch (error: any) {
-         console.error(error.message)
-     }
-}); */
+router.get("/email/:email", async (req, res) => {
+    try {
+        const {email} = req.params
+        const user = await prisma.user.findUnique({
+            where: {
+                email
+            },
+            include: { 
+                Shelter: true, 
+                following: {
+                    where: {
+                        enable: true
+                    },
+                    include: {
+                        author: true
+                    }
+                }, 
+                posts: {
+                    where: {
+                        enable: true
+                    },
+                    include: {
+                        Comment:{
+                            where: {
+                                enable: true
+                            }
+                        }
+                    }
+                } 
+            }
+        })
 
-// get all users, or search them by name
+        user ? res.status(200).send({message: "the user was found", payload: user}) : res.status(404).send({error: "user was not found"})
+    } catch (error: any) {
+        res.status(404).send({error: error.message})
+    }
+})
+
 router.get("/", async (req: Req, res) => {
     try {
-        const { name } = req.query;
+        const { name, status } = req.query;
 
         const user = await prisma.user.findMany({
-            where: { name: { contains: name } },
-            include: { posts: true,
-                following: true,
+            where: { 
+                name: {
+                    contains: name || '',
+                    mode: 'insensitive'
+                },
+                enable: status
+            },
+
+            include: { 
+                Shelter: {
+                    where : {
+                        enable: status
+                    }
+                },
+                
+                posts: {
+                        where: {
+                            enable: status
+                        },
+
+                        include: {
+                            Comment:{
+                                where: {
+                                    enable: status
+                                }
+                            }
+                        }
+                },
+
+                following: {
+                    where: {
+                        enable: status
+                    }
+                },
              }
         });
 
@@ -58,11 +112,30 @@ router.get("/", async (req: Req, res) => {
 // get an user by its id
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
-
+    const state : boolean = true;
     try {
         const user = await prisma.user.findUnique({ 
             where: { id },
-            include: { following: true, posts: true }
+            include: { 
+                Shelter: true, 
+                following: {
+                    where: {
+                        enable: state
+                    }
+                }, 
+                posts: {
+                    where: {
+                        enable: state
+                    },
+                    include: {
+                        Comment:{
+                            where: {
+                                enable: true
+                            }
+                        }
+                    }
+                } 
+            }
         });
 
         user ? res.status(200).send(user) : res.status(404).send("ERROR: User not found.");
@@ -72,14 +145,20 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-//get followers of an user
+// get a shelter followed by an user
 router.get("/:id/following", async (req, res) => {
     const { id } = req.params;
 
     try {
         const user = await prisma.user.findUnique({
             where: { id },
-            include: { following: true }
+            include: { 
+                following: {
+                    include: {
+                        author: true
+                    }
+                } 
+            }
         });
 
         user ? res.status(200).send(user.following) : res.status(404).send("ERROR: User not found.");
@@ -94,23 +173,94 @@ router.post("/", async (req: Req, res) => {
     const { name, email, profilePic } = req.body;
 
     try {
-        await prisma.user.create({
-            data: {
+        const newUser = await prisma.user.upsert({
+            where: { email },
+            update: {},
+            create: {
                 name,
                 email,
-                profilePic,
+                profilePic
             },
+            include:{
+                posts: true,
+                Shelter: {
+                    include: {
+                        author: true
+                    }
+                },
+                Comment: true,
+                following: true 
+            }
         });
 
-        res.status(200).send("User created successfully.");
+        sendMailCreate(name, email)
+        
+        res.status(200).send({message: "User created successfully.", newUser: newUser});
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);
     }
 });
 
+// logical enabled to users (Admin)
+router.put('/enable',  async(req, res)=>{
+    try {
+        const id = req.body.userId;
+        await prisma.user.update({
+            where: { id },
+            data: { enable: true },
+        });
+        res.status(200).send(`User ${id} enabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
+
+router.put('/admin', jwtCheck, async(req, res)=>{
+    try {
+        const { userId, adminId, removeAdmin = false } = req.body;
+        const admin = await prisma.user.findUnique({
+            where: { id: adminId }
+        });
+
+        if(! admin) res.status(404).send('Username is not found.')
+        if(admin?.role === 'User') res.status(400).send("Require admin permissions.")
+
+        const newAdmin = await prisma.user.update({
+            where: { id: userId },
+            data: { role: removeAdmin ? "User" : "Admin" },
+        });
+
+        res.status(200).send({ message: `User ${newAdmin.name} is now ${removeAdmin ? "User" : "Admin"}`, payload: newAdmin })
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    } 
+})
+
+
+// logical disabled to users (Admin)
+router.put('/disable', async(req, res) => {
+    try {
+        const id = req.body.userId;
+
+        await prisma.user.update({
+            where: { id },
+            data: { enable: false },
+        });
+
+        res.status(200).send(`User ${id} disabled successfully`)
+    } catch (error) {
+        res.status(400).send("ERROR: There was an unexpected error.")
+        console.log(error)
+    }
+   
+})
+
 // update an user
-router.put("/:id", async (req, res) => {
+router.put("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
     const { name, email, profilePic } = req.body;
 
@@ -132,15 +282,13 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete an user
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", jwtCheck, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const deletedUser = await prisma.user.delete({
-            where: { id },
-        });
+        const userDelete = await prisma.user.delete({ where: { id } })
 
-        deletedUser ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.");
+        userDelete ? res.status(200).send("User deleted successfully.") : res.status(404).send("ID could not be found.")
     } catch (error) {
         res.status(400).send('ERROR: There was an unexpected error.');
         console.log(error);

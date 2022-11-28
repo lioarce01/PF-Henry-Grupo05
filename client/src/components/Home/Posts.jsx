@@ -1,62 +1,38 @@
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { getPostsAction } from "../../redux/reducers/dataBack/managePosts/managePostsActions"
+import { useEffect } from "react"
+import { useSelector } from "react-redux"
 import CardPost from "./CardPost"
 import Spinner from "../Spinner/Spinner"
-import PostFilters from "./PostFilters"
-import ModalCreatePost from "./ModalCreatePost"
+import { useGetPostsQuery } from "../../redux/api/posts"
 
 const Posts = () => {
-	const [isOpen, setIsOpen] = useState(false)
-	const [page, setPage] = useState(1)
-	const dispatch = useDispatch()
-	const posts = useSelector((state) => state.managePosts.posts)
-
-	const closeModal = () => setIsOpen(false)
+	const { sort } = useSelector((state) => state.localStorage.postState)
+	const { data: posts, isLoading, isSuccess, refetch } = useGetPostsQuery(sort)
 
 	useEffect(() => {
-		dispatch(getPostsAction())
-	}, [dispatch, page])
-
-	const handleScroll = () => {
-		if (
-			window.innerHeight + document.documentElement.scrollTop + 1 >=
-			document.documentElement.scrollHeight
-		) {
-			setPage((prev) => prev + 1)
-		}
-	}
-
-	useEffect(() => {
-		window.addEventListener("scroll", handleScroll)
+		refetch()
 	}, [])
 
 	return (
-		<div className="w-full min-h-[50rem] px-32 py-10 mb-4 bg-[#FAF2E7]">
-			<div className={`flex flex-col ${posts.length ? "w-full" : "w-[580px]"}`}>
-				<div className="flex w-full">
-					<button
-						onClick={() => setIsOpen(true)}
-						className="bg-transparent hover:bg-[#462312] text-[#462312] font-semibold hover:text-white py-1 px-4 border border-[#462312] hover:border-transparent rounded mx-auto">
-						Create Post
-					</button>
-				</div>
-
-				<div className="flex items-center justify-end">
-					<PostFilters />
-				</div>
-			</div>
-
-			<div className="flex flex-col justify-center w-full min-w-full">
-				{posts.length ? (
+		<div className="xl:w-8/12 lg:w-full lg:mr-[50px] h-[800px] px-6 bg-none overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+			<div className="flex flex-col justify-center w-full">
+				{isLoading ? (
+					<div className="mt-[140px]">
+						<Spinner />
+					</div>
+				) : null}
+				{isSuccess &&
 					posts.map((post) => {
 						return (
 							<CardPost
+							    postVideo={post.video}
 								key={post.id}
 								id={post.id}
 								profilePic={post.author.profilePic}
 								postImage={post.image}
 								author={post.author.name}
+								shelter={post.shelter.name}
+								shelterId={post.shelter.id}
+								authorRole={post.author.role}
 								content={post.content}
 								likes={post.likes}
 								createdAt={post.createdAt}
@@ -64,16 +40,10 @@ const Posts = () => {
 								authorId={post.authorId}
 							/>
 						)
-					})
-				) : (
-					<div className="mt-[140px]">
-						<Spinner />
-					</div>
-				)}
+					})}
 			</div>
-			<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
 		</div>
 	)
-}
+};
 
-export default Posts
+export default Posts;
