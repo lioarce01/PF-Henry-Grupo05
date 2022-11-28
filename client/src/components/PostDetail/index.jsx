@@ -4,33 +4,47 @@ import AuthorData from "./AuthorData";
 import PostData from "./PostData";
 import { useGetPostByIdQuery } from "../../redux/api/posts";
 import VideoPlayer from "../VideoPlayer";
+import { useSelector } from "react-redux";
+import ModalEditPost from "./ModalEditPost";
 
 const Post = ({ postId, closeModal, setLike, like, likes }) => {
-  const [toogle, setToogle] = useState(true);
+	const [toogle, setToogle] = useState(true);
 
-  const { data: details, isFetching } = useGetPostByIdQuery(postId);
-  
-  if (!details || Object.keys(details).length === 0) return;
+	const { data: details, isFetching } = useGetPostByIdQuery(postId);
+
+	const { darkmode } = useSelector(state => state.localStorage.manageTheme)
+
+	if (!details || Object.keys(details).length === 0) return;
 
 	return (
-		<div>
-			<div className="flex flex-row bg-white rounded-xl shadow-md w-[65rem] max-h-[50rem]">
-			<div className="w-[60%] py-20">
+		<div className={darkmode && `dark`}>
+			<div className="flex flex-row bg-white rounded-xl shadow-md w-[75vw] max-h-[94vh] dark:bg-[#3b3742]">
+			<div className="w-[50vw] my-auto">
 					{details.video && <VideoPlayer public_id={details.video}/>}
 					{details.image && (
 						<img
 							src={details.image}
 							alt="post"
-							className="object-cover w-full max-h-[40rem]"
+							className="object-cover object-center w-full"
 						/>
 					)}
 				</div>
 				<div className="pt-4 w-[40%]">
 					<div>
-						<div className="px-4">
-							<AuthorData details={details} />
+						<div className="px-4 flex flex-row justify-between">
+							<div>
+								<AuthorData details={details} />
+							</div>
+							<div>
+								<ModalEditPost
+									authorId={details.author.id}
+									closeModal={closeModal}
+									setToogle={setToogle}
+									postId={postId}
+								/>
+							</div>
 						</div>
-						<div className="overflow-y-scroll h-[40rem]">
+						<div className="overflow-y-scroll h-[40rem] scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
 							<div className="px-4">
 								<PostData
 									setToogle={setToogle}
