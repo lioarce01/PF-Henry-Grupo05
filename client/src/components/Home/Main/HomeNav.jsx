@@ -1,11 +1,13 @@
 import { BsSearch } from 'react-icons/bs'
 import { HiPencil } from 'react-icons/hi'
+import { useEffect, useState } from 'react'
 import { useGetSheltersQuery } from "../../../redux/api/shelters"
 import { useDispatch, useSelector } from "react-redux"
 import ModalShelters from '../Modals/ModalShelters'
 import ModalCreatePost from "../Modals/ModalCreatePost"
 import CreateTicket from '../../CreateTicket'
 import { carouselSheltersAction, setAnimalsAction } from '../../../redux/slices/manageShelters/actions'
+
 
 // animals array to map filters. used to optimize code
 const animals = [{ type: 'Dogs', emoji: '🐶', target: 'activeDogs' }, { type: 'Cats', emoji: '😺', target: 'activeCats' },
