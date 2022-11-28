@@ -14,7 +14,7 @@ const PostForm = ({ closeModal }) => {
 	const { getAccessTokenSilently } = useAuth0();
 	const { userDetail } = useSelector((state) => state.localStorage.userState);
 
-  const [addNewPost, {}] = useAddNewPostMutation();
+  const [addNewPost] = useAddNewPostMutation();
 
   const onSubmit = async (e) => {
     e.preventDefault();

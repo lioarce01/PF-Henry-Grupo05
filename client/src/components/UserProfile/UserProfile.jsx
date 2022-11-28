@@ -48,7 +48,7 @@ const UserProfile = () => {
 		await updateUser({accessToken, userId: userDetail.id, updatedUser: values}).then(res => toast.success("Name updated successfully")).catch(() => toast.error('There has been an error'));
 		setEditMode(false);
 	}
-	const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
+	const { values, errors, handleBlur, handleChange } = useFormik({
 		initialValues: {
 			name: '',
 		},
@@ -61,13 +61,13 @@ const UserProfile = () => {
 	}
 
 	return (
-		<div className="bg-[#fff5f4] xsm:w-[100vw] xsm:mx-auto xsm:px-4 sm:w-auto">
+		<div className="bg-[#EFF0F3] xsm:w-[100vw] xsm:mx-auto xsm:px-4 sm:w-auto dark:bg-[#27242C] shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)]">
 			<Toaster />
 			<Navbar />
 			<div className="mt-8 sm:w-5/6 sm:h-5/6 xsm:w-[90%] mx-auto lg:grid lg:grid-cols-3 lg:grid-rows-1 sm:flex sm:flex-col">
-				<div className="mt-16 bg-[#f3a199cc] max-w-md rounded-[3em] mx-auto shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)] overflow-hidden min-w-[23vw]">
+				<div className="mt-16 bg-[#ffffffd7] max-w-md rounded-[3em] mx-auto shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)] overflow-hidden min-w-[23vw] dark:bg-[#1B1A1F]">
 					<div className="group/item z-0">
-						<img className="rounded-t-[3em] xl:max-h-[45vh] lg:min-w-[23vw] sm:min-w-[100%] xsm:min-w-[100%] object-right object-cover bg-[#f5d0cccb] z-1 mb-4 lg:h-[35vh]" src={details?.profilePic} alt="profilePic" />
+						<img className="rounded-t-[3em] xl:max-h-[45vh] lg:min-w-[23vw] sm:min-w-[100%] xsm:min-w-[100%] object-right object-cover bg-[#cacaca] z-1 mb-4 lg:h-[35vh]" src={details?.profilePic} alt="profilePic" />
 						{
 							isAuth && userDetail.id === userId &&
 								<div className="group/edit invisible opacity-0 cursor-pointer group-hover/item:visible z-20 group-hover/item:opacity-100 duration-500 translate-y-[-5.5rem] translate-x-[23rem] bg-[#ffffff60] backdrop-blur-sm w-[4rem] h-[4rem] rounded-full absolute align-middle">
@@ -83,50 +83,45 @@ const UserProfile = () => {
 							{ editMode ?
 								<form onSubmit={(e) => onSubmit(e)} className="flex flex-col gap-1 text-center">
 									<div className="w-fit mx-auto">
-										<label className="text-md font-bold">Name: </label>
+										<label className="text-md font-bold text-[#838788] dark:text-[#F0EEEE]">Name: </label>
 										<input type="text"
 											value={values.name}
 											name='name'
 											placeholder='Name Lastname'
 											onChange={handleChange}
 											onBlur={handleBlur}
-											className="bg-[#f3807649] placeholder-white font-medium opacity-70 focus:outline-none focus:opacity-95 focus:border-none rounded-md pl-2"
+											className="bg-[#EFF0F3] placeholder-[#838788c2] dark:placeholder-[#1B1A1F] font-medium opacity-70 focus:outline-none focus:opacity-95 focus:border-none rounded-md pl-2 py-2"
 										/>
 										{errors.name && <p className='text-red-500'>{errors.name}</p>}
 									</div>
-									{/* <div className=""> //Esto es para actualizar el email
-										<label className="text-md font-bold">Email: </label>
-										<input type="email" value={values.email} name='email' placeholder='Add your email..' onChange={handleChange} onBlur={handleBlur} className="bg-transparent" />
-										{errors.email && <p className='text-red-500'>{errors.email}</p>}
-          							</div> */}
-									<h6 class="mb-3 font-normal text-gray-700 drop-shadow-md text-center">
+									<h6 class="mb-3 mt-2 font-normal text-[#838788] dark:text-[#F0EEEE] drop-shadow-md text-center">
 										{details?.email}
 									</h6>
 									<div className="flex flex-row gap-4 justify-center mt-2">
-										<button type="submit" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 duration-300">Save</button>
-										<button onClick={manageCancelButton} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-											<span className="relative px-5 py-2.5 transition-all ease-in duration-7 bg-[#f55644] rounded-md group-hover:bg-opacity-0">
-												Cancel
+										<button type="submit" className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-white rounded-lg group bg-gradient-to-br from-[#FF7272] to-orange-400 group-hover:from-[#FF7272] group-hover:to-orange-400 hover:text-white focus:ring-4 focus:outline-none focus:ring-pink-200">
+											<span className="relative px-5 py-2.5 transition-all ease-in duration-7 bg-[#FF7272] rounded-md group-hover:bg-opacity-0 dark:bg-[#E06161]">
+												Save
 											</span>
 										</button>
+										<button onClick={manageCancelButton} className="text-white bg-[#FF7272] hover:bg-[#e72d2d] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 duration-300 dark:bg-[#E06161] dark:hover:bg-[#c92a2a]">Cancel</button>
 									</div>
 								</form>
 								:
-								<div className="dark:text-black shadow-white">
+								<div className="text-[#76797a] dark:text-[#F0EEEE]">
 									<div className="flex flex-row justify-center">
-										<h5 className="mb-2 text-2xl font-bold tracking-tight drop-shadow-md text-center shadow-white">
+										<h5 className="mb-2 text-2xl font-bold tracking-tight text-center">
 											{details?.name} 
 										</h5>
 										<UpdateProfileButton userId={userId} setEditMode={setEditMode} editMode={editMode}/>
 									</div>
-									<h6 className="mb-3 font-normal text-gray-700 drop-shadow-md text-center">
+									<h6 className="mb-3 font-normal text-[#838788] drop-shadow-md text-center dark:text-[#F0EEEE]">
 										{details?.email}
 									</h6>
 								</div>
 							}
 							<div className="flex flex-row justify-center gap-6 content-end mt-4">
 								{ details?.following?.length > 0 ?
-									<button className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center rounded-md hover:bg-[#f7dfdc88] duration-300" onClick={manageSheltersFollowedButton}>
+									<button className="p-2 mb-3 font-bold text-[#838788] hover:text-white drop-shadow-md text-center rounded-md hover:bg-[#83878865] duration-300 dark:text-[#F0EEEE]" onClick={manageSheltersFollowedButton}>
 										<span>
 											{details?.following?.length}
 										</span>
@@ -135,7 +130,7 @@ const UserProfile = () => {
 										</span>
 									</button>
 									:
-									<div className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center rounded-md">
+									<div className="p-2 mb-3 font-bold text-[#838788] drop-shadow-md text-center rounded-md">
 										<span>
 											0
 										</span>
@@ -144,7 +139,7 @@ const UserProfile = () => {
 										</span>
 									</div>
 								}
-								<span className="p-2 mb-3 font-bold text-gray-700 drop-shadow-md text-center">
+								<span className="p-2 mb-3 font-bold text-[#838788] drop-shadow-md text-center dark:text-[#F0EEEE]">
 									<span>
 										Role:
 									</span>
@@ -157,11 +152,12 @@ const UserProfile = () => {
 					</div>
 				</div>
 				<div className="lg:col-span-2 sm:mt-8 xsm:mt-8">
-					<h5 className="mt-2 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black drop-shadow-md text-center">Posts</h5>
+					<h5 className="mt-2 mb-2 text-2xl font-bold tracking-tight text-[#838788] drop-shadow-sm text-center dark:text-[#FF7272]">Posts</h5>
 					{
 						details?.posts?.length > 0 ?
-							<div className="ml-4 overflow-auto max-h-[39rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#dd7d5d] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+							<div className="ml-4 overflow-auto max-h-[39rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md dark:scrollbar-thumb-[#e06161]">
 								{details?.posts?.map((post) => {
+									
 									return (
 										<UserProfileCardPost
 											key={post.id}
