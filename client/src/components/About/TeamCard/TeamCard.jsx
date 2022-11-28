@@ -4,7 +4,7 @@ import LinkedinBtn from './LinkedinBtn';
 
 const TeamCard = ({name,image,linkedin,github,phrase}) => {
     return ( 
-        <div className="mb-12 lg:mb-0 p-4 hover:scale-110 duration-200 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl w-56">
+        <div className="mb-12 lg:mb-12 p-4 hover:scale-110 duration-200 dark:bg-[#AFB3B4] bg-white shadow-xl dark:shadow-[rgb(77,77,77)] shadow-[rgb(255,213,201)] rounded-2xl w-56">
             <img
               className="rounded-lg shadow-lg mb-3 mx-auto  object-cover"
               src={image}
