@@ -17,18 +17,25 @@ const Navbar = () => {
 			<div className="flex flex-row justify-between w-full">
 				<div className="flex flex-row items-center">
 					<div className="flex flex-row items-center justify-center ml-[10px]">
-					<Link to="/">
-								<div className="flex group flex-row">
-									<span className={`text-[1.5rem] font-bold text-black dark:text-[#f0eeee]
-										group-hover:text-[#FF7272] transition-all duration-500 font-mono mt-[2px]`}>Paws</span>
-									<span className={`text-[1.5rem] font-bold text-[#FF7272] dark:group-hover:text-white
-										group-hover:text-[#201008] transition-all duration-500`}>Founding</span>
-								</div>
-							</Link>
+						<Link to="/">
+							<div className="flex group flex-row">
+								<span
+									className={`text-[1.5rem] font-bold text-black dark:text-[#f0eeee]
+										group-hover:text-[#FF7272] transition-all duration-500 font-mono mt-[2px]`}
+								>
+									Paws
+								</span>
+								<span
+									className={`text-[1.5rem] font-bold text-[#FF7272] dark:group-hover:text-white
+										group-hover:text-[#201008] transition-all duration-500`}
+								>
+									Founding
+								</span>
+							</div>
+						</Link>
 					</div>
 
-					<div
-						className="ml-4 lg:ml-[100px] md:ml-[120px] hover:bg-[#FF7272] p-[7px] rounded-full transition duration-300 dark:hover:bg-[#E06161]">
+					<div className="ml-4 lg:ml-[100px] md:ml-[120px] hover:bg-[#FF7272] p-[7px] rounded-full transition duration-300 dark:hover:bg-[#E06161]">
 						<Link to="/home">
 							<FiHome className="text-[#201008] w-[25px] h-[25px] dark:text-white" />
 						</Link>
@@ -36,15 +43,19 @@ const Navbar = () => {
 				</div>
 
 				<div className="flex flex-row items-center">
-					
-					<div className="mr-[250px]">
+					<div className="lg:mr-[250px]">
 						<button
 							className="hover:bg-[#FF7272] p-[5px] rounded-full transition duration-300 dark:hover:bg-[#E06161]"
-							onClick={toggleDarkMode}>
-							{darkmode ? <BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white dark:text-[#F0EEEE]" /> : <HiMoon className="text-xl text-[#201008] w-[25px] h-[25px]" />}
+							onClick={toggleDarkMode}
+						>
+							{darkmode ? (
+								<BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white dark:text-[#F0EEEE]" />
+							) : (
+								<HiMoon className="text-xl text-[#201008] w-[25px] h-[25px]" />
+							)}
 						</button>
 					</div>
-					
+
 					<ProfilePanel />
 				</div>
 			</div>
