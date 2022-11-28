@@ -23,6 +23,14 @@ export const sheltersApi = createApi({
             providesTags: ["Shelters"]
         }),
 
+        getShelterByAnimal: builder.mutation({
+            query: (animals) => ({
+                url: "/shelters/filter-sort",
+                method: "post",
+                body: { order: 'name', orderType: "asc", filter: {animals: animals}, name: "" }
+            }),
+            invalidatesTags: ["Shelters"]
+        }),
         sortShelters: builder.mutation({
             query: ({ order, orderType, filter, name }) => ({
                 url: "/shelters/filter-sort",
@@ -124,4 +132,5 @@ export const {
     useDeleteFollowersMutation,
     useDisableShelterMutation,
     useEnableShelterMutation,
+    useGetShelterByAnimalMutation
 } = sheltersApi;

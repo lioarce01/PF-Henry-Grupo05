@@ -34,6 +34,9 @@ router.get("/email/:email", async (req, res) => {
                 following: {
                     where: {
                         enable: true
+                    },
+                    include: {
+                        author: true
                     }
                 }, 
                 posts: {
@@ -180,7 +183,11 @@ router.post("/", async (req: Req, res) => {
             },
             include:{
                 posts: true,
-                Shelter: true,
+                Shelter: {
+                    include: {
+                        author: true
+                    }
+                },
                 Comment: true,
                 following: true 
             }

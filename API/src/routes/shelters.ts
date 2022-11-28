@@ -69,7 +69,7 @@ router.get('/topFive', async(req: ReqGet, res)=>{
 // interface used to define objects which contain
 // the type of filter the user wants to use
 interface allFilters {
-    animals: string,
+    animals: [],
     country: string,
     city: string
 }
@@ -96,7 +96,7 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
                 where: {
                     enable: true,
                     listAnimals: ! filter?.animals ? undefined : {
-                        has: filter?.animals
+                        hasSome: filter?.animals,
                     },
                     country: filter?.country,
                     city:    filter?.city,
@@ -106,6 +106,7 @@ router.post('/filter-sort', async(req : ReqSampling, res) => {
                     },
                 },
                 include: { 
+                    author: true,
                     tickets: true,
                     followers: true, 
                     posts: {
