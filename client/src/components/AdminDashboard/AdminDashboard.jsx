@@ -98,7 +98,7 @@ const AdminDashboard = () => {
 			<Toaster />
 			<Navbar />
 			<div className="flex flex-col justify-center w-full lg:flex-row">
-				<div className="flex flex-col w-full lg:w-[500px] items-center mx-2">
+				<div className="flex flex-col w-full lg:w-[500px] items-center px-2">
 					<h2 className="py-4 text-2xl font-bold">Users</h2>
 					<div className="flex flex-row p-2 my-2">
 						<input
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
 							Search
 						</button>
 					</div>
-					<div className="flex flex-row bg-white h-[600px] overflow-y-scroll rounded-md w-[85%] md:w-[500px] lg:w-full my-4 dark:bg-[#1B1A1F]">
+					<div className="flex flex-row bg-white h-[600px] overflow-y-scroll rounded-md w-[85%] md:w-[500px] lg:w-full my-4 dark:bg-[#1B1A1F] scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
 						<ul className="flex flex-col w-full p-2">
 							{userLoading ? (
 								<div>Loading...</div>
@@ -124,7 +124,7 @@ const AdminDashboard = () => {
 										className="flex flex-row items-center justify-between p-2"
 									>
 										<div className="flex flex-col">
-											<span>{user.name}</span>
+											<span>{user.name.substring()}</span>
 										</div>
 										<div className="flex flex-row">
 											{user.role === "Admin" ? (
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
 					</div>
 				</div>
 
-				<div className="flex flex-col w-full lg:w-[500px] items-center mx-2 ">
+				<div className="flex flex-col w-full lg:w-[500px] items-center px-2 ">
 					<h2 className="py-4 text-2xl font-bold">Shelters</h2>
 					<div className="flex flex-row p-2 my-2">
 						<input
@@ -179,7 +179,7 @@ const AdminDashboard = () => {
 							Search
 						</button>
 					</div>
-					<div className="flex flex-row bg-white h-[600px] overflow-y-scroll rounded-md w-[85%] md:w-[500px] lg:w-full my-4 dark:bg-[#1B1A1F]">
+					<div className="flex flex-row bg-white h-[600px] overflow-y-scroll rounded-md w-[85%] md:w-[500px] lg:w-full my-4 dark:bg-[#1B1A1F] scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
 						<ul className="flex flex-col w-full p-2">
 							{shelterLoading ? (
 								<div>Loading...</div>
