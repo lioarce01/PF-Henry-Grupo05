@@ -53,7 +53,7 @@ const PostData = ({
 
 	return (
 		<div className="pt-2">
-			<div className="flex flex-col">
+			<div className="flex flex-col dark:text-[#F0EEEE] h-auto">
 				<ShowMoreText
 					lines={3}
 					more="Show more"
@@ -63,7 +63,7 @@ const PostData = ({
 					expanded={false}
 					truncatedEndingComponent={"... "}>
 					<textarea
-						className="w-full mb-1 border border-gray-300 resize-none bg-inherit disabled:border-none "
+						className="w-full mb-1 border border-gray-300 resize-none bg-inherit disabled:border-none"
 						type="text"
 						name="content"
 						onChange={inputHandler}
@@ -86,9 +86,9 @@ const PostData = ({
 				</div>
 			)}
 
-			<div className="flex flex-row items-center justify-end w-full py-2 mt-4 border-t border-gray-200">
-				<div className="flex px-3 py-2 space-x-1 text-sm text-gray-700 transition duration-300 rounded-md cursor-pointer hover:bg-red-100">
-					<span className="font-bold">{likesActuals}</span>
+			<div className="flex flex-row items-center justify-start w-full py-2 mt-4 border-t border-gray-200 dark:border-[#38353d]">
+				<div className="flex px-3 py-2 space-x-1 text-sm text-gray-500 transition duration-300 rounded-md cursor-pointer hover:bg-[#ff727260] dark:text-[#857d91] dark:hover:bg-[#afb3b486] dark:hover:text-[#F0EEEE]">
+					<span className={like ? `font-bold text-black dark:text-[#b5afc0]` :`font-bold text-gray-500 dark:text-[#857d91]`}>{likesActuals}</span>
 					<button onClick={toggleLike}>
 						{like ? (
 							<AiFillHeart className="w-5 h-5 text-red-500" />
@@ -97,8 +97,8 @@ const PostData = ({
 						)}
 					</button>
 				</div>
-				<div className="flex px-3 py-2 mr-2 text-sm text-gray-700 transition duration-300 rounded-md hover:bg-red-100">
-					<p className="mr-[7px] mb-[1px] font-[800]">
+				<div className="flex px-3 py-2 mr-2 text-sm text-gray-500 transition duration-300 rounded-md dark:text-[#857d91]">
+					<p className="mr-[7px] mb-[1px] font-bold">
 						{details.Comment?.length}
 					</p>
 					<MdComment className="w-5 h-5 text-[#6D91E9]" />

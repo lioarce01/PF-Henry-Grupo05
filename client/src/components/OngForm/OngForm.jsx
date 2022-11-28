@@ -48,7 +48,7 @@ const OngForm = () => {
 			}, 4500)
 
 		}
-		if (user.isAuth && !user.userDetail.Shelter.length) {
+		if (user.isAuth && !user.userDetail.Shelter.length && image.length && listAnimals.length) {
 			const data = await location({ address: values.address, city: values.city, country: values.country });
 			const { lat, lon } = data;
 			const accessToken = await getAccessTokenSilently()
@@ -304,7 +304,7 @@ const OngForm = () => {
 						values.city !== "" &&
 						values.country !== "" &&
 						image.length &&
-						listAnimals.length ? (
+						listAnimals.length > 0 ? (
 						<div className="mt-0">
 							<button
 								type="submit"
@@ -315,7 +315,6 @@ const OngForm = () => {
 					) : (
 						<div className="animate-pulse hover:animate-none">
 							<button
-								type="submit"
 								className="pt-1 pb-1 pl-2 w-64 pr-2 mr-4 mt-0 text-white text-xl font-bold rounded-md bg-[#eb1414] border border-[#ed6868] ">
 								Fields incompletes
 							</button>

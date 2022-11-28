@@ -28,14 +28,14 @@ const ModalEditPost = ({ authorId, setToogle, postId, closeModal }) => {
     return classes.filter(Boolean).join(" ");
   }
   return (
-    <div className="w-full relative z-50 inline-block text-right outline-none">
-      {authorId === userDetail.id || userDetail.role === "Admin"  ? (
+    <div className="relative z-50 inline-block text-right">
+      {authorId === userDetail.id || userDetail.role === "Admin" ? (
         <Menu
           as="div"
-          className="relative z-50 inline-block text-left outline-none"
+          className="relative z-50 inline-block text-left"
         >
           <div>
-            <Menu.Button className="inline-flex justify-center w-full px-2 py-1 text-sm font-medium text-gray-800 border-2 border-[#fffcf7] rounded-md shadow-sm outline-none hover:bg-[#fffcf7] transition duration-300 focus:outline-none">
+            <Menu.Button className="inline-flex justify-center w-full px-2 py-1 text-sm font-medium text-gray-800 rounded-md shadow-sm hover:bg-[#ff72728a] transition duration-300 dark:text-[#AFB3B4] dark:hover:bg-[#afb3b4b0] dark:hover:text-[#F0EEEE]">
               <AiOutlineEllipsis className="w-8 h-8 " aria-hidden="true" />
             </Menu.Button>
           </div>
@@ -49,7 +49,7 @@ const ModalEditPost = ({ authorId, setToogle, postId, closeModal }) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-[#27242C]">
               <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
@@ -57,7 +57,7 @@ const ModalEditPost = ({ authorId, setToogle, postId, closeModal }) => {
                       onClick={() => setToogle((toogle) => !toogle)}
                       type="submit"
                       className={classNames(
-                        active ? "bg-slate-200 text-gray-900" : "text-gray-700",
+                        active ? "bg-slate-200 text-gray-900 dark:bg-[#AFB3B4]" : "text-gray-700 dark:text-[#AFB3B4]",
                         "block w-full px-4 py-2 text-left text-sm"
                       )}
                     >
@@ -75,7 +75,7 @@ const ModalEditPost = ({ authorId, setToogle, postId, closeModal }) => {
                     <button
                       onClick={() => deletePost(postId)}
                       className={classNames(
-                        active ? "bg-red-600 text-white" : "text-gray-700",
+                        active ? "bg-red-600 text-white" : "text-gray-700 dark:text-[#AFB3B4]",
                         "block w-full px-4 py-2 text-left text-sm"
                       )}
                     >

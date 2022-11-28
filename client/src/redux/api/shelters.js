@@ -23,6 +23,14 @@ export const sheltersApi = createApi({
             providesTags: ["Shelters"]
         }),
 
+        getShelterByAnimal: builder.mutation({
+            query: (animals) => ({
+                url: "/shelters/filter-sort",
+                method: "post",
+                body: { order: 'name', orderType: "asc", filter: {animals: animals}, name: "" }
+            }),
+            invalidatesTags: ["Shelters"]
+        }),
         sortShelters: builder.mutation({
             query: ({ order, orderType, filter, name }) => ({
                 url: "/shelters/filter-sort",
@@ -70,24 +78,20 @@ export const sheltersApi = createApi({
         }),
 
         addFollowers: builder.mutation({
-            query: ({ userId, shelterId }) => {
-                return ({
+            query: ({ userId, shelterId }) => ({
                 url: `/shelters/follow`,
                 method: "put",
                 body: { userId, shelterId },
-            })},
+            }),
             invalidatesTags: ["Shelters", "ShelterId"]
         }),
 
         deleteFollowers: builder.mutation({
-            query: ({ userId, shelterId }) => {
-                console.log("user: ", userId);
-                console.log("deleteFollow: ", shelterId);
-                return ({
+            query: ({ userId, shelterId }) => ({
                 url: `/shelters/unfollow`,
                 method: "put", 
                 body: { userId, shelterId },
-            })},
+            }),
             invalidatesTags: ["Shelters", "ShelterId"]
         }),
         disableShelter: builder.mutation({
@@ -124,4 +128,5 @@ export const {
     useDeleteFollowersMutation,
     useDisableShelterMutation,
     useEnableShelterMutation,
+    useGetShelterByAnimalMutation
 } = sheltersApi;

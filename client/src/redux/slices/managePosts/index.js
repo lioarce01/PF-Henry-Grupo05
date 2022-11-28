@@ -5,7 +5,7 @@ export const managePostsSlice = createSlice({
     name: "managePosts",
 
     initialState: {
-        sort: {order: false, type: false}
+        sort: {order: 'createdAt', type: 'asc'}
     },
 
     reducers: {

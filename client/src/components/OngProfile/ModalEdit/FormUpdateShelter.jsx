@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import {
   useUpdateShelterMutation,
 } from "../../../redux/api/shelters";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { ongSchema } from "./validationOngFormUpdate.js";
 import UploadImage from "./UploadImage";
 import Swal from "sweetalert2"
+import location from '../../OngForm/location'
 
 
 const FormUpdateShelter = ({
@@ -19,6 +20,7 @@ const FormUpdateShelter = ({
   const { id } = useParams();
   const [image, setImage] = useState(details?.profilePic);
   const [toggle, setToggle] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(()=>{
     return(()=>{
@@ -26,12 +28,26 @@ const FormUpdateShelter = ({
     })
   },[])
 
+  const newCoords = async (e) =>{
+	e.preventDefault();
+	e.stopPropagation();
+	const data = await location({ address: values.address, city: values.city, country: values.country });
+	const { lat, lon } = data;
+	updateShelter({updatedShelter:{lat: lat, lon: lon,address: values.address, city: values.city, country: values.country }, id})
+	Swal.fire({icon:'success',
+			  title: 'Shelter´s Coordinates Saved!',
+			  preConfirm: ()=>{
+				navigate(0)
+			  }
+			})
+  }
+
   const onSubmit = () => {
     updateShelter({ updatedShelter: { ...values, profilePic: image }, id });
     Swal.fire({ icon: "success", title: "Shelter Updated!", 
-    // preConfirm: () => {
-    //     shelterRefetch();
-    // }
+	preConfirm: ()=>{
+		navigate(0)
+	  }
     });
   };
 
@@ -125,7 +141,14 @@ const FormUpdateShelter = ({
 								)}
                                 </div>
 							</div>
-
+									<button
+									onClick={newCoords}
+									className={(!errors.city && !errors.address && !errors.country)?
+										"dark:bg-[#E06161] bg-[#FF7272] hover:bg-[#e76464] transition-all hover:scale-[1.05] duration-300 text-white font-semibold text-xs sm:text-base py-1 px-4  rounded-full mx-auto"
+										:"bg-[#FF7272] text-white font-semibold text-xs sm:text-base py-1 px-4  rounded-full mx-auto opacity-50 cursor-default"}
+									>
+										Set New Coordinates
+									</button>
                             <div className="flex flex-col justify-start text-left w-full">
                                 <label className="dark:text-white text-[#FF7272]">Description: </label>
                                 <div className="flex flex-col w-full">
@@ -163,7 +186,7 @@ const FormUpdateShelter = ({
 							</div>
                                 <button type="submit" disabled={!toggle}
 								className={(Object.entries(errors).length === 0 && toggle)?"dark:bg-[#E06161] bg-[#FF7272] hover:bg-[#e76464] transition-all hover:scale-[1.05] duration-300 text-white font-semibold text-xs sm:text-base py-1 px-4  rounded-full mx-auto"
-								:"bg-[#FF7272] text-white font-semibold text-xs sm:text-base py-1 px-4  rounded-full mx-auto opacity-50"}
+								:"bg-[#FF7272] text-white font-semibold text-xs sm:text-base py-1 px-4  rounded-full mx-auto opacity-50 cursor-default"}
 								> Save</button>
 						</div>
 					</form>

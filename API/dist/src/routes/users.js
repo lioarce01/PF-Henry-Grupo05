@@ -31,6 +31,9 @@ router.get("/email/:email", (req, res) => __awaiter(void 0, void 0, void 0, func
                 following: {
                     where: {
                         enable: true
+                    },
+                    include: {
+                        author: true
                     }
                 },
                 posts: {
@@ -166,7 +169,11 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             },
             include: {
                 posts: true,
-                Shelter: true,
+                Shelter: {
+                    include: {
+                        author: true
+                    }
+                },
                 Comment: true,
                 following: true
             }
