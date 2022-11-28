@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import React from "react"
+import { Link } from "react-router-dom"
 import { BsSun } from "react-icons/bs"
 import { HiMoon } from "react-icons/hi"
 import { FiHome } from "react-icons/fi"
@@ -7,23 +7,10 @@ import { useDispatch, useSelector } from "react-redux"
 import ProfilePanel from "./ProfilePanel"
 import { switchTheme } from "../../redux/slices/manageTheme"
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(" ")
-}
-
 const Navbar = () => {
-	const location = useLocation()
-	const [isOpen, setIsOpen] = useState(false)
-	const [toggle, setToggle] = useState(false)
-	const { userDetail, isAuth } = useSelector(
-		(state) => state.localStorage.userState
-	)
-	
 	const dispatch = useDispatch()
 	const { darkmode } = useSelector(state => state.localStorage.manageTheme)
 	const toggleDarkMode = () => dispatch(switchTheme())
-	const handleToggle = () => setToggle(! toggle)
-	const closeModal = () => setIsOpen(false)
 
 	return (
 		<div className="relative z-49 flex flex-row items-center w-full h-20 px-4 bg-white rounded-b-lg dark:bg-[#1B1A1F] duration-300">
