@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import HomeProfilePanel from "../Home/Main/HomeProfilePanel"
-import { switchTheme } from "../..//redux/slices/manageTheme"
+import HomeProfilePanel from "../../Home/Main/HomeProfilePanel"
+import { switchTheme } from "../../../redux/slices/manageTheme"
 
 // react icons
 import { BsChevronBarLeft, BsChevronBarRight, BsChevronBarUp,

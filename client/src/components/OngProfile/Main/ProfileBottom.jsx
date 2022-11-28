@@ -1,9 +1,9 @@
-import Posts from "./Posts"
-import PostFilters from "./PostFilters"
+import Posts from "../Posts"
+import PostFilters from "../PostFilters"
 import { TbMap2 } from 'react-icons/tb'
 import { useSelector } from "react-redux"
 import ProfileFooter from "./ProfileFooter"
-import MapView from "../Maps/MapView/MapView"
+import MapView from "../../Maps/MapView/MapView"
 
 const ProfileBottom = ({ details, setIsOpen }) => {
     const { userDetail } = useSelector(state => state.localStorage.userState);

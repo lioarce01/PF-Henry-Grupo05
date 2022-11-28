@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import OngDetail from "./components/OngProfile/index.jsx";
+import OngDetail from "./components/OngProfile/Main/index.jsx";
 import Home from "./components/Home/Main/Home";
 import Landing from "./components/Landing";
 import Page404 from "./components/Page404";

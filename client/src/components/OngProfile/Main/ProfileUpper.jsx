@@ -1,18 +1,18 @@
 import Swal from "sweetalert2"
 import { useState } from "react"
-import Goals from '../Goals/Goals'
+import Goals from '../../Goals/Goals'
 import { FaInfo } from 'react-icons/fa'
 import { AiFillEdit } from 'react-icons/ai'
 import { useAuth0 } from "@auth0/auth0-react"
 import { useNavigate } from "react-router-dom"
-import ModalEdit from './ModalEdit/ModalEdit'
+import ModalEdit from '../ModalEdit/ModalEdit'
 import { GiReceiveMoney } from 'react-icons/gi'
 import { useDispatch, useSelector } from 'react-redux'
-import { useGetUserByIdQuery } from "../../redux/api/users"
-import ModalDescription from './ModalDescription/ModalDescription'
+import { useGetUserByIdQuery } from "../../../redux/api/users"
+import ModalDescription from '../ModalDescription/ModalDescription'
 import { RiUserFollowFill, RiUserUnfollowLine } from 'react-icons/ri'
-import { useAddFollowersMutation, useDeleteFollowersMutation } from "../../redux/api/shelters"
-import { addFollowingAction, removeFollowingAction } from '../../redux/slices/manageUsers/actions'
+import { useAddFollowersMutation, useDeleteFollowersMutation } from "../../../redux/api/shelters"
+import { addFollowingAction, removeFollowingAction } from '../../../redux/slices/manageUsers/actions'
 
 
 const ProfileUpper = ({ details, setIsOpenDonate, loading, shelterRefetch }) => {

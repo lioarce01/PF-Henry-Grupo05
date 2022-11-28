@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 
-import ModalDonate from "./Donate/ModalDonate"
-import ModalCreatePost from "../Home/Modals/ModalCreatePost"
+import ModalDonate from "../Donate/ModalDonate"
+import ModalCreatePost from "../../Home/Modals/ModalCreatePost"
 
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux"
-import { useLazyGetUserByIdQuery } from "../../redux/api/users"
-import { setUserAction } from "../../redux/slices/manageUsers/actions"
-import { useEnableShelterMutation, useGetShelterByIdQuery } from "../../redux/api/shelters"
+import { useLazyGetUserByIdQuery } from "../../../redux/api/users"
+import { setUserAction } from "../../../redux/slices/manageUsers/actions"
+import { useEnableShelterMutation, useGetShelterByIdQuery } from "../../../redux/api/shelters"
 
 import ProfileUpper from './ProfileUpper'
 import ProfileBottom from './ProfileBottom'

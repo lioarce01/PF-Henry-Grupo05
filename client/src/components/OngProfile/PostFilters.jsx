@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { sortPostsAction } from "../../redux/slices/managePosts/actions";
 
@@ -13,10 +12,6 @@ const PostFilters = () => {
 
     dispatch(sortPostsAction(order, type));
   };
-
-  /*useEffect(() => {
-    // fix route, make endpoint in redux, write action HERE
-  }, [])*/
 
   return (
     <div>
