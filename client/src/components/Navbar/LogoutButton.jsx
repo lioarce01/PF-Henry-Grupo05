@@ -13,7 +13,7 @@ const LogoutButton = React.forwardRef((props, ref) => {
 	}
 
 	return (
-		<div className="block w-full px-4 py-2 text-sm text-left cursor-pointer hover:bg-slate-200">
+		<div className="block w-full px-4 py-2 text-sm text-left cursor-pointer hover:bg-slate-200 dark:text-[#F0EEEE] dark:bg-[#27242C] dark:hover:bg-[#342f3d]">
 			<button ref={ref} onClick={handleClick}>
 				{props.children}
 			</button>

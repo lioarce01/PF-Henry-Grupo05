@@ -13,7 +13,7 @@ const HomeCarousel = () => {
     const { data: topShelters, refetchTop } = useTopFiveSheltersQuery(10)
 
     const [showShelters, setShowShelters] = useState(shelters)
-    console.log(userDetail?.following)
+    
     useEffect(() => {
         refetch()
     }, [])

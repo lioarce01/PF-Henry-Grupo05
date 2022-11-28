@@ -68,14 +68,13 @@ const UserProfileCardPost = ({
 	useEffect(() => {
 		setLikesActuals(likes)
 	}, [likes])
-
 	if (!image)
 		image =
 			"https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/kittens-in-shelter-69469.jpg?h=ece64c50&itok=tOiKeqHY"
 
 	return (
 		<div className="flex flex-col">
-			<div className="2xl:w-[800px] xl:w-[600px] xsm:w-[350px] my-4 mx-auto md:min-w-[500px] bg-white rounded-[30px] shadow-[16px_30px_25px_-12px_rgba(255,196,181,1)]">
+			<div className="2xl:w-[800px] xl:w-[600px] xsm:w-[350px] my-4 mx-auto md:min-w-[500px] bg-white rounded-[30px] shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)] dark:bg-[#1B1A1F]">
 				<div className="flex flex-col mx-auto m-[30px] rounded-[30px] px-[20px] 2xl:w-[800px] xl:w-[600px]">
 					<div className="flex flex-row">
 						<img
@@ -86,7 +85,7 @@ const UserProfileCardPost = ({
 
 						<div className="flex flex-col items-start">
 							<Link to={`/users/${authorId}`} className="">
-								<h2 className="flex items-center justify-center mb-1 text-lg font-bold text-[#474747] border-b border-[#fffcf7] hover:border-black transition duration-300">
+								<h2 className="flex items-center justify-center mb-1 text-lg font-bold text-[#979999] border-b border-[#fffcf7] hover:border-[#838788] transition duration-300">
 									{author}{" "}
 									{authorRole === "Admin" && (
 										<MdAdminPanelSettings className="ml-2 text-yellow-500" />
@@ -95,7 +94,7 @@ const UserProfileCardPost = ({
 							</Link>
 							<div className="flex flex-row gap-2">
 								<Link to={`/${shelterId}/profile`}>
-									<p className="px-2 py-1 text-sm font-semibold text-white transition duration-300 bg-red-400 rounded-lg hover:shadow-md hover:shadow-red-400">
+									<p className="px-2 py-1 text-sm font-semibold text-white transition duration-300 bg-[#FF7272] rounded-lg hover:shadow-md hover:shadow-red-400">
 										{shelter}
 									</p>
 								</Link>

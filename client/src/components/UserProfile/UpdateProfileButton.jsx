@@ -11,7 +11,7 @@ function UpdateProfileButton({userId, setEditMode, editMode}) {
 
     if (isAuth && userDetail.id === userId) {
         return (
-            <button className="ml-2 p-3 font-semibold hover:bg-[#fae2d680] transition duration-300 rounded-md" onClick={manageClick}>
+            <button className="ml-2 p-3 font-semibold hover:bg-[#c9c9c9] hover:text-white hover:rotate-90 transition duration-300 rounded-md" onClick={manageClick}>
                 <BsGearWideConnected />
             </button>
         )
