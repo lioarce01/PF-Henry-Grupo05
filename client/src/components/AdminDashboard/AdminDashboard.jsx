@@ -72,7 +72,7 @@ const AdminDashboard = () => {
 		})
 		toast.promise(myPromise, {
 			loading: "Converting to admin..",
-			success: `${data.payload.name} is now admin`,
+			success: `${data?.payload?.name} is now admin`,
 			error: "Error when fetching",
 		})
 	}
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
 
 		toast.promise(myPromise, {
 			loading: "Removing admin..",
-			success: `${data?.payload.name} is no longer admin`,
+			success: `${data?.payload?.name} is no longer admin`,
 			error: "Error when fetching",
 		})
 	}
