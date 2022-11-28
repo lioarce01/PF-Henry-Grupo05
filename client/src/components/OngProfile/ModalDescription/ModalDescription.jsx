@@ -1,12 +1,11 @@
 import { Transition, Dialog } from '@headlessui/react'
-import { Fragment } from "react";
-import React from 'react'
 import DescriptionWindow from './DescriptionWindow';
+import { Fragment } from "react";
 
-const ModalDescription = ({ isOpen, closeModal, details,shelterRefetch}) => {
+const ModalDescription = ({ isOpen, closeModal, details, shelterRefetch }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as="div" className="relative z-10" onClose={closeModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -32,7 +31,7 @@ const ModalDescription = ({ isOpen, closeModal, details,shelterRefetch}) => {
             >
               <Dialog.Panel className=" transform overflow-hidden bg-transparent  align-middle  transition-all">
                 {/* aca se renderizan cosas */}
-                <DescriptionWindow details={details} shelterRefetch={shelterRefetch}/>
+                <DescriptionWindow details={details} shelterRefetch={shelterRefetch} />
               </Dialog.Panel>
             </Transition.Child>
           </div>

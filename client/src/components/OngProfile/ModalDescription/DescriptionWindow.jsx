@@ -17,9 +17,9 @@ const DescriptionWindow = ({
 
 
   return (
-		<div className="flex flex-col items-center my-4 lg:mt-4 lg:mt-0 lg:w-full">
+		<div className="flex flex-col items-center lg:w-full">
 			<div className="w-full mb-2 lg:my-4 h-fit lg:p-0 lg:min-w-0 lg:w-full lg:max-w-full flex flex-row justify-center ">
-				<div className="dark:bg-[#1B1A1F] bg-white dark:shadow-[#E06161] shadow-[#FF7272] shadow-xl p-2 px-4 sm:px-8 rounded-2xl mt-2 md:w-[85%] lg:max-w-[1000px] flex flex-col lg:items-center">
+				<div className="dark:bg-[#1B1A1F] bg-white p-2 px-4 sm:px-8 rounded-2xl mt-2 md:w-[85%] lg:max-w-[1000px] flex flex-col lg:items-center">
                     <div className="sm:text-[2rem] sm:mt-4 dark:text-[#E06161] text-[#FF7272] mt-2 text-lg font-bold">
                         <h2 className="text-center">{details?.name}</h2>
                     </div>

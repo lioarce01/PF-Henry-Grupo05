@@ -14,7 +14,7 @@ function TicketList({ tickets }) {
               {tickets && tickets.payload.length > 0 ?
                 tickets.payload.map((ticket) => (
                   <Ticket key={ticket.id} ticket={ticket} />
-                )) : <h2 className="text-center">No tickets found</h2>}
+                )) : <h2 className="text-center pb-[20px]">No tickets found</h2>}
             </div>
           </div>
         </div>

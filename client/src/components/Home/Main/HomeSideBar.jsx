@@ -16,8 +16,9 @@ import { BsPeopleFill, BsSun } from "react-icons/bs"
 import { BsChevronBarLeft, BsChevronBarRight, BsChevronBarUp, BsChevronBarDown } from "react-icons/bs"
 
 const SubscriptorsBar = () => {
-	// these are for changing and getting carousel display state
 	const dispatch = useDispatch()
+
+	// these are for changing and getting carousel display state
 	const { carousel } = useSelector(state => state.manageShelters)
 	const [displaying, setDisplaying] = useState('All')
 

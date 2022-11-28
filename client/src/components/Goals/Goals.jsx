@@ -14,18 +14,24 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading, shelte
 	const [isOpen, setIsOpen] = useState(false)
 	const closeModal = () => setIsOpen(false)
 
+	// array to render cards whose sole function is
+	// to fill the carousel so it doesn't feel so empty
+	const fillCards = []
+	for (let i = goals?.length; i < 5; i++) fillCards.push(i)
+
 	return (
 		<div className="flex flex-col w-full">
-			<div className='flex flex-row mb-[20px]'>
+			<div className='flex flex-row mb-[25px]'>
 				<h2 className="text-2xl font-semibold text-[#838788] dark:text-[#b3b8b9]">Goals</h2>
 
-				{(userDetail.Shelter.id === shelterId) ?
+				{(userDetail.Shelter[0]?.id === shelterId) ?
 					<button
-						className="w-[120px] py-[5px] text-white transition duration-300 rounded-[20px] bg-[#FF7272] hover:bg-[#e76464] ml-auto"
+						className="w-[120px] py-[5px] text-[#838788] dark:text-[#b3b8b9] font-semibold transition duration-300 ml-auto 
+						underline decoration-[#FF7272] decoration-2 underline-offset-2 hover:text-[#FF7272]"
 						onClick={() => setIsOpen(true)}>
 						Create goal
 					</button>
-					: undefined}
+				: undefined}
 			</div>
 
 			{!loading ?
@@ -38,7 +44,7 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading, shelte
 							freeMode={true}
 							direction={"horizontal"}
 							modules={[FreeMode, Autoplay]}
-							className="min-h-[340px] max-h-[380px]"
+							className="min-h-[330px] max-h-[350px]"
 
 							breakpoints={{
 								1440: {
@@ -82,8 +88,8 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading, shelte
 									/>
 								</SwiperSlide>)}
 
-							{(window.innerWidth > 1200 && goals.length < 5) ?
-								(goals?.map((g, index) =>
+							{(goals.length < 5) ?
+								(fillCards?.map((f, index) =>
 									<SwiperSlide key={index} >
 										<div className="w-[280px] h-[235px] flex items-center rounded-xl bg-[#EFF0F3] hover:mt-[10px]
 								opacity-50 shadow-[6px_20px_54px_-10px_rgba(133,133,133,0.5)] transition-all duration-300">
@@ -94,13 +100,14 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading, shelte
 									</SwiperSlide>))
 								: undefined}
 
-						</Swiper> : 
+						</Swiper> :
+
 						<div className='flex h-[150px] w-full'>
 							<div className='flex mx-auto mt-[20px]'>
 								<h1 className='text-2xl'>This shelter has no goals yet.</h1>
 							</div>
 						</div>
-						}
+					}
 				</div> : <Spinner />}
 
 			<Modal isOpen={isOpen} closeModal={closeModal} shelterId={shelterId} shelterRefetch={shelterRefetch} />

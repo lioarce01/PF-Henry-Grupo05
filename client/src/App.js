@@ -18,6 +18,7 @@ import ProtectRoute from "./components/TicketsPage/ProtectRoute";
 
 function App() {
   LoadUser()
+  
   const { darkmode } = useSelector(state => state.localStorage.manageTheme)
   return (
     <div className={darkmode ? "App dark": "App light"}>

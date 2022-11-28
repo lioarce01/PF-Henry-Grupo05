@@ -78,8 +78,8 @@ const MapView = ({ name, lat, lon, id, author }) => {
 	if (lat && lon) {
 		return (
 			<div className={(author?.id === userDetail?.id) ?
-				"h-48 sm:h-80 lg:h-64 w-9/12 lg:w-full bg-white rounded-lg p-1 mb-5" :
-				"h-48 sm:h-80 w-9/12 lg:w-full lg:h-80 bg-white rounded-lg p-1 mb-5"}
+				"sm:h-80 h-64 w-full bg-white rounded-lg p-1 mb-5" :
+				"h-48 sm:h-80 w-full lg:h-80 bg-white rounded-lg p-1 mb-5"}
 				onClick={handleClick2}>
 				<MapContainer
 					center={position}
@@ -96,11 +96,11 @@ const MapView = ({ name, lat, lon, id, author }) => {
 				</MapContainer>
 				<div className='flex flex-col w-full items-center'>
 					{(author?.id === userDetail?.id && !toogle) && (
-						<button className="my-2 w-full bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-lg tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						<button className="mt-2 mb-[20px] w-full bg-[#FF7272] hover:bg-[#e76464] text-gray-100 p-2 hover:text-white rounded-lg tracking-wide font-semibold  focus:outline-none cursor-pointer transition ease-in duration-300"
 							onClick={handleClick}>Set Current Position</button>
 					)}
 					{(author?.id === userDetail?.id && cpos.length > 0 && toogle) && (
-						<button className="my-2 w-full bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-lg tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						<button className="mt-2 mb-[20px] w-full bg-[#FF7272] hover:bg-[#e76464] text-gray-100 p-2 hover:text-white rounded-lg tracking-wide font-semibold  focus:outline-none cursor-pointer transition ease-in duration-300"
 							onClick={handleSave}>Save as Current</button>
 					)}
 				</div>
@@ -108,7 +108,7 @@ const MapView = ({ name, lat, lon, id, author }) => {
 		)
 	} else
 		return (
-			<div className="h-48 sm:h-80 w-9/12 shadow-[rgb(255,213,201)] bg-white shadow-lg rounded-lg p-1 mb-5">
+			<div className="h-48 sm:h-80 w-full bg-white rounded-lg p-1 mb-5">
 				<MapContainer center={center} zoom={14} scrollWheelZoom={false} className="w-full h-full relative z-0">
 					<TileLayer
 						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -120,11 +120,11 @@ const MapView = ({ name, lat, lon, id, author }) => {
 				
 				<div className='flex flex-row-reverse justify-between'>
 					{(author?.id === userDetail?.id && !toogle) && (
-						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						<button className="mt-2 mb-[20px] w-[60%] bg-[#FF7272] hover:bg-[#e76464] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none cursor-pointer transition ease-in duration-300"
 							onClick={handleClick}>Set Current Position</button>
 					)}
 					{(author?.id === userDetail?.id && cpos.length > 0 && toogle) && (
-						<button className="my-2 w-[60%] bg-[#ca7c62] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none focus:shadow-outline hover:bg-[#462312] shadow-lg cursor-pointer transition ease-in duration-300"
+						<button className="mt-2 mb-[20px] bg-[#FF7272] hover:bg-[#e76464] text-gray-100 p-2 hover:text-white rounded-full tracking-wide font-semibold  focus:outline-none cursor-pointer transition ease-in duration-300"
 							onClick={handleSave}>Save as Current</button>
 					)}
 				</div>

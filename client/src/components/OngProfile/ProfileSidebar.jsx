@@ -1,19 +1,24 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import HomeProfilePanel from "../Home/Main/HomeProfilePanel"
+import { switchTheme } from "../..//redux/slices/manageTheme"
 
 // react icons
 import { BsChevronBarLeft, BsChevronBarRight, BsChevronBarUp,
 BsChevronBarDown, BsFillPersonFill } from "react-icons/bs"
 import { HiPencilSquare } from "react-icons/hi2"
 import { FaMapMarkerAlt } from "react-icons/fa"
-import { HiLink } from "react-icons/hi"
+import { HiLink, HiMoon } from "react-icons/hi"
+import { BsSun } from "react-icons/bs"
 
 
 const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, followersLength, setIsOpenDonate }) => {
+    const dispatch = useDispatch()
 
-    const { userDetail } = useSelector(state => state.localStorage.userState)
+    // handles dark mode toggle in the website
+	const { darkmode } = useSelector(state => state.localStorage.manageTheme)
+	const toggleDarkMode = () => dispatch(switchTheme())
 
     // handles this bar's expansion state
     // it may start expanded or rectracted, based on initial window width
@@ -64,7 +69,7 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                 </div>
 
                 {/* informative text */}
-                <div className={expanded && `xsm:flex sm:flex-row md:flex-col xsm:flex-row xsm:ml-[30px]`}>
+                <div className={expanded && `xsm:flex sm:flex-col xsm:flex-col xsm:ml-[30px]`}>
                     <div className={`xsm:mt-[20px] sm:mt-[45px] ${expanded && "sm:ml-[20px]"}`}>
                         <ul className="mt-[10px]">
                             {/* location */}
@@ -93,7 +98,7 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                         </ul>
                     </div>
 
-                    <div className={`${expanded ? "md:ml-[45px] sm:ml-auto sm:mr-[140px] xsm:ml-[35px] xsm:mt-[20px] w-full sm:mt-[25px] " : "sm:mt-[60px]"}`}>
+                    <div className={`${expanded ? "md:ml-[45px] sm:ml-[30px] sm:mr-0 xsm:ml-0 xsm:mt-[20px] w-full sm:mt-[25px] " : "sm:mt-[60px]"}`}>
                         <ul className="mt-[5px] text-center ">
                             {/* posts */}
                             <li className="mt-[10px] w-full">
@@ -101,27 +106,27 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                                     {!expanded &&  <HiPencilSquare className={`text-[#bb7070] flex mt-[2px] group-hover:text-[#e76f6f] 
 									transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />}
 
-                                    <div className={`flex flex-col w-full text-center ${expanded && "mr-[80px]"}`}>
-                                        <span className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1.3rem] font-semibold">{postsLength}</span>
+                                    <div className={`flex sm:flex-row md:flex-col w-full sm:text-left md:text-center ${expanded && "mr-[80px]"}`}>
+                                        <span className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1rem] font-semibold">{postsLength}</span>
                                         {expanded && 
-                                        <div className="flex w-fit text-center mx-auto">
-                                            <p className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1.3rem] text-center font-semibold">{postsLength > 1 ? "Posts" : "Post"}</p>
+                                        <div className="flex w-fit text-center md:mx-auto">
+                                            <p className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1rem] text-center font-semibold xsm:ml-[10px] md:ml-0">{postsLength > 1 ? "Posts" : "Post"}</p>
                                         </div>}
                                     </div>
                                 </button>
                             </li>
 
                             {/* followers */}
-                            <li className="mt-[25px] w-full">
+                            <li className="xsm:mt-[5px] sm:mt-[25px] w-full">
                                 <button className={`flex flex-row group ${!expanded && 'mx-auto flex-col'} w-full`}>
                                     {!expanded &&  <BsFillPersonFill className={`text-[#bb7070] flex mt-[2px] group-hover:text-[#e76f6f] 
 									transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />}
 
-                                    <div className={`flex flex-col w-full text-center ${expanded && "mr-[80px]"}`}>
-                                        <span className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1.3rem] font-semibold">{followersLength}</span>
+                                    <div className={`flex sm:flex-row md:flex-col w-full sm:text-left md:text-center ${expanded && "mr-[80px]"}`}>
+                                        <span className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1rem] font-semibold">{followersLength}</span>
                                         {expanded && 
-                                        <div className="flex w-fit text-center mx-auto">
-                                            <p className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1.3rem] text-center font-semibold">{followersLength > 1 ? "Followers" : "Follower"}</p>
+                                        <div className="flex w-fit text-center md:mx-auto">
+                                            <p className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1rem] text-center font-semibold xsm:ml-[10px] md:ml-0">{followersLength > 1 ? "Followers" : "Follower"}</p>
                                         </div>}
                                     </div>
                                 </button>
@@ -129,14 +134,20 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                         </ul>
                     </div>
 
-                    {(userDetail.id !== id) ? 
-                        <div className={expanded ? "mt-[70px]" : "mt-[50px]"}>
-                            <button onClick={() => setIsOpenDonate(true)} className={`bg-[#FF7272] hover:bg-[#e76464] font-semibold text-white 
-                            py-[12px] rounded-[20px] ${expanded ? "w-full text-xl" : "text-lg px-[15px] flex mx-auto"} dark:bg-[#E06161] dark:hover:bg-[#b64d4d]`}>
-                                Support
-                            </button>
-                        </div> 
-                    : undefined}
+                    <div className={`md:mt-[50px] flex flex-row ${expanded ? "sm:w-auto sm:mr-[40px] md:w-[250px] ml-[20px] sm:mt-[160px] lg:mt-[100px]" : "ml-[30px] sm:mt-[40px]"}`}>
+                        {expanded && <h2 className="sm:flex text-[#979b9c] dark:text-[#afb3b4] text-[1.1rem] font-semibold xsm:hidden">Night Mode</h2>}
+
+                        <div className={`flex ${expanded && "ml-auto sm:mr-[0px] xsm:absolute xsm:top-[40px] xsm:right-[20px] sm:static"}`}>
+                            <div className="flex flex-row bg-[#F2F1EF] hover:bg-[#e7e6e4] rounded-[30px] dark:bg-[#302c35]">
+                                <button onClick={toggleDarkMode} className={`flex w-[40px] rounded-[30px] py-[5px] ${!darkmode ? "bg-none" : "bg-[#FF7272]"}`}>
+                                    <HiMoon className={`text-lg mx-auto ${!darkmode ? "text-[#8389A5] dark:text-[#c4bfbf]" : "text-white"}`} />
+                                </button>
+                                <button onClick={toggleDarkMode} className={`flex w-[40px] rounded-[30px] py-[5px] ${darkmode ? "bg-none" : "bg-[#FF7272]"}`}>
+                                    <BsSun className={`text-lg mx-auto ${darkmode ? "text-[#8389A5] dark:text-[#c4bfbf]" : "text-white"}`} />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 

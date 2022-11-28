@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -71,14 +70,13 @@ const OngFormUpdate = ({
     validationSchema: ongSchema,
     onSubmit,
   });
-  console.log(errors);
 
   return (
-		<div className="flex flex-col items-center w-9/12 mt-10 lg:mt-4 lg:mt-0 lg:w-full">
+		<div className="flex flex-col items-center w-9/12 mt-10 lg:mt-0 lg:w-full">
 			<div className="w-full mb-2 h-fit lg:p-0 lg:min-w-0 lg:w-full lg:max-w-full">
 				<div
 					className="bg-white shadow-[rgba(255,213,201)] shadow-xl p-2 rounded-2xl lg:flex lg:items-center lg:flex-col
-					lg:w-full lg:p-0 lg:border-2 lg:border-blue lg:w-full lg:max-w-full lg:min-w-[250px]"
+					lg:w-full lg:p-0 lg:border-2 lg:border-blue lg:max-w-full lg:min-w-[250px]"
 				>
 					{!toggle ? (
 						<UploadImage

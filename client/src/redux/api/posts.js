@@ -9,9 +9,9 @@ export const postApi = createApi({
 
   endpoints: (builder) => ({
     getPosts: builder.query({
-      query: ({ order, type }) => {
+      query: ({ order, type, id = '' }) => {
         if (!order || !type) return "/posts";
-        return `/posts/sort?order=${order}&type=${type}`;
+        return `/posts/sort?order=${order}&type=${type}&id=${id}`;
       },
       providesTags: ["Posts"],
     }),

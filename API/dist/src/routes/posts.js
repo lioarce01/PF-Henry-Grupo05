@@ -92,14 +92,12 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 router.get('/sort', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { order, type } = req.query;
+    const { order, type, id } = req.query;
     const state = true;
     try {
         if (order && type) {
             const posts = yield prisma.post.findMany({
-                where: {
-                    enable: state
-                },
+                where: id ? { enable: state, shelterId: id } : { enable: state },
                 include: {
                     author: true,
                     Comment: {

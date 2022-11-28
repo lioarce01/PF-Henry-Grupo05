@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useEnableShelterMutation, useGetShelterByIdQuery } from "../../redux/api/shelters";
-import OngFormUpdate from "./OngFormUpdate";
-import ModalCreatePost from "../Home/Modals/ModalCreatePost";
-import Spinner from "../Spinner/Spinner";
-import ModalDonate from "./Donate/ModalDonate";
-import { useDispatch, useSelector } from "react-redux";
-import Description from "./Description";
-import Swal from "sweetalert2";
-import { useLazyGetUserByIdQuery } from "../../redux/api/users";
-import { setUserAction } from "../../redux/slices/manageUsers/actions";
+import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 
-import ProfileSidebar from './ProfileSidebar'
+import ModalDonate from "./Donate/ModalDonate"
+import ModalCreatePost from "../Home/Modals/ModalCreatePost"
+
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux"
+import { useLazyGetUserByIdQuery } from "../../redux/api/users"
+import { setUserAction } from "../../redux/slices/manageUsers/actions"
+import { useEnableShelterMutation, useGetShelterByIdQuery } from "../../redux/api/shelters"
+
 import ProfileUpper from './ProfileUpper'
 import ProfileBottom from './ProfileBottom'
+import ProfileSidebar from './ProfileSidebar'
 
 
 const OngDetail = () => {
@@ -30,7 +29,7 @@ const OngDetail = () => {
     const [isOpenDonate, setIsOpenDonate] = useState(false)
     const closeModalDonate = () => setIsOpenDonate(false)
 
-    // ??? modal handler
+    // create post modal handler
     const [isOpen, setIsOpen] = useState(false)
     const closeModal = () => setIsOpen(false)
 
@@ -84,20 +83,20 @@ const OngDetail = () => {
     
     return (
         <div className="flex flex-row w-screen h-screen bg-[#EFF0F3] dark:bg-[#27242C] overflow-y-hidden">
-            <div className="h-screen">
+            <div className="h-screen xsm:w-0 sm:w-fit">
                 <ProfileSidebar profilePic={details?.profilePic} city={details?.city} country={details?.country} website={details?.website}
-                id={details?.id} postsLength={details?.posts?.length} followersLength={details?.followers?.length} setIsOpenDonate={setIsOpenDonate} />
+                id={details?.id} postsLength={details?.posts?.length} followersLength={details?.followers?.length} />
             </div>
 
-            <div className="w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
-                <div className="mt-[35px] ml-[100px] mr-[60px]">
-                    <ProfileUpper id={details?.id} name={details?.name} goals={details?.goals} setIsOpenDonate={setIsOpenDonate} 
-                    loading={isLoading} shelterRefetch={shelterRefetch} />
+            <div className="w-full overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+                <div className="xsm:mt-[30px] md:mt-[35px] xsm:ml-[10px] sm:ml-[20px] md:ml-[40px] xl:ml-[60px] 2xl:ml-[100px] xsm:mr-0 sm:mr-[20px] md:mr-[40px] 2xl:mr-[60px]">
+                    <ProfileUpper setIsOpenDonate={setIsOpenDonate} loading={isLoading} shelterRefetch={shelterRefetch} details={details} />
                     <ProfileBottom setIsOpen={setIsOpen} details={details} />
                 </div>
             </div>
 
             <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} id={id} />
+            <ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
         </div>
     )
 }

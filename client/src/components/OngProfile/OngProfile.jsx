@@ -44,7 +44,7 @@ const OngDetail = () => {
 
   const enable = async (id) => {
 	await enableShelter(id).unwrap()
-	let newUser = await getUser(userDetail.id).unwrap()
+	const newUser = await getUser(userDetail.id).unwrap()
 	dispatch(setUserAction(newUser, true))
   }
 

@@ -12,13 +12,13 @@ const PostForm = () => {
 	const { getAccessTokenSilently } = useAuth0()
 	const { userDetail } = useSelector((state) => state.localStorage.userState)
 
-  const [addNewPost, {}] = useAddNewPostMutation();
+	const [addNewPost] = useAddNewPostMutation();
 
 	const onSubmit = async (e) => {
 		e.preventDefault()
 		const accessToken = await getAccessTokenSilently()
 
-		if (! image || ! content) return alert("content and image are needed")
+		if (!image || !content) return alert("content and image are needed")
 
 		const newPost = {
 			content,
@@ -26,7 +26,7 @@ const PostForm = () => {
 			shelterId: userDetail.Shelter[0].id,
 			authorId: userDetail.id,
 		}
-		
+
 		const myPromise = addNewPost({ accessToken, newPost })
 		toast.promise(myPromise, {
 			loading: "Creating post",
@@ -40,7 +40,7 @@ const PostForm = () => {
 
 	return (
 		<div className="">
-			<div className="sm:max-w-lg  max-w-full p-10 pt-6 bg-white rounded-xl z-10 h-[600px]">
+			<div className="sm:max-w-lg  max-w-full p-10 pt-6 bg-white dark:bg-[#1b1a1f] rounded-xl z-10 h-[600px]">
 				<div className="text-center">
 					<h2 className="text-3xl font-bold text-[#FF7272]">Create Post</h2>
 				</div>

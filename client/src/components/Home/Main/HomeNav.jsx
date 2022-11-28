@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { HiPencil } from 'react-icons/hi'
-import { useGetSheltersQuery } from "../../../redux/api/shelters"
 import { useSelector } from "react-redux"
+import { useEffect, useState } from 'react'
+import CreateTicket from '../../CreateTicket'
 import ModalShelters from '../Modals/ModalShelters'
 import ModalCreatePost from "../Modals/ModalCreatePost"
-import CreateTicket from '../../CreateTicket'
+import { useGetSheltersQuery } from "../../../redux/api/shelters"
+
 
 // animals array to map filters. used to optimize code
 const animals = [{ type: 'Dogs', emoji: '🐶', target: 'activeDogs' }, { type: 'Cats', emoji: '😺', target: 'activeCats' },
@@ -20,7 +21,7 @@ const rndIndex = Math.floor(Math.random() * (welcomePhrases.length))
 
 
 const HomeNav = () => {
-    // is user verified? :p
+    // is user verified?
     const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
 
     // fetch all enabled shelters
@@ -38,7 +39,7 @@ const HomeNav = () => {
 
         setActive({
             ...active,
-            [tag]: ! active[tag]
+            [tag]: !active[tag]
         })
     }
 
@@ -83,14 +84,16 @@ const HomeNav = () => {
                     </form>
                 </div>
 
-                {isAuth && <button onClick={() => setOpenCreatePost(true)} className='flex flex-row bg-[#FF7272] dark:bg-[#e06161] ml-auto md:mr-[30px] lg:mr-[30px] xl:mr-[60px]
-                xsm:mr-[20px] sm:mt-[30px] sm:h-fit pl-[5px] xsm:pr-[2px] xsm:pl-[2px] xsm:h-[44px] xsm:mt-[33px] md:pr-[20px] rounded-full items-center hover:bg-[#e76464] dark:hover:bg-[#be4f4f] transition-colors duration-300'>
-                    <span className="p-[7px] rounded-full">
-                        <HiPencil className='text-2xl text-white' />
-                    </span>
-                    <span className='font-semibold text-white ml-[5px] xsm:hidden md:contents'>Create Post</span>
-                </button>}
-                {isAuth && userDetail?.Shelter[0] ? <CreateTicket /> : null}
+                <div className='flex flex-row mt-[5px] ml-auto'>
+                    {isAuth && <button onClick={() => setOpenCreatePost(true)} className='flex flex-row bg-[#6371f1] hover:bg-[#5460d1] dark:bg-[#7F8AF3] dark:hover:bg-[#6a75d3] md:mr-[10px] 
+                    xsm:mr-[20px] sm:mt-[30px] sm:h-fit pl-[5px] xsm:pr-[2px] sm:pr-0 xsm:pl-[2px] xsm:h-[44px] xsm:mt-[33px] rounded-full items-center  transition-colors duration-300 xl:mr-[20px]'>
+                        <span className="p-[7px] rounded-full">
+                            <HiPencil className='text-2xl text-white' />
+                        </span>
+                    </button>}
+
+                    {isAuth && userDetail?.Shelter[0] ? <CreateTicket /> : null}
+                </div>
             </div>
 
             <h1 className='font-semibold ml-[20px] mt-[30px] text-[1.3rem] text-[#FF7272] hover:underline w-fit'>{welcomePhrases[rndIndex]}</h1>

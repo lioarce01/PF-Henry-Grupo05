@@ -90,19 +90,18 @@ type ReqSampling = {
     query: {
         order: 'createdAt' | 'likes'
         type: 'asc' | 'desc',
+        id: string
     }
 };
 
 
 router.get('/sort', async (req: ReqSampling, res) => {
-    const { order, type } = req.query;
+    const { order, type, id } = req.query;
     const state: boolean = true;
     try {
         if (order && type) {
             const posts = await prisma.post.findMany({
-                where: {
-                    enable: state
-                },
+                where: id ? { enable: state, shelterId: id } : { enable: state },
                 include: {
                     author: true,
                     Comment: {
