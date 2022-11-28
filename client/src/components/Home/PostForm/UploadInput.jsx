@@ -9,10 +9,11 @@ const UploadImage = ({ url, setUrl }) => {
   const handleChange = async (e) => {
     setLoading(true);
     const { response, image } = await uploadImage("preset_posts", e.target.files[0]);
-    if(response?.resource_type === "video") {
+
+    if (response?.resource_type === "video") {
       setUrl(["video", response?.public_id])
-    }
-    else if(response?.resource_type === "image") setUrl(["image", image]);
+    } else if (response?.resource_type === "image") setUrl(["image", image]);
+    
     setLoading(false);
   };
 
@@ -51,12 +52,12 @@ const UploadImage = ({ url, setUrl }) => {
                 />
               </div>
               <p className="pointer-none text-[#b2b3b4]">
-                      <p
-                        className="text-[#979b9c] font-bold"
-                      >
-                        select a file
-                      </p>{" "}
-                      from your computer
+                <p
+                  className="text-[#979b9c] font-bold"
+                >
+                  select a file
+                </p>{" "}
+                from your computer
               </p>
             </div>
             <input

@@ -7,9 +7,7 @@ import { selectUser } from '../../redux/slices/manageUsers'
 function ProtectRoute() {
     const {isAuth, userDetail} = useSelector(selectUser)
     if(!isAuth || !userDetail?.Shelter[0]) return <Navigate to={"/home"}/>
-  return (
-    <TicketsPage />
-  )
+    return <TicketsPage />
 }
 
 export default ProtectRoute

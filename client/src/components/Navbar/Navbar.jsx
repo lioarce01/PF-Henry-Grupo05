@@ -1,4 +1,3 @@
-import React from "react"
 import { Link } from "react-router-dom"
 import { BsSun } from "react-icons/bs"
 import { HiMoon } from "react-icons/hi"

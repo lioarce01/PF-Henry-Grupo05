@@ -110,7 +110,7 @@ const CardPost = ({
 						</div>
 					</div>
 
-					<div className="flex flex-col w-full py-[20px] px-[70px] font-normal text-justify text-gray-900 text-md">
+					<div className="flex flex-col w-full py-[20px] px-[70px] font-normal text-justify text-gray-900 dark:text-[#dad6d6] text-md">
 						<ShowMoreText
 							lines={3}
 							more="Show more"

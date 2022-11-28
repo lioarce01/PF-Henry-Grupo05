@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import OngDetail from "./components/OngProfile/OngProfile";
+import OngDetail from "./components/OngProfile/Main/index.jsx";
 import Home from "./components/Home/Main/Home";
 import Landing from "./components/Landing";
 import Page404 from "./components/Page404";
@@ -18,6 +18,7 @@ import TermsAndConditions from "./components/TermsAndConditions/TermsAndConsditi
 
 function App() {
   LoadUser()
+  
   const { darkmode } = useSelector(state => state.localStorage.manageTheme)
   return (
     <div className={darkmode ? "App dark": "App light"}>
