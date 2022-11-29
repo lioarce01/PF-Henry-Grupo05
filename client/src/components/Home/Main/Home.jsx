@@ -3,6 +3,7 @@ import Posts from '../Posts'
 import HomeNav from './HomeNav'
 import HomeSideBar from './HomeSideBar'
 import HomeCarousel from './HomeCarousel/HomeCarousel'
+import HomeChatBot from '../HomeChatBot'
 import { Toaster } from 'react-hot-toast'
 
 const Home = () => {
@@ -29,6 +30,10 @@ const Home = () => {
 						</div>
 						<div className='xsm:pb-[40px] lg:hidden xl:contents w-full'>
 							<TopShelters />
+
+							<div className='fixed right-[20px] bottom-[20px]'>
+								<HomeChatBot />
+							</div>
 						</div>
 					</div>
 				</div>
