@@ -6,7 +6,7 @@ import { Fragment } from "react"
 import { Menu, Transition } from "@headlessui/react"
 import { AiOutlineDown } from "react-icons/ai"
 import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 const ProfilePanel = () => {
 	const { userDetail, isAuth } = useSelector(
@@ -15,6 +15,8 @@ const ProfilePanel = () => {
 	function classNames(...classes) {
 		return classes.filter(Boolean).join(" ")
 	}
+
+	const location = useLocation()
 
 	const ref = React.createRef()
 	return (
@@ -53,26 +55,12 @@ const ProfilePanel = () => {
 					>
 						<Menu.Items className="absolute right-0 z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-[#27242C] dark:text-[#F0EEEE]">
 							<div className="py-1">
-								<Menu.Item>
-									{({ active }) => (
-										<Link
-											to={`/users/${userDetail.id}`}
-											className={classNames(
-												active
-													? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]"
-													: "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
-												"block px-4 py-2 text-sm"
-											)}
-										>
-											Account settings
-										</Link>
-									)}
-								</Menu.Item>
-								{userDetail?.role === "Admin" && (
-									<Menu.Item as={AdminButton}>
+								{
+									location.pathname !== `/users/${userDetail.id}` &&
+									<Menu.Item>
 										{({ active }) => (
 											<Link
-												to={`/admin`}
+												to={`/users/${userDetail.id}`}
 												className={classNames(
 													active
 														? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]"
@@ -80,11 +68,29 @@ const ProfilePanel = () => {
 													"block px-4 py-2 text-sm"
 												)}
 											>
-												Admin Dashboard
+												Account settings
 											</Link>
 										)}
 									</Menu.Item>
-								)}
+								}
+								{	
+									location.pathname !== '/admin' && userDetail?.role === "Admin" &&
+										<Menu.Item>
+											{({ active }) => (
+												<Link
+													to="/admin"
+													className={classNames(
+														active
+															? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]"
+															: "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
+														"block px-4 py-2 text-sm"
+													)}
+												>
+													Admin Dashboard
+												</Link>
+											)}
+										</Menu.Item>
+								}
 								<Menu.Item>
 									{({ active }) => (
 										<Link
