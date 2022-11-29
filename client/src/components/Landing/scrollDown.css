@@ -25,8 +25,8 @@
   width: 48px;
   height: 48px;
   margin-left: -12px;
-  border-left: 2px solid #3D190C;
-  border-bottom: 2px solid #3D190C;
+  border-left: 2px solid #FF7272;
+  border-bottom: 2px solid #FF7272;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
   -webkit-animation: sdb07 2s infinite;
@@ -79,7 +79,7 @@
     display: inline-block;
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
-    color: #3D190C;
+    color: #FF7272;
     font : normal 400 20px/1 'Josefin Sans', sans-serif;
     letter-spacing: .1em;
     text-decoration: none;

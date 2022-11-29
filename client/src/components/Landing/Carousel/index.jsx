@@ -26,7 +26,7 @@ const Carousel = () => {
 
   return (
     <div className="w-[80%] h-fit mx-auto rounded">
-      <h2 className="mb-20 max-sm:mb-2 max-sm:mt-11 font-bold text-[#201008] dark:text-[#F0EEEE] md:text-7xl lg:text-5xl text-center text-2xl">Trending</h2>
+      <h2 className="mb-20 max-sm:mb-2 max-sm:mt-11 font-bold text-[#201008] dark:text-[#F0EEEE] md:text-7xl lg:text-5xl 2xl:text-7xl text-center text-2xl">Trending</h2>
       <Swiper
         loop={true}
         slidesPerView={1}
