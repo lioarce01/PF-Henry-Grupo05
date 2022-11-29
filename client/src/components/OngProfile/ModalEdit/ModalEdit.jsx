@@ -1,12 +1,14 @@
 import { Transition, Dialog } from '@headlessui/react'
 import { Fragment } from "react";
+import { useSelector } from 'react-redux';
 import React from 'react'
 import FormUpdateShelter from './FormUpdateShelter';
 
 const ModalEdit = ({ isOpen, closeModal, details,shelterRefetch}) => {
+  const { darkmode } = useSelector(state => state.localStorage.manageTheme)
   return (
     <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className={darkmode?"relative z-10 dark":"relative z-10"} onClose={closeModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -30,7 +32,7 @@ const ModalEdit = ({ isOpen, closeModal, details,shelterRefetch}) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className=" transform overflow-hidden rounded-2xl bg-transparent  align-middle  transition-all">
+              <Dialog.Panel className="transform overflow-hidden rounded-2xl bg-transparent  align-middle  transition-all">
                 {/* aca se renderizan cosas */}
                 <FormUpdateShelter details={details} shelterRefetch={shelterRefetch}/>
               </Dialog.Panel>
