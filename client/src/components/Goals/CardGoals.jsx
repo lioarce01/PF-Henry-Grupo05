@@ -7,6 +7,7 @@ import {
 } from "../../redux/api/goals"
 import ModalDonate from "../OngProfile/Donate/ModalDonate"
 import "./CardGoals.css"
+import { percentage } from "../../utils"
 
 const CardGoals = ({
 	title,
@@ -29,7 +30,7 @@ const CardGoals = ({
 		(state) => state.localStorage.userState
 	)
 
-	console.log("authorId: ", authorId)
+	let pesoArgentino = Intl.NumberFormat("es-AR")
 
 	const handleEnable = async () => {
 		await enableGoal({ id })
@@ -62,7 +63,16 @@ const CardGoals = ({
 					htmlFor="goal"
 					className="flex flex-row items-center gap-1 dark:text-[#b3b8b9] mb-[2px]"
 				>
-					{budget / 100}% <span>completed</span>
+					{budget >= goal ? (
+						<div>
+							<p>Goal of ${pesoArgentino.format(goal)} Raised</p>
+						</div>
+					) : budget < goal ? (
+						<span>
+							{percentage(budget, goal).toFixed(0)}% completed of $
+							{pesoArgentino.format(goal)}
+						</span>
+					) : null}
 				</label>
 
 				<div className="relative inline-block bg-white h-[20px] rounded-lg overflow-hidden">
