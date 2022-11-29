@@ -60,7 +60,7 @@ const ModalShelters = ({ setOpen, search }) => {
                 !shelters?.length && "h-full"
               }`}
             >
-              <div className="flex flex-row flex-wrap gap-8 mx-auto">
+              <div className="flex flex-row flex-wrap lg:gap-8 mx-auto">
                 {shelters?.length ? (
                   shelters?.map((s) => {
                     return (
