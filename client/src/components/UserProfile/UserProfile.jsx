@@ -61,10 +61,10 @@ const UserProfile = () => {
 	}
 
 	return (
-		<div className="bg-[#EFF0F3] xsm:w-screen xsm:mx-auto w-full sm:w-auto dark:bg-[#27242C] shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)]">
+		<div className="bg-[#EFF0F3] xsm:w-screen xsm:mx-auto w-full h-full flex justify-between flex-col min-h-screen sm:w-auto dark:bg-[#27242C] shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)]">
 			<Toaster />
 			<Navbar />
-			<div className="mt-8 sm:w-5/6 sm:h-5/6 xsm:w-[90%] mx-auto lg:grid lg:grid-cols-3 lg:grid-rows-1 sm:flex sm:flex-col">
+			<div className="mt-8 sm:w-5/6 sm:h-5/6 xsm:w-[90%] mx-auto lg:grid lg:grid-cols-3 lg:grid-rows-1 sm:flex sm:flex-col h-screen">
 				<div className="mt-16 bg-[#ffffffd7] max-w-md rounded-[3em] mx-auto shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)] overflow-hidden min-w-[23vw] dark:bg-[#1B1A1F]">
 					<div className="group/item z-0">
 						<img
@@ -206,7 +206,9 @@ const UserProfile = () => {
 					)}
 				</div>
 			</div>
-			<Footer />
+			<div>
+				<Footer />
+			</div>
 			<ModalUserSheltersFollowed
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
