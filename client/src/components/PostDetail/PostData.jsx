@@ -63,7 +63,7 @@ const PostData = ({
 					expanded={false}
 					truncatedEndingComponent={"... "}>
 					<textarea
-						className="w-full mb-1 border border-gray-300 resize-none bg-inherit disabled:border-none"
+						className="w-full mb-1 border border-gray-300 resize-none bg-inherit disabled:border-none dark:border-[#27242C]"
 						type="text"
 						name="content"
 						onChange={inputHandler}
@@ -72,14 +72,14 @@ const PostData = ({
 						value={input.description}
 						cols="10"
 						rows={rows}
-					/>
+				/>
 				</ShowMoreText>
 			</div>
 
 			{!toogle && (
-				<div className="flex flex-row-reverse justify-between flex-start">
+				<div className="flex flex-row justify-end">
 					<button
-						className="px-2 py-1 mt-1 border border-gray-400 rounded hover:bg-gray-300"
+						className="px-2 py-1 mt-1 border font-bold border-gray-400 rounded-lg hover:bg-gray-300 dark:text-[#F0EEEE] dark:bg-[#E06161] duration-200 outline-none border-none dark:hover:bg-[#eb7a7a]"
 						onClick={saveHandler}>
 						Save
 					</button>

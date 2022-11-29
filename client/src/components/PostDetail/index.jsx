@@ -18,58 +18,60 @@ const Post = ({ postId, closeModal, setLike, like, likes }) => {
 
 	return (
 		<div className={darkmode && `dark`}>
-			<div className="flex flex-row bg-white rounded-xl shadow-md w-[75vw] max-h-[94vh] dark:bg-[#3b3742]">
-			<div className="w-[50vw] my-auto">
-					{details.video && <VideoPlayer public_id={details.video}/>}
-					{details.image && (
-						<img
-							src={details.image}
-							alt="post"
-							className="object-cover object-center w-full"
-						/>
-					)}
-				</div>
-				<div className="pt-4 w-[40%]">
-					<div>
-						<div className="px-4 flex flex-row justify-between">
-							<div>
-								<AuthorData details={details} />
-							</div>
-							<div>
-								<ModalEditPost
-									authorId={details.author.id}
-									closeModal={closeModal}
-									setToogle={setToogle}
-									postId={postId}
+			<div className="flex lg:flex-row bg-white rounded-xl shadow-md w-[75vw] xl:max-h-[94vh] lg:max-h-[55vh] lg:w-[85vw] xsm:flex-col dark:bg-[#3b3742]">
+				<div className=" bg-black flex justify-center">
+					<div className="xl:w-[50vw] my-auto justify-self-start min-w-[50vw]">
+							{details.video && <VideoPlayer public_id={details.video}/>}
+							{details.image && (
+								<img
+									src={details.image}
+									alt="post"
+									className="object-cover object-center w-full"
 								/>
-							</div>
+							)}
 						</div>
-						<div className="overflow-y-scroll h-[40rem] scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
-							<div className="px-4">
-								<PostData
-									setToogle={setToogle}
-									isFetching={isFetching}
-									likes={likes}
-									closeModal={closeModal}
-									toogle={toogle}
-									postId={postId}
-									details={details}
-									setLike={setLike}
-									like={like}
-								/>
+				</div>
+					<div className="pt-4 xl:w-[40%] justify-self-end min-w-[35vw]">
+						<div>
+							<div className="px-4 flex flex-row justify-between">
+								<div>
+									<AuthorData details={details} />
+								</div>
+								<div>
+									<ModalEditPost
+										authorId={details.author.id}
+										closeModal={closeModal}
+										setToogle={setToogle}
+										postId={postId}
+									/>
+								</div>
 							</div>
-							<div>
-								<Comments
-									postAuthorId={details.authorId}
-									isFetching={isFetching}
-									postId={postId}
-									details={details}
-								/>
+							<div className="overflow-y-scroll h-[40rem] scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+								<div className="px-4">
+									<PostData
+										setToogle={setToogle}
+										isFetching={isFetching}
+										likes={likes}
+										closeModal={closeModal}
+										toogle={toogle}
+										postId={postId}
+										details={details}
+										setLike={setLike}
+										like={like}
+									/>
+								</div>
+								<div>
+									<Comments
+										postAuthorId={details.authorId}
+										isFetching={isFetching}
+										postId={postId}
+										details={details}
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 		</div>
 
 		// <div className="flex flex-col w-[50rem] mt-[80px] p-6 space-y-6 overflow-hidden rounded-lg shadow-md  bg-[#FAF2E7] border border-gray-200 mx-auto">
