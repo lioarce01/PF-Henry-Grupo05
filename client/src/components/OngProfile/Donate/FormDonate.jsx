@@ -8,9 +8,9 @@ import { useAuth0 } from "@auth0/auth0-react"
 const FormDonate = ({ closeModal, name, shelterId, goalId }) => {
 
     const [checkout, {data, isSuccess}] = useCheckoutMutation()
-    const {getAccessTokenSilently, user} = useAuth0()
+    const {user} = useAuth0()
 
-    const [input, setInput] = useState({donation: 0, shelter: name, shelterId, goalId, email: user?.email})
+    const [input, setInput] = useState({donation: 0, shelter: name, shelterId, goalId, email: user?.email || "asd@gmail.com"})
     const [image, setImage] = useState(false);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
@@ -39,8 +39,7 @@ const FormDonate = ({ closeModal, name, shelterId, goalId }) => {
         if (input.donation < 50) return setErrorAmount(true)
         if (input.donation >= 50) setErrorAmount(false)
         setLoading(true)
-        let accessToken = await getAccessTokenSilently()
-        checkout({...input, accessToken})
+        checkout({...input})
     }
 
     useEffect(() => {
