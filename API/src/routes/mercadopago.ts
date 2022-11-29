@@ -11,7 +11,7 @@ const prisma = new PrismaClient()
 
 const router = express.Router();
 
-router.post("/", async (req,res) => {
+router.post("/", jwtCheck, async (req,res) => {
 
     let {shelter, donation, shelterId, goalId, email} = req.body
 

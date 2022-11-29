@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai';
-import { useCheckoutPlanMutation } from '../../../redux/api/mercadopago';
+import { useCheckoutMutation } from '../../../redux/api/mercadopago';
 import Spinner from '../../Spinner/Spinner';
 import { useAuth0 } from "@auth0/auth0-react"
 
 const FormDonate = ({ closeModal, name, shelterId, goalId }) => {
 
-    const [checkout, {data, isSuccess}] = useCheckoutPlanMutation()
+    const [checkout, {data, isSuccess}] = useCheckoutMutation()
     const {getAccessTokenSilently, user} = useAuth0()
 
     const [input, setInput] = useState({donation: 0, shelter: name, shelterId, goalId, email: user?.email})
