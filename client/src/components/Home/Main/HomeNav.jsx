@@ -111,7 +111,7 @@ const HomeNav = () => {
 						>
 							<input
 								type="text"
-								className="bg-white dark:bg-[#1b1a1f] h-full pl-[20px] lg:pr-[80px] rounded-full focus:outline-none"
+								className="bg-white dark:bg-[#1b1a1f] dark:text-white h-full pl-[20px] lg:pr-[80px] rounded-full focus:outline-none"
 								placeholder="Type to search shelters..."
 								value={search.query}
 								onChange={(e) => handleChange(e)}
