@@ -46,7 +46,7 @@ const ProfileBottom = ({ details, setIsOpen }) => {
                     {details && <MapView name={details?.name} lat={details?.lat} lon={details?.lon} id={details?.id} author={details?.author} />}
                 </div>
 
-                <div className={`lg:hidden ${(userDetail.Shelter[0].id === details?.id) && 'mt-[80px]'}`}>
+                <div className={`lg:hidden ${( userDetail?.Shelter && userDetail?.Shelter[0]?.id === details?.id) && 'mt-[80px]'}`}>
                     <div className="flex flex-row">
 
                         <h2 className="text-2xl font-semibold text-[#838788] dark:text-[#b3b8b9]">News & Updates</h2>

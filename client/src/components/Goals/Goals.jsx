@@ -24,7 +24,7 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading, shelte
 			<div className='flex flex-row mb-[25px]'>
 				<h2 className="text-2xl font-semibold text-[#838788] dark:text-[#b3b8b9]">Goals</h2>
 
-				{(userDetail.Shelter[0]?.id === shelterId) ?
+				{( userDetail.Shelter && userDetail?.Shelter[0]?.id === shelterId) ?
 					<button
 						className="w-[120px] py-[5px] text-[#838788] dark:text-[#b3b8b9] font-semibold transition duration-300 ml-auto 
 						underline decoration-[#FF7272] decoration-2 underline-offset-2 hover:text-[#FF7272]"
