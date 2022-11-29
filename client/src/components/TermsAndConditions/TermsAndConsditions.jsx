@@ -230,7 +230,7 @@ const TermsAndConditions = () =>{
                 </div>
                 
             </div>
-            <div className="flex mb-0">
+            <div className="relative w-full fixed p-0 mb-0">
                 <Footer/>
             </div>
 
