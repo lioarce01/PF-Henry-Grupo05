@@ -31,10 +31,10 @@ const AddComment = ({ postId }) => {
   return (
 		<>
 			<form onSubmit={onSubmit} className="flex justify-center">
-				<div className="mb-3 w-[100%] md:w-[80%] xl:w-[90%]">
+				<div className="mb-3 w-[90%] md:w-[80%] xl:w-[90%]">
 					<textarea
 						onChange={handleChange}
-						className="form-control block border border-gray-300 w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded-xl transition ease-in-out outline-none dark:bg-[#AFB3B4]"
+						className="form-control block border border-gray-300 w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-clip-padding rounded-xl transition ease-in-out outline-none dark:bg-[#3b3742] dark:focus:bg-[#AFB3B4] dark:border-[#27242C]"
 						rows="3"></textarea>
 					<div className="flex items-end justify-end">
 						<button className="px-4 py-2 mt-2 font-bold text-white transition duration-300 bg-red-400 rounded-xl hover:bg-red-500 dark:bg-[#E06161] dark:hover:bg-[#ee7878]">
