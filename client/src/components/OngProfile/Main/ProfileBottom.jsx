@@ -4,6 +4,7 @@ import { TbMap2 } from 'react-icons/tb'
 import { useSelector } from "react-redux"
 import ProfileFooter from "./ProfileFooter"
 import MapView from "../../Maps/MapView/MapView"
+import HomeChatBot from "../../Home/HomeChatBot"
 
 const ProfileBottom = ({ details, setIsOpen }) => {
     const { userDetail } = useSelector(state => state.localStorage.userState);
@@ -72,6 +73,10 @@ const ProfileBottom = ({ details, setIsOpen }) => {
                         <Posts name={details?.name} id={details?.id} />
                     </div>
                 </div>
+
+                <div className='fixed right-[20px] bottom-[20px] z-50'>
+					<HomeChatBot />
+				</div>
 
                 <ProfileFooter id={details?.id} />
             </div>

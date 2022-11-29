@@ -15,6 +15,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { userSchema } from './validationUserForm';
 import { useFormik } from 'formik';
 import toast, { Toaster } from "react-hot-toast";
+import HomeChatBot from "../Home/HomeChatBot";
 
 const UserProfile = () => {
 	const { userId } = useParams();
@@ -39,13 +40,13 @@ const UserProfile = () => {
 	const updateUserImage = async (e) => {
 		const { image } = await uploadImage("preset_posts", e.target.files[0])
 		let accessToken = await getAccessTokenSilently();
-		await updateUser({ accessToken, userId, updatedUser: {profilePic: image}}).then(res => toast.success("Profile picture updated successfully")).catch(() => toast.error('There has been an error'));
+		await updateUser({ accessToken, userId, updatedUser: { profilePic: image } }).then(res => toast.success("Profile picture updated successfully")).catch(() => toast.error('There has been an error'));
 	}
 
 	const onSubmit = async (e) => {
 		e.preventDefault()
 		const accessToken = await getAccessTokenSilently()
-		await updateUser({accessToken, userId: userDetail.id, updatedUser: values}).then(res => toast.success("Name updated successfully")).catch(() => toast.error('There has been an error'));
+		await updateUser({ accessToken, userId: userDetail.id, updatedUser: values }).then(res => toast.success("Name updated successfully")).catch(() => toast.error('There has been an error'));
 		setEditMode(false);
 	}
 	const { values, errors, handleBlur, handleChange } = useFormik({
@@ -206,7 +207,11 @@ const UserProfile = () => {
 					)}
 				</div>
 			</div>
+			<div className='fixed right-[20px] bottom-[120px] z-50'>
+				<HomeChatBot />
+			</div>
 			<div>
+
 				<Footer />
 			</div>
 			<ModalUserSheltersFollowed
