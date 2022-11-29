@@ -1,12 +1,17 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import FormCreate from "./FormCreate";
+import { useSelector } from "react-redux"
+import FormCreate from "./FormCreate"
 
-
-const modalCreate = ({ isOpen, closeModal, shelterId, shelterRefetch }) => {
+const ModalCreate = ({ isOpen, closeModal, shelterId, shelterRefetch }) => {
+	const { darkmode } = useSelector((state) => state.localStorage.manageTheme)
 	return (
 		<Transition appear show={isOpen} as={Fragment}>
-			<Dialog as="div" className="relative z-50" onClose={closeModal}>
+			<Dialog
+				as="div"
+				className={darkmode ? "relative z-50 dark" : "relative z-50"}
+				onClose={closeModal}
+			>
 				<Transition.Child
 					as={Fragment}
 					enter="ease-out duration-300"
@@ -30,7 +35,7 @@ const modalCreate = ({ isOpen, closeModal, shelterId, shelterRefetch }) => {
 							leaveFrom="opacity-100 scale-100"
 							leaveTo="opacity-0 scale-95"
 						>
-							<Dialog.Panel className="w-full max-w-md overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+							<Dialog.Panel className="w-full max-w-md overflow-hidden text-left align-middle transition-all bg-white dark:bg-[#27242C] transform shadow-lg shadow-[#E06161] dark:shadow-[#E06161] rounded-2xl">
 								<FormCreate
 									shelterId={shelterId}
 									closeModal={closeModal}
@@ -45,4 +50,4 @@ const modalCreate = ({ isOpen, closeModal, shelterId, shelterRefetch }) => {
 	)
 }
 
-export default modalCreate;
+export default ModalCreate

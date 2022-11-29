@@ -1,10 +1,12 @@
 import { useState } from "react";
 import toast from 'react-hot-toast'
-import { useCreateGoalMutation } from "../../../redux/api/goals";
+import { useSelector } from "react-redux"
+import { useCreateGoalMutation } from "../../../redux/api/goals"
 
 const FormCreate = ({ closeModal, shelterId, shelterRefetch }) => {
 	const [input, setInput] = useState({ title: "", content: "", goal: 0 })
 	const [createGoal] = useCreateGoalMutation()
+	const { darkmode } = useSelector((state) => state.localStorage.manageTheme)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -22,11 +24,16 @@ const FormCreate = ({ closeModal, shelterId, shelterRefetch }) => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className="max-w-[50%] mx-auto">
+		<form
+			onSubmit={handleSubmit}
+			className={
+				darkmode ? "py-4 px-10 dark:bg-[#27242C]" : "px-10 mx-auto py-4"
+			}
+		>
 			<div className="mb-6">
 				<label
 					htmlFor="title"
-					className="block mb-2 text-sm font-medium text-gray-900 "
+					className="block mb-2 text-md font-medium text-gray-900 dark:text-[#F0EEEE]"
 				>
 					Title
 				</label>
@@ -44,7 +51,7 @@ const FormCreate = ({ closeModal, shelterId, shelterRefetch }) => {
 			<div className="mb-6">
 				<label
 					htmlFor="content"
-					className="block mb-2 text-sm font-medium text-gray-900 "
+					className="block mb-2 text-md font-medium text-gray-900 dark:text-[#F0EEEE]"
 				>
 					Content
 				</label>
@@ -61,7 +68,7 @@ const FormCreate = ({ closeModal, shelterId, shelterRefetch }) => {
 			<div className="mb-6">
 				<label
 					htmlFor="goal"
-					className="block mb-2 text-sm font-medium text-gray-900 "
+					className="block mb-2 font-medium text-gray-900 dark:text-[#F0EEEE] text-md"
 				>
 					Goal
 				</label>
@@ -90,12 +97,14 @@ const FormCreate = ({ closeModal, shelterId, shelterRefetch }) => {
 				</div>
 			</div>
 
-			<button
-				type="submit"
-				className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-			>
-				Create goal
-			</button>
+			<div className="w-full flex justify-center">
+				<button
+					type="submit"
+					className="text-white bg-[#6a77f5] transition duration-300 hover:bg-[#5c6bf1] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+				>
+					Create goal
+				</button>
+			</div>
 		</form>
 	)
 }
