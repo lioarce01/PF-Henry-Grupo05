@@ -21,7 +21,7 @@ const UploadImage = ({ url, setUrl }) => {
 
   return (
     <div className="grid grid-cols-1 space-y-2">
-      <label className="text-sm font-bold text-[#979b9c] tracking-wide">
+      <label className="text-sm font-bold text-[#979b9c] dark:text-[#F0EEEE] tracking-wide">
         Upload image
       </label>
       {url[0] && (
@@ -41,19 +41,19 @@ const UploadImage = ({ url, setUrl }) => {
         ) : (
           <label
             draggable="true"
-            className="flex flex-col rounded-lg border-[#d7dadb] border-4 border-dashed w-full h-60 p-10 group text-center cursor-pointer"
+            className="flex flex-col rounded-lg border-[#d7dadb] dark:border-[#AFB3B4] border-4 border-dashed w-full h-60 p-10 group text-center cursor-pointer"
           >
             <div className="h-full w-full text-center flex flex-col items-center justify-center">
               <div className="flex flex-auto max-h-48 w-2/5 mx-auto ">
                 <img
-                  className="has-mask h-36 object-center"
+                  className="has-mask h-36 object-center dark:invert"
                   src="https://i.pinimg.com/originals/00/65/ee/0065ee133294c73fe29dbab81dc6acc9.png"
                   alt="freepik"
                 />
               </div>
-              <p className="pointer-none text-[#b2b3b4]">
+              <p className="pointer-none text-[#b2b3b4] dark:text-[#AFB3B4]">
                 <p
-                  className="text-[#979b9c] font-bold"
+                  className="text-[#979b9c] dark:text-[#F0EEEE] font-bold"
                 >
                   select a file
                 </p>{" "}
