@@ -13,7 +13,7 @@ function Landing() {
       <Navbar />
       <Introduction />
 
-      <div className="lg:mt-[150px] 2xl:mt-[90px] lg:mb-[200px] max-sm:hidden">
+      <div className="lg:mt-[70px] 2xl:mt-[90px] lg:mb-[200px] max-sm:hidden">
             <section className="demo section07" id="section07">
               <a href="#trending"><span></span><span></span><span></span></a>
             </section>

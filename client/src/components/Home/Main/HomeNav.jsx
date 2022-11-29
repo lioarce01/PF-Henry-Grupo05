@@ -88,10 +88,11 @@ const HomeNav = () => {
 
     const handleChange = e => setSearch({ ...search, query: e.target.value })
 
-    const handleSearch = e => {
+    const handleSearch = async e => {
         e.preventDefault()
         setSearch({ ...search, submit: true })
-        displayShelters()
+        await displayShelters()
+        setSearch({submit: false, query: ''})
     }
 
     // ------------------------------------------ //
@@ -106,7 +107,7 @@ const HomeNav = () => {
                 <div className="sm:w-[250px] md:w-[270px] lg:w-[350px] h-[50px] bg-white dark:bg-[#1b1a1f] ml-[20px] mt-[30px] rounded-full">
                     <form onSubmit={e => handleSearch(e)} className='flex flex-row w-full items-center h-full'>
                         <input type="text" className="bg-white dark:bg-[#1b1a1f] h-full pl-[20px] lg:pr-[80px] rounded-full focus:outline-none"
-                            placeholder="Type to search shelters..." onChange={e => handleChange(e)} />
+                            placeholder="Type to search shelters..." value={search.query} onChange={e => handleChange(e)} />
                         <button className='ml-auto mr-[10px] p-[10px] bg-[#FF7272] dark:bg-[#e06161] rounded-full hover:bg-[#e76464] dark:hover:bg-[#be4f4f]'>
                             <BsSearch className='text-white' />
                         </button>

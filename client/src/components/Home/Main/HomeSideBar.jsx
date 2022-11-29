@@ -89,14 +89,6 @@ const SubscriptorsBar = () => {
 							</li>
 
 							<li className="mt-[10px]">
-								<button className={`flex flex-row group ${!expanded && 'mx-auto'}`}>
-									<TbReportMoney className={`text-[#bb7070] flex group-hover:text-[#e76f6f] dark:text-[#f56666] dark:group-hover:text-[#fa5656] 
-									transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />
-									{expanded && <p className="flex xsm:ml-[10px] sm:ml-[15px] text-[#979b9c] dark:text-[#afb3b4] sm:text-[1.1rem] xsm:text-[0.9rem] font-semibold group-hover:underline">Subbed Shelters</p>}
-								</button>
-							</li>
-
-							<li className="mt-[10px]">
 								<button onClick={() => handleRender('following')} className={`flex flex-row group ${!expanded && 'mx-auto'}`}>
 									<AiFillStar className={`text-2xl text-[#bb7070] flex group-hover:text-[#e76f6f] dark:text-[#f56666] dark:group-hover:text-[#fa5656] 
 									transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />
