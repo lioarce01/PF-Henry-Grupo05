@@ -8,7 +8,7 @@ const Footer = () => {
 
     return (
 
-        <footer className="w-full lg:h-[100px] md:h-[50px] sm:px-12 dark:bg-[#1B1A1F] xsm:h-[90px] xsm:px-2">
+        <footer className="w-full lg:h-[100px] md:h-[50px] sm:px-12 dark:bg-[#1B1A1F] bg-inherit xsm:h-[90px] xsm:px-2">
             <div className="border-t-[1px] border-[#3D190C] lg:pt-7 md:pt-4 flex flex-row xsm:flex-wrap items-center lg:justify-between xsm:justify-center">
                 <div className="flex md:flex-row xsm:flex-wrap items-center xsm:pb-2 xsm:pt-4 sm:p-0">
                     <img className="w-7 h-7 2xl:w-12 2xl:h-12" src={darkState ? imageDark : image} />
