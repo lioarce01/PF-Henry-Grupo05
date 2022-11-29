@@ -1,11 +1,13 @@
 import { Transition, Dialog } from '@headlessui/react'
 import DescriptionWindow from './DescriptionWindow';
 import { Fragment } from "react";
+import { useSelector } from 'react-redux';
 
 const ModalDescription = ({ isOpen, closeModal, details, shelterRefetch }) => {
+  const { darkmode } = useSelector(state => state.localStorage.manageTheme)
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Dialog as="div" className={darkmode?"relative z-10 dark":"relative z-10"} onClose={closeModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
