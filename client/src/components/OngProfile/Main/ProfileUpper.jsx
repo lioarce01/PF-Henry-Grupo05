@@ -1,5 +1,5 @@
 import Swal from "sweetalert2"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Goals from '../../Goals/Goals'
 import { FaInfo } from 'react-icons/fa'
 import { AiFillEdit } from 'react-icons/ai'
@@ -28,13 +28,11 @@ const ProfileUpper = ({ details, setIsOpenDonate, loading, shelterRefetch }) => 
     const [modalEdit, setModalEdit] = useState(false);
     const closeModalEdit = () => setModalEdit(false);
 
-    const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
+    const { isAuth, userDetail, following } = useSelector(state => state.localStorage.userState)
     const { data: gotUser, refetch: userRefetch } = useGetUserByIdQuery(userDetail?.id)
 
     const [unfollow] = useDeleteFollowersMutation()
     const [follow] = useAddFollowersMutation()
-
-    console.log("gotUser: ", details)
 
 		const deleteFollow = async () => {
 			if (isAuth) {
@@ -54,7 +52,7 @@ const ProfileUpper = ({ details, setIsOpenDonate, loading, shelterRefetch }) => 
 				shelterRefetch()
 				userRefetch()
 			} else {
-				if (userDetail.following.length > 2) {
+				if (following.length > 2) {
 					Swal.fire({
 						icon: "error",
 						title: "Create a user or log in to save your following",
@@ -70,6 +68,9 @@ const ProfileUpper = ({ details, setIsOpenDonate, loading, shelterRefetch }) => 
 				}
 			}
 		}
+		useEffect(()=>{
+			userRefetch()
+		},[following])
 
 		return (
 			<div className="w-full">
@@ -108,7 +109,7 @@ const ProfileUpper = ({ details, setIsOpenDonate, loading, shelterRefetch }) => 
 								{gotUser?.following?.find(
 									(shelter) => shelter.id === details?.id
 								) ||
-								userDetail?.following?.find(
+								following?.find(
 									(shelter) => shelter.id === details?.id
 								) ? (
 									<button
