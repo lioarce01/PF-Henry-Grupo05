@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useAddNewTicketMutation } from "../../redux/api/shelters";
 import { useRespondTicketMutation } from "../../redux/api/tickets";
+import { selectTheme } from "../../redux/slices/manageTheme";
 import { selectUser } from "../../redux/slices/manageUsers";
 import Comment from "../PostDetail/Comments/Comment";
 
@@ -10,6 +11,7 @@ function ItemTicket({ticket}) {
   const [input, setInput] = useState("");
   const [respondTicket] = useRespondTicketMutation()
   const {userDetail} = useSelector(selectUser)
+  const {darkmode} = useSelector(selectTheme)
 
   const handleChange = (e) => {
     setInput(e.target.value);
@@ -22,21 +24,21 @@ function ItemTicket({ticket}) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-[400px] mx-auto bg-white p-10 rounded ">
-      
-      <div className="mb-6 ">
-        <h2 className="bold text-lg font-bold">Shelter</h2>
+    <form onSubmit={handleSubmit} className={`w-[400px] mx-auto bg-white p-10 rounded ${darkmode && "dark bg-[#27242C]"}`}>
+      <h2 className="text-center text-2xl font-bold  dark:text-white">Ticket</h2>
+      <div className="mb-6 dark:text-white">
+        <h2 className="bold text-lg font-bold dark:text-white">Shelter</h2>
         NAME: {ticket?.shelter.name}
         <br />
         ID: {ticket?.shelter.id}
       </div>
-      <div className="mb-6">
-        <h2 className="bold text-lg font-bold">Title</h2>
+      <div className="mb-6 dark:text-white">
+        <h2 className="bold text-lg font-bold dark:text-white">Title</h2>
         {ticket?.title}
       </div>
       <div className="mb-6">
-        <h2 className="bold text-lg font-bold">Content</h2>
-        <p className=" break-words">{ticket?.content}</p>
+        <h2 className="bold text-lg font-bold dark:text-white">Content</h2>
+        <p className=" break-words dark:text-white">{ticket?.content}</p>
       </div>
 
       {ticket?.status === "for review" ? (userDetail?.role === "Admin" && <><div>
