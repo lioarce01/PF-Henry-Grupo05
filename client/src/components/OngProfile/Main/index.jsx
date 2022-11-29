@@ -95,7 +95,7 @@ const OngDetail = () => {
                 </div>
             </div>
 
-            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} id={id} />
+            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} shelterId={details?.id} />
             <ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
         </div>
     )
