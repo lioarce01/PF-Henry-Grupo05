@@ -135,11 +135,11 @@ const ONGFilters = ({ setShelters, search }) => {
 	return (
 		<div className="flex mx-auto items-center">
 			<div className="flex flex-col">
-				<h1 className="font-bold text-[#666768] ml-[5px] text-[1.2rem]">Browse Shelters:</h1>
+				<h1 className="font-bold text-[#666768] ml-[5px] text-[1.2rem] dark:text-[#FF7272]">Browse Shelters:</h1>
 
-				<div className="w-[300px] lg:w-[110%] h-[50px] bg-[#EFF0F3] mt-[15px] rounded-full">
-					<form onSubmit={e => handleSubmit(e)} className='flex flex-row w-full items-center h-full'>
-						<input value={input} type="text" className="bg-[#EFF0F3] h-full pl-[20px] rounded-full focus:outline-none"
+				<div className="w-[300px] lg:w-[110%] h-[50px] bg-[#EFF0F3] dark:bg-[#000] mt-[15px] rounded-full">
+					<form onSubmit={e => handleSubmit(e)} className='flex flex-row w-full items-center h-full dark:bg-[#000] rounded-full'>
+						<input value={input} type="text" className="bg-[#EFF0F3] h-full pl-[20px] rounded-full focus:outline-none dark:bg-[#000] dark:text-white"
 						placeholder="Type to search shelters..." onChange={e => handleChange(e)} />
 						<button className='ml-auto mr-[10px] p-[10px] bg-[#FF7272] rounded-full hover:bg-[#e76464]'>
 							<BsSearch className='text-white' />
