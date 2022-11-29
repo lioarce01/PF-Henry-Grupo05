@@ -9,12 +9,12 @@ import { useSelector } from "react-redux";
 const HomeCarousel = () => {
     const { carousel, animals } = useSelector(state => state.manageShelters)
     const { isAuth, userDetail } = useSelector(state => state.localStorage.userState)
-    const { data: shelters, isLoading, refetch } = useGetSheltersQuery({name: "", enabled: true})
+    const { data: shelters, isLoading, refetch } = useGetSheltersQuery({ name: "", enabled: true })
     const { data: topShelters, refetchTop } = useTopFiveSheltersQuery(10)
-    const [getShelterByAnimal, {data: animalShelter}] = useGetShelterByAnimalMutation() 
+    const [getShelterByAnimal, { data: animalShelter }] = useGetShelterByAnimalMutation()
     const [showShelters, setShowShelters] = useState(shelters)
     console.log(userDetail, animalShelter)
-    
+
     useEffect(() => {
         refetch()
 
@@ -26,27 +26,27 @@ const HomeCarousel = () => {
 
     useEffect(() => {
         if (carousel === 'following') setShowShelters(userDetail?.following)
-        else if (carousel === 'trending')  setShowShelters(topShelters)
-        else if(carousel === "animals") {
-            if(animals.length > 0) {
+        else if (carousel === 'trending') setShowShelters(topShelters)
+        else if (carousel === "animals") {
+            if (animals.length > 0) {
                 getShelterByAnimal(animals).unwrap()
                     .then(res => setShowShelters(res))
             } else setShowShelters(shelters)
         }
         else setShowShelters(shelters)
-        
+
     }, [carousel, animals])
 
     if (isLoading) return (<div className=""><Spinner /></div>)
-    if (! showShelters?.length) return (
-    <div className="w-full py-[40px]">
-        <h1 className="text-center font-bold text-[#FF7272]">{isAuth ? "You are not following any shelters." : "You are not logged in!"}</h1>
-    </div>)
+    if (!showShelters?.length) return (
+        <div className="w-full py-[40px]">
+            <h1 className="text-center font-bold text-[#FF7272]">{isAuth ? "You are not following any shelters." : "You are not logged in!"}</h1>
+        </div>)
 
     return (
         <div className="">
             <Swiper
-          
+
                 slidesPerView={1}
                 spaceBetween={0}
                 freeMode={true}
@@ -79,12 +79,12 @@ const HomeCarousel = () => {
                     }
                 }}>
 
-                    {showShelters?.length > 0 && showShelters?.map((s, index) => 
+                {showShelters?.length > 0 && showShelters?.map((s, index) =>
                     <SwiperSlide key={index} >
                         <CarouselCard id={s?.id} image={s?.profilePic} name={s?.name} goal={s?.goal} authorId={s?.authorId}
-                                      budget={s?.budget} listAnimals={s?.listAnimals} profilePic={s?.author?.profilePic}/>
-                    </SwiperSlide>)}
-
+                            budget={s?.budget} listAnimals={s?.listAnimals} profilePic={s?.author?.profilePic} />
+                    </SwiperSlide>
+                )}
             </Swiper>
         </div>
     )
