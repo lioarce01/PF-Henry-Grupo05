@@ -82,7 +82,7 @@ const Goals = ({ goals, setIsOpenDonate, shelterId, shelterName, loading, shelte
 										id={g.id}
 										setIsOpenDonate={setIsOpenDonate}
 										shelterId={shelterId}
-										shlterName={shelterName}
+										shelterName={shelterName}
 										enable={g.enable}
 										shelterRefetch={shelterRefetch}
 									/>
