@@ -56,11 +56,11 @@ const ModalShelters = ({ setOpen, search }) => {
                     overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md bg-green`}
           >
             <div
-              className={`flex w-[90%] mx-auto ${
+              className={`flex w-[90%] lg:w-fit mx-auto ${
                 !shelters?.length && "h-full"
               }`}
             >
-              <div className="flex flex-row flex-wrap mx-auto">
+              <div className="flex flex-row flex-wrap gap-8 mx-auto">
                 {shelters?.length ? (
                   shelters?.map((s) => {
                     return (
@@ -81,7 +81,7 @@ const ModalShelters = ({ setOpen, search }) => {
                                                     shadow-[0px_12px_10px_-6px_rgba(133,133,133,0.8)] dark:shadow-none"
                             />
 
-                            <div className="flex-col items-start mt-[10px] ml-[25px] xsm:hidden md:flex">
+                            <div className="flex-col items-start mt-[10px] ml-[25px] xsm:hidden md:flex truncate">
                               <h1 className="flex flex-col leading-5 font-[700] text-[#838788] group-hover:text-[#5e6061] ">
                                 {s.name}
                               </h1>
@@ -90,7 +90,7 @@ const ModalShelters = ({ setOpen, search }) => {
                               </p>
                               <p
                                 className="flex flex-row w-[250px] mt-[10px] font-semibold 
-                                                        text-[#ACB1B2] text-[0.9rem] group-hover:text-[#838788]"
+                                                        text-[#ACB1B2] text-[0.9rem] group-hover:text-[#838788] "
                               >
                                 {s.description.length > 61
                                   ? s.description.slice(0, 61) + "..."
