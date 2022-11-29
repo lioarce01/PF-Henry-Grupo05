@@ -60,43 +60,60 @@ const ProfilePanel = ({ expanded }) => {
 						leave="transition ease-in duration-75"
 						leaveFrom="transform opacity-100 scale-100"
 						leaveTo="transform opacity-0 scale-95">
-						<Menu.Items className="absolute z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+						<Menu.Items className="absolute z-10 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-[#27242C] dark:text-[#F0EEEE]">
 							<div className="py-1">
+								{
+									location.pathname !== '/home' && 
+										<Menu.Item>
+											{({ active }) => (
+												<Link
+													to="/home"
+													className={classNames(
+														active ? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]" : "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
+														"block px-4 py-2 text-sm"
+													)}>
+													Home
+												</Link>
+											)}
+										</Menu.Item>
+								}
 								<Menu.Item>
 									{({ active }) => (
 										<Link
 											to={`/users/${userDetail.id}`}
 											className={classNames(
-												active ? "bg-slate-100 text-gray-900" : "text-gray-700",
+												active ? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]" : "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
 												"block px-4 py-2 text-sm"
 											)}>
 											Account settings
 										</Link>
 									)}
 								</Menu.Item>
-								{userDetail?.role === "Admin" && (
-									<Menu.Item as={AdminButton}>
-										{({ active }) => (
-											<Link
-												to={`/admin`}
-												className={classNames(
-													active
-														? "bg-slate-100 text-gray-900"
-														: "text-gray-700",
-													"block px-4 py-2 text-sm"
-												)}>
-												Admin Dashboard
-											</Link>
-										)}
-									</Menu.Item>
-								)}					
+								{	
+									userDetail?.role === "Admin" &&
+										<Menu.Item>
+											{({ active }) => (
+												<Link
+													to="/admin"
+													className={classNames(
+														active
+															? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]"
+															: "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
+														"block px-4 py-2 text-sm"
+													)}
+												>
+													Admin Dashboard
+												</Link>
+											)}
+										</Menu.Item>
+								}				
 								<Menu.Item>
 									{({ active }) => (
 										<Link
 
 											to={userDetail?.Shelter?.length > 0 ? `/${userDetail.Shelter[0].id}/profile` : "/createOng"}
 											className={classNames(
-												active ? "bg-slate-100 text-gray-900" : "text-gray-700",
+												active ? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]" : "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
 												"block px-4 py-2 text-sm"
 											)}>
 											{userDetail?.Shelter?.length > 0 ? "Shelter settings" : "Create Shelter"}
@@ -109,7 +126,7 @@ const ProfilePanel = ({ expanded }) => {
 
 											to={location.pathname === "/tickets" ? "/home" : "/tickets" }
 											className={classNames(
-												active ? "bg-slate-100 text-gray-900" : "text-gray-700",
+												active ? "bg-slate-100 text-gray-900 dark:text-[#F0EEEE] dark:bg-[#342f3d]" : "text-gray-700 dark:text-[#F0EEEE] dark:bg-[#27242C]",
 												"block px-4 py-2 text-sm"
 											)}>
 											{location.pathname === "/tickets" ? "Home" : "My Tickets"}
