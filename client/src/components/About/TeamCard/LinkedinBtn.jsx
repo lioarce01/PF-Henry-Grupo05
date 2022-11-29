@@ -6,7 +6,7 @@ const LinkedinBtn = ({linkedin}) => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 448 512"
-                  className="w-6 h-6 text-black-600"
+                  className="w-6 h-6 text-black-600 dark:text-[#F0EEEE]"
                 >
                   <path
                     fill="currentColor"
