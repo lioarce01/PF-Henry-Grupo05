@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import Modal from './modalCreate'
+import { useState } from "react"
+import Modal from "./modalCreate"
 import CardGoals from "./CardGoals"
-import { useSelector } from 'react-redux'
-import { BiMessageAdd } from 'react-icons/bi'
+import { useSelector } from "react-redux"
+import { BiMessageAdd } from "react-icons/bi"
 
 // all swiper imports
 import Spinner from "../Spinner/Spinner"
