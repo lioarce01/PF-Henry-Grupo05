@@ -39,21 +39,25 @@ const PostForm = ({ closeModal }) => {
 
 	return (
 		<div className="">
-			<div className="sm:max-w-lg  max-w-full p-10 pt-6 bg-white rounded-xl z-10 ">
+			<div className="sm:max-w-lg  max-w-full p-10 pt-6 bg-white dark:bg-[#1B1A1F] rounded-xl z-10  ">
+				<div className="flex flex-row justify-end">
+					<button className="sm:hidden text-[#EFF0F3] dark:text-[#F0EEEE] py-1 px-2 rounded-xl bg-[#FF7272] dark:bg-[#E06161] w-fit"
+					onClick={closeModal}>X</button>
+				</div>
 				<div className="text-center">
-					<h2 className="text-3xl font-bold text-[#FF7272]">Create Post</h2>
+					<h2 className="text-3xl font-bold text-[#FF7272] dark:text-[#E06161]">Create Post</h2>
 				</div>
 				<form onSubmit={onSubmit} className="mt-5 space-y-3">
 					<ContentInput content={content} setContent={setContent} />
 					<UploadImage url={url} setUrl={setUrl} />
 					{url[0] === "video" && <VideoPlayer public_id={url[1]} />}
-					<p className="text-sm text-[#b2b3b4]">
+					<p className="text-sm text-[#b2b3b4] dark:text-[#AFB3B4]">
 						<span>File type: types of images</span>
 					</p>
 					<div>
 						<button
 							type="submit"
-							className="my-5 w-[60%] mx-auto flex justify-center bg-[#FF7272] text-gray-100 p-3 rounded-full tracking-wide 
+							className="my-5 w-[60%] mx-auto flex justify-center bg-[#FF7272] dark:bg-[#E06161] text-gray-100 dark:text-[#F0EEEE] p-3 rounded-full tracking-wide 
 							font-semibold focus:outline-none focus:shadow-outline hover:bg-[#e76464] shadow-lg cursor-pointer transition ease-in duration-300">
 							CREATE
 						</button>
