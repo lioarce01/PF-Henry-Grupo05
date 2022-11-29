@@ -13,8 +13,9 @@ import toast from "react-hot-toast";
 import { useAuth0 } from "@auth0/auth0-react";
 import { selectUser } from "../../redux/slices/manageUsers";
 import { addLikeAction, removeLikeAction } from "../../redux/slices/manageUsers/actions";
+import VideoPlayer from "../VideoPlayer";
 
-const CardPost = ({ image, author, content, profilePic, postImage, likes, createdAt, comments, id, authorId, authorRole, shelter, shelterId }) => {
+const CardPost = ({ postVideo,image, author, content, profilePic, postImage, likes, createdAt, comments, id, authorId, authorRole, shelter, shelterId }) => {
 	const dispatch = useDispatch()
 	const { getAccessTokenSilently } = useAuth0()
 	const { isAuth } = useSelector((state) => state.localStorage.userState)
@@ -113,11 +114,12 @@ const CardPost = ({ image, author, content, profilePic, postImage, likes, create
 					</div>
 
 					<div>
-						<img
+						{postImage && <img
 							src={postImage}
 							alt="post"
 							className="pb-object-cover w-[400px] mt-[20px] mb-[30px] flex mx-auto rounded-[20px]"
-						/>
+						/>}
+						{postVideo && <VideoPlayer public_id={postVideo}/>}
 					</div>
 
 					<div className="flex items-center justify-end pt-2 mt-2 border-t border-gray-400">

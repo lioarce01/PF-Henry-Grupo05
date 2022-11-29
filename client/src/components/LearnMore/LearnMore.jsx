@@ -7,8 +7,10 @@ const LearnMore = () =>{
     const image = "https://cdn-icons-png.flaticon.com/512/1152/1152755.png"
 
     return(
-        <div className="bg-[#eff0f3] w-full dark:bg-[#1b1a1f] dark:text-[#F0EEEE]">
-            <Navbar/>
+        <div className="bg-[#eff0f3] w-full min-h-screen overflow-y-hidden dark:bg-[#1b1a1f] dark:text-[#F0EEEE]">
+            
+                <Navbar/>
+            
             <div>
                 <div className="w-full flex flex-row items-center justify-center ml-[10px] animate-tracking-animation">
                         <span className="font-bold text-4xl sm:text-7xl text-[#201008] dark:text-white">
@@ -34,9 +36,9 @@ const LearnMore = () =>{
                     <img className="w-40 h-40 dark:invert" src={image} alt='Not Found'/>
                 </div>
             </div>
-            <div className=" flex mb-0">
+            
                 <Footer/>
-            </div>
+            
         </div>
     )
 }
