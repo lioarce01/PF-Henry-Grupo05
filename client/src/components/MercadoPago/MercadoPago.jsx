@@ -15,14 +15,21 @@ const MercadoPago = () => {
         let payment_id = query.get("payment_id")
         console.log("payment_id: ", payment_id)
         setTimeout(() => {
-          verify({payment_id}).unwrap().then((res) => {
-            res.status === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
-            navigate(`/${res.data}/profile`)
-          }).catch((res) => {
-            res.status === 200 ? Swal.fire("Approved payment", undefined,'success') : Swal.fire({icon: 'error', title: "Failed payment"})
-            navigate("/home")
-          })
-        }, 3500)
+					verify({ payment_id })
+						.unwrap()
+						.then((res) => {
+							res.status === 200
+								? Swal.fire("Approved payment", undefined, "success")
+								: Swal.fire({ icon: "error", title: "Failed payment" })
+							navigate(`/${res.data}/profile`)
+						})
+						.catch((res) => {
+							res.status === 200
+								? Swal.fire("Approved payment", undefined, "success")
+								: Swal.fire({ icon: "error", title: "Failed payment" })
+							navigate("/home")
+						})
+				}, 15000)
     }, [])
 
   return (
@@ -33,7 +40,7 @@ const MercadoPago = () => {
       </div>
       <div className='flex flex-col items-center mb-8 lg:flex-row lg:justify-around h-fit lg:mb-16'>
       <div className="flex flex-row mb-8 lg:mb-0">
-        <h1 className="text-4xl font-bold text-black  dark:text-white">Paws</h1>
+        <h1 className="text-4xl font-bold text-black dark:text-white">Paws</h1>
         <h1 className=" font-bold text-4xl text-[#FF7272] dark:text-[#E06161]">Founding</h1>
       </div>
       <img src="https://logotipoz.com/wp-content/uploads/2021/10/version-horizontal-large-logo-mercado-pago.webp" alt="mercado_pago_logo" 
