@@ -33,7 +33,7 @@ router.post("/", async (req,res) => {
                 id: "ticket"
             }]
         },
-        back_urls: {success: "http://localhost:3000/mp"},
+        back_urls: {success: `${process.env.URLMP}/mp`},
         auto_return: "approved",
     }
 
@@ -54,14 +54,21 @@ router.get('/feedback', async function (req, res) {
         let goalId = id[1]
         let shelterId = id[0]
         let shelter = await prisma.shelter.findUnique({where: {id: shelterId}})
-        let goal = await prisma.goal.findUnique({where: {id: goalId}})
+        if (goalId !== "undefined") {
+            let goal = await prisma.goal.findUnique({where: {id: goalId}})
+            await prisma.payment.create({data: {paymentId: data.id.toString()}})
+            await prisma.shelter.update({where: {id: shelterId}, data: {
+                budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price),
+            }}),
+            await prisma.goal.update({where: {id: goalId}, data: {
+                budget: goal?.budget! + Number(data.additional_info.items[0].unit_price)
+            }})
+        }
         await prisma.payment.create({data: {paymentId: data.id.toString()}})
         await prisma.shelter.update({where: {id: shelterId}, data: {
             budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price),
-        }}),
-        await prisma.goal.update({where: {id: goalId}, data: {
-            budget: goal?.budget! + Number(data.additional_info.items[0].unit_price)
         }})
+        
 
         sendMailDonate(data.additional_info.items[0].description, shelter?.name!)
 

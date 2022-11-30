@@ -4,6 +4,7 @@ import { TbMap2 } from 'react-icons/tb'
 import { useSelector } from "react-redux"
 import ProfileFooter from "./ProfileFooter"
 import MapView from "../../Maps/MapView/MapView"
+import HomeChatBot from "../../Home/HomeChatBot"
 
 const ProfileBottom = ({ details, setIsOpen }) => {
     const { userDetail } = useSelector(state => state.localStorage.userState);
@@ -46,7 +47,7 @@ const ProfileBottom = ({ details, setIsOpen }) => {
                     {details && <MapView name={details?.name} lat={details?.lat} lon={details?.lon} id={details?.id} author={details?.author} />}
                 </div>
 
-                <div className={`lg:hidden ${(userDetail.Shelter[0].id === details?.id) && 'mt-[80px]'}`}>
+                <div className={`lg:hidden ${( userDetail?.Shelter && userDetail?.Shelter[0]?.id === details?.id) && 'mt-[80px]'}`}>
                     <div className="flex flex-row">
 
                         <h2 className="text-2xl font-semibold text-[#838788] dark:text-[#b3b8b9]">News & Updates</h2>
@@ -73,7 +74,11 @@ const ProfileBottom = ({ details, setIsOpen }) => {
                     </div>
                 </div>
 
-                <ProfileFooter id={details?.id} />
+                <div className='fixed right-[20px] bottom-[20px] z-50'>
+					<HomeChatBot />
+				</div>
+
+                <ProfileFooter id={userDetail?.id} />
             </div>
         </div>
     )

@@ -90,12 +90,12 @@ const OngDetail = () => {
 
             <div className="w-full overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
                 <div className="xsm:mt-[30px] md:mt-[35px] xsm:ml-[10px] sm:ml-[20px] md:ml-[40px] xl:ml-[60px] 2xl:ml-[100px] xsm:mr-0 sm:mr-[20px] md:mr-[40px] 2xl:mr-[60px]">
-                    <ProfileUpper setIsOpenDonate={setIsOpenDonate} loading={isLoading} shelterRefetch={shelterRefetch} details={details} />
+                    <ProfileUpper setIsOpenDonate={setIsOpenDonate} loading={isLoading} shelterRefetch={shelterRefetch} details={details}/>
                     <ProfileBottom setIsOpen={setIsOpen} details={details} />
                 </div>
             </div>
 
-            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} id={id} />
+            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} shelterId={details?.id} />
             <ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
         </div>
     )
