@@ -29,7 +29,7 @@ const HomeCarousel = () => {
         }
         else setShowShelters(shelters)
 
-    }, [carousel, animals])
+    }, [carousel, animals, shelters])
 
     if (isLoading) return (<div className=""><Spinner /></div>)
     if (!showShelters?.length) return (
