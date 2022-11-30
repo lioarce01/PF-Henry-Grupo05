@@ -75,6 +75,7 @@ const ModalShelters = ({ setOpen, search }) => {
 													<div className="flex flex-row">
 														<img
 															src={s.profilePic}
+															alt="/"
 															className="object-cover w-[120px] h-[120px] rounded-[25px] 
                                                     shadow-[0px_12px_10px_-6px_rgba(133,133,133,0.8)] dark:shadow-none"
 														/>
