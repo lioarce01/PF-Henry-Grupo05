@@ -3,7 +3,7 @@ import { FaDog, FaCat, FaKiwiBird } from 'react-icons/fa'
 import { SiHappycow } from 'react-icons/si'
 import { GiElephant } from 'react-icons/gi'
 
-const CarouselCard = ({ id, image, name, goal, budget, listAnimals, profilePic, authorId }) => {
+const CarouselCard = ({ id, image, name, city, budget, listAnimals, profilePic, authorId }) => {
 
     // formatting budget and goal to show the $ sign,
     // as well as the thousands separator
@@ -67,8 +67,8 @@ const CarouselCard = ({ id, image, name, goal, budget, listAnimals, profilePic, 
                     </div>
 
                     <div className="flex flex-row mt-[15px]">
-                        <h2 className="flex text-[#ACB1B2]">Goal to Reach:</h2>
-                        <h2 className="flex font-semibold ml-auto text-[#979b9c] dark:text-[#abb0b1]">{moneyFormat(goal)}</h2>
+                        <h2 className="flex text-[#ACB1B2]">City:</h2>
+                        <h2 className="flex font-semibold ml-auto text-[#979b9c] dark:text-[#abb0b1]">{city}</h2>
                     </div>
 
                     <div className="flex flex-row mt-[15px]">

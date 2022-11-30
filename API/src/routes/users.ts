@@ -121,6 +121,9 @@ router.get("/:id", async (req, res) => {
                 following: {
                     where: {
                         enable: state
+                    },
+                    include: {
+                        author: true
                     }
                 }, 
                 posts: {
