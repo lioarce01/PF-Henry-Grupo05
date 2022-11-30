@@ -43,7 +43,8 @@ router.post("/", async (req,res) => {
 })
 
 router.get('/feedback', async function (req, res) {
-    let payment_id = req.query.payment_id
+    try {
+        let payment_id = req.query.payment_id
     let {data} = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
 	
     let paymentID = await prisma.payment.findMany({where: {paymentId: data.id.toString()}})
@@ -75,6 +76,9 @@ router.get('/feedback', async function (req, res) {
         res.status(200).json({status:200,data: shelterId})
     } else {
         res.status(403).send("Failed payment")
+    }
+    } catch(e) {
+        console.log(e)
     }
 });
 
