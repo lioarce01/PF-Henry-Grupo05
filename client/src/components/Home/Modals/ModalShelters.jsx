@@ -80,8 +80,10 @@ const ModalShelters = ({ setOpen, search }) => {
 														/>
 
 														<div className="flex-col items-start mt-[10px] ml-[25px] xsm:hidden md:flex truncate">
-															<h1 className="flex flex-col leading-5 font-[700] text-[#838788] group-hover:text-[#5e6061] ">
-																{s.name}
+															<h1 className="flex flex-col leading-5 font-[700] text-[#838788] group-hover:text-[#5e6061] xsm:text-[0.9rem]">
+																{s.name.length > 26
+																	? s.name.slice(0, 26) + "..."
+																	: s.name}
 															</h1>
 															<p className="flex flex-col text-[#FF7272]">
 																{s.city}
@@ -90,16 +92,16 @@ const ModalShelters = ({ setOpen, search }) => {
 																className="flex flex-row w-[250px] mt-[10px] font-semibold 
                                                         text-[#ACB1B2] text-[0.9rem] group-hover:text-[#838788] "
 															>
-																{s.description.length > 61
-																	? s.description.slice(0, 61) + "..."
+																{s.description.length > 30
+																	? s.description.slice(0, 30) + "..."
 																	: s.description}
 															</p>
 														</div>
 
 														<div className="flex-col items-start mt-[10px] ml-[25px] xsm:flex md:hidden">
 															<h1 className="flex flex-col leading-5 font-[700] text-[#838788] group-hover:text-[#5e6061] xsm:text-[0.9rem]">
-																{s.name.length > 27
-																	? s.name.slice(0, 27) + "..."
+																{s.name.length > 26
+																	? s.name.slice(0, 26) + "..."
 																	: s.name}
 															</h1>
 															<p className="flex flex-col text-[#FF7272] xsm:text-[0.9rem]">
