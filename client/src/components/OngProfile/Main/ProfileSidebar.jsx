@@ -69,7 +69,7 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                 </div>
 
                 {/* informative text */}
-                <div className={expanded && `xsm:flex sm:flex-col xsm:flex-col xsm:ml-[30px]`}>
+                <div className={`h-full ${expanded && `xsm:flex sm:flex-col xsm:flex-col xsm:ml-[30px]`}`}>
                     <div className={`xsm:mt-[20px] sm:mt-[45px] ${expanded && "sm:ml-[20px]"}`}>
                         <ul className="mt-[10px]">
                             {/* location */}
@@ -106,7 +106,7 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                                     {!expanded &&  <HiPencilSquare className={`text-[#bb7070] flex mt-[2px] group-hover:text-[#e76f6f] 
 									transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />}
 
-                                    <div className={`flex sm:flex-row md:flex-col w-full sm:text-left md:text-center ${expanded && "mr-[80px]"}`}>
+                                    <div className={`flex xsm:flex-row sm:flex-col w-full sm:text-center ${expanded && "mr-[80px]"}`}>
                                         <span className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1rem] font-semibold">{postsLength}</span>
                                         {expanded && 
                                         <div className="flex w-fit text-center md:mx-auto">
@@ -122,7 +122,7 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                                     {!expanded &&  <BsFillPersonFill className={`text-[#bb7070] flex mt-[2px] group-hover:text-[#e76f6f] 
 									transition-all duration-300 ${expanded ? 'sm:text-2xl xsm:text-xl' : 'text-4xl mx-auto'}`} />}
 
-                                    <div className={`flex sm:flex-row md:flex-col w-full sm:text-left md:text-center ${expanded && "mr-[80px]"}`}>
+                                    <div className={`flex xsm:flex-row sm:flex-col w-full sm:text-center ${expanded && "mr-[80px]"}`}>
                                         <span className="text-[#979b9c] dark:text-[#b3b8b9] sm:text-[1.5rem] xsm:text-[1rem] font-semibold">{followersLength}</span>
                                         {expanded && 
                                         <div className="flex w-fit text-center md:mx-auto">
@@ -134,7 +134,7 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
                         </ul>
                     </div>
 
-                    <div className={`md:mt-[50px] flex flex-row ${expanded ? "sm:w-auto sm:mr-[40px] md:w-[250px] ml-[20px] sm:mt-[160px] lg:mt-[100px]" : "ml-[30px] sm:mt-[40px]"}`}>
+                    <div className={`flex flex-row ${expanded ? "sm:w-auto sm:mr-[40px] md:w-[250px] ml-[20px] sm:items-end sm:h-full sm:mb-[60px]" : "ml-[30px] items-end h-[20%]"}`}>
                         {expanded && <h2 className="sm:flex text-[#979b9c] dark:text-[#afb3b4] text-[1.1rem] font-semibold xsm:hidden">Night Mode</h2>}
 
                         <div className={`flex ${expanded && "ml-auto sm:mr-[0px] xsm:absolute xsm:top-[40px] xsm:right-[20px] sm:static"}`}>
@@ -152,7 +152,7 @@ const ProfileSidebar = ({ id, profilePic, city, country, website, postsLength, f
 
 
                 {/* retract nav button: only shows on xsm */}
-                <div className="xsm:flex sm:hidden mt-[40px] w-fit mx-auto">
+                <div className="xsm:flex sm:hidden relative bottom-[60px] w-fit mx-auto">
                     <button onClick={toggleExpanded} className="bg-[#EFF0F3] p-[5px] rounded-full">
                         <BsChevronBarUp className="text-2xl" />
                     </button>

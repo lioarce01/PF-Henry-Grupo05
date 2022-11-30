@@ -111,6 +111,9 @@ router.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 following: {
                     where: {
                         enable: state
+                    },
+                    include: {
+                        author: true
                     }
                 },
                 posts: {
