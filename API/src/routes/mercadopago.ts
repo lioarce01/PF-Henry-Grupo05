@@ -45,7 +45,11 @@ router.post("/", async (req,res) => {
 router.get('/feedback', async function (req, res) {
     try {
         let payment_id = req.query.payment_id
+        console.log("paymend_id: ", payment_id)
+        console.log("env: ", process.env)
     let {data} = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
+    console.log("data: ", data)
+
 	
     let paymentID = await prisma.payment.findMany({where: {paymentId: data.id.toString()}})
 
