@@ -46,9 +46,9 @@ router.get('/feedback', async function (req, res) {
     try {
         let payment_id = req.query.payment_id
         console.log("paymend_id: ", payment_id)
-        console.log("env: ", process.env)
+        // console.log("env: ", process.env)
     let {data} = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
-    console.log("data: ", data)
+    console.log("data: ", JSON.stringify(data))
 
 	
     let paymentID = await prisma.payment.findMany({where: {paymentId: data?.id?.toString()}})
@@ -61,7 +61,7 @@ router.get('/feedback', async function (req, res) {
         let shelter = await prisma.shelter.findUnique({where: {id: shelterId}})
         if (goalId !== "undefined") {
             let goal = await prisma.goal.findUnique({where: {id: goalId}})
-            await prisma.payment.create({data: {paymentId: data.id.toString()}})
+            await prisma.payment.create({data: {paymentId: data?.id?.toString()}})
             await prisma.shelter.update({where: {id: shelterId}, data: {
                 budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price),
             }}),
@@ -69,7 +69,7 @@ router.get('/feedback', async function (req, res) {
                 budget: goal?.budget! + Number(data.additional_info.items[0].unit_price)
             }})
         }
-        await prisma.payment.create({data: {paymentId: data.id.toString()}})
+        await prisma.payment.create({data: {paymentId: data?.id?.toString()}})
         await prisma.shelter.update({where: {id: shelterId}, data: {
             budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price),
         }})
