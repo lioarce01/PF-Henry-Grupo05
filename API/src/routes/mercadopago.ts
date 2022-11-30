@@ -33,7 +33,7 @@ router.post("/", async (req,res) => {
                 id: "ticket"
             }]
         },
-        back_urls: {success: `https://pf-henry-grupo05.vercel.app/mp`},
+        back_urls: {success: `${process.env.URLMP}/mp`},
         auto_return: "approved",
     }
 
