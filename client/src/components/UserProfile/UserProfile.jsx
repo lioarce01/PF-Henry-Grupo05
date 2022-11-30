@@ -186,6 +186,7 @@ const UserProfile = () => {
 										key={post.id}
 										id={post.id}
 										profilePic={details.profilePic}
+										postVideo={post.video}
 										postImage={post.image}
 										author={details.name}
 										shelter={details.Shelter[0]?.name}
