@@ -6,6 +6,7 @@ import axios from "axios"
 import { PrismaClient } from "@prisma/client";
 import { jwtCheck } from '../jwtCheck';
 import { sendMailDonate } from '../middleware/nodemailer';
+import fetch from "cross-fetch"
 
 const prisma = new PrismaClient()
 
@@ -45,9 +46,12 @@ router.post("/", async (req,res) => {
 router.get('/feedback', async function (req, res) {
     try {
         let payment_id = req.query.payment_id
-    let {data} = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
+        console.log("paymend_id: ", payment_id)
+        let data = await fetch(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}}).then((res) => res.json())
+    console.log("data: ", data)
+
 	
-    let paymentID = await prisma.payment.findMany({where: {paymentId: data.id.toString()}})
+    let paymentID = await prisma.payment.findMany({where: {paymentId: data?.id?.toString()}})
 
     if (data.status === "approved" && !paymentID.length) {
         let id = data.additional_info.items[0].id
@@ -57,7 +61,7 @@ router.get('/feedback', async function (req, res) {
         let shelter = await prisma.shelter.findUnique({where: {id: shelterId}})
         if (goalId !== "undefined") {
             let goal = await prisma.goal.findUnique({where: {id: goalId}})
-            await prisma.payment.create({data: {paymentId: data.id.toString()}})
+            await prisma.payment.create({data: {paymentId: data?.id?.toString()}})
             await prisma.shelter.update({where: {id: shelterId}, data: {
                 budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price),
             }}),
@@ -65,7 +69,7 @@ router.get('/feedback', async function (req, res) {
                 budget: goal?.budget! + Number(data.additional_info.items[0].unit_price)
             }})
         }
-        await prisma.payment.create({data: {paymentId: data.id.toString()}})
+        await prisma.payment.create({data: {paymentId: data?.id?.toString()}})
         await prisma.shelter.update({where: {id: shelterId}, data: {
             budget: shelter?.budget! + Number(data.additional_info.items[0].unit_price),
         }})
@@ -75,7 +79,7 @@ router.get('/feedback', async function (req, res) {
 
         res.status(200).json({status:200,data: shelterId})
     } else {
-        res.status(403).send("Failed payment")
+        res.status(403).send({data: data.status, paymentID})
     }
     } catch(e) {
         console.log(e)
