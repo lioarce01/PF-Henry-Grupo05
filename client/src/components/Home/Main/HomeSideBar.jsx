@@ -48,7 +48,7 @@ const SubscriptorsBar = () => {
 	}, [])
 
 	return (
-		<div className={`flex h-screen bg-white dark:bg-[#1b1a1f] overflow-y-hidden ${expanded ? "md:w-[350px] xsm:w-screen xsm:h-screen xsm:fixed xsm:z-50 sm:static" : "xsm:h-0 sm:h-screen sm:flex w-[140px]"} transition-all duration-300`}>
+		<div className={`flex h-screen bg-white dark:bg-[#1b1a1f] overflow-x-hidden overflow-y-hidden ${expanded ? "md:w-[350px] xsm:w-screen xsm:h-screen xsm:fixed xsm:z-50 sm:static" : "xsm:h-0 sm:h-screen sm:flex w-[140px]"} transition-all duration-300`}>
 			<div className={`${expanded ? "md:w-[325px] xsm:w-screen sm:pr-[20px] xsm:pr-0" : "w-[140px]"} h-screen mt-[30px] flex flex-col`}>
 				<div className={expanded && "ml-[25px]"}>
 					<div className="flex w-full">
@@ -150,7 +150,7 @@ const SubscriptorsBar = () => {
 					</div>
 				</Link>
 
-				<div className={`md:mt-[50px] flex flex-row ${expanded ? "sm:w-auto sm:mr-[40px] md:w-[250px] ml-[45px] sm:mt-[160px] lg:mt-[100px]" : "ml-[30px] sm:mt-[40px]"}`}>
+				<div className={`flex flex-row sm:items-end sm:h-full mb-[60px] ${expanded ? "sm:w-auto sm:mr-[40px] md:w-[250px] ml-[45px]" : "ml-[30px]"}`}>
 					{expanded && <h2 className="sm:flex text-[#979b9c] dark:text-[#afb3b4] text-[1.1rem] font-semibold xsm:hidden">Night Mode</h2>}
 
 					<div className={`flex ${expanded && "ml-auto sm:mr-[0px] xsm:absolute xsm:top-[40px] xsm:right-[20px] sm:static"}`}>
