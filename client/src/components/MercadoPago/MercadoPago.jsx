@@ -25,21 +25,21 @@ const MercadoPago = () => {
     }, [])
 
   return (
-    <div className='flex flex-col w-screen h-screen place-content-center'>
-    <div className='flex flex-col h-fit w-1/3 mx-auto p-5 bg-white shadow-xl shadow-[rgb(255,213,201)] rounded-2xl'>
-      <div className='mb-16'>
-      <p className='text-center text-4xl text-[#3D190C] font-bold'>Thanks for Helping Us to make a Better World!</p>
+    <div className='flex flex-col w-screen h-screen bg-[#EFF0F3] dark:bg-[#27242C] place-content-center'>
+    <div className='flex flex-col h-fit w-[300px] lg:w-2/3 xl:w-3/6 2xl:w-[45%] xl:p-8 2xl:px-16 mx-auto p-5 bg-white dark:bg-[#1B1A1F] lg:shadow-xl shadow-lg shadow-[#FF7272] dark:shadow-[#E06161] rounded-2xl'>
+      <div className='lg:mb-16 mb-8'>
+      <p className='text-center  text-2xl lg:text-4xl 2xl:text-6xl text-black dark:text-[#F0EEEE] font-bold'>Thanks for Helping Us to make a Better World!</p>
       </div>
-      <div className='flex flex-row items-center justify-around h-fit mb-16'>
-      <div className="flex flex-row ">
-        <h1 className=" font-bold text-4xl text-[#3D190C]">Paws</h1>
-        <h1 className=" font-bold text-4xl text-[#F87171]">Founding</h1>
+      <div className='flex flex-col lg:flex-row items-center lg:justify-around h-fit mb-8 lg:mb-16'>
+      <div className="flex flex-row mb-8 lg:mb-0">
+        <h1 className=" font-bold text-4xl text-black dark:text-white">Paws</h1>
+        <h1 className=" font-bold text-4xl text-[#FF7272] dark:text-[#E06161]">Founding</h1>
       </div>
       <img src="https://logotipoz.com/wp-content/uploads/2021/10/version-horizontal-large-logo-mercado-pago.webp" alt="mercado_pago_logo" 
-      className='h-32 w-60 '/>
+      className='lg:h-32 lg:w-60 w-[200px] h-[90px]'/>
       </div>
-      <p className='text-center text-2xl text-[#3D190C] mb-20'>Thanks to Heroes like you, we can continue rescuing animals until we find them a home.</p>
-      <p className='text-center text-1xl text-[#F87171]'>Wait a moment please, will redirected soon...</p>
+      <p className='text-center text-lg lg:text-2xl 2xl:text-3xl text-[#838788] dark:text-[#AFB3B4] mb-8 lg:mb-20'>Thanks to Heroes like you, we can continue rescuing animals until we find them a home.</p>
+      <p className='text-center text-sm lg:text-1xl 2xl:text-2xl text-[#FF7272] dark:text-[#E06161]'>Wait a moment please, will redirected soon...</p>
     </div>
     </div>
   )
