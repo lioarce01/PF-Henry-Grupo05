@@ -6,6 +6,7 @@ import axios from "axios"
 import { PrismaClient } from "@prisma/client";
 import { jwtCheck } from '../jwtCheck';
 import { sendMailDonate } from '../middleware/nodemailer';
+import fetch from "cross-fetch"
 
 const prisma = new PrismaClient()
 
