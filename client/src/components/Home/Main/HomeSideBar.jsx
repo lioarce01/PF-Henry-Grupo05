@@ -44,7 +44,10 @@ const SubscriptorsBar = () => {
 	}, [carousel])
 
 	useEffect(() => {
-		setDisplaying('All')
+		dispatch(carouselSheltersAction("All"))
+		return () => {
+			dispatch(carouselSheltersAction("All"))
+		}
 	}, [])
 
 	return (
