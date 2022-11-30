@@ -65,7 +65,7 @@ const UserProfile = () => {
 		<div className="bg-[#EFF0F3] xsm:w-screen xsm:mx-auto w-full h-full flex justify-between flex-col min-h-screen sm:w-auto dark:bg-[#27242C] shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)]">
 			<Toaster />
 			<Navbar />
-			<div className="mt-8 sm:w-5/6 sm:h-5/6 xsm:w-[90%] mx-auto lg:grid lg:grid-cols-3 lg:grid-rows-1 sm:flex sm:flex-col h-screen">
+			<div className="mt-8 sm:w-5/6 sm:h-5/6 xsm:w-[90%] mx-auto lg:grid lg:grid-cols-3 lg:grid-rows-1 sm:flex sm:flex-col h-screen xsm:h-auto">
 				<div className="mt-16 bg-[#ffffffd7] max-w-md rounded-[3em] mx-auto shadow-[6px_16px_54px_-27px_rgba(133,133,133,0.4)] overflow-hidden min-w-[23vw] dark:bg-[#1B1A1F]">
 					<div className="group/item z-0">
 						<img
@@ -179,7 +179,7 @@ const UserProfile = () => {
 						Posts
 					</h5>
 					{details?.posts?.length > 0 ? (
-						<div className="ml-4 overflow-auto max-h-[39rem] overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md dark:scrollbar-thumb-[#e06161]">
+						<div className="ml-4 max-h-[39rem] xsm:h-auto overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md dark:scrollbar-thumb-[#e06161]">
 							{details?.posts?.map((post) => {
 								return (
 									<UserProfileCardPost
@@ -207,12 +207,9 @@ const UserProfile = () => {
 					)}
 				</div>
 			</div>
-			<div className='fixed right-[20px] bottom-[120px] z-50'>
+			<Footer />
+			<div className='fixed right-[20px] bottom-[120px] z-50 xsm:hidden'>
 				<HomeChatBot />
-			</div>
-			<div>
-
-				<Footer />
 			</div>
 			<ModalUserSheltersFollowed
 				isOpen={isOpen}
