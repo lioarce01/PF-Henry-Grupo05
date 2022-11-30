@@ -51,7 +51,7 @@ router.get('/feedback', async function (req, res) {
     console.log("data: ", data)
 
 	
-    let paymentID = await prisma.payment.findMany({where: {paymentId: data?.id.toString()}})
+    let paymentID = await prisma.payment.findMany({where: {paymentId: data?.id?.toString()}})
 
     if (data.status === "approved" && !paymentID.length) {
         let id = data.additional_info.items[0].id
