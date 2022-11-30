@@ -78,7 +78,7 @@ const ProfileBottom = ({ details, setIsOpen }) => {
 					<HomeChatBot />
 				</div>
 
-                <ProfileFooter id={details?.id} />
+                <ProfileFooter id={userDetail?.id} />
             </div>
         </div>
     )
