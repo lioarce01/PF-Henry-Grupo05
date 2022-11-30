@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { useAuth0 } from "@auth0/auth0-react";
 import { selectUser } from "../../redux/slices/manageUsers";
 import { addLikeAction, removeLikeAction } from "../../redux/slices/manageUsers/actions";
+import VideoPlayer from "../VideoPlayer";
 
 const UserProfileCardPost = ({
 	image,
@@ -28,6 +29,7 @@ const UserProfileCardPost = ({
 	authorRole,
 	shelter,
 	shelterId,
+	postVideo
 }) => {
 	const { likes: userLikes } = useSelector(selectUser)
 	const [likesActuals, setLikesActuals] = useState(likes)
@@ -119,11 +121,12 @@ const UserProfileCardPost = ({
 					</div>
 
 					<div className="rounded-[20px]">
-						<img
+						{postImage && <img
 							src={postImage}
 							alt="post"
 							className="object-center object-contain w-[400px] mt-[20px] mb-[30px] flex mx-auto rounded-[20px] lg:max-h-[300px]"
-						/>
+						/>}
+						{postVideo && <VideoPlayer public_id={postVideo}/>}
 					</div>
 
 					<div className="flex items-center justify-end pt-2 mt-2 border-t border-gray-400 dark:border-[#38353d]">
