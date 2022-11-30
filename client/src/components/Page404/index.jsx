@@ -29,7 +29,7 @@ const Page404 = () => {
           </p>
 
           <Link to="/home">
-            <button className="bg-white hover:bg-[#cc5c5c] text-white font-semibold py-2 px-4 border border-gray-400 rounded shadow bg-[#FF7272] dark:border-none">back to homepage</button>
+            <button className="bg-white hover:bg-[#cc5c5c] text-white font-semibold py-2 px-4 rounded shadow bg-[#FF7272] dark:border-none">back to homepage</button>
           </Link>
           
         </div>
