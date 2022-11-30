@@ -46,9 +46,8 @@ router.get('/feedback', async function (req, res) {
     try {
         let payment_id = req.query.payment_id
         console.log("paymend_id: ", payment_id)
-        // console.log("env: ", process.env)
-    let {data} = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}})
-    console.log("data: ", JSON.stringify(data))
+        let data = await fetch(`https://api.mercadopago.com/v1/payments/${payment_id}`, {headers: {Authorization: `Bearer ${process.env.ACCESS_TOKEN!}`}}).then((res) => res.json())
+    console.log("data: ", data)
 
 	
     let paymentID = await prisma.payment.findMany({where: {paymentId: data?.id?.toString()}})
