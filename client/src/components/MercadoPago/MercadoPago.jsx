@@ -23,13 +23,11 @@ const MercadoPago = () => {
 								: Swal.fire({ icon: "error", title: "Failed payment" })
 							navigate(`/${res.data}/profile`)
 						})
-						.catch((res) => {
-							res.status === 200
-								? Swal.fire("Approved payment", undefined, "success")
-								: Swal.fire({ icon: "error", title: "fallo el pago" })
+						.catch(() => {
+							Swal.fire({ icon: "error", title: "Failed payment" })
 							navigate("/home")
 						})
-				}, 15000)
+				}, 3500)
     }, [])
 
   return (
