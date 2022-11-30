@@ -54,7 +54,7 @@ const PostData = ({
 	return (
 		<div className="pt-2">
 			<div className="flex flex-col dark:text-[#F0EEEE] h-auto">
-				<ShowMoreText
+				{toogle?<ShowMoreText
 					lines={3}
 					more="Show more"
 					less="Show less"
@@ -74,6 +74,17 @@ const PostData = ({
 						rows={rows}
 				/>
 				</ShowMoreText>
+				:<textarea
+						className="w-full mb-1 border border-gray-300 resize-none bg-inherit disabled:border-none dark:border-[#27242C]"
+						type="text"
+						name="content"
+						onChange={inputHandler}
+						defaultValue={details.content}
+						disabled={toogle}
+						value={input.description}
+						cols="10"
+						rows={rows}
+				/>}
 			</div>
 
 			{!toogle && (
