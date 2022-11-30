@@ -31,7 +31,7 @@ const Home = () => {
 						<div className='xsm:pb-[40px] lg:hidden xl:contents w-full'>
 							<TopShelters />
 
-							<div className='fixed right-[20px] bottom-[20px] z-50'>
+							<div className='xsm:hidden sm:flex fixed right-[20px] bottom-[20px] z-50'>
 								<HomeChatBot />
 							</div>
 						</div>

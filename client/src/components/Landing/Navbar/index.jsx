@@ -15,13 +15,13 @@ const Navbar = () => {
     <div className="flex justify-between lg:px-10 px-3 py-5 items-center w-full lg:w-full">
 
       <div className="flex group flex-row">
-        <span className={`lg:text-[1.5rem] text-sm sm:text-xl font-bold text-[#201008] dark:text-[#F0EEEE] group-hover:text-[#FF7272] transition-all duration-500 font-mono`}>Paws</span>
+        <span className={`lg:text-[1.5rem] text-sm sm:text-xl font-bold text-[#201008] dark:text-[#F0EEEE] group-hover:text-[#FF7272] transition-all duration-500 font-mono mt-[2px]`}>Paws</span>
         <span className={`lg:text-[1.5rem] text-sm sm:text-xl font-bold text-[#FF7272] group-hover:text-[#201008] transition-all duration-500`}>Founding</span>
       </div>
 
 
       <div className="flex xl:w-1/3 justify-end">
-          <a className="font-bold text-[#838788] link-underline link-underline-black lg:text-[1.5rem]" href="/about">About Us</a>
+          <a className="font-bold text-[#838788] dark:text-[#d8d8d8] link-underline link-underline-black lg:text-[1.5rem]" href="/about">About Us</a>
       </div>
 
       <div className="flex gap-10">
@@ -30,9 +30,9 @@ const Navbar = () => {
               onClick={toggleDarkMode}
             >
               {darkmode ? (
-                <BsSun className="text-xl text-[#201008] w-[25px] h-[25px] hover:text-white dark:text-[#F0EEEE]" />
+                <BsSun className="text-xl text-[#838788] w-[25px] h-[25px] hover:text-white dark:text-[#F0EEEE]" />
               ) : (
-                <HiMoon className="text-xl text-[#201008] w-[25px] h-[25px]" />
+                <HiMoon className="text-xl text-[#838788] w-[25px] h-[25px]" />
                 )}
             </button>
 

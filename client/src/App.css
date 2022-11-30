@@ -25,3 +25,9 @@ html::-webkit-scrollbar-thumb {
   background-color: #FF7272;
   border-radius: 100px;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #27242C;
+  }
+}

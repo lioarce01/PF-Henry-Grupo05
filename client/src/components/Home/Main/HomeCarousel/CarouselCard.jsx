@@ -68,7 +68,7 @@ const CarouselCard = ({ id, image, name, city, budget, listAnimals, profilePic, 
 
                     <div className="flex flex-row mt-[15px]">
                         <h2 className="flex text-[#ACB1B2]">City:</h2>
-                        <h2 className="flex font-semibold ml-auto text-[#979b9c] dark:text-[#abb0b1]">{city}</h2>
+                        <h2 className="flex font-semibold ml-auto text-[#979b9c] dark:text-[#abb0b1]">{(city.length > 20) ? city.slice(0,20)+'...' : city}</h2>
                     </div>
 
                     <div className="flex flex-row mt-[15px]">
