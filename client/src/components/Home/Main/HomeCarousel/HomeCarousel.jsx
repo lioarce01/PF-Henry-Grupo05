@@ -5,6 +5,7 @@ import { useGetShelterByAnimalMutation, useGetSheltersQuery, useTopFiveSheltersQ
 import { FreeMode, Autoplay } from "swiper";
 import CarouselCard from './CarouselCard'
 import { useSelector } from "react-redux";
+import { useGetUserByIdQuery } from "../../../../redux/api/users";
 
 const HomeCarousel = () => {
     const { carousel, animals } = useSelector(state => state.manageShelters)
@@ -13,19 +14,17 @@ const HomeCarousel = () => {
     const { data: topShelters, refetchTop } = useTopFiveSheltersQuery(10)
     const [getShelterByAnimal, { data: animalShelter }] = useGetShelterByAnimalMutation()
     const [showShelters, setShowShelters] = useState(shelters)
-    console.log(userDetail, animalShelter)
+    const { data: gotUser, refetch: userRefetch } = useGetUserByIdQuery(userDetail?.id)
+
+    console.log("gotUser", gotUser);
 
     useEffect(() => {
         refetch()
-
-    }, [])
-
-    useEffect(() => {
         setShowShelters(shelters)
-    }, [shelters])
+    }, [shelters, showShelters])
 
     useEffect(() => {
-        if (carousel === 'following') setShowShelters(userDetail?.following)
+        if (carousel === 'following') setShowShelters(gotUser?.following)
         else if (carousel === 'trending') setShowShelters(topShelters)
         else if (carousel === "animals") {
             if (animals.length > 0) {
@@ -81,7 +80,7 @@ const HomeCarousel = () => {
 
                 {showShelters?.length > 0 && showShelters?.map((s, index) =>
                     <SwiperSlide key={index} >
-                        <CarouselCard id={s?.id} image={s?.profilePic} name={s?.name} goal={s?.goal} authorId={s?.authorId}
+                        <CarouselCard id={s?.id} image={s?.profilePic} name={s?.name} city={s?.city} authorId={s?.authorId}
                             budget={s?.budget} listAnimals={s?.listAnimals} profilePic={s?.author?.profilePic} />
                     </SwiperSlide>
                 )}

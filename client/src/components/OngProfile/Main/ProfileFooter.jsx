@@ -12,7 +12,7 @@ const ProfileFooter = ({ id }) => {
             </div>
 
             <div className="flex flex-row mt-[5px]">
-                <Link className="text-[#838788] dark:text-[#b3b8b9] mr-[10px] font-semibold hover:underline text-lg">Privacy & Terms</Link>
+                <Link to="/termsAndConditions"className="text-[#838788] dark:text-[#b3b8b9] mr-[10px] font-semibold hover:underline text-lg">Privacy & Terms</Link>
             </div>
 
             <div className="flex flex-row mt-[5px]">
