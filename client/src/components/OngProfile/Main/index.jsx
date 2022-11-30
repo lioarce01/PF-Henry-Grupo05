@@ -82,23 +82,41 @@ const OngDetail = () => {
 
     
     return (
-        <div className="flex flex-row w-screen h-screen bg-[#EFF0F3] dark:bg-[#27242C] overflow-y-hidden">
-            <div className="h-screen xsm:w-0 sm:w-fit">
-                <ProfileSidebar profilePic={details?.profilePic} city={details?.city} country={details?.country} website={details?.website}
-                id={details?.id} postsLength={details?.posts?.length} followersLength={details?.followers?.length} />
-            </div>
+			<div className="flex flex-row w-screen h-screen bg-[#EFF0F3] dark:bg-[#27242C] overflow-y-hidden">
+				<div className="h-screen xsm:w-0 sm:w-fit">
+					<ProfileSidebar
+						profilePic={details?.profilePic}
+						city={details?.city}
+						country={details?.country}
+						website={details?.website}
+						id={details?.id}
+						postsLength={details?.posts?.length}
+						followersLength={details?.followers?.length}
+						budget={details?.budget}
+					/>
+				</div>
 
-            <div className="w-full overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
-                <div className="xsm:mt-[30px] md:mt-[35px] xsm:ml-[10px] sm:ml-[20px] md:ml-[40px] xl:ml-[60px] 2xl:ml-[100px] xsm:mr-0 sm:mr-[20px] md:mr-[40px] 2xl:mr-[60px]">
-                    <ProfileUpper setIsOpenDonate={setIsOpenDonate} loading={isLoading} shelterRefetch={shelterRefetch} details={details}/>
-                    <ProfileBottom setIsOpen={setIsOpen} details={details} />
-                </div>
-            </div>
+				<div className="w-full overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-[#FF7272] dark:scrollbar-thumb-[#E06161] scrollbar-track-none scrollbar-thumb-height scrollbar-thumb-rounded-md">
+					<div className="xsm:mt-[30px] md:mt-[35px] xsm:ml-[10px] sm:ml-[20px] md:ml-[40px] xl:ml-[60px] 2xl:ml-[100px] xsm:mr-0 sm:mr-[20px] md:mr-[40px] 2xl:mr-[60px]">
+						<ProfileUpper
+							setIsOpenDonate={setIsOpenDonate}
+							loading={isLoading}
+							shelterRefetch={shelterRefetch}
+							details={details}
+						/>
+						<ProfileBottom setIsOpen={setIsOpen} details={details} />
+					</div>
+				</div>
 
-            <ModalDonate isOpen={isOpenDonate} closeModal={closeModalDonate} name={details?.name} shelterId={details?.id} />
-            <ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
-        </div>
-    )
+				<ModalDonate
+					isOpen={isOpenDonate}
+					closeModal={closeModalDonate}
+					name={details?.name}
+					shelterId={details?.id}
+				/>
+				<ModalCreatePost isOpen={isOpen} closeModal={closeModal} />
+			</div>
+		)
 }
 
 export default OngDetail
