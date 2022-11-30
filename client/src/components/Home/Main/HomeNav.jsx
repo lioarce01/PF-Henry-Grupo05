@@ -123,7 +123,7 @@ const HomeNav = () => {
 					</div>
 
 					<div className="flex flex-row gap-2 md:mt-[5px] ml-auto">
-						{isAuth && (
+						{(isAuth && userDetail?.Shelter[0])  && (
 							<button
 								onClick={() => setOpenCreatePost(true)}
 								className="flex flex-row bg-[#6371f1] hover:bg-[#5460d1] dark:bg-[#7F8AF3] dark:hover:bg-[#6a75d3] md:mr-[10px] sm:mt-[30px] sm:h-fit pl-[5px] xsm:pr-[2px] sm:pr-0 xsm:pl-[2px] xsm:h-[44px] xsm:mt-[33px] rounded-full items-center  transition-colors duration-300 xl:mr-[20px]"
