@@ -4,8 +4,9 @@ import Spinner from "../../../Spinner/Spinner";
 import { useGetShelterByAnimalMutation, useGetSheltersQuery, useTopFiveSheltersQuery } from "../../../../redux/api/shelters"
 import { FreeMode, Autoplay } from "swiper";
 import CarouselCard from './CarouselCard'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetUserByIdQuery } from "../../../../redux/api/users";
+import { carouselSheltersAction } from "../../../../redux/slices/manageShelters/actions";
 
 const HomeCarousel = () => {
     const { carousel, animals } = useSelector(state => state.manageShelters)
@@ -15,13 +16,7 @@ const HomeCarousel = () => {
     const [getShelterByAnimal, { data: animalShelter }] = useGetShelterByAnimalMutation()
     const [showShelters, setShowShelters] = useState(shelters)
     const { data: gotUser, refetch: userRefetch } = useGetUserByIdQuery(userDetail?.id)
-
-    console.log("gotUser", gotUser);
-
-    useEffect(() => {
-        refetch()
-        setShowShelters(shelters)
-    }, [shelters, showShelters])
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (carousel === 'following') setShowShelters(gotUser?.following)
@@ -30,11 +25,11 @@ const HomeCarousel = () => {
             if (animals.length > 0) {
                 getShelterByAnimal(animals).unwrap()
                     .then(res => setShowShelters(res))
-            } else setShowShelters(shelters)
+            } else dispatch(carouselSheltersAction("all"))
         }
         else setShowShelters(shelters)
 
-    }, [carousel, animals])
+    }, [carousel, animals, shelters])
 
     if (isLoading) return (<div className=""><Spinner /></div>)
     if (!showShelters?.length) return (
