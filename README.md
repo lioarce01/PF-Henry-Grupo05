@@ -111,13 +111,13 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-* Samir José - [Linkedin](https://twitter.com/twitter_handle)
-* Lionel Arce - [Linkedin](https://twitter.com/twitter_handle)
-* Nicolás Llosas - [Linkedin](https://twitter.com/twitter_handle)
-* Nahuel Guerra - [Linkedin](https://twitter.com/twitter_handle)
-* Ismael Saragusti - [Linkedin](https://twitter.com/twitter_handle)
-* Bautista Sánchez - [Linkedin](https://twitter.com/twitter_handle)
-* Juan José Pischetz - [Linkedin](https://twitter.com/twitter_handle)
+* Samir José - [Linkedin](https://www.linkedin.com/in/samirantoniojose/)
+* Lionel Arce - [Linkedin](https://www.linkedin.com/in/lionel-arce/)
+* Nicolás Llosas - [Linkedin](https://www.linkedin.com/in/nico-llosas-estudiante-ingenieria-informatica/)
+* Nahuel Guerra - [Linkedin](https://www.linkedin.com/in/nahuel-emiliano-guerra-77860324b/)
+* Ismael Saragusti - [Linkedin](https://www.linkedin.com/in/ismael-saragusti-664260213/)
+* Bautista Sánchez - [Linkedin](https://www.linkedin.com/in/baut-s/)
+* Juan José Pischetz - [Linkedin](https://www.linkedin.com/in/juanjo-pischetz/)
 
 Project Link: [https://github.com/lioarce01/PF-Henry-Grupo05](https://github.com/lioarce01/PF-Henry-Grupo05)
 
