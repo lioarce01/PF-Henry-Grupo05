@@ -19,7 +19,9 @@ const HomeCarousel = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (carousel === 'following') setShowShelters(gotUser?.following)
+        if (carousel === 'following') {
+            userRefetch()
+            setShowShelters(gotUser?.following)}
         else if (carousel === 'trending') setShowShelters(topShelters)
         else if (carousel === "animals") {
             if (animals.length > 0) {
@@ -29,7 +31,7 @@ const HomeCarousel = () => {
         }
         else setShowShelters(shelters)
 
-    }, [carousel, animals, shelters])
+    }, [carousel, animals, shelters, gotUser])
 
     if (isLoading) return (<div className=""><Spinner /></div>)
     if (!showShelters?.length) return (
