@@ -37,7 +37,7 @@ return (
 				{details?.author?.id === userDetail?.id && (
 					<button
 						onClick={() => setIsOpen(true)}
-						className="bg-[#FF7272] w-[120px] font-semibold text-white rounded-full transition duration-300
+						className="bg-[#FF7272] w-[120px] font-semibold text-white rounded-full max-sm:ml-3 lg:ml-[380px] transition duration-300
                             hover:bg-[#e46363]"
 					>
 						Create Post
@@ -99,7 +99,7 @@ return (
 					{details?.author?.id === userDetail?.id && (
 						<button
 							onClick={() => setIsOpen(true)}
-							className="bg-[#FF7272] w-[120px] font-semibold text-white rounded-full transition duration-300
+							className="bg-[#FF7272] w-[120px] font-semibold text-white rounded-full md:ml-60 max-sm:ml-5 transition duration-300
                             hover:bg-[#e46363]"
 						>
 							Create Post
